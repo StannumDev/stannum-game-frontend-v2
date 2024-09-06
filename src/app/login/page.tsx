@@ -2,23 +2,30 @@ import Image from "next/image";
 import wallpaper from "@/assets/wallpaper/login.webp"
 import Link from "next/link";
 import { TfiBackLeft } from "react-icons/tfi";
+import { LoginForm } from "@/components";
 
 export default function LoginPage() {
     return (
         <main className="grow w-full flex flex-col justify-start items-center bg-card">
             <h1 className="sr-only">Iniciar sesión</h1>
-            <section className="w-full flex justify-center items-center h-svh">
-                <div className="w-1/2 h-svh relative">
+            <section className="w-full flex flex-col lg:flex-row justify-start items-start h-svh">
+                <aside className="w-full lg:w-1/2 aspect-video max-h-64 lg:max-h-none lg:aspect-auto lg:h-svh relative">
                     <Image src={wallpaper} alt='Iniciar sesión' className="size-full object-cover absolute top-0 left-0"/>
-                </div>
-                <div className="w-1/2 h-svh flex justify-start items-center pl-24">
-                    <div className="w-full max-w-md flex flex-col justify-start items-start">
-                        <Link href={'/'} className="flex items-center gap-1.5 text-white">
-                            <TfiBackLeft className="stroke-1 text-base relative top-px"/>
-                            <span className="font-semibold text-lg">Volver</span>
+                </aside>
+                <div className="mt-16 lg:mt-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
+                    <div className="w-full max-w-sm flex flex-col justify-start items-center lg:items-start relative">
+                        <Link href={'/'} className="flex items-center gap-1.5 text-white absolute -top-4 lg:-top-8 left-0 -translate-y-full">
+                            <TfiBackLeft className="stroke-[0.25] text-base relative top-px"/>
+                            <span className="font-light text-lg">Volver</span>
                         </Link>
-                        <p className="mt-4 text-3xl text-white font-light">Ingresa a <b className="text-stannum font-bold">STANNUM Game</b></p>
-                        <p className="text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
+                        <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-bold block sm:inline">STANNUM Game</b></p>
+                        <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
+                        <LoginForm/>
+                        <div className="lg:mt-12 w-full flex flex-col justify-center items-center text-center">
+                            <div className="w-full h-[2px] bg-card-lighter opacity-25 hidden lg:block"></div>
+                            <p className="mt-6 w-full text-neutral-400">¿Aún no tienes una cuenta?</p>
+                            <Link href={'/register'} className="mt-3 w-full lg:w-fit bg-card-light h-9 px-5 text-white rounded-lg text-sm font-semibold flex justify-center items-center hover:bg-card-lighter transition-all duration-200 ease-in-out">Registrarse gratis</Link>
+                        </div>
                     </div>
                 </div>
             </section>
