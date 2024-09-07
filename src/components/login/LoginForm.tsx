@@ -7,9 +7,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { FiUnlock, FiUser } from "react-icons/fi";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { FormErrorMessage } from "../ui/FormErrorMessage";
-import { ButtonLoading } from "../ui/ButtonLoading";
+import { FormErrorMessage, ButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido."),
@@ -79,15 +77,7 @@ export const LoginForm = () => {
                         <FiUnlock className="w-5 h-4 relative transition-all duration-200 ease-in-out"/>
                         <label htmlFor="username" className="text-lg transition-all duration-200 ease-in-out">Contraseña</label>
                     </div>
-                    <button
-                        type="button"
-                        className="absolute bottom-0 right-0 size-9 flex justify-center items-center opacity-75 hover:opacity-100"
-                        onClick={ () => { setShowPassword(!showPassword) }}
-                    >
-                        {
-                            showPassword? <FaEyeSlash className="text-white size-4"/> : <FaEye className="text-white size-4"/>
-                        }
-                    </button>
+                    <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
                 </div>
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="-mt-2"/>
             </div>

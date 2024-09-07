@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { FieldError } from "react-hook-form";
 
 interface Props{
-    condition: FieldError | undefined;
+    condition: FieldError | boolean | undefined;
     message?: string;
     className?: string
 }

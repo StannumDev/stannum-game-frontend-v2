@@ -1,8 +1,7 @@
 import Image from "next/image";
-import wallpaper from "@/assets/wallpaper/login.webp"
 import Link from "next/link";
-import { TfiBackLeft } from "react-icons/tfi";
-import { LoginForm } from "@/components";
+import { GoBackButton, LoginForm } from "@/components";
+import wallpaper from "@/assets/wallpaper/login.webp"
 
 export default function LoginPage() {
     return (
@@ -14,10 +13,7 @@ export default function LoginPage() {
                 </aside>
                 <div className="mt-16 lg:mt-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
                     <div className="w-full max-w-sm flex flex-col justify-start items-center lg:items-start relative">
-                        <Link href={'/'} className="flex items-center gap-1.5 text-white absolute -top-4 lg:-top-8 left-0 -translate-y-full">
-                            <TfiBackLeft className="stroke-[0.25] text-base relative top-px"/>
-                            <span className="font-light text-lg">Volver</span>
-                        </Link>
+                        <GoBackButton className="-top-4 lg:-top-8 left-0"/>
                         <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-bold block sm:inline">STANNUM Game</b></p>
                         <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
                         <LoginForm/>
