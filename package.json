@@ -14,6 +14,8 @@
     "framer-motion": "^11.5.4",
     "next": "14.2.8",
     "react": "^18",
+    "react-avatar-editor": "^13.0.2",
+    "react-country-region-selector": "^3.6.1",
     "react-dom": "^18",
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.53.0",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-avatar-editor": "^13.0.3",
     "@types/react-dom": "^18",
     "@types/react-google-recaptcha": "^2.1.9",
     "eslint": "^8",

@@ -9,7 +9,7 @@ interface Props{
     className?: string
 }
 
-export const FormErrorMessage = ({condition, message = "Campo requerido.", className}:Props) => {
+export const FormErrorMessage = ({condition, message="Campo requerido.", className}:Props) => {
     return (
         <AnimatePresence>
             {

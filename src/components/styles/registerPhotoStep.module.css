@@ -1,0 +1,24 @@
+.range_input{
+    @apply appearance-none w-full max-w-sm bg-transparent cursor-pointer
+}
+
+.range_input::-webkit-slider-runnable-track{
+    @apply bg-card-light h-1 rounded-lg
+}
+
+.range_input::-moz-range-track{
+    @apply bg-card-light h-1 rounded-lg
+}
+
+.range_input::-webkit-slider-thumb{
+    margin-top: calc(0.25rem/2 - 1rem/2);
+    @apply appearance-none bg-stannum h-4 w-4 rounded-full transition-all duration-200 ease-in-out
+}
+
+.range_input::-webkit-slider-thumb:hover{
+    @apply bg-stannum-hover scale-125
+}
+
+.range_input::-moz-range-thumb{
+    @apply border-none bg-stannum h-4 w-4 rounded-full
+}

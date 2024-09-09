@@ -42,7 +42,7 @@
   background-color: rgba(80, 80, 80, 1);
 }
 
-input{
+input, textarea{
   @apply outline-none focus-visible:outline-none
 }
 

@@ -12,7 +12,7 @@ interface Props{
 export const ButtonLoading = ({isLoading, text, className}:Props) => {
     return (
         <motion.button
-            whileTap={{scale: 1.05}}
+            whileTap={{scale: !isLoading ? 1.05 : 1 }}
             whileHover={{ backgroundColor: '#8cdccd'}}
             disabled={isLoading}
             type="submit"
