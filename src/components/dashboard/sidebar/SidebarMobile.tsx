@@ -1,4 +1,6 @@
-import { Fragment } from 'react';
+'use client'
+
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -12,6 +14,8 @@ interface Props{
 }
 
 export const SidebarMobile = ({links, pathname}:Props) => {
+    const [isSearching, setIsSearching] = useState<boolean>(false)
+
     return (
         <div className="md:hidden w-full min-h-svh fixed top-0 left-0 pointer-events-none">
             <div className="w-full px-3 pt-3 pb-1 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0">
@@ -33,7 +37,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                         links.map((link:SidebarLink, i:number) => (
                             <Fragment key={i}>
                                 {i === 1 && (
-                                    <BuscadorSidebarMobile/>
+                                    <BuscadorSidebarMobile isSearching={isSearching} setIsSearching={setIsSearching}/>
                                 )}
                                 <motion.li
                                     key={i}
@@ -42,7 +46,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ type: 'spring', delay: i === 0 ? 0.125 : 0.125 + (i*0.125 + 0.125), bounce: 0}}
                                 >
-                                    <SidebarMobileLink link={link} pathname={pathname}/>
+                                    <SidebarMobileLink link={link} pathname={pathname} isSearching={isSearching}/>
                                 </motion.li>
                             </Fragment>
                         ))

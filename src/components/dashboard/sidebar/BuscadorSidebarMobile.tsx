@@ -1,5 +1,6 @@
 'use client'
 
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -7,7 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { CiSearch } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
-import { useEffect, useState } from "react";
+
+interface Props{
+    isSearching: boolean;
+    setIsSearching: Dispatch<SetStateAction<boolean>>
+}
 
 const schema = z.object({
     search: z.string().nonempty().min(1).max(50),
@@ -15,11 +20,10 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const BuscadorSidebarMobile = () => {
+export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
 
     const { register, handleSubmit, reset, setFocus } = useForm<Schema>({ resolver: zodResolver(schema) })
     const router = useRouter();
-    const [isSearching, setIsSearching] = useState<boolean>(false)
 
     const onSubmit:SubmitHandler<Schema> = async ({search}:Schema) => {
         try {
