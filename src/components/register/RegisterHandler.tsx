@@ -25,12 +25,12 @@ export const RegisterHandler = () => {
                 </div>
                 <AnimatePresence mode="wait" initial={false}>
                     <motion.div
-                        key={step}  // Esta key es importante para que AnimatePresence detecte el cambio
+                        key={step}
                         initial={{ x: 672, opacity: 0, height: 0, scale: 0 }}
                         animate={{ x: 0, opacity: 1, height: 'auto', scale: 1 }}
                         exit={{ x: -672, opacity: 0, height: 0, scale: 0 }}
                         transition={{ bounce: 0 }}
-                        className="w-full mt-6 md:mt-8 overflow-hidden md:min-h-24 flex flex-col justify-center items-center"
+                        className="w-full mt-6 md:mt-8 overflow-hidden md:min-h-48 flex flex-col justify-center items-center"
                     >
                         {step === 'email' && <RegisterEmailStep nextStep={nextStep} />}
                         {step === 'password' && <RegisterPasswordStep />}

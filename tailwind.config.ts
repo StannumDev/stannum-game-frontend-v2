@@ -10,7 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         'background':{
-          DEFAULT: '#0a0a0a'
+          DEFAULT: '#0a0a0a',
+          sidebar: '#111111'
         },
         'invalid':{
           DEFAULT: '#f45050'

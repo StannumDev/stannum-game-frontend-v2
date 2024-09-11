@@ -43,7 +43,7 @@
 }
 
 input, textarea{
-  @apply outline-none focus-visible:outline-none
+  @apply outline-none focus-visible:outline-none bg-transparent
 }
 
 input:-webkit-autofill,

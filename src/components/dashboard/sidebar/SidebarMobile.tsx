@@ -1,0 +1,54 @@
+import { Fragment } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import type { SidebarLink } from '@/interfaces';
+import { BuscadorSidebarMobile, Logo, SidebarMobileLink } from '@/components';
+import default_user from "@/assets/user/default_user.webp";
+
+interface Props{
+    links:Array<SidebarLink>;
+    pathname: string
+}
+
+export const SidebarMobile = ({links, pathname}:Props) => {
+    return (
+        <div className="md:hidden w-full min-h-svh fixed top-0 left-0 pointer-events-none">
+            <div className="w-full px-3 pt-3 pb-1 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0">
+                <Link href={'/'} aria-label="Inicio STANNUM Game">
+                    <Logo className="fill-white w-24" pathClassName="fill-white"/>
+                </Link>
+                <Link href={'/'} className="rounded-full relative overflow-hidden">
+                    <Image src={default_user} alt='Usuario STANNUM Game' className="size-10 aspect-square object-cover"/>
+                </Link>
+            </div>
+            <motion.div
+                className="w-full bg-card pointer-events-auto absolute bottom-0 left-0"
+                initial={{ y: '100%', opacity: 1 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ type: 'spring', bounce: 0 }}
+            >
+                <ul className="w-full grid grid-cols-5 justify-center items-center overflow-hidden">
+                    {
+                        links.map((link:SidebarLink, i:number) => (
+                            <Fragment key={i}>
+                                {i === 1 && (
+                                    <BuscadorSidebarMobile/>
+                                )}
+                                <motion.li
+                                    key={i}
+                                    className="w-full"
+                                    initial={{ y: 100, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ type: 'spring', delay: i === 0 ? 0.125 : 0.125 + (i*0.125 + 0.125), bounce: 0}}
+                                >
+                                    <SidebarMobileLink link={link} pathname={pathname}/>
+                                </motion.li>
+                            </Fragment>
+                        ))
+                    }
+                </ul>
+            </motion.div>
+        </div>
+    )
+}

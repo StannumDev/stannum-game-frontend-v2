@@ -1,7 +1,6 @@
 interface Props{
     className: string;
     pathClassName: string;
-    fill?: string
 }
 
 interface Path{
@@ -20,7 +19,7 @@ const paths:Array<Path> = [
   { path: "M64.5763 12.9743C64.5142 12.9329 64.4603 12.8832 64.4023 12.8376V21.8606C64.4023 22.1504 64.4438 22.3989 64.5266 22.6225C64.6839 23.049 65.0773 23.3057 65.5784 23.3057C66.0339 23.3057 66.4065 23.0656 66.5763 22.6556C66.6715 22.4279 66.7212 22.1629 66.7212 21.8689V14.3159L64.5763 12.9743Z" }
 ]
 
-export const Logo = ({ className, pathClassName, fill="white" } :Props) => {
+export const Logo = ({ className, pathClassName } :Props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +29,7 @@ export const Logo = ({ className, pathClassName, fill="white" } :Props) => {
     >
       {
         paths.map(({path}:Path, i:number) => (
-          <path key={i} fill={fill} className={pathClassName} fillRule="nonzero" d={path} />
+          <path key={i} className={pathClassName} fillRule="nonzero" d={path} />
         ))
       }
     </svg>
