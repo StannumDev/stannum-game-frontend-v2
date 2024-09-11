@@ -1,9 +1,9 @@
+import { HomeLayout } from "@/components";
+
 export default function HomePage() {
     return (
-        <main className="grow min-h-svh flex flex-col justify-start items-center">
-            <section className="min-h-svh"></section>
-            <section className="min-h-svh"></section>
-            <section className="min-h-svh"></section>
+        <main className="grow min-h-svh flex justify-start items-start p-8">
+            <HomeLayout/>
         </main>
     );
 }

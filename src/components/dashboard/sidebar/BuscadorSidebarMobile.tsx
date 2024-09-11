@@ -30,7 +30,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
             console.log(search);
             // callToast(response);
             router.push('/login');
-        } catch (error:any) {
+        } catch (error:unknown) {
             console.log(error);
         }
     }
@@ -80,7 +80,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                             id="search"
                             autoComplete="off"
                             placeholder="Buscar..."
-                            className="grow h-10 text-white peer placeholder:text-card-lighter focus-visible:placeholder:text-card-lightest"
+                            className="grow h-10 peer placeholder:text-card-lighter focus-visible:placeholder:text-card-lightest"
                             {...register("search",{
                                 required: true,
                                 maxLength: 50

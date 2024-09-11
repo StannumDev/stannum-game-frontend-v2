@@ -40,7 +40,7 @@ export const RegisterDetailsStep = () => {
         try {
             console.log(data);
             // setIsLoading(false);
-        } catch (error:any) {
+        } catch (error:unknown) {
             console.log(error);
             // setIsLoading(false);
         }

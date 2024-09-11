@@ -9,7 +9,7 @@ import { LiaSpinnerSolid } from "react-icons/lia";
 import styles from "@/components/styles/registerPhotoStep.module.css"
 export const RegisterPhotoStep = () => {
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading] = useState<boolean>(false);
     const [zoom, setZoom] = useState<number>(1)
     const [rotate, setRotate] = useState<number>(0)
     const [file, setFile] = useState<string|null>(null)

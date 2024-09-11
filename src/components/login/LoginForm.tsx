@@ -1,6 +1,6 @@
 'use client'
 
-import { useLogin } from "@/services";
+import { requestLogin } from "@/services";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -29,11 +29,11 @@ export const LoginForm = () => {
         // setErrorMessage(null);
         try {
             console.log(data);
-            await useLogin(data);
+            await requestLogin(data);
             // callToast(response);
             router.push('/dashboard');
             setIsLoading(false)
-        } catch (error:any) {
+        } catch (error:unknown) {
             console.log(error);
             setIsLoading(false);
         }

@@ -13,48 +13,51 @@ interface Props{
 
 export const SidebarDesktop = ({links, pathname}:Props) => {
     return (
-        <div className="hidden md:block w-full max-w-xs min-h-svh fixed top-0 left-0">
-            <motion.nav
-                initial={{ x: '-100%', opacity: 1 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ type: 'spring', duration: 0.375 }}
-                className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-12 flex flex-col justify-start items-center"
-            >
-                <Link href={'/'} aria-label="Inicio STANNUM Game" className="hover:scale-105 translate-all duration-200 ease-in-out">
-                    <Logo className="fill-white w-40" pathClassName="fill-white"/>
-                </Link>
-                <ul className="mt-24 w-full grow">
-                    {
-                        links.map((link:SidebarLink, i:number) => (
-                            <motion.li
-                                key={i}
-                                className="w-full"
-                                initial={{ y: 100, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ type: 'spring', delay: 0.125 + i*0.125 }}
-                            >
-                                <SidebarDesktopLink link={link} pathname={pathname}/>
-                            </motion.li>
-                        ))
-                    }
-                </ul>
-                <BuscadorSidebar/>
-                <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.75 }}
-                    className="w-full py-8 px-4 flex justify-start items-center gap-4"
+        <>
+            <div className='hidden md:block w-full max-w-xs min-h-svh'></div>
+            <div className="hidden md:block w-full max-w-xs min-h-svh fixed top-0 left-0">
+                <motion.nav
+                    initial={{ x: '-100%', opacity: 1 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ type: 'spring', duration: 0.375 }}
+                    className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-12 flex flex-col justify-start items-center"
                 >
-                    <Link href={'/'} className="rounded-full border-2 border-stannum relative overflow-hidden shrink-0">
-                        <Image src={default_user} alt='Usuario STANNUM Game' className="min-w-14 max-w-14 aspect-square object-cover"/>
+                    <Link href={'/'} aria-label="Inicio STANNUM Game" className="hover:scale-105 translate-all duration-200 ease-in-out">
+                        <Logo className="fill-white w-40" pathClassName="fill-white"/>
                     </Link>
-                    <Link href={'/'} className="grow text-white lowercase truncate">mateolohezicmateolohezicmateolohezicmateolohezicmateolohezicmateolohezic</Link>
-                    <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
-                        <span className="sr-only">Cerrar sesión</span>
-                        <GrPowerShutdown className="text-xl relative -top-px transition-all duration-200 ease-in-out"/>
-                    </button>
-                </motion.div>
-            </motion.nav>
-        </div>
+                    <ul className="mt-24 w-full grow">
+                        {
+                            links.map((link:SidebarLink, i:number) => (
+                                <motion.li
+                                    key={i}
+                                    className="w-full"
+                                    initial={{ y: 100, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ type: 'spring', delay: 0.125 + i*0.125 }}
+                                >
+                                    <SidebarDesktopLink link={link} pathname={pathname}/>
+                                </motion.li>
+                            ))
+                        }
+                    </ul>
+                    <BuscadorSidebar/>
+                    <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.75 }}
+                        className="w-full py-8 px-4 flex justify-start items-center gap-4"
+                    >
+                        <Link href={'/'} className="rounded-full border-2 border-stannum relative overflow-hidden shrink-0">
+                            <Image src={default_user} alt='Usuario STANNUM Game' className="min-w-14 max-w-14 aspect-square object-cover"/>
+                        </Link>
+                        <Link href={'/'} className="grow lowercase truncate">mateolohezicmateolohezicmateolohezicmateolohezicmateolohezicmateolohezic</Link>
+                        <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
+                            <span className="sr-only">Cerrar sesión</span>
+                            <GrPowerShutdown className="text-xl relative -top-px transition-all duration-200 ease-in-out"/>
+                        </button>
+                    </motion.div>
+                </motion.nav>
+            </div>
+        </>
     )
 }

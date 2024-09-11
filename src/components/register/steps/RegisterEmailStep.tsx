@@ -6,8 +6,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormErrorMessage, ButtonLoading } from "@/components";
-import { useReCAPTCHA } from "@/services";
-import { checkEmailExist } from "@/services/register";
+import { validateReCAPTCHA } from "@/services";
+// import { checkEmailExist } from "@/services/register";
 
 interface Props{
     nextStep:() => void
@@ -45,13 +45,13 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
         setReCAPTCHAError(false);
         setReCAPTCHAErrorMessage('');
         try {
-            const success:boolean = await useReCAPTCHA(value);
+            const success:boolean = await validateReCAPTCHA(value);
             if(!success){
                 errorReCAPTCHA('Reintente completar el ReCAPTCHA.');
                 setReCAPTCHACompleted(false);
             }
             setReCAPTCHACompleted(true);
-        } catch (error) {
+        } catch (error:unknown) {
             // setRecaptchaError(true)
             // setRecaptchaErrorMessage(error.response.data.message)
             console.log(error);
@@ -70,6 +70,8 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                 return
             }
             // const available = await checkEmailExist(email);
+            console.log(email);
+            
             const available = true;
             if(!available){
                 setIsLoading(false);
@@ -77,7 +79,7 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
             }
             nextStep();
             setIsLoading(false);
-        } catch (error:any) {
+        } catch (error:unknown) {
             console.log(error);
             // setIsLoading(false);
         }

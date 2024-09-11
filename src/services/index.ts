@@ -1,3 +1,3 @@
-export { useLogin } from './auth';
+export { requestLogin } from './auth';
 
-export { useReCAPTCHA } from './reCaptcha';
+export { validateReCAPTCHA } from './reCaptcha';

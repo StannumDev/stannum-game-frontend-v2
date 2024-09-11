@@ -12,7 +12,7 @@ export const SidebarDesktopLink = ({link, pathname}:Props) => {
         <Link
             href={href}
             aria-label={`Navegar a ${label}`}
-            className={`w-full py-4 px-8 text-white flex justify-start items-center gap-2 transition-all duration-200 ease-in-out
+            className={`w-full py-4 px-8 flex justify-start items-center gap-2 transition-all duration-200 ease-in-out
                 ${pathname === href ? 'bg-gradient-to-tr from-stannum to-teal-200' : 'hover:bg-[rgba(103,204,185,0.25)]'}
             `}
         >

@@ -3,6 +3,8 @@ export { FormErrorMessage } from "./ui/FormErrorMessage";
 export { ButtonLoading } from "./ui/ButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";
 export { ButtonShowPassword } from "./ui/ButtonShowPassword";
+export { ProgressCircle } from "./ui/ProgressCircle";
+export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 
 export { Sidebar } from "./dashboard/sidebar/Sidebar";
 export { SidebarDesktop } from "./dashboard/sidebar/SidebarDesktop";
@@ -11,6 +13,15 @@ export { SidebarDesktopLink } from "./dashboard/sidebar/SidebarDesktopLink";
 export { SidebarMobileLink } from "./dashboard/sidebar/SidebarMobileLink";
 export { BuscadorSidebar } from "./dashboard/sidebar/BuscadorSidebar";
 export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile";
+
+export { HomeLayout } from "./dashboard/home/HomeLayout";
+export { PresentacionHome } from "./dashboard/home/PresentacionHome";
+export { GoalsHome } from "./dashboard/home/GoalsHome";
+export { ContinuarHome } from "./dashboard/home/ContinuarHome";
+export { ContinuarCardHome } from "./dashboard/home/ContinuarCardHome";
+export { ActivarProductoHome } from "./dashboard/home/ActivarProductoHome";
+
+export { GoalCardHome } from "./goals/GoalCardHome";
 
 export { LoginForm } from "./login/LoginForm";
 export { WallpaperLogin } from "./login/WallpaperLogin";
