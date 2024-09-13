@@ -3,7 +3,7 @@ import { ContinuarCardHome } from "@/components";
 
 export const ContinuarHome = () => {
     return (
-        <div className="w-full">
+        <section className="w-full">
             <h2 className="w-full font-semibold text-2xl text-center flex justify-start items-center gap-1">
                 <MdPlayCircle className=""/>
                 Continuar viendo
@@ -13,6 +13,6 @@ export const ContinuarHome = () => {
                 <ContinuarCardHome/>
                 <ContinuarCardHome/>
             </div>
-        </div>
+        </section>
     )
 }

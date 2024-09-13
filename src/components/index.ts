@@ -20,6 +20,7 @@ export { GoalsHome } from "./dashboard/home/GoalsHome";
 export { ContinuarHome } from "./dashboard/home/ContinuarHome";
 export { ContinuarCardHome } from "./dashboard/home/ContinuarCardHome";
 export { ActivarProductoHome } from "./dashboard/home/ActivarProductoHome";
+export { RankingHome } from "./dashboard/home/RankingHome";
 
 export { GoalCardHome } from "./goals/GoalCardHome";
 
@@ -31,3 +32,5 @@ export { RegisterEmailStep } from "./register/steps/RegisterEmailStep";
 export { RegisterPasswordStep } from "./register/steps/RegisterPasswordStep";
 export { RegisterDetailsStep } from "./register/steps/RegisterDetailsStep";
 export { RegisterPhotoStep } from "./register/steps/RegisterPhotoStep";
+
+export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
