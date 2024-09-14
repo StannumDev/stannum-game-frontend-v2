@@ -1,14 +1,94 @@
-import { FirstPlaceIcon } from "@/components";
 import Link from "next/link";
 import { FaRankingStar, FaCircleInfo } from "react-icons/fa6";
+import { CardRankingHome } from "@/components";
 import foto from "@/assets/user/default_user.webp";
-import Image from "next/image";
+import { SimpleRanking } from "@/interfaces";
+
+const rankings:Array<SimpleRanking> = [
+    {
+        position: 1,
+        name:"Mateo Bernabé Lohezic",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 100,
+    },
+    {
+        position: 2,
+        name:"Nicolas Darelli",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 93,
+    },
+    {
+        position: 3,
+        name:"Nani Ghiotto",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 87,
+    },
+    {
+        position: 4,
+        name:"Martin Merlini",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 86,
+    },
+    {
+        position: 5,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 6,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 7,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 8,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 9,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 10,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+    {
+        position: 11,
+        name:"Nicolas Nasrallah",
+        photo: foto,
+        enterprise: "STANNUM",
+        points: 80,
+    },
+]
 
 export const RankingHome = () => {
     return (
         <section className="w-full card">
             <div className="w-full flex justify-between items-center">
-                <h2 className="w-fit text-2xl font-semibold uppercase flex justify-start items-center gap-2">
+                <h2 className="w-fit text-2xl font-black uppercase flex justify-start items-center gap-2">
                     <div>
                         <FaRankingStar className="text-3xl relative -top-px"/>
                     </div>
@@ -26,43 +106,12 @@ export const RankingHome = () => {
                     <h3 className="col-span-2 pl-2">Empresa</h3>
                     <h3 className="col-span-1 text-center">Puntos</h3>
                 </div>
-                <div className="mt-2 w-full flex flex-col gap-3 justify-start items-start">
-                    <div className="w-full bg-card-light px-4 py-3 rounded-lg grid grid-cols-8 items-center gap-2">
-                        <h3 className="col-span-1 flex justify-center items-center">
-                            <span className="sr-only">Primer puesto</span>
-                            <FirstPlaceIcon/>
-                        </h3>
-                        <h3 className="col-span-4 pl-2 flex justify-start items-center gap-3">
-                            <Image src={foto} alt='Primer puesto Mateo Bernabé Lohezic' className="size-9 rounded-full"/>
-                            <span className="grow whitespace-nowrap truncate">Mateo Bernabé Lohezic Bernabé Lohezic Bernabé Lohezic</span>
-                        </h3>
-                        <h3 className="col-span-2 pl-2 whitespace-nowrap truncate">STANNUM STANNUM STANNUM STANNUM</h3>
-                        <h3 className="col-span-1 text-center">99</h3>
-                    </div>
-                    <div className="w-full bg-card-light px-4 py-3 rounded-lg grid grid-cols-8 items-center gap-2">
-                        <h3 className="col-span-1 flex justify-center items-center">
-                            <span className="sr-only">Primer puesto</span>
-                            <FirstPlaceIcon/>
-                        </h3>
-                        <h3 className="col-span-4 pl-2 flex justify-start items-center gap-3">
-                            <Image src={foto} alt='Primer puesto Mateo Bernabé Lohezic' className="size-9 rounded-full"/>
-                            <span className="grow whitespace-nowrap truncate">Mateo Bernabé Lohezic Bernabé Lohezic Bernabé Lohezic</span>
-                        </h3>
-                        <h3 className="col-span-2 pl-2 whitespace-nowrap truncate">STANNUM STANNUM STANNUM STANNUM</h3>
-                        <h3 className="col-span-1 text-center">99</h3>
-                    </div>
-                    <div className="w-full bg-card-light px-4 py-3 rounded-lg grid grid-cols-8 items-center gap-2">
-                        <h3 className="col-span-1 flex justify-center items-center">
-                            <span className="sr-only">Primer puesto</span>
-                            <FirstPlaceIcon/>
-                        </h3>
-                        <h3 className="col-span-4 pl-2 flex justify-start items-center gap-3">
-                            <Image src={foto} alt='Primer puesto Mateo Bernabé Lohezic' className="size-9 rounded-full"/>
-                            <span className="grow whitespace-nowrap truncate">Mateo Bernabé Lohezic Bernabé Lohezic Bernabé Lohezic</span>
-                        </h3>
-                        <h3 className="col-span-2 pl-2 whitespace-nowrap truncate">STANNUM STANNUM STANNUM STANNUM</h3>
-                        <h3 className="col-span-1 text-center">99</h3>
-                    </div>
+                <div className="mt-2 w-[calc(100%+0.5rem)] pr-2 flex flex-col gap-3 justify-start items-start max-h-64 overflow-y-auto overflow-x-hidden">
+                    {
+                        rankings.map((player:SimpleRanking, i:number) => (
+                            <CardRankingHome {...player} key={i}/>
+                        ))
+                    }
                 </div>
             </div>
         </section>

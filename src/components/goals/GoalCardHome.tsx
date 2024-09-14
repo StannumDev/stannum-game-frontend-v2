@@ -11,7 +11,7 @@ export const GoalCardHome = () => {
     const [isHovered, setIsHovered] = useState<boolean>(false)
 
     const progressVariants = {
-        hidden: { scale: 0.75, rotate: -90, opacity: 0.5 },
+        hidden: { scale: 0.75, rotate: -90, opacity: 0.75 },
         visible: { scale: 1, rotate: -90, opacity: 1 }
     }
 

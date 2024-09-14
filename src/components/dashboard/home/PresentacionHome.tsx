@@ -12,7 +12,7 @@ export const PresentacionHome = () => {
             </button>
             <div className="w-full absolute bottom-8 left-6 z-20">
                 <p className="text-4xl">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
-                <p className="mt-2 w-full max-w-xl text-base text-pretty">Adentrate con nuestros <b className="font-normal text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
+                <p className="mt-2 w-full max-w-xl text-pretty">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
             </div>
         </section>
     )

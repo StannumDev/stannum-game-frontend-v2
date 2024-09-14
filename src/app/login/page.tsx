@@ -10,7 +10,7 @@ export default function LoginPage() {
                 <div className="mt-16 lg:mt-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
                     <div className="w-full max-w-sm flex flex-col justify-start items-center lg:items-start relative">
                         <GoBackButton className="-top-4 lg:-top-8 left-0"/>
-                        <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-bold block sm:inline">STANNUM Game</b></p>
+                        <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-semibold block sm:inline">STANNUM Game</b></p>
                         <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
                         <LoginForm/>
                         <div className="lg:mt-12 w-full flex flex-col justify-center items-center text-center">

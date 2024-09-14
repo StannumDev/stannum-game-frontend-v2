@@ -1,4 +1,4 @@
-import { MotionWrapperLayout, PresentacionHome, GoalsHome, ContinuarHome, ActivarProductoHome, RankingHome } from "@/components"
+import { MotionWrapperLayout, PresentacionHome, GoalsHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome, StanHelp } from "@/components"
 
 export const HomeLayout = () => {
   return (
@@ -16,10 +16,16 @@ export const HomeLayout = () => {
         </div>
         <div className="col-span-5 min-h-svh flex flex-col justify-start items-start gap-8">
             <MotionWrapperLayout>
+              <RachaHome/>
+            </MotionWrapperLayout>
+            <MotionWrapperLayout>
               <ActivarProductoHome/>
             </MotionWrapperLayout>
             <MotionWrapperLayout>
               <RankingHome/>
+            </MotionWrapperLayout>
+            <MotionWrapperLayout>
+              <StanHelp/>
             </MotionWrapperLayout>
         </div>
     </div>
