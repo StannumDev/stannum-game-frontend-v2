@@ -17,17 +17,17 @@ export const SidebarMobile = ({links, pathname}:Props) => {
     const [isSearching, setIsSearching] = useState<boolean>(false)
 
     return (
-        <div className="md:hidden w-full min-h-svh fixed top-0 left-0 pointer-events-none">
-            <div className="w-full px-3 pt-3 pb-1 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0">
+        <div className="md:hidden w-full min-h-svh fixed top-0 left-0 pointer-events-none z-[9999999]">
+            <div className="w-full p-2 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0">
                 <Link href={'/'} aria-label="Inicio STANNUM Game">
                     <Logo className="fill-white w-24" pathClassName="fill-white"/>
                 </Link>
                 <Link href={'/'} className="rounded-full relative overflow-hidden">
-                    <Image src={default_user} alt='Usuario STANNUM Game' className="size-10 aspect-square object-cover"/>
+                    <Image src={default_user} alt='Usuario STANNUM Game' className="size-8 aspect-square object-cover"/>
                 </Link>
             </div>
             <motion.div
-                className="w-full bg-card pointer-events-auto absolute bottom-0 left-0"
+                className="w-full bg-background pointer-events-auto absolute bottom-0 left-0"
                 initial={{ y: '100%', opacity: 1 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ type: 'spring', bounce: 0 }}

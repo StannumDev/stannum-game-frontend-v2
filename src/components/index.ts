@@ -11,6 +11,7 @@ export { SidebarDesktop } from "./dashboard/sidebar/SidebarDesktop";
 export { SidebarMobile } from "./dashboard/sidebar/SidebarMobile";
 export { SidebarDesktopLink } from "./dashboard/sidebar/SidebarDesktopLink";
 export { SidebarMobileLink } from "./dashboard/sidebar/SidebarMobileLink";
+export { SidebarMobileIndicator } from "./dashboard/sidebar/SidebarMobileIndicator";
 export { BuscadorSidebar } from "./dashboard/sidebar/BuscadorSidebar";
 export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile";
 

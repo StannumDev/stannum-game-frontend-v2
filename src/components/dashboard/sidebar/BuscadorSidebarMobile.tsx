@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { CiSearch } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
+import { SidebarMobileIndicator } from "@/components";
 
 interface Props{
     isSearching: boolean;
@@ -53,12 +54,13 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 type="button"
                 onClick={() => { setIsSearching(!isSearching) }}
                 aria-label={`Buscar en STANNUM Game`}
-                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-all duration-200 ease-in-out
+                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-all duration-200 ease-in-out relative
                     ${isSearching ? 'text-stannum' : 'text-card-lightest'}
                 `}
             >
                 <CiSearch className="size-8"/>
                 <span className="sr-only">Buscar</span>
+                { isSearching && <SidebarMobileIndicator/> }
             </button>
         </motion.li>
         <AnimatePresence>

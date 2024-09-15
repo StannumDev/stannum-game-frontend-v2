@@ -24,7 +24,7 @@ export const GoalCardHome = () => {
         <motion.article
             onMouseEnter={ () => setIsHovered(true) }
             onMouseLeave={ () => setIsHovered(false) }
-            className="h-full w-48 bg-transparent flex flex-col justify-center items-center"
+            className="h-full w-52 lg:w-48 bg-transparent flex flex-col justify-center items-center"
         >
             <div className="w-1/2 aspect-square relative">
                 <div className="w-full absolute top-0 left-0">
@@ -55,10 +55,10 @@ export const GoalCardHome = () => {
                     </div>
                 </div>
             </div>
-            <div className="grow w-full flex justify-center items-center">
+            <div className="mt-4 lg:mt-0 lg:grow w-full flex justify-center items-center">
                 <h3 className="w-full text-center text-xl uppercase font-semibold truncate">Goal 1 Goal 1 Goal 1 Goal 1</h3>
             </div>
-            <p className="text-center text-neutral-300 line-clamp-2">
+            <p className="mt-2 lg:mt-0 text-center text-neutral-300 line-clamp-2">
                 Consolidar la experiencia Consolidar la experiencia Consolidar la experiencia del cliente en el corazón de STANNUM
             </p>
         </motion.article>

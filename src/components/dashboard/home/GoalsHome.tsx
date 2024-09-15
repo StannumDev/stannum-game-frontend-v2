@@ -5,19 +5,29 @@ import { GoalCardHome } from "@/components"
 
 export const GoalsHome = () => {
     return (
-        <section className="w-full grid grid-cols-3 gap-8">
-            <div className="col-span-1 card aspect-square flex flex-col justify-center items-center">
+        <section className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="hidden col-span-1 card aspect-square lg:flex flex-col justify-center items-center">
                 <p className="grow text-3xl font-thin uppercase">Monitorea tus <b className="text-stannum font-semibold">goals</b> diariamente</p>
                 <p className="w-full px-3 text-base flex justify-center items-center gap-3">
                     <TbInfoHexagon className="text-2xl shrink-0 text-stannum"/>
                     <span className="text-pretty leading-tight">Ver más detalles acerca de mis goals</span>
                 </p>
             </div>
-            <div className="col-span-2 card border-b-0 flex justify-start items-stretch gap-8 overflow-x-auto">
-                <GoalCardHome/>
-                <GoalCardHome/>
-                <GoalCardHome/>
-                <GoalCardHome/>
+            <div className="col-span-1 lg:col-span-2 relative">
+                <div className="h-full w-full overflow-x-scroll pb-2">
+                    <div className="w-full h-full pb-[13px] absolute top-0 right-0 pointer-events-none z-20">
+                        <div className="w-full h-full border border-card-light rounded-lg"></div>
+                    </div>
+                    <div className="w-full h-full pb-[13px] absolute top-0 right-0 pointer-events-none z-0">
+                        <div className="w-full h-full bg-card rounded-lg"></div>
+                    </div>
+                    <div className="h-full w-fit card bg-none border-transparent flex justify-start items-stretch gap-4 lg:gap-8 min-h-56 lg:min-h-0 relative z-10">
+                        <GoalCardHome/>
+                        <GoalCardHome/>
+                        <GoalCardHome/>
+                        <GoalCardHome/>
+                    </div>
+                </div>
             </div>
         </section>
     )

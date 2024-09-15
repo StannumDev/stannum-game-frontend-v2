@@ -9,7 +9,11 @@
 
 @layer components {
   .card {
-    @apply p-6 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card-light
+    @apply p-4 lg:p-6 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card-light
+  }
+
+  .card-link{
+    @apply hover:border-card-lightest transition-all duration-200 ease-in-out cursor-pointer
   }
 }
 
