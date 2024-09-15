@@ -109,7 +109,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                     </motion.button>
                 </motion.div>
                 <motion.div
-                    className="w-full min-h-screen bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-0"
+                    className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-0"
                     onClick={ () => { reset(); setIsSearching(false) }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
