@@ -7,7 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { FiUnlock, FiUser } from "react-icons/fi";
-import { FormErrorMessage, ButtonLoading, ButtonShowPassword } from "@/components";
+import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido."),
@@ -82,7 +82,7 @@ export const LoginForm = () => {
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="-mt-2"/>
             </div>
             <div className="mt-8 w-full flex justify-end">
-                <ButtonLoading isLoading={isLoading} text="Iniciar sesión" className="w-full lg:w-32 h-9 text-sm font-semibold"/>
+                <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="w-full lg:w-32 h-9 text-sm font-semibold"/>
             </div>
         </form>
     )

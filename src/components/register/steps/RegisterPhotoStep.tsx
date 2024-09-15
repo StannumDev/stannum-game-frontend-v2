@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import AvatarEditor from 'react-avatar-editor';
 import { MdAddAPhoto } from "react-icons/md";
 import { LiaSpinnerSolid } from "react-icons/lia";
-// import { FormErrorMessage, ButtonLoading } from "@/components";
+// import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import styles from "@/components/styles/registerPhotoStep.module.css"
 export const RegisterPhotoStep = () => {
 
@@ -94,33 +94,33 @@ export const RegisterPhotoStep = () => {
                             />
                         </div>
                     </div>
-                    <div className="mt-8 w-full flex justify-center items-center gap-4">
-                        <motion.button
-                            whileTap={{scale: !isLoading ? 1.05 : 1 }}
-                            whileHover={{ backgroundColor: '#515151'}}
-                            disabled={isLoading}
-                            type="submit"
-                            className="w-full md:w-32 h-10 text-sm font-semibold bg-card-light disabled:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center"
-                        >
-                            Omitir
-                        </motion.button>
-                        <motion.button
-                            whileTap={{scale: !isLoading ? 1.05 : 1 }}
-                            whileHover={{ backgroundColor: '#8cdccd'}}
-                            disabled={isLoading}
-                            type="submit"
-                            className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center"
-                        >
-                            {
-                                isLoading ?
-                                    <LiaSpinnerSolid className="animate-spin size-6"/>
-                                :
-                                    'Continuar'
-                            }
-                        </motion.button>
-                    </div>
                 </div>
             }
+            <div className="mt-8 w-full flex justify-center items-center gap-4">
+                <motion.button
+                    whileTap={{scale: !isLoading ? 1.05 : 1 }}
+                    whileHover={{ backgroundColor: '#515151'}}
+                    disabled={isLoading}
+                    type="submit"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-card-light disabled:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center"
+                >
+                    Omitir
+                </motion.button>
+                <motion.button
+                    whileTap={{scale: !isLoading ? 1.05 : 1 }}
+                    whileHover={{ backgroundColor: '#8cdccd'}}
+                    disabled={isLoading}
+                    type="button"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center"
+                >
+                    {
+                        isLoading ?
+                            <LiaSpinnerSolid className="animate-spin size-6"/>
+                        :
+                            'Continuar'
+                    }
+                </motion.button>
+            </div>
         </div>
     )
 }

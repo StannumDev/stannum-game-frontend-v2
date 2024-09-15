@@ -6,7 +6,7 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { HiSelector } from "react-icons/hi";
-import { FormErrorMessage, ButtonLoading } from "@/components";
+import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 const schema = z.object({
     name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
@@ -171,7 +171,7 @@ export const RegisterDetailsStep = () => {
                 <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
             </div>
             <div className="mt-8 w-full flex justify-center">
-                <ButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
+                <SubmitButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
             </div>
         </form>
     )

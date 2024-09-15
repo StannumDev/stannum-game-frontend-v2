@@ -21,7 +21,7 @@ export const RegisterHandler = () => {
                 <button className="absolute top-0 right-0 text-white bg-red-500 p-2" onClick={nextStep}>asdasd</button>
                 <div className="w-full flex flex-col justify-center items-center gap-4">
                     <Logo className="fill-white w-40" pathClassName="fill-white"/>
-                    <h2 className="text-3xl md:text-5xl font-black text-white uppercase"><b className="text-stannum">Crea</b> tu cuenta</h2>
+                    <h2 className="text-3xl md:text-5xl font-black text-white uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
                 </div>
                 <AnimatePresence mode="wait" initial={false}>
                     <motion.div

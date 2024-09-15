@@ -1,6 +1,6 @@
 export { Logo } from "./ui/Logo";
 export { FormErrorMessage } from "./ui/FormErrorMessage";
-export { ButtonLoading } from "./ui/ButtonLoading";
+export { SubmitButtonLoading } from "./ui/SubmitButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";
 export { ButtonShowPassword } from "./ui/ButtonShowPassword";
 export { ProgressCircle } from "./ui/ProgressCircle";

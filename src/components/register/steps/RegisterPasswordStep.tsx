@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormErrorMessage, ButtonLoading, ButtonShowPassword } from "@/components";
+import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 import { CiAt } from "react-icons/ci";
 
 const schema = z.object({
@@ -106,7 +106,7 @@ export const RegisterPasswordStep = () => {
                 <FormErrorMessage condition={errors?.passwordRepeat} message={errors?.passwordRepeat?.message} className="mt-2"/>
             </div>
             <div className="mt-8 w-full flex justify-center">
-                <ButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
+                <SubmitButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
             </div>
         </form>
     )

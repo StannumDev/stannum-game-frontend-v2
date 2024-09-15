@@ -9,7 +9,7 @@ interface Props{
     className?: string;
 }
 
-export const ButtonLoading = ({isLoading, text, className}:Props) => {
+export const SubmitButtonLoading = ({isLoading, text, className}:Props) => {
     return (
         <motion.button
             whileTap={{scale: !isLoading ? 1.05 : 1 }}

@@ -5,7 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormErrorMessage, ButtonLoading } from "@/components";
+import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import { validateReCAPTCHA } from "@/services";
 // import { checkEmailExist } from "@/services/register";
 
@@ -120,7 +120,7 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
             </div>
             <FormErrorMessage condition={reCAPTCHAError} message={reCAPTCHAErrorMessage} className="mt-2 text-center"/>
             <div className="mt-8 w-full flex justify-center">
-                <ButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
+                <SubmitButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
             </div>
         </form>
     )

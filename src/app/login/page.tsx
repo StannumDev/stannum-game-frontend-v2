@@ -5,9 +5,9 @@ export default function LoginPage() {
     return (
         <main className="grow w-full flex flex-col justify-start items-center bg-card">
             <h1 className="sr-only">Iniciar sesión</h1>
-            <section className="w-full flex flex-col lg:flex-row justify-start items-start h-svh">
+            <section className="w-full flex flex-col lg:flex-row justify-start items-start min-h-svh">
                 <WallpaperLogin/>
-                <div className="mt-16 lg:mt-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
+                <div className="my-16 lg:my-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
                     <div className="w-full max-w-sm flex flex-col justify-start items-center lg:items-start relative">
                         <GoBackButton className="-top-4 lg:-top-8 left-0"/>
                         <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-semibold block sm:inline">STANNUM Game</b></p>
