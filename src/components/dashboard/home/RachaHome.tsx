@@ -1,4 +1,3 @@
-// import { PiWarningThin } from "react-icons/pi";
 import { PiWarningOctagonThin } from "react-icons/pi";
 
 export const RachaHome = () => {

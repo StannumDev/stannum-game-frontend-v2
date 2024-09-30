@@ -16,17 +16,17 @@ const links:Array<SidebarLink> = [
     },
     {
         label: 'Biblioteca',
-        href: '/dashboard/aszxcd',
+        href: '/dashboard/library',
         Icon: RiApps2Fill
     },
     {
         label: 'Tienda',
-        href: '/dashboard/asczxcvd',
+        href: '/dashboard/store',
         Icon: IoBagHandle
     },
     {
         label: 'Mi perfil',
-        href: '/dashboard/asvsdd',
+        href: '/dashboard/profile',
         Icon: PiUserCircleFill
     },
 ]

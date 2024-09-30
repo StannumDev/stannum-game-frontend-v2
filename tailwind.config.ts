@@ -31,6 +31,9 @@ const config: Config = {
           lightest:'#646464',
         }
       },
+      animation: {
+        "spin-fast": 'spin .5s linear infinite',
+      }
     },
   },
   plugins: [],
