@@ -30,7 +30,8 @@ export { ProfileNavbar } from "./dashboard/profile/ProfileNavbar";
 export { ProfileNavbarButton } from "./dashboard/profile/ProfileNavbarButton";
 export { ProfileSectionIndicator } from "./dashboard/profile/ProfileSectionIndicator";
 export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLayout";
-export { AchievementCard } from "./dashboard/profile/sections/AchievementCard";
+
+export { ProfileAchievementsCard } from "./dashboard/achievements/ProfileAchievementsCard";
 
 export { GoalCardHome } from "./goals/GoalCardHome";
 

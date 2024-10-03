@@ -1,4 +1,6 @@
-import { AchievementCard } from "@/components"
+import { ProfileAchievementsCard } from "@/components"
+import type { Achievement } from "@/interfaces";
+import { achievements } from "@/achievements";
 
 export const AchievementsLayout = () => {
     return (
@@ -10,17 +12,12 @@ export const AchievementsLayout = () => {
                 </div>
                 <p className="mt-2">Da un vistazo a todos los <b className="text-stannum">objetivos alcanzados</b> durante el entrenamiento.</p>
             </header>
-            <div className="w-full grid grid-cols-4 gap-8">
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
-                <AchievementCard/>
+            <div className="w-full grid grid-cols-4 gap-4">
+                {
+                    achievements.map((achievement:Achievement, i:number)=> (
+                        <ProfileAchievementsCard {...achievement} key={i}/>
+                    ))
+                }
             </div>
         </section>
     )
