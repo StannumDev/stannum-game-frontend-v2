@@ -88,7 +88,7 @@ export const RankingHome = () => {
     return (
         <section className="w-full card">
             <div className="w-full flex justify-between items-center">
-                <h2 className="w-fit text-xl lg:text-2xl font-black uppercase flex justify-start items-center gap-2">
+                <h2 className="w-fit title-2 flex justify-start items-center gap-2">
                     <div>
                         <FaRankingStar className="text-2xl lg:text-3xl relative -top-px"/>
                     </div>

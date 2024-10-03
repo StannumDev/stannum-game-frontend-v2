@@ -12,7 +12,7 @@ export const PresentacionHome = () => {
             <Image src={stannum_game_video} priority={true} alt="Presentación STANNUM Game" className="size-full object-cover blur-[1px] absolute top-0 left-0 z-0"/>
             <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-20">
                 <p className="text-2xl lg:text-4xl leading-tight">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
-                <p className="hidden lg:block mt-2 w-full max-w-xl text-pretty text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
+                <p className="hidden lg:block mt-2 w-full max-w-xl text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
             </div>
         </section>
     )

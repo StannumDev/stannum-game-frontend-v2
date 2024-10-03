@@ -25,6 +25,13 @@ export { ActivarProductoHome } from "./dashboard/home/ActivarProductoHome";
 export { RankingHome } from "./dashboard/home/RankingHome";
 export { StanHelp } from "./dashboard/home/StanHelp";
 
+export { ProfileSectionsLayout } from "./dashboard/profile/ProfileSectionsLayout";
+export { ProfileNavbar } from "./dashboard/profile/ProfileNavbar";
+export { ProfileNavbarButton } from "./dashboard/profile/ProfileNavbarButton";
+export { ProfileSectionIndicator } from "./dashboard/profile/ProfileSectionIndicator";
+export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLayout";
+export { AchievementCard } from "./dashboard/profile/sections/AchievementCard";
+
 export { GoalCardHome } from "./goals/GoalCardHome";
 
 export { CardRankingHome } from "./ranking/CardRankingHome";
