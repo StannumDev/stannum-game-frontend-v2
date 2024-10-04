@@ -1,6 +1,6 @@
 'use client'
 
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, Fragment, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -42,7 +42,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
     
 
     return (
-    <>
+    <Fragment>
         <motion.li
             key={'search'}
             className="w-full"
@@ -66,7 +66,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
         <AnimatePresence>
             {
                 isSearching &&
-                <>
+                <Fragment>
                 <motion.div
                     className="w-full pl-3 h-16 bg-card flex justify-center items-center fixed top-0 left-0 z-10 pointer-events-auto"
                     initial={{ y: '-100%' }}
@@ -115,9 +115,9 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                 ></motion.div>
-                </>
+                </Fragment>
             }
         </AnimatePresence>
-    </>
+    </Fragment>
     )
 }

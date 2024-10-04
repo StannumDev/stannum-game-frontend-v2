@@ -5,6 +5,7 @@ export interface Achievement{
     description: string;
     background: StaticImageData;
     achieved: boolean;
-    getProgress?: (user: any ) => number;
+    getProgress: () => number;
+    // getProgress?: (user: any ) => number;
     checkAchievement?: (user: any) => void;
 }

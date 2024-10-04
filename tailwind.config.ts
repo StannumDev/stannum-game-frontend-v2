@@ -29,6 +29,7 @@ const config: Config = {
           light:'#333333',
           lighter:'#515151',
           lightest:'#646464',
+          hover:'rgba(255,255,255,0.1)',
         }
       },
       animation: {

@@ -31,6 +31,13 @@
 }
 
 @layer base {
+  * {
+    user-select: none;
+  }
+
+  img {
+      pointer-events: none;
+  }
 
   b{
     @apply font-normal

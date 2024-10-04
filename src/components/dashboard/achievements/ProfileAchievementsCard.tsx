@@ -5,10 +5,8 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Achievement } from '@/interfaces';
 
-export const ProfileAchievementsCard = ({ title, description, background, achieved, getProgress, checkAchievement }: Achievement) => {
-    // const userProgress = progress ? progress(/* user object */) : 0; // Obtener el progreso del usuario
-
-    const [progress] = useState<number>(Math.floor(Math.random() * 101));
+export const ProfileAchievementsCard = ({ title, description, background, achieved, getProgress }: Achievement) => {
+    const progress = getProgress()
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     return (

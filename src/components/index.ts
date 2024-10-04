@@ -1,4 +1,5 @@
 export { Logo } from "./ui/Logo";
+export { Icon } from "./ui/Icon";
 export { FormErrorMessage } from "./ui/FormErrorMessage";
 export { SubmitButtonLoading } from "./ui/SubmitButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";

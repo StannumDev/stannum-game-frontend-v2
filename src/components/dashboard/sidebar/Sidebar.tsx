@@ -1,5 +1,6 @@
 'use client'
 
+import { Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { RiApps2Fill } from "react-icons/ri";
@@ -35,9 +36,9 @@ export const Sidebar = () => {
     const pathname = usePathname()
 
     return (
-    <>
+    <Fragment>
         <SidebarDesktop links={links} pathname={pathname} />
         <SidebarMobile links={links} pathname={pathname} />
-    </>
+    </Fragment>
     )
 }

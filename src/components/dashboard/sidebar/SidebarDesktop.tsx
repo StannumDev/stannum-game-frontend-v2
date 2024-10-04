@@ -1,9 +1,12 @@
+'use client'
+
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { GrPowerShutdown } from 'react-icons/gr';
 import type { SidebarLink } from '@/interfaces';
-import { BuscadorSidebar, Logo, SidebarDesktopLink } from '@/components';
+import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
@@ -12,18 +15,59 @@ interface Props{
 }
 
 export const SidebarDesktop = ({links, pathname}:Props) => {
+
+    const [isExpanded, setIsExpanded] = useState<boolean>(true)
+
     return (
-        <>
-            <div className='hidden md:block w-full max-w-xs min-h-svh'></div>
-            <div className="hidden md:block w-full max-w-xs min-h-svh fixed top-0 left-0">
+        <Fragment>
+            <motion.div
+                animate={{ maxWidth: isExpanded ? 320 : 80 }}
+                className='hidden md:block w-full max-w-xs min-h-svh'
+            ></motion.div>
+            <motion.div
+                animate={{ maxWidth: isExpanded ? 320 : 80 }}
+                className="hidden md:block w-full max-w-xs min-h-svh fixed top-0 left-0"
+            >
                 <motion.nav
                     initial={{ x: '-100%', opacity: 1 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ type: 'spring', duration: 0.375 }}
-                    className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-12 flex flex-col justify-start items-center"
+                    className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-12 flex flex-col justify-start items-center relative"
                 >
-                    <Link href={'/'} aria-label="Inicio STANNUM Game" className="hover:scale-105 translate-all duration-200 ease-in-out">
-                        <Logo className="fill-white w-40" pathClassName="fill-white"/>
+                    <button
+                        type="button"
+                        className='bg-red-500 absolute top-4 left-4'
+                        onClick={()=> setIsExpanded(!isExpanded) }
+                    >
+                        { isExpanded ? 'Cerrar' : 'Abrir'}
+                    </button>
+                    <Link href={'/'} aria-label="Inicio STANNUM Game" className={`h-6 ${isExpanded ? 'w-40' : 'w-12'} relative block hover:scale-105 translate-all duration-200 ease-in-out`}>
+                        <AnimatePresence mode='popLayout' initial={false}>
+                            {
+                                isExpanded ?
+                                <motion.span
+                                    initial={{ x: -150, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: -150, opacity: 0 }}
+                                    transition={{ x:{ duration: 0.25 }, opacity:{ duration: 0.125 } }}
+                                    key='logoNavbar'
+                                    className='block'
+                                >
+                                    <Logo className="fill-white h-6" pathClassName="fill-white"/>
+                                </motion.span>
+                                :
+                                <motion.span
+                                    initial={{ x: 150, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: 150, opacity: 0 }}
+                                    transition={{ x:{ duration: 0.25 }, opacity:{ duration: 0.125 } }}
+                                    key='iconNavbar'
+                                    className='h-6 w-12 flex justify-center items-center absolute top-0 left-0 right-0 mx-auto'
+                                >
+                                    <Icon className="fill-white h-6" pathClassName="fill-white"/>
+                                </motion.span>
+                            }
+                        </AnimatePresence>
                     </Link>
                     <ul className="mt-24 w-full grow">
                         {
@@ -35,7 +79,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ type: 'spring', delay: 0.125 + i*0.125 }}
                                 >
-                                    <SidebarDesktopLink link={link} pathname={pathname}/>
+                                    <SidebarDesktopLink link={link} pathname={pathname} isExpanded={isExpanded}/>
                                 </motion.li>
                             ))
                         }
@@ -57,7 +101,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         </button>
                     </motion.div>
                 </motion.nav>
-            </div>
-        </>
+            </motion.div>
+        </Fragment>
     )
 }
