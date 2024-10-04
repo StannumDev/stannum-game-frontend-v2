@@ -76,7 +76,7 @@ export const RegisterPhotoStep = () => {
                                 step={0.01}
                                 value={zoom}
                                 onChange={ (e) => { setZoom(parseFloat(e.target.value)) }}
-                                className={styles.range_input}
+                                className={styles.range__input}
                             />
                         </div>
                         <div className="mt-4 w-full flex justify-center items-center gap-1">
@@ -90,7 +90,7 @@ export const RegisterPhotoStep = () => {
                                 step={1}
                                 value={rotate}
                                 onChange={ (e) => { setRotate(parseInt(e.target.value)) }}
-                                className={styles.range_input}
+                                className={styles.range__input}
                             />
                         </div>
                     </div>

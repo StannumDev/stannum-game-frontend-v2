@@ -1,0 +1,23 @@
+.clip__diagonal{
+    clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.pattern__stripes {
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 20px 20px;
+}
+
+@media (min-width: 768px){
+    .clip__diagonal{
+        clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    }
+}

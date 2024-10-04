@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RiMedalFill } from "react-icons/ri";
 import { ProfileSection } from "@/interfaces";
-import { AchievementsLayout, ProfileNavbar } from "@/components";
+import { AchievementsLayout, MotionWrapperLayout, ProfileNavbar } from "@/components";
 
 const sections:Array<ProfileSection> = [
     {
@@ -53,20 +53,22 @@ export const ProfileSectionsLayout = () => {
     };
 
     return (
-        <section className="w-full card px-0">
-            <div className="px-4 lg:px-6">
-                <ProfileNavbar
-                    sections={sections}
-                    selectedLayout={selectedLayout}
-                    handleLayoutChange={handleLayoutChange}
-                />
-            </div>
-            <span className="my-4 block w-full h-px bg-card-light"></span>
-            <div className="px-4 lg:px-6">
-                {
-                    selectedLayout === 'achievements' && <AchievementsLayout/>
-                }
-            </div>
-        </section>
+        <MotionWrapperLayout>
+            <section className="w-full card px-0">
+                <div className="px-4 lg:px-6">
+                    <ProfileNavbar
+                        sections={sections}
+                        selectedLayout={selectedLayout}
+                        handleLayoutChange={handleLayoutChange}
+                    />
+                </div>
+                <span className="my-4 block w-full h-px bg-card-light"></span>
+                <div className="px-4 lg:px-6">
+                    {
+                        selectedLayout === 'achievements' && <AchievementsLayout/>
+                    }
+                </div>
+            </section>
+        </MotionWrapperLayout>
     )
 }

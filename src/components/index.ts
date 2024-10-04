@@ -1,3 +1,4 @@
+// UI
 export { Logo } from "./ui/Logo";
 export { Icon } from "./ui/Icon";
 export { FormErrorMessage } from "./ui/FormErrorMessage";
@@ -7,6 +8,7 @@ export { ButtonShowPassword } from "./ui/ButtonShowPassword";
 export { ProgressCircle } from "./ui/ProgressCircle";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 
+// SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";
 export { SidebarDesktop } from "./dashboard/sidebar/SidebarDesktop";
 export { SidebarMobile } from "./dashboard/sidebar/SidebarMobile";
@@ -16,6 +18,7 @@ export { SidebarMobileIndicator } from "./dashboard/sidebar/SidebarMobileIndicat
 export { BuscadorSidebar } from "./dashboard/sidebar/BuscadorSidebar";
 export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile";
 
+// HOME
 export { HomeLayout } from "./dashboard/home/HomeLayout";
 export { PresentacionHome } from "./dashboard/home/PresentacionHome";
 export { GoalsHome } from "./dashboard/home/GoalsHome";
@@ -26,27 +29,39 @@ export { ActivarProductoHome } from "./dashboard/home/ActivarProductoHome";
 export { RankingHome } from "./dashboard/home/RankingHome";
 export { StanHelp } from "./dashboard/home/StanHelp";
 
-export { ProfileSectionsLayout } from "./dashboard/profile/ProfileSectionsLayout";
+// PROFILE
+export { UserProfileInfo } from "./dashboard/profile/UserProfileInfo";
 export { ProfileNavbar } from "./dashboard/profile/ProfileNavbar";
 export { ProfileNavbarButton } from "./dashboard/profile/ProfileNavbarButton";
-export { ProfileSectionIndicator } from "./dashboard/profile/ProfileSectionIndicator";
+export { UserProfilePicture } from "./dashboard/profile/UserProfilePicture";
+export { UserProfileCover } from "./dashboard/profile/UserProfileCover";
+export { UserProfileLevel } from "./dashboard/profile/UserProfileLevel";
+export { UserProfileSocialMedias } from "./dashboard/profile/UserProfileSocialMedias";
+export { ProfileSectionsLayout } from "./dashboard/profile/sections/ProfileSectionsLayout";
+export { ProfileSectionIndicator } from "./dashboard/profile/sections/ProfileSectionIndicator";
 export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLayout";
 
+// ACHIEVEMENTS
 export { ProfileAchievementsCard } from "./dashboard/achievements/ProfileAchievementsCard";
 
+// GOALS
 export { GoalCardHome } from "./goals/GoalCardHome";
 
+// RANKING
 export { CardRankingHome } from "./ranking/CardRankingHome";
 
+// LOGIN
 export { LoginForm } from "./login/LoginForm";
 export { WallpaperLogin } from "./login/WallpaperLogin";
 
+// REGISTER
 export { RegisterHandler } from "./register/RegisterHandler";
 export { RegisterEmailStep } from "./register/steps/RegisterEmailStep";
 export { RegisterPasswordStep } from "./register/steps/RegisterPasswordStep";
 export { RegisterDetailsStep } from "./register/steps/RegisterDetailsStep";
 export { RegisterPhotoStep } from "./register/steps/RegisterPhotoStep";
 
+// SVGs
 export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
 export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";
 export { ThirdPlaceIcon } from "./svg/ThirdPlaceIcon";
