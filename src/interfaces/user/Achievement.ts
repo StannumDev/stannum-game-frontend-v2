@@ -7,5 +7,6 @@ export interface Achievement{
     achieved: boolean;
     getProgress: () => number;
     // getProgress?: (user: any ) => number;
-    checkAchievement?: (user: any) => void;
+    // checkAchievement?: (user: any) => void;
+    checkAchievement?: () => void;
 }

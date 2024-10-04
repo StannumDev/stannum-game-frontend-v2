@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GrPowerShutdown } from 'react-icons/gr';
+import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
 import default_user from "@/assets/user/default_user.webp";
@@ -32,16 +33,24 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                     initial={{ x: '-100%', opacity: 1 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ type: 'spring', duration: 0.375 }}
-                    className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-12 flex flex-col justify-start items-center relative"
+                    className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-16 flex flex-col justify-start items-center relative"
                 >
-                    <button
+                    <motion.button
                         type="button"
-                        className='bg-red-500 absolute top-4 left-4'
+                        animate={{ width: isExpanded ? 20 : 48 }}
+                        transition={{duration: 0}}
+                        className={`h-7 flex justify-center items-center text-neutral-600 hover:text-neutral-500 absolute top-4 left-4 transition-all duration-200 ease-in-out`}
                         onClick={()=> setIsExpanded(!isExpanded) }
                     >
-                        { isExpanded ? 'Cerrar' : 'Abrir'}
-                    </button>
-                    <Link href={'/'} aria-label="Inicio STANNUM Game" className={`h-6 ${isExpanded ? 'w-40' : 'w-12'} relative block hover:scale-105 translate-all duration-200 ease-in-out`}>
+                        {
+                            isExpanded ?
+                            <LuPanelLeftClose className='size-5'/>
+                            :
+                            <LuPanelLeftOpen className='size-5'/>
+                        }
+                        <span className='sr-only'>{ isExpanded ? 'Cerrar' : 'Abrir'}</span>
+                    </motion.button>
+                    <Link href={'/dashboard'} aria-label="Inicio STANNUM Game" className={`h-6 ${isExpanded ? 'w-40' : 'w-12'} relative block hover:scale-105 translate-all duration-200 ease-in-out`}>
                         <AnimatePresence mode='popLayout' initial={false}>
                             {
                                 isExpanded ?
@@ -84,21 +93,28 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             ))
                         }
                     </ul>
-                    <BuscadorSidebar/>
+                    <BuscadorSidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded}/>
                     <motion.div
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.75 }}
                         className="w-full py-8 px-4 flex justify-start items-center gap-4"
                     >
-                        <Link href={'/'} className="rounded-full border-2 border-stannum relative overflow-hidden shrink-0">
-                            <Image src={default_user} alt='Usuario STANNUM Game' className="min-w-14 max-w-14 aspect-square object-cover"/>
+                        <Link href={'/dashboard'} className="rounded-full border-2 border-stannum relative overflow-hidden shrink-0">
+                            <Image src={default_user} alt='Usuario STANNUM Game' className={`${ isExpanded ? 'w-14' : 'w-11' } aspect-square object-cover transition-all duration-200 ease-in-out`}/>
                         </Link>
-                        <Link href={'/'} className="grow lowercase truncate">mateolohezicmateolohezicmateolohezicmateolohezicmateolohezicmateolohezic</Link>
-                        <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
-                            <span className="sr-only">Cerrar sesión</span>
-                            <GrPowerShutdown className="text-xl relative -top-px transition-all duration-200 ease-in-out"/>
-                        </button>
+                        <AnimatePresence>
+                            {
+                                isExpanded &&
+                                <Fragment>
+                                <Link href={'/dashboard'} className="grow lowercase truncate">mateolohezicmateolohezicmateolohezicmateolohezicmateolohezicmateolohezic</Link>
+                                <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
+                                    <span className="sr-only">Cerrar sesión</span>
+                                    <GrPowerShutdown className="text-xl relative -top-px transition-all duration-200 ease-in-out"/>
+                                </button>
+                                </Fragment>
+                            }
+                        </AnimatePresence>
                     </motion.div>
                 </motion.nav>
             </motion.div>
