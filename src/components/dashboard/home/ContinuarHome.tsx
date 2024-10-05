@@ -8,7 +8,7 @@ export const ContinuarHome = () => {
                 <MdPlayCircle/>
                 Continuar viendo
             </h2>
-            <div className="mt-4 w-full pb-2 lg:pb-0 lg:grid lg:grid-cols-3 flex gap-4 overflow-x-auto lg:overflow-x-hidden">
+            <div className="mt-2 w-full pb-2 lg:pb-0 lg:grid lg:grid-cols-3 flex gap-4 overflow-x-auto lg:overflow-x-hidden">
                 <ContinuarCardHome/>
                 <ContinuarCardHome/>
                 <ContinuarCardHome/>

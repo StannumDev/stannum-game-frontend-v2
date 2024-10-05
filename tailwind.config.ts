@@ -17,8 +17,10 @@ const config: Config = {
           DEFAULT: '#f45050'
         },
         stannum:{
-          DEFAULT: '#67ccb9',
-          hover:'#8cdccd',
+          // DEFAULT: '#67ccb9',
+          // hover:'#8cdccd',
+          DEFAULT: '#41cfc9',
+          hover:'#45dcd6',
         },
         tmd:{
           DEFAULT:'#144859',

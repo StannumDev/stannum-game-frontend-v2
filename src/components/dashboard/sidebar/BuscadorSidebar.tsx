@@ -93,7 +93,7 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
                         }
                     </AnimatePresence>
                 </div>
-                <div className={`w-full h-9 border-b ${ isExpanded ? 'border-card-lighter peer-focus-visible:border-card-lightest' : 'border-transparent' } absolute top-0 left-0 pointer-events-none transition-all duration-200 ease-in-out`}></div>
+                <div className={`w-full h-9 border-b ${ isExpanded ? 'border-card peer-focus-visible:border-card-light' : 'border-transparent' } absolute top-0 left-0 pointer-events-none transition-all duration-200 ease-in-out`}></div>
             </form>
         </motion.div>
     )

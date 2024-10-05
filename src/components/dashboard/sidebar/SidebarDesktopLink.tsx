@@ -1,6 +1,9 @@
+'use client'
+
 import Link from "next/link"
 import { AnimatePresence, motion } from 'framer-motion';
 import type { SidebarLink } from "@/interfaces"
+import { useEffect, useState } from "react";
 
 interface Props{
     link: SidebarLink
@@ -10,17 +13,41 @@ interface Props{
 
 export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
     const { label, href, Icon } = link
+    const [isActive, setIsActive] = useState<boolean>(false)
+
+    const checkActive = () => {
+        if(href === '/dashboard' && pathname === href){
+            setIsActive(true);
+            return;
+        } else if(href !== '/dashboard' && pathname.startsWith(href)){
+            setIsActive(true);
+            return
+        } else {
+            setIsActive(false);
+        }
+    }
+
+    useEffect(() => {
+        checkActive()
+    }, [pathname])
+    
+
+    const linkVariants = {
+        active: 'text-white',
+        inactive: 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200',
+    }
+
     return (
         <Link
             href={href}
             aria-label={`Navegar a ${label}`}
             className={`w-full py-4 px-8 flex items-center transition-all duration-200 ease-in-out relative
-                ${pathname !== href ? 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200' : 'text-white'}
+                ${ isActive ? linkVariants.active : linkVariants.inactive}
                 ${isExpanded ? 'justify-start' : 'justify-center'}
             `}
         >
             {
-                pathname === href &&
+                isActive &&
                 <motion.div
                     layoutId="activeSidebar"
                     transition={{ duration: 0.125, type: 'spring', bounce: 0 }}

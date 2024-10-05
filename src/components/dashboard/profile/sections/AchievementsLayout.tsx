@@ -1,6 +1,6 @@
 import { ProfileAchievementsCard } from "@/components"
 import type { Achievement } from "@/interfaces";
-import { achievements } from "@/achievements";
+import { achievements } from "@/utilities";
 
 export const AchievementsLayout = () => {
     return (
@@ -8,7 +8,7 @@ export const AchievementsLayout = () => {
             <header>
                 <div className="w-fit flex justify-start items-center gap-4">
                     <h2 className="w-fit title-2">Logros y trofeos</h2>
-                    <div className="w-fit text-stannum text-sm py-1 px-3 rounded-xl bg-stannum bg-opacity-40">3/25 conseguidos</div>
+                    <div className="w-fit text-stannum text-sm py-1 px-3 rounded-xl bg-stannum/40">3/25 conseguidos</div>
                 </div>
                 <p className="mt-2">Da un vistazo a todos los <b className="text-stannum">objetivos alcanzados</b> durante el entrenamiento.</p>
             </header>

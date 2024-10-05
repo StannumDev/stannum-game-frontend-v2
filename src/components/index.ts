@@ -46,10 +46,13 @@ export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLay
 export { ProfileAchievementsCard } from "./dashboard/achievements/ProfileAchievementsCard";
 
 // GOALS
-export { GoalCardHome } from "./goals/GoalCardHome";
+export { GoalCardHome } from "./dashboard/goals/GoalCardHome";
 
 // RANKING
-export { CardRankingHome } from "./ranking/CardRankingHome";
+export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
+
+// TMD
+export { TMDCover } from "./tmd/home/TMDCover";
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";

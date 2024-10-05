@@ -11,7 +11,7 @@ export const UserProfileLevel = () => {
             </div>
             <div className='w-64 px-4 bg-card flex flex-col justify-center items-start gap-1'>
                 <p className='text-sm leading-none'><b className='text-stannum'>3500 XP</b> / 5000 XP</p>
-                <div className="w-full h-4 bg-card-light rounded-full flex overflow-hidden transition-all duration-200 ease-in-out" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+                <div className="w-full h-4 border border-card-light rounded-full flex overflow-hidden transition-all duration-200 ease-in-out" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
                     <div
                         className={`bg-stannum ${styles.pattern__stripes}`}
                         style={{ width: `${progress}%` }}

@@ -18,7 +18,7 @@
   }
 
   .card {
-    @apply p-4 lg:p-6 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card-light
+    @apply p-4 lg:p-6 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card
   }
 
   .card-link{
@@ -85,10 +85,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #67ccb9;
+  /* background-color: #67ccb9; */
+  background-color: #41cfc9;
   border-radius: .5rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #8cdccd;
+  background-color: #45dcd6;
+  /* background-color: #8cdccd; */
 }
