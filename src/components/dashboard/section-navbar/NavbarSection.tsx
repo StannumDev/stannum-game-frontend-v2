@@ -50,6 +50,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
             >
                 <FaChevronLeft className="size-3"/>
             </button>
+            <div className="w-fit max-w-full flex justify-start items-center gap-4 overflow-hidden">
             {sections.map((section: NavbarSectionType, i: number) => (
                 <NavbarSectionButton
                     key={i}
@@ -58,6 +59,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                     handleLayoutChange={handleLayoutChange}
                 />
             ))}
+            </div>
             <button
                 type="button"
                 onClick={() => navigate('next')}

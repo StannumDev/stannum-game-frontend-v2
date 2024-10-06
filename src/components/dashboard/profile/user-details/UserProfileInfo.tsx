@@ -1,7 +1,7 @@
 export const UserProfileInfo = () => {
     return (
         <div className="w-full flex gap-4">
-            <section className="w-[calc((100%/3)*2-32px)] card">
+            <section className="w-[calc((100%/3)*2-16px)] card">
                 <h2 className="title-2">Información</h2>
                 <div className="mt-4 w-full grid grid-cols-2 gap-4">
                     <div>

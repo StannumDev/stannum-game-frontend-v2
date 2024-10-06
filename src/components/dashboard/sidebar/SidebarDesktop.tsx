@@ -23,11 +23,11 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
         <Fragment>
             <motion.div
                 animate={{ maxWidth: isExpanded ? 320 : 80 }}
-                className='hidden md:block w-full max-w-xs min-h-svh'
+                className='hidden lg:block lg:w-64 2xl:w-80 min-h-svh shrink-0'
             ></motion.div>
             <motion.div
                 animate={{ maxWidth: isExpanded ? 320 : 80 }}
-                className="hidden md:block w-full max-w-xs min-h-svh fixed top-0 left-0"
+                className="hidden lg:block lg:w-64 2xl:w-80 min-h-svh fixed top-0 left-0"
             >
                 <motion.nav
                     initial={{ x: '-100%', opacity: 1 }}
