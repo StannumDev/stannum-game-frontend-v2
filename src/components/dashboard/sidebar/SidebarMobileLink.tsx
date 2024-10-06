@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import { SidebarLink } from "@/interfaces";
+import type { SidebarLink } from "@/interfaces";
 import { SidebarMobileIndicator } from "@/components";
 
 interface Props{

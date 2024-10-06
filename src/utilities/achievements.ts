@@ -1,4 +1,4 @@
-import { Achievement } from "@/interfaces";
+import type { Achievement } from "@/interfaces";
 import achievement_background_1 from '@/assets/profile/achievement_background_1.webp';
 import achievement_background_2 from '@/assets/profile/achievement_background_2.webp';
 import achievement_background_3 from '@/assets/profile/achievement_background_3.webp';

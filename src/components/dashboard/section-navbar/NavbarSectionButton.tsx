@@ -1,13 +1,13 @@
-import { ProfileSection } from "@/interfaces";
-import { ProfileSectionIndicator } from '@/components';
+import type { NavbarSection } from "@/interfaces";
+import { NavbarSectionIndicator } from '@/components';
 
 interface Props{
-    section: ProfileSection;
-    selectedLayout: 'achievements'|'tmd'|'proem';
-    handleLayoutChange: (layout: "achievements" | "tmd" | "proem") => void
+    section: NavbarSection;
+    selectedLayout: string;
+    handleLayoutChange: (layout: string) => void
 }
 
-export const ProfileNavbarButton = ({section, selectedLayout, handleLayoutChange}:Props) => {
+export const NavbarSectionButton = ({section, selectedLayout, handleLayoutChange}:Props) => {
 
     const {label, value, Icon} = section;
 
@@ -22,7 +22,7 @@ export const ProfileNavbarButton = ({section, selectedLayout, handleLayoutChange
         >
             {
                 selectedLayout === value &&
-                <ProfileSectionIndicator/>
+                <NavbarSectionIndicator/>
             }
             {
                 Icon &&

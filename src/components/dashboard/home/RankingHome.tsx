@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FaRankingStar, FaCircleInfo } from "react-icons/fa6";
-import { SimpleRanking } from "@/interfaces";
+import type { SimpleRanking } from "@/interfaces";
 import { CardRankingHome } from "@/components";
 import foto from "@/assets/user/default_user.webp";
 

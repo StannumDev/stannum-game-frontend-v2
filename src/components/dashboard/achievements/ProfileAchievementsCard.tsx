@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Achievement } from '@/interfaces';
+import type { Achievement } from '@/interfaces';
 
 export const ProfileAchievementsCard = ({ title, description, background, achieved, getProgress }: Achievement) => {
     const progress = getProgress()

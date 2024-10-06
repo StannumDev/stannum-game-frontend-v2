@@ -1,6 +1,6 @@
 export type { SidebarLink } from './SidebarLink';
 
-export type { ProfileSection } from './profile/ProfileSection';
+export type { NavbarSection } from './NavbarSection';
 export type { SocialMedia } from './profile/SocialMedia';
 
 export type { SimpleRanking } from './user/ranking/SimpleRanking';

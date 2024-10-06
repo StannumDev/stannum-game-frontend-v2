@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { motion } from 'framer-motion';
-import { SimpleRanking } from "@/interfaces"
+import type { SimpleRanking } from "@/interfaces"
 import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
 
 export const CardRankingHome = ({position, name, photo, enterprise, points}:SimpleRanking) => {

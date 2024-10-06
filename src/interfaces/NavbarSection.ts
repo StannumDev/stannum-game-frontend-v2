@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 
-export interface ProfileSection {
+export interface NavbarSection {
     label: string;
-    value: 'achievements'|'tmd'|'proem';
+    value: string;
     Icon?: IconType
 }

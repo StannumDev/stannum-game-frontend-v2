@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaLinkedinIn, FaInstagram,  } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
-import { SocialMedia } from "@/interfaces";
+import type { SocialMedia } from "@/interfaces";
 
 export const UserProfileSocialMedias = () => {
 

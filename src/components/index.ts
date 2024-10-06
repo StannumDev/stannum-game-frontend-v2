@@ -31,16 +31,18 @@ export { StanHelp } from "./dashboard/home/StanHelp";
 
 // PROFILE
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
-export { ProfileNavbar } from "./dashboard/profile/ProfileNavbar";
-export { ProfileNavbarButton } from "./dashboard/profile/ProfileNavbarButton";
 export { UserProfilePicture } from "./dashboard/profile/user-details/UserProfilePicture";
 export { UserProfileCover } from "./dashboard/profile/user-details/UserProfileCover";
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";
 export { UserProfileSocialMedias } from "./dashboard/profile/user-details/UserProfileSocialMedias";
 export { UserProfileInfo } from "./dashboard/profile/user-details/UserProfileInfo";
 export { ProfileSectionsLayout } from "./dashboard/profile/sections/ProfileSectionsLayout";
-export { ProfileSectionIndicator } from "./dashboard/profile/sections/ProfileSectionIndicator";
 export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLayout";
+
+//NAVBAR SECTION
+export { NavbarSection } from "./dashboard/section-navbar/NavbarSection";
+export { NavbarSectionIndicator } from "./dashboard/section-navbar/NavbarSectionIndicator";
+export { NavbarSectionButton } from "./dashboard/section-navbar/NavbarSectionButton";
 
 // ACHIEVEMENTS
 export { ProfileAchievementsCard } from "./dashboard/achievements/ProfileAchievementsCard";
@@ -53,6 +55,7 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
 export { TMDCover } from "./tmd/home/TMDCover";
+export { TMDSectionsLayout } from "./tmd/TMDSectionsLayout";
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";
