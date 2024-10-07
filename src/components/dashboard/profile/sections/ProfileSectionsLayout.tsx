@@ -54,7 +54,7 @@ export const ProfileSectionsLayout = () => {
                     selectedLayout={selectedLayout}
                     handleLayoutChange={handleLayoutChange}
                 />
-                <span className="my-4 block w-full h-px bg-card-light"></span>
+                <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6">
                     {selectedLayout === 'achievements' && <AchievementsLayout />}
                 </div>

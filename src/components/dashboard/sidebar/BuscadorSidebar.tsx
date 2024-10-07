@@ -72,9 +72,9 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
                     whileTap={{ scale: isExpanded ? 1.25 : 1, color: 'white' }}
                     className={`${isExpanded ? 'size-9 text-card-lighter peer-focus-visible:text-card-lightest' : 'size-12 text-neutral-400 group-hover:text-neutral-200'} flex justify-center items-center`}
                 >
-                    <CiSearch className={`${ isExpanded ? 'size-5' : 'size-7' } transition-all duration-200 ease-in-out`}/>
+                    <CiSearch className={`${ isExpanded ? 'size-5' : 'size-7' } transition-200`}/>
                 </motion.button>
-                <div className="h-9 w-4 absolute right-0 bottom-0 opacity-0 peer-focus-visible:opacity-100 transition-all duration-200 ease-in-out">
+                <div className="h-9 w-4 absolute right-0 bottom-0 opacity-0 peer-focus-visible:opacity-100 transition-200">
                     <AnimatePresence>
                         {
                             watch("search") !== "" &&
@@ -88,12 +88,12 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
                                 className="size-full flex justify-center items-center"
                             >
                                 <span className="sr-only">Limpiar buscador</span>
-                                <IoClose className="relative top-[2px] text-card-lighter transition-all duration-200 ease-in-out"/>
+                                <IoClose className="relative top-[2px] text-card-lighter transition-200"/>
                             </motion.button>
                         }
                     </AnimatePresence>
                 </div>
-                <div className={`w-full h-9 border-b ${ isExpanded ? 'border-card peer-focus-visible:border-card-light' : 'border-transparent' } absolute top-0 left-0 pointer-events-none transition-all duration-200 ease-in-out`}></div>
+                <div className={`w-full h-9 border-b ${ isExpanded ? 'border-card peer-focus-visible:border-card-light' : 'border-transparent' } absolute top-0 left-0 pointer-events-none transition-200`}></div>
             </form>
         </motion.div>
     )

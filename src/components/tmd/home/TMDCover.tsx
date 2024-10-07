@@ -11,9 +11,9 @@ export const TMDCover = () => {
   return (
     <MotionWrapperLayout>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
-            <button type="button" className='size-10 bg-card rounded-full flex justify-center items-center absolute top-4 left-4 z-10 group scale-[0.8] hover:scale-100 hover:bg-card-light transition-all duration-200 ease-in-out'>
+            <button type="button" className='size-10 bg-card rounded-full flex justify-center items-center absolute top-4 left-4 z-10 group scale-[0.8] hover:scale-100 hover:bg-card-light transition-200'>
                 <span className='sr-only'>Volver atras</span>
-                <FaChevronLeft className='size-5 stroke-1 text-neutral-400 group-hover:text-white transition-all duration-200 ease-in-out'/>
+                <FaChevronLeft className='size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
             </button>
             <div className='size-full absolute top-0 left-0 z-0'>
                 <div className='bg-gradient-to-b from-black/25 via-black/50 to-black/75 size-full absolute top-0 left-0 z-10'></div>
@@ -41,7 +41,7 @@ export const TMDCover = () => {
                     <div className='mt-2 w-full max-w-md flex justify-center items-center gap-2'>
                         <div className='text-sm leading-none font-bold text-white'>{progress}%</div>
                         <div
-                            className="w-full h-5 bg-card border border-card-light rounded-full flex overflow-hidden transition-all duration-200 ease-in-out"
+                            className="w-full h-5 bg-card border border-card-light rounded-full flex overflow-hidden transition-200"
                             role="progressbar"
                             aria-valuenow={progress}
                             aria-valuemin={0}

@@ -16,7 +16,7 @@ export const SidebarMobileLink = ({link, pathname, isSearching}:Props) => {
         <Link
             href={href}
             aria-label={`Navegar a ${label}`}
-            className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-all duration-200 ease-in-out relative
+            className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative
                 ${pathname === href && !isSearching ? 'text-stannum' : 'text-card-lightest'}
             `}
         >

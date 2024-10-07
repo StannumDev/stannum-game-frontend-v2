@@ -9,7 +9,7 @@ export const ActivarProductoHome = () => {
                 <p className="mt-2 w-full text-sm lg:text-base"><b className="text-stannum">Ingresa tu código</b> de activación y comenza a <span className="block">disfrutar tu producto al maximo.</span></p>
             </div>
             <div className="size-full bg-gradient-to-r from-card to-transparent to-[150%] absolute top-0 left-0 z-10"></div>
-            <div className="size-full absolute top-0 left-0 z-0 group-hover:scale-125 transition-all duration-200 ease-in-out">
+            <div className="size-full absolute top-0 left-0 z-0 group-hover:scale-125 transition-200">
                 <Image src={activar_producto} alt="Activar producto STANNUM Game" className="size-full object-cover"/>
             </div>
         </section>

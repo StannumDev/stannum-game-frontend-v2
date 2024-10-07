@@ -102,7 +102,7 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                             maxLength: 50
                         })}
                         />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                 </div>
                 <FormErrorMessage condition={errors?.email} message={errors?.email?.message} className="mt-2"/>
             </div>

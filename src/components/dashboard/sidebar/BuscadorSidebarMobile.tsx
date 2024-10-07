@@ -54,7 +54,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 type="button"
                 onClick={() => { setIsSearching(!isSearching) }}
                 aria-label={`Buscar en STANNUM Game`}
-                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-all duration-200 ease-in-out relative
+                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative
                     ${isSearching ? 'text-stannum' : 'text-card-lightest'}
                 `}
             >
@@ -93,7 +93,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                             whileTap={{ scale: 1.25, color: 'white' }}
                             className="px-2 h-10 text-card-lighter peer-focus-visible:text-card-lightest flex justify-center items-center"
                         >
-                            <CiSearch className="text-xl transition-all duration-200 ease-in-out"/>
+                            <CiSearch className="text-xl transition-200"/>
                         </motion.button>
                     </form>
                     <motion.button

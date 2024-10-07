@@ -54,10 +54,10 @@ export const LoginForm = () => {
                             maxLength: 50
                         })}
                     />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
-                        <FiUser className="size-5 relative transition-all duration-200 ease-in-out"/>
-                        <label htmlFor="username" className="text-lg transition-all duration-200 ease-in-out">Correo electrónico</label>
+                        <FiUser className="size-5 relative transition-200"/>
+                        <label htmlFor="username" className="text-lg transition-200">Correo electrónico</label>
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="-mt-2"/>
@@ -72,10 +72,10 @@ export const LoginForm = () => {
                             maxLength: 50
                         })}
                     />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
-                        <FiUnlock className="w-5 h-4 relative transition-all duration-200 ease-in-out"/>
-                        <label htmlFor="username" className="text-lg transition-all duration-200 ease-in-out">Contraseña</label>
+                        <FiUnlock className="w-5 h-4 relative transition-200"/>
+                        <label htmlFor="username" className="text-lg transition-200">Contraseña</label>
                     </div>
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
                 </div>

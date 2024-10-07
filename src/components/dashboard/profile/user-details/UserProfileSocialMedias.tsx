@@ -28,9 +28,9 @@ export const UserProfileSocialMedias = () => {
             {
                 socialMedias && socialMedias.length > 0 &&
                 socialMedias.map(({label, url, Icon}:SocialMedia, i:number) => (
-                    <Link key={i} href={url} target="_blank" rel="noopener noreferrer" className="size-10 rounded-xl bg-card-light hover:bg-card-lighter flex justify-center items-center group/link transition-all duration-200 ease-in-out">
+                    <Link key={i} href={url} target="_blank" rel="noopener noreferrer" className="size-10 rounded-xl bg-card-light hover:bg-card-lighter flex justify-center items-center group/link transition-200">
                         <span className="sr-only">{label}</span>
-                        <Icon className="size-5 text-neutral-400 group-hover/link:text-white transition-all duration-200 ease-in-out"/>
+                        <Icon className="size-5 text-neutral-400 group-hover/link:text-white transition-200"/>
                     </Link>
                 ))
             }

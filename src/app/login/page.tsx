@@ -16,7 +16,7 @@ export default function LoginPage() {
                         <div className="lg:mt-12 w-full flex flex-col justify-center items-center text-center">
                             <div className="w-full h-[2px] bg-card-lighter opacity-25 hidden lg:block"></div>
                             <p className="mt-6 w-full text-neutral-400">¿Aún no tienes una cuenta?</p>
-                            <Link href={'/register'} className="mt-3 w-full lg:w-fit bg-card-light h-9 px-5 text-white rounded-lg text-sm font-semibold flex justify-center items-center hover:bg-card-lighter transition-all duration-200 ease-in-out">Registrarse gratis</Link>
+                            <Link href={'/register'} className="mt-3 w-full lg:w-fit bg-card-light h-9 px-5 text-white rounded-lg text-sm font-semibold flex justify-center items-center hover:bg-card-lighter transition-200">Registrarse gratis</Link>
                         </div>
                     </div>
                 </div>

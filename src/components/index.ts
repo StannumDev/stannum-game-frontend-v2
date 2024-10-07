@@ -54,8 +54,12 @@ export { GoalCardHome } from "./dashboard/goals/GoalCardHome";
 export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
+export { TMDModuleCard } from "./tmd/TMDModuleCard";
 export { TMDCover } from "./tmd/home/TMDCover";
-export { TMDSectionsLayout } from "./tmd/TMDSectionsLayout";
+export { TMDSectionsLayout } from "./tmd/sections/TMDSectionsLayout";
+export { TMDWarmUpLayout } from "./tmd/sections/TMDWarmUpLayout";
+export { TMDPreseasonLayout } from "./tmd/sections/TMDPreseasonLayout";
+export { TMDSeasonLayout } from "./tmd/sections/TMDSeasonLayout";
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";

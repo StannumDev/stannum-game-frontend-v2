@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
-import { MotionWrapperLayout, NavbarSection } from "@/components";
+import { MotionWrapperLayout, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
 import { RiFireLine, RiFlagLine, RiMedal2Line, RiCustomerService2Line, RiToolsLine, RiTrophyLine, RiShieldStarLine } from "react-icons/ri";
+import { AnimatePresence } from "framer-motion";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -76,9 +77,15 @@ export const TMDSectionsLayout = () => {
                     selectedLayout={selectedLayout}
                     handleLayoutChange={handleLayoutChange}
                 />
-                <span className="my-4 block w-full h-px bg-card-light"></span>
-                <div className="px-4 lg:px-6">
-                    {/* {selectedLayout === 'achievements' && <AchievementsLayout />} */}
+                <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
+                <div className="px-4 lg:px-6 overflow-x-hidden">
+                    <AnimatePresence mode="wait">
+                        {
+                            selectedLayout === 'preseason' ? <TMDPreseasonLayout /> :
+                            selectedLayout === 'season' ? <TMDSeasonLayout /> :
+                            selectedLayout === 'warmup' && <TMDWarmUpLayout />
+                        }
+                    </AnimatePresence>
                 </div>
             </section>
         </MotionWrapperLayout>

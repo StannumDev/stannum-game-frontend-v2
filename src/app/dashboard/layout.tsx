@@ -8,7 +8,7 @@ export const metadata:Metadata = {
 
 export default function DashboardLayout({children}:{children: React.ReactNode}) {
     return (
-        <div className="grow w-full flex justify-center items-center bg-background text-white">
+        <div className="grow w-full flex bg-background text-white">
             <Sidebar />
             {children}
         </div>

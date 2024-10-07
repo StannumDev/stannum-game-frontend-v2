@@ -56,7 +56,7 @@ export const RegisterPasswordStep = () => {
                                     maxLength: 25
                                 })}
                                 />
-                            <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                            <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export const RegisterPasswordStep = () => {
                         })}
                     />
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                 </div>
                 <p className="mt-2 text-sm text-neutral-400">Debe contener al menos una minúscula, una mayúscula y un número.</p>
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="mt-2"/>
@@ -101,7 +101,7 @@ export const RegisterPasswordStep = () => {
                         })}
                     />
                     <ButtonShowPassword status={showPasswordRepeat} changeStatus={setShowPasswordRepeat} className="absolute bottom-0 right-0 size-9"/>
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-all duration-200 ease-in-out"></span>
+                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                 </div>
                 <FormErrorMessage condition={errors?.passwordRepeat} message={errors?.passwordRepeat?.message} className="mt-2"/>
             </div>

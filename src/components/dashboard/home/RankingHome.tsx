@@ -94,8 +94,8 @@ export const RankingHome = () => {
                     </div>
                     Top Leaders
                 </h2>
-                <Link href={'/'} className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative group hover:bg-card-hover transition-all duration-200 ease-in-out">
-                    <FaCircleInfo className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 ease-in-out"/>
+                <Link href={'/'} className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative group hover:bg-card-hover transition-200">
+                    <FaCircleInfo className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/>
                     Temporada 1
                 </Link>
             </div>

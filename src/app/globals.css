@@ -24,6 +24,18 @@
   .card-link{
     @apply hover:border-card-lightest transition-all duration-200 ease-in-out cursor-pointer
   }
+
+  .transition-100{
+    @apply transition-all duration-100 ease-in-out
+  }
+
+  .transition-150{
+    @apply transition-all duration-150 ease-in-out
+  }
+
+  .transition-200{
+    @apply transition-all duration-200 ease-in-out
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,7 +55,7 @@
     @apply font-normal
   }
   
-  input, textarea{
+  input, textarea, button{
     @apply outline-none focus-visible:outline-none bg-transparent border-none
   }
 

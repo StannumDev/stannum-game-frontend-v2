@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { NavbarSectionButton } from "@/components";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 interface Props {
     sections: Array<NavbarSectionType>;
@@ -25,13 +25,15 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
         }
     };
 
-    // useEffect para agregar el listener de teclado
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'ArrowLeft') {
                 navigate('previous');
             } else if (event.key === 'ArrowRight') {
                 navigate('next');
+            } else if (!isNaN(Number(event.key)) && Number(event.key) >= 1 && Number(event.key) <= sections.length) {
+                const sectionIndex = Number(event.key) - 1;
+                handleLayoutChange(sections[sectionIndex].value);
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -46,7 +48,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 type="button"
                 onClick={() => navigate('previous')}
                 disabled={sections.findIndex(section => section.value === selectedLayout) === 0}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-all duration-200 ease-in-out"
+                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
                 <FaChevronLeft className="size-3"/>
             </button>
@@ -64,7 +66,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 type="button"
                 onClick={() => navigate('next')}
                 disabled={sections.findIndex(section => section.value === selectedLayout) === sections.length - 1}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-all duration-200 ease-in-out"
+                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
                 <FaChevronRight className="size-3"/>
             </button>
