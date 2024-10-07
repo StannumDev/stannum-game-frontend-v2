@@ -19,7 +19,6 @@ export { BuscadorSidebar } from "./dashboard/sidebar/BuscadorSidebar";
 export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile";
 
 // HOME
-export { HomeLayout } from "./dashboard/home/HomeLayout";
 export { PresentacionHome } from "./dashboard/home/PresentacionHome";
 export { GoalsHome } from "./dashboard/home/GoalsHome";
 export { ContinuarHome } from "./dashboard/home/ContinuarHome";

@@ -5,9 +5,8 @@ export const TMDPreseasonLayout = () => {
     return (
         <motion.section
             key="TMDPreseasonLayout"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1}}
-            transition={{ type: "spring", bounce: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1}}
             className="w-full flex flex-col gap-4"
         >
             <TMDModuleCard/>
