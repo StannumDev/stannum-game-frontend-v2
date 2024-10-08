@@ -20,7 +20,7 @@ const config: Config = {
           // DEFAULT: '#67ccb9',
           // hover:'#8cdccd',
           DEFAULT: '#41cfc9',
-          hover:'#45dcd6',
+          hover:'#66eae5',
         },
         tmd:{
           DEFAULT:'#144859',

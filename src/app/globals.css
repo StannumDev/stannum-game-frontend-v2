@@ -99,10 +99,11 @@
 ::-webkit-scrollbar-thumb {
   /* background-color: #67ccb9; */
   background-color: #41cfc9;
+  cursor: pointer;
   border-radius: .5rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #45dcd6;
+  background-color: #66eae5;
   /* background-color: #8cdccd; */
 }

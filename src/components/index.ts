@@ -7,6 +7,7 @@ export { GoBackButton } from "./ui/GoBackButton";
 export { ButtonShowPassword } from "./ui/ButtonShowPassword";
 export { ProgressCircle } from "./ui/ProgressCircle";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
+export { Modal } from "./ui/Modal";
 
 // SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";
@@ -53,12 +54,12 @@ export { GoalCardHome } from "./dashboard/goals/GoalCardHome";
 export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
-export { TMDModuleCard } from "./tmd/TMDModuleCard";
-export { TMDCover } from "./tmd/home/TMDCover";
-export { TMDSectionsLayout } from "./tmd/sections/TMDSectionsLayout";
-export { TMDWarmUpLayout } from "./tmd/sections/TMDWarmUpLayout";
-export { TMDPreseasonLayout } from "./tmd/sections/TMDPreseasonLayout";
-export { TMDSeasonLayout } from "./tmd/sections/TMDSeasonLayout";
+export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
+export { TMDCover } from "./dashboard/tmd/home/TMDCover";
+export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
+export { TMDWarmUpLayout } from "./dashboard/tmd/sections/TMDWarmUpLayout";
+export { TMDPreseasonLayout } from "./dashboard/tmd/sections/TMDPreseasonLayout";
+export { TMDSeasonLayout } from "./dashboard/tmd/sections/TMDSeasonLayout";
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";
