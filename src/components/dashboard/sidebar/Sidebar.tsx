@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import { RiApps2Fill } from "react-icons/ri";

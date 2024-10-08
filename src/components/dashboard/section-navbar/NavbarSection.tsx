@@ -46,7 +46,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [selectedLayout, sections.length]);
+    }, [selectedLayout, sections.length, handleLayoutChange, navigate, sections]);
 
     return (
         <nav className="w-full px-2 lg:px-6 flex justify-between lg:justify-start items-center gap-2 lg:gap-4">

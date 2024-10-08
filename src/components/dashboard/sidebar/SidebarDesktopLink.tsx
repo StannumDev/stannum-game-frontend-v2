@@ -15,21 +15,20 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
     const { label, href, Icon } = link
     const [isActive, setIsActive] = useState<boolean>(false)
 
-    const checkActive = () => {
-        if(href === '/dashboard' && pathname === href){
-            setIsActive(true);
-            return;
-        } else if(href !== '/dashboard' && pathname.startsWith(href)){
-            setIsActive(true);
-            return
-        } else {
-            setIsActive(false);
-        }
-    }
-
     useEffect(() => {
+        const checkActive = () => {
+            if(href === '/dashboard' && pathname === href){
+                setIsActive(true);
+                return;
+            } else if(href !== '/dashboard' && pathname.startsWith(href)){
+                setIsActive(true);
+                return
+            } else {
+                setIsActive(false);
+            }
+        }
         checkActive()
-    }, [pathname])
+    }, [pathname, href])
     
 
     const linkVariants = {
