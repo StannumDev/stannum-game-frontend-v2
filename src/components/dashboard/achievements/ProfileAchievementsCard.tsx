@@ -17,7 +17,7 @@ export const ProfileAchievementsCard = ({ title, description, background, achiev
         >
             <div className='size-full absolute top-0 left-0 z-0 pointer-events-none'>
                 <Image src={background} alt="Logro STANNUM Game" className={`size-full object-cover ${achieved ? 'grayscale-0' : 'grayscale'}`}/>
-                <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-25 group-hover:opacity-100 transition-200'></div>
+                <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-100 transition-200'></div>
             </div>
             <div className='w-full relative z-20 overflow-hidden'>
                 <div className='overflow-hidden'>

@@ -12,14 +12,14 @@ interface Props {
 }
 
 export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: Props) => {
-    
+
     const navigate = (direction: 'previous' | 'next') => {
         const currentIndex = sections.findIndex(section => section.value === selectedLayout);
-        
+
         if (direction === 'previous' && currentIndex > 0) {
             handleLayoutChange(sections[currentIndex - 1].value);
         }
-    
+
         if (direction === 'next' && currentIndex < sections.length - 1) {
             handleLayoutChange(sections[currentIndex + 1].value);
         }
@@ -37,38 +37,46 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
             }
         };
         document.addEventListener('keydown', handleKeyDown);
+    
+        const currentButton = document.querySelector(`[data-layout="${selectedLayout}"]`);
+        if (currentButton) {
+            (currentButton as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+    
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [selectedLayout]);
+    }, [selectedLayout, sections.length]);
 
     return (
-        <nav className="w-full px-4 lg:px-6 flex justify-start items-center gap-4">
+        <nav className="w-full px-2 lg:px-6 flex justify-between lg:justify-start items-center gap-2 lg:gap-4">
             <button
                 type="button"
                 onClick={() => navigate('previous')}
                 disabled={sections.findIndex(section => section.value === selectedLayout) === 0}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
+                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
-                <FaChevronLeft className="size-3"/>
+                <FaChevronLeft className="size-3" />
             </button>
-            <div className="w-fit max-w-full flex justify-start items-center gap-4 overflow-hidden">
-            {sections.map((section: NavbarSectionType, i: number) => (
-                <NavbarSectionButton
-                    key={i}
-                    section={section}
-                    selectedLayout={selectedLayout}
-                    handleLayoutChange={handleLayoutChange}
-                />
-            ))}
+            <div
+                className="w-fit max-w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
+            >
+                {sections.map((section: NavbarSectionType, i: number) => (
+                    <NavbarSectionButton
+                        key={i}
+                        section={section}
+                        selectedLayout={selectedLayout}
+                        handleLayoutChange={handleLayoutChange}
+                    />
+                ))}
             </div>
             <button
                 type="button"
                 onClick={() => navigate('next')}
                 disabled={sections.findIndex(section => section.value === selectedLayout) === sections.length - 1}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
+                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
-                <FaChevronRight className="size-3"/>
+                <FaChevronRight className="size-3" />
             </button>
         </nav>
     );

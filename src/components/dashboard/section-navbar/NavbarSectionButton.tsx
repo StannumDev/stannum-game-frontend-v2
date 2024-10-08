@@ -13,12 +13,10 @@ export const NavbarSectionButton = ({section, selectedLayout, handleLayoutChange
 
     return (
         <button
+            data-layout={value}
             type="button"
             onClick={() => handleLayoutChange(value)}
-            className={`
-                px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200
-                ${ selectedLayout !== value ? 'hover:bg-[rgba(255,255,255,0.1)] text-white' : 'text-stannum'}
-            `}
+            className={`${ selectedLayout !== value ? 'hover:bg-[rgba(255,255,255,0.1)] text-white' : 'text-stannum'} px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200`}
         >
             {
                 selectedLayout === value &&

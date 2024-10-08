@@ -17,8 +17,16 @@
     @apply text-lg lg:text-xl font-black
   }
 
+  .main-container{
+    @apply mt-12 mb-14 lg:my-0 grow min-w-0 lg:min-h-svh pt-2 lg:pt-4 p-4 flex flex-col gap-4 overflow-x-hidden
+  }
+
   .card {
     @apply p-4 lg:p-6 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card
+  }
+
+  .no-card {
+    @apply p-0 rounded-none bg-transparent border-0
   }
 
   .card-link{
@@ -35,6 +43,15 @@
 
   .transition-200{
     @apply transition-all duration-200 ease-in-out
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
   }
 }
 
