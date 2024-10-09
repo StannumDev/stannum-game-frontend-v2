@@ -1,6 +1,6 @@
 import Image from "next/image";
-import wallpaper from "@/assets/wallpaper/register.webp"
 import { RegisterHandler } from "@/components";
+import wallpaper from "@/assets/wallpaper/register.webp";
 
 export default function RegisterPage() {
     return (

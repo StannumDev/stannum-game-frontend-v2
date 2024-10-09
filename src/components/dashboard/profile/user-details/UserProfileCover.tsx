@@ -1,10 +1,10 @@
 'use client'
 
+import { useState } from "react";
 import Image from "next/image";
 import { MdModeEdit } from "react-icons/md";
-import profile_background from '@/assets/profile/achievement_background_3.webp';
-import { useState } from "react";
 import { Modal } from "@/components/ui/Modal";
+import profile_background from '@/assets/profile/achievement_background_3.webp';
 
 export const UserProfileCover = () => {
 

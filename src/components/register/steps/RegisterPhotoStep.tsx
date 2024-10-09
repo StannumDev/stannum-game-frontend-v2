@@ -6,7 +6,8 @@ import AvatarEditor from 'react-avatar-editor';
 import { MdAddAPhoto } from "react-icons/md";
 import { LiaSpinnerSolid } from "react-icons/lia";
 // import { FormErrorMessage, SubmitButtonLoading } from "@/components";
-import styles from "@/components/styles/registerPhotoStep.module.css"
+import styles from "@/components/styles/registerPhotoStep.module.css";
+
 export const RegisterPhotoStep = () => {
 
     const [isLoading] = useState<boolean>(false);

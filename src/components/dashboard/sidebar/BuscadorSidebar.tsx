@@ -1,13 +1,13 @@
 'use client'
 
+import { Dispatch, Fragment, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { CiSearch } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
-import { Dispatch, Fragment, SetStateAction } from "react";
 
 interface Props{
     isExpanded: boolean;

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FaChevronLeft } from "react-icons/fa6";
-import styles from '@/components/styles/TMDCover.module.css'
+import styles from '@/components/styles/TMDCover.module.css';
 import { MotionWrapperLayout } from '@/components';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
 import background from '@/assets/wallpaper/tmd.webp';

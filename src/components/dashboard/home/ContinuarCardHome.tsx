@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { IoPlaySharp } from "react-icons/io5"
+import Link from "next/link";
+import { IoPlaySharp } from "react-icons/io5";
 
 export const ContinuarCardHome = () => {
     return (

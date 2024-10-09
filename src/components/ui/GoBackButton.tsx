@@ -1,8 +1,8 @@
 'use client'
  
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { TfiBackLeft } from 'react-icons/tfi'
+import { TfiBackLeft } from 'react-icons/tfi';
 
 interface Props{
     className?: string;

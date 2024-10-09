@@ -1,6 +1,6 @@
-import { ProfileAchievementsCard } from "@/components"
-import type { Achievement } from "@/interfaces";
 import { achievements } from "@/utilities";
+import type { Achievement } from "@/interfaces";
+import { ProfileAchievementsCard } from "@/components"
 
 export const AchievementsLayout = () => {
     return (

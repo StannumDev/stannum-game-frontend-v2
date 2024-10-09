@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
+import { RiFireLine, RiFlagLine, RiMedal2Line, RiCustomerService2Line, RiToolsLine, RiTrophyLine, RiShieldStarLine } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { MotionWrapperLayout, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
-import { RiFireLine, RiFlagLine, RiMedal2Line, RiCustomerService2Line, RiToolsLine, RiTrophyLine, RiShieldStarLine } from "react-icons/ri";
-import { AnimatePresence } from "framer-motion";
 
 const sections: Array<NavbarSectionType> = [
     {

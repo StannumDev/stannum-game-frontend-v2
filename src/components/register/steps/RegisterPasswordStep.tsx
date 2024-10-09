@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { CiAt } from "react-icons/ci";
+import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario invalido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),

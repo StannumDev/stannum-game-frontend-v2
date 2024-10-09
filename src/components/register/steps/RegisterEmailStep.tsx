@@ -5,8 +5,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import { validateReCAPTCHA } from "@/services";
+import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 // import { checkEmailExist } from "@/services/register";
 
 interface Props{

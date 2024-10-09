@@ -1,8 +1,8 @@
 'use client'
 
-import Image from "next/image"
+import Image from "next/image";
 import { motion } from 'framer-motion';
-import wallpaper from "@/assets/wallpaper/login.webp"
+import wallpaper from "@/assets/wallpaper/login.webp";
 
 export const WallpaperLogin = () => {
     return (

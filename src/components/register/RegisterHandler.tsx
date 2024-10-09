@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from "react"
-import { Logo } from "../ui/Logo"
-import { RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components"
-import { AnimatePresence, motion } from "framer-motion"
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Logo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 
 export const RegisterHandler = () => {
 

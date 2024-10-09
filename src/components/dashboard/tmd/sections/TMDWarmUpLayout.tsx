@@ -1,5 +1,5 @@
-import { TMDModuleCard } from "@/components";
 import { motion } from 'framer-motion';
+import { TMDModuleCard } from "@/components";
 
 export const TMDWarmUpLayout = () => {
     return (

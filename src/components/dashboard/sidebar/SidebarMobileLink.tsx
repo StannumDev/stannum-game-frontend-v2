@@ -1,9 +1,9 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SidebarLink } from "@/interfaces";
 import { SidebarMobileIndicator } from "@/components";
-import { useEffect, useState } from "react";
 
 interface Props{
     link: SidebarLink;

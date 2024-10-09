@@ -1,9 +1,9 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import Link from "next/link"
 import { AnimatePresence, motion } from 'framer-motion';
-import type { SidebarLink } from "@/interfaces"
-import { useEffect, useState } from "react";
+import type { SidebarLink } from "@/interfaces";
 
 interface Props{
     link: SidebarLink

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { HiSelector } from "react-icons/hi";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
