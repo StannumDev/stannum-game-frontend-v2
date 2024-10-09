@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RiMedalFill } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
-import { AchievementsLayout, NavbarSection } from "@/components";
+import { AchievementsLayout, MotionWrapperLayout, NavbarSection } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -40,22 +40,24 @@ export const ProfileSectionsLayout = () => {
         }
     }, [layout, pathname, router]);
 
-    const handleLayoutChange = (layout: string): void => {
+    const handleLayoutChange = useCallback((layout: string): void => {
         setSelectedLayout(layout as sectionOptions);
         router.replace(`${pathname}?section=${layout}`, { scroll: false });
-    };
+    }, [pathname, router, setSelectedLayout])
 
     return (
-        <section className="w-full card px-0">
-            <NavbarSection
-                sections={sections}
-                selectedLayout={selectedLayout}
-                handleLayoutChange={handleLayoutChange}
-            />
-            <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
-            <div className="px-4 lg:px-6">
-                {selectedLayout === 'achievements' && <AchievementsLayout />}
-            </div>
-        </section>
+        <MotionWrapperLayout>
+            <section className="w-full card px-0">
+                <NavbarSection
+                    sections={sections}
+                    selectedLayout={selectedLayout}
+                    handleLayoutChange={handleLayoutChange}
+                />
+                <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
+                <div className="px-4 lg:px-6">
+                    {selectedLayout === 'achievements' && <AchievementsLayout />}
+                </div>
+            </section>
+        </MotionWrapperLayout>
     );
 };

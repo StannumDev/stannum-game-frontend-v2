@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { NavbarSectionButton } from "@/components";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
@@ -12,8 +12,9 @@ interface Props {
 }
 
 export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: Props) => {
+    const containerRef = useRef<HTMLDivElement>(null); // Ref para el contenedor de los botones
 
-    const navigate = (direction: 'previous' | 'next') => {
+    const navigate = useCallback((direction: 'previous' | 'next') => {
         const currentIndex = sections.findIndex(section => section.value === selectedLayout);
 
         if (direction === 'previous' && currentIndex > 0) {
@@ -23,7 +24,26 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
         if (direction === 'next' && currentIndex < sections.length - 1) {
             handleLayoutChange(sections[currentIndex + 1].value);
         }
-    };
+    }, [sections, selectedLayout, handleLayoutChange]);
+
+    useEffect(() => {
+        const currentButton = containerRef.current?.querySelector(`[data-layout="${selectedLayout}"]`);
+        if(currentButton && containerRef.current){
+            const container = containerRef.current;
+            const button = currentButton as HTMLElement;
+
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+
+            if (buttonRect.left < containerRect.left || buttonRect.right > containerRect.right) {
+                button.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center',
+                });
+            }
+        }
+    }, [selectedLayout]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -37,16 +57,10 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
             }
         };
         document.addEventListener('keydown', handleKeyDown);
-    
-        const currentButton = document.querySelector(`[data-layout="${selectedLayout}"]`);
-        if (currentButton) {
-            (currentButton as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-    
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [selectedLayout, sections.length, handleLayoutChange, navigate, sections]);
+    }, [selectedLayout, handleLayoutChange, navigate, sections, sections.length]);
 
     return (
         <nav className="w-full px-2 lg:px-6 flex justify-between lg:justify-start items-center gap-2 lg:gap-4">
@@ -59,6 +73,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 <FaChevronLeft className="size-3" />
             </button>
             <div
+                ref={containerRef}  // Asignamos el ref al contenedor
                 className="w-fit max-w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
             >
                 {sections.map((section: NavbarSectionType, i: number) => (

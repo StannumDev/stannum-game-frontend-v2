@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { MotionWrapperLayout, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
@@ -63,10 +63,10 @@ export const TMDSectionsLayout = () => {
         }
     }, [layout, pathname, router]);
 
-    const handleLayoutChange = (layout: string): void => {
+    const handleLayoutChange = useCallback((layout: string): void => {
         setSelectedLayout(layout as sectionOptions);
         router.replace(`${pathname}?section=${layout}`, { scroll: false });
-    };
+    }, [pathname, router, setSelectedLayout])
 
     return (
         <MotionWrapperLayout>
