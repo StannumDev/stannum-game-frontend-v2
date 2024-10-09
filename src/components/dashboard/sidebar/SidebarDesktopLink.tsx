@@ -30,7 +30,6 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
         checkActive()
     }, [pathname, href])
     
-
     const linkVariants = {
         active: 'text-white',
         inactive: 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200',

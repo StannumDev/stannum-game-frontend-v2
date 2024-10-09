@@ -39,7 +39,6 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
     useEffect(() => {
         isSearching && setFocus("search")
     }, [isSearching, setFocus])
-    
 
     return (
     <Fragment>
