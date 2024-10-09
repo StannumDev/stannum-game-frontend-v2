@@ -32,7 +32,6 @@ export const ProfileSectionsLayout = () => {
     const layout = searchParams.get('section');
     const [selectedLayout, setSelectedLayout] = useState<sectionOptions>('achievements');
 
-    // Actualiza el estado basado en la URL al cargar el componente o cambiar la URL
     useEffect(() => {
         if (layout && ['achievements', 'tmd', 'proem'].includes(layout)) {
             setSelectedLayout(layout as sectionOptions);
@@ -40,6 +39,10 @@ export const ProfileSectionsLayout = () => {
             router.replace(`${pathname}?section=achievements`, { scroll: false });
         }
     }, [layout, pathname, router]);
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleLayoutChange = (layout: string): void => {
         setSelectedLayout(layout as sectionOptions);
