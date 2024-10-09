@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: Props) => {
-    const containerRef = useRef<HTMLDivElement>(null); // Ref para el contenedor de los botones
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const navigate = useCallback((direction: 'previous' | 'next') => {
         const currentIndex = sections.findIndex(section => section.value === selectedLayout);
@@ -73,7 +73,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 <FaChevronLeft className="size-3" />
             </button>
             <div
-                ref={containerRef}  // Asignamos el ref al contenedor
+                ref={containerRef}
                 className="w-fit max-w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
             >
                 {sections.map((section: NavbarSectionType, i: number) => (

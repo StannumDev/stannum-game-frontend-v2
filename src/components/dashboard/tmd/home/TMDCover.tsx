@@ -11,10 +11,12 @@ export const TMDCover = () => {
   return (
     <MotionWrapperLayout>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
-            <button type="button" className='size-8 lg:size-10 bg-card rounded-full hidden lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-10 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
-                <span className='sr-only'>Volver atras</span>
-                <FaChevronLeft className='size-4 lg:size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
-            </button>
+            <div className='content-visibility-hidden lg:content-visibility-visible'>
+                <button type="button" className='size-8 lg:size-10 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-10 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
+                    <span className='sr-only'>Volver atras</span>
+                    <FaChevronLeft className='size-4 lg:size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
+                </button>
+            </div>
             <div className='size-full absolute top-0 left-0 z-0'>
                 <div className='bg-gradient-to-b from-black/25 via-black/50 to-black/75 size-full absolute top-0 left-0 z-10'></div>
                 <Image priority={true} src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm'/>

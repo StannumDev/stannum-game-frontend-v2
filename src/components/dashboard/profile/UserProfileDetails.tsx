@@ -15,12 +15,12 @@ export const UserProfileDetails = () => {
                             <p className="font-semibold text-stannum">STANNUM</p>
                         </div>
                         <UserProfileSocialMedias/>
-                        <div className="hidden lg:block">
+                        <div className="content-visibility-hidden lg:content-visibility-visible">
                             <UserProfileLevel/>
                         </div>
                     </div>
                 </section>
-                <div className="lg:hidden">
+                <div className="lg:content-visibility-hidden">
                     <UserProfileLevel/>
                 </div>
             </MotionWrapperLayout>

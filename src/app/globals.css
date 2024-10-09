@@ -53,6 +53,18 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
   }
+
+  .content-visibility-visible{
+    content-visibility: visible;
+  }
+
+  .content-visibility-hidden{
+    content-visibility: hidden;
+  }
+
+  .content-visibility-auto{
+    content-visibility: auto;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
