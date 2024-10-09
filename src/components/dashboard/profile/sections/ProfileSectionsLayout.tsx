@@ -20,17 +20,9 @@ const sections: Array<NavbarSectionType> = [
         label: "PROEM",
         value: "proem"
     },
-    {
-        label: "Hola",
-        value: "hola"
-    },
-    {
-        label: "Chau",
-        value: "chau"
-    },
 ];
 
-type sectionOptions = 'achievements' | 'tmd' | 'proem' | 'hola' | 'chau'
+type sectionOptions = 'achievements' | 'tmd' | 'proem'
 
 export const ProfileSectionsLayout = () => {
     const router = useRouter();
@@ -42,7 +34,7 @@ export const ProfileSectionsLayout = () => {
 
     // Actualiza el estado basado en la URL al cargar el componente o cambiar la URL
     useEffect(() => {
-        if (layout && ['achievements', 'tmd', 'proem', 'hola', 'chau'].includes(layout)) {
+        if (layout && ['achievements', 'tmd', 'proem'].includes(layout)) {
             setSelectedLayout(layout as sectionOptions);
         } else {
             router.replace(`${pathname}?section=achievements`, { scroll: false });

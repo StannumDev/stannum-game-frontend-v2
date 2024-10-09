@@ -24,7 +24,7 @@ export const UserProfileSocialMedias = () => {
     ]
 
     return (
-        <div className="flex justify-start lg:justify-end items-center gap-2 absolute top-4 lg:bottom-6 left-4 lg:right-6 z-50">
+        <div className="flex justify-start lg:justify-end items-center lg:items-end gap-2 absolute top-4 lg:bottom-6 left-4 lg:right-6 z-10">
             {
                 socialMedias && socialMedias.length > 0 &&
                 socialMedias.map(({label, url, Icon}:SocialMedia, i:number) => (
