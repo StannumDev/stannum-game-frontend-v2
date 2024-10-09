@@ -39,10 +39,6 @@ export const ProfileSectionsLayout = () => {
             router.replace(`${pathname}?section=achievements`, { scroll: false });
         }
     }, [layout, pathname, router]);
-    
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
 
     const handleLayoutChange = (layout: string): void => {
         setSelectedLayout(layout as sectionOptions);
