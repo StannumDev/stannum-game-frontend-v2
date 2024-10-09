@@ -19,10 +19,10 @@ export const TMDCover = () => {
             </div>
             <div className='size-full absolute top-0 left-0 z-0'>
                 <div className='bg-gradient-to-b from-black/25 via-black/50 to-black/75 size-full absolute top-0 left-0 z-10'></div>
-                <Image priority={true} src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm'/>
+                <Image priority src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm'/>
             </div>
             <div className='py-8 lg:py-16 relative z-10'>
-                <Image priority={true} src={logo} alt='Logo TRENNO Mark Digital' className='w-64 lg:w-80 object-contain drop-shadow-md'/>
+                <Image priority src={logo} alt='Logo TRENNO Mark Digital' className='w-64 lg:w-80 object-contain drop-shadow-md'/>
             </div>
             <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-10'>
                 <h2 className='w-full px-2 text-stannum bg-stannum/40 rounded'>Top Leader</h2>
