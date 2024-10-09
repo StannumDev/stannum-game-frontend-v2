@@ -53,9 +53,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 type="button"
                 onClick={() => { setIsSearching(!isSearching) }}
                 aria-label={`Buscar en STANNUM Game`}
-                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative
-                    ${isSearching ? 'text-stannum' : 'text-card-lightest'}
-                `}
+                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative ${isSearching ? 'text-stannum' : 'text-card-lightest'}`}
             >
                 <CiSearch className="size-8"/>
                 <span className="sr-only">Buscar</span>
@@ -67,7 +65,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 isSearching &&
                 <Fragment>
                 <motion.div
-                    className="w-full pl-3 h-16 bg-card flex justify-center items-center fixed top-0 left-0 z-10 pointer-events-auto"
+                    className="w-full pl-3 h-16 bg-card flex justify-center items-center fixed top-0 left-0 z-[99999999] pointer-events-auto"
                     initial={{ y: '-100%' }}
                     animate={{ y: 0 }}
                     exit={{ y: '-100%' }}
@@ -108,7 +106,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                     </motion.button>
                 </motion.div>
                 <motion.div
-                    className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-0"
+                    className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[9999999]"
                     onClick={ () => { reset(); setIsSearching(false) }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
