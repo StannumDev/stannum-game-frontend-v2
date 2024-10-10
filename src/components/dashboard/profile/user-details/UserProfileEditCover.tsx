@@ -66,7 +66,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                     </div>
                 </div>
                 <div className="mt-4 lg:mt-6 w-full grow bg-card rounded-b-lg relative overflow-y-auto">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 p-4 gap-2 lg:gap-4 absolute top-0 left-0">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 p-2 lg:p-4 gap-2 lg:gap-4 absolute top-0 left-0">
                         {
                             backgrounds.map(({img}, i) => (
                                 <div
