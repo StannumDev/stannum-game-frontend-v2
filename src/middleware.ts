@@ -1,6 +1,6 @@
-// import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export function middleware() {
+export function middleware(request:NextRequest) {
 
   // const token = request.cookies.get('token')?.value
 
@@ -11,6 +11,10 @@ export function middleware() {
   // if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
   //   return NextResponse.redirect(new URL('/login', request.url))
   // }
+  
+  if (request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
 
   return
 }
