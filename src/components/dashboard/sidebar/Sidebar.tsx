@@ -35,12 +35,11 @@ const links: Array<SidebarLink> = [
 export const Sidebar = () => {
     const pathname = usePathname();
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-
-    const checkScreenSize = () => {
-        setIsLargeScreen(window.innerWidth >= 1024);
-    };
     
     useEffect(() => {
+        const checkScreenSize = () => {
+            setIsLargeScreen(window.innerWidth >= 1024);
+        };
         checkScreenSize();
         window.addEventListener('resize', checkScreenSize);
         return () => {

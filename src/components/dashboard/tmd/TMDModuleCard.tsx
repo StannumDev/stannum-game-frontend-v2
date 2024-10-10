@@ -10,7 +10,7 @@ export const TMDModuleCard = () => {
                 <span className='text-4xl font-semibold relative -left-1'>01</span>
             </div>
             <div className='ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-8'>
-                <span className='text-xs font-semibold uppercase tracking-widest text-card-lightest truncate'>Pretemporada</span>
+                <span className='text-xs font-semibold uppercase tracking-widest text-card-lightest truncate'>Módulo 01</span>
                 <h2 className='w-full title-2 text-xl truncate'>Organización Digital Organización Digital Organización Digital Organización Digital Organización Digital</h2>
             </div>
             <div className='flex w-fit h-14 relative z-10 shrink-0'>

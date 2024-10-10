@@ -33,6 +33,7 @@ export { StanHelp } from "./dashboard/home/StanHelp";
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
 export { UserProfilePicture } from "./dashboard/profile/user-details/UserProfilePicture";
 export { UserProfileCover } from "./dashboard/profile/user-details/UserProfileCover";
+export { UserProfileEditCover } from "./dashboard/profile/user-details/UserProfileEditCover";
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";
 export { UserProfileSocialMedias } from "./dashboard/profile/user-details/UserProfileSocialMedias";
 export { UserProfileInfo } from "./dashboard/profile/user-details/UserProfileInfo";

@@ -109,7 +109,7 @@ export const RegisterPhotoStep = () => {
                 </motion.button>
                 <motion.button
                     whileTap={{scale: !isLoading ? 1.05 : 1 }}
-                    whileHover={{ backgroundColor: '#8cdccd'}}
+                    whileHover={{ backgroundColor: '#66eae5'}}
                     disabled={isLoading}
                     type="button"
                     className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center"

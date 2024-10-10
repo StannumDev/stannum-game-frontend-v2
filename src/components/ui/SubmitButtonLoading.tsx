@@ -13,7 +13,7 @@ export const SubmitButtonLoading = ({isLoading, text, className}:Props) => {
     return (
         <motion.button
             whileTap={{scale: !isLoading ? 1.05 : 1 }}
-            whileHover={{ backgroundColor: '#8cdccd'}}
+            whileHover={{ backgroundColor: '#66eae5'}}
             disabled={isLoading}
             type="submit"
             className={`${className} bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center`}

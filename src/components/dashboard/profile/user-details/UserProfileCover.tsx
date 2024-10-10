@@ -1,36 +1,37 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { MdModeEdit } from "react-icons/md";
-import { Modal } from "@/components/ui/Modal";
+import { UserProfileEditCover } from "@/components";
 import profile_background from '@/assets/profile/achievement_background_3.webp';
 
 export const UserProfileCover = () => {
 
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsLargeScreen(window.innerWidth >= 1024);
+        };
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+        return () => {
+            window.removeEventListener('resize', checkScreenSize);
+        };
+    }, []);
 
     return (
-        <div className="w-full card rounded-b-none border-b-0 p-0 overflow-hidden relative group/main">
-            <div className="size-full bg-gradient-to-b from-transparent to-black absolute top-0 left-0 z-10"></div>
+        <div className="w-full card rounded-b-none border-b-0 p-0 overflow-hidden relative group/main" >
+            <div
+                onClick={() => { !isLargeScreen && setShowModal(true) }}
+                className="size-full bg-gradient-to-b from-transparent to-black absolute top-0 left-0 z-10"
+            ></div>
             <Image priority src={profile_background} alt="Profile background STANNUM Game" className="w-full aspect-video lg:aspect-auto lg:h-80 object-cover relative z-0 object-[50%_65%]"/>
-            <div className="content-visibility-hidden lg:content-visibility-visible">
-                <button
-                    onClick={() => setShowModal(true)}
-                    type="button"
-                    className="size-8 rounded-md lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/main:opacity-100 absolute top-6 right-6 z-20 transition-200"
-                >
-                    <span className="sr-only">Editar portada</span>
-                    <MdModeEdit className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
-                </button>
-            </div>
-            <Modal
-                className="max-w-5xl"
+            <UserProfileEditCover
                 showModal={showModal}
                 setShowModal={setShowModal}
-            >
-                asdasdas
-            </Modal>
+            />
         </div>
     )
 }
