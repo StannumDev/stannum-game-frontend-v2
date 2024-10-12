@@ -14,7 +14,7 @@
     }
 }
 
-.pattern__stripes {
+.progressbar__pattern {
     background-image: linear-gradient(
         135deg,
         #bbfffc,

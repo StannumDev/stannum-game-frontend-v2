@@ -13,7 +13,7 @@ export const UserProfileLevel = () => {
                 <p className='lg:text-sm leading-none'><b className='text-stannum'>3500 XP</b> / 5000 XP</p>
                 <div className="w-full h-4 border border-card-light rounded-full flex overflow-hidden transition-200" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
                     <div
-                        className={`bg-stannum ${styles.pattern__stripes}`}
+                        className={`bg-stannum ${styles.progressbar__pattern}`}
                         style={{ width: `${progress}%` }}
                     ></div>
                 </div>

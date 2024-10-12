@@ -49,7 +49,7 @@ export const TMDCover = () => {
                             aria-valuemin={0}
                             aria-valuemax={100}
                         >
-                            <div className={`bg-stannum ${styles.pattern__stripes}`} style={{ width: `${progress}%` }}></div>
+                            <div className={`bg-stannum ${styles.progressbar__pattern}`} style={{ width: `${progress}%` }}></div>
                         </div>
                     </div>
                 </div>

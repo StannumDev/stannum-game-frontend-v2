@@ -117,7 +117,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                         }
                     </div>
                 </div>
-                <div className="mt-6 w-full flex justify-end items-center">
+                <div className="mt-4 lg:mt-6 w-full flex justify-end items-center">
                     <motion.button
                         whileTap={{scale: !isLoading ? 1.05 : 1 }}
                         whileHover={{ backgroundColor: '#66eae5'}}
