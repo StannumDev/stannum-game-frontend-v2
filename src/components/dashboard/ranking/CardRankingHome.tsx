@@ -11,7 +11,7 @@ export const CardRankingHome = ({position, name, photo, enterprise, points}:Simp
       initial={ position !== 1 && position !== 2 && position !== 3 ? { opacity: 0, x: '100%' } : { opacity: 1, x: 0 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      className="w-full bg-card-light px-1 lg:px-4 py-3 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2"
+      className="w-full bg-card-light px-1 lg:px-4 py-2 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2"
     >
         <h3 className="col-span-2 lg:col-span-1 flex justify-center items-center relative">
             <span className="sr-only">

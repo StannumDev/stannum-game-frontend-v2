@@ -10,16 +10,55 @@ import profile_background_1 from '@/assets/profile/achievement_background_1.webp
 import profile_background_2 from '@/assets/profile/achievement_background_2.webp';
 import profile_background_3 from '@/assets/profile/achievement_background_3.webp';
 
-const backgrounds:Array<{img:StaticImageData}> = [
+const backgrounds:Array<{label:string, img:StaticImageData}> = [
     {
-        img: profile_background_1
+        img: profile_background_1,
+        label: 'Profile 1'
     },
     {
-        img: profile_background_2
+        img: profile_background_2,
+        label: 'Profile 2'
     },
     {
-        img: profile_background_3
-    }
+        img: profile_background_3,
+        label: 'Profile 3'
+    },
+    {
+        img: profile_background_1,
+        label: 'Profile 12'
+    },
+    {
+        img: profile_background_2,
+        label: 'Profile 22'
+    },
+    {
+        img: profile_background_3,
+        label: 'Profile 32'
+    },
+    {
+        img: profile_background_1,
+        label: 'Profile 13'
+    },
+    {
+        img: profile_background_2,
+        label: 'Profile 23'
+    },
+    {
+        img: profile_background_3,
+        label: 'Profile 33'
+    },
+    {
+        img: profile_background_1,
+        label: 'Profile 14'
+    },
+    {
+        img: profile_background_2,
+        label: 'Profile 24'
+    },
+    {
+        img: profile_background_3,
+        label: 'Profile 34'
+    },
 ]
 
 interface Props{
@@ -30,6 +69,7 @@ interface Props{
 export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [selectedLabel, setSelectedLabel] = useState<String>();
     const [selectedBackground, setSelectedBackground] = useState<StaticImageData>(profile_background_1);
 
     const changeBackground = () => {
@@ -68,50 +108,17 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                 <div className="mt-4 lg:mt-6 w-full grow bg-card rounded-b-lg relative overflow-y-auto">
                     <div className="grid grid-cols-2 lg:grid-cols-4 p-2 lg:p-4 gap-2 lg:gap-4 absolute top-0 left-0">
                         {
-                            backgrounds.map(({img}, i) => (
+                            backgrounds.map(({label, img}, i) => (
                                 <div
                                     key={i}
-                                    className="card p-0 aspect-video overflow-hidden group relative cursor-pointer"
-                                    onClick={ () => setSelectedBackground(img) }
+                                    className={`card p-0 aspect-video overflow-hidden group relative cursor-pointer outline outline-2 -outline-offset-1 transition-150 ${ selectedLabel === label ? 'outline-stannum' : 'outline-transparent hover:outline-stannum/40'}`}
+                                    onClick={ () => {
+                                        setSelectedLabel(label);
+                                        setSelectedBackground(img);
+                                    }}
                                 >
-                                    <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-50 transition-200'></div>
-                                    <Image src={img} alt="Seleccionar fondo" className=""/>
-                                </div>
-                            ))
-                        }
-                        {
-                            backgrounds.map(({img}, i) => (
-                                <div
-                                    key={i}
-                                    className="card p-0 aspect-video overflow-hidden group relative cursor-pointer"
-                                    onClick={ () => setSelectedBackground(img) }
-                                >
-                                    <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-50 transition-200'></div>
-                                    <Image src={img} alt="Seleccionar fondo" className=""/>
-                                </div>
-                            ))
-                        }
-                        {
-                            backgrounds.map(({img}, i) => (
-                                <div
-                                    key={i}
-                                    className="card p-0 aspect-video overflow-hidden group relative cursor-pointer"
-                                    onClick={ () => setSelectedBackground(img) }
-                                >
-                                    <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-50 transition-200'></div>
-                                    <Image src={img} alt="Seleccionar fondo" className=""/>
-                                </div>
-                            ))
-                        }
-                        {
-                            backgrounds.map(({img}, i) => (
-                                <div
-                                    key={i}
-                                    className="card p-0 aspect-video overflow-hidden group relative cursor-pointer"
-                                    onClick={ () => setSelectedBackground(img) }
-                                >
-                                    <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-50 transition-200'></div>
-                                    <Image src={img} alt="Seleccionar fondo" className=""/>
+                                    <div className={`size-full rounded-lg bg-gradient-to-br from-transparent to-black absolute top-0 left-0 transition-200 ${ selectedLabel === label ? 'opacity-50' : 'opacity-50 lg:opacity-25 lg:group-hover:opacity-50'}`}></div>
+                                    <Image src={img} alt="Seleccionar fondo" className="size-full rounded-lg"/>
                                 </div>
                             ))
                         }

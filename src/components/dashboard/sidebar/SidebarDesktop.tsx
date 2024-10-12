@@ -8,7 +8,8 @@ import { GrPowerShutdown } from 'react-icons/gr';
 import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
-import default_user from "@/assets/user/default_user.webp";
+// import default_user from "@/assets/user/default_user.webp";
+import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
     links:Array<SidebarLink>;
@@ -100,18 +101,18 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         transition={{ delay: 0.75 }}
                         className="w-full py-8 px-4 flex justify-start items-center gap-4"
                     >
-                        <Link href={'/dashboard'} className="rounded-full border-2 border-stannum relative overflow-hidden shrink-0">
-                            <Image src={default_user} alt='Usuario STANNUM Game' className={`${ isExpanded ? 'w-14' : 'w-11' } aspect-square object-cover transition-200`}/>
+                        <Link href={'/dashboard'} className="rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0">
+                            <Image src={mateo} alt='Usuario STANNUM Game' className={`${ isExpanded ? 'w-14' : 'w-11' } aspect-square object-cover transition-200`}/>
                         </Link>
                         <AnimatePresence>
                             {
                                 isExpanded &&
                                 <Fragment>
-                                <Link href={'/dashboard'} className="grow lowercase truncate">mateolohezicmateolohezicmateolohezicmateolohezicmateolohezicmateolohezic</Link>
-                                <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
-                                    <span className="sr-only">Cerrar sesión</span>
-                                    <GrPowerShutdown className="text-xl relative -top-px transition-200"/>
-                                </button>
+                                    <Link href={'/dashboard'} className="grow lowercase truncate">mateolohezicmateolohezic</Link>
+                                    <button type="button" className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0">
+                                        <span className="sr-only">Cerrar sesión</span>
+                                        <GrPowerShutdown className="text-xl relative -top-px transition-200"/>
+                                    </button>
                                 </Fragment>
                             }
                         </AnimatePresence>

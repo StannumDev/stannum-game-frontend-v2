@@ -3,12 +3,13 @@ import { FaRankingStar, FaCircleInfo } from "react-icons/fa6";
 import type { SimpleRanking } from "@/interfaces";
 import { MotionWrapperLayout, CardRankingHome } from "@/components";
 import foto from "@/assets/user/default_user.webp";
+import mateo from "@/assets/user/usuario_mateo.webp";
 
 const rankings:Array<SimpleRanking> = [
     {
         position: 1,
         name:"Mateo Bernabé Lohezic",
-        photo: foto,
+        photo: mateo,
         enterprise: "STANNUM",
         points: 100,
     },

@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebarMobile, Icon, SidebarMobileLink } from '@/components';
-import default_user from "@/assets/user/default_user.webp";
+// import default_user from "@/assets/user/default_user.webp";
+import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
     links:Array<SidebarLink>;
@@ -23,7 +24,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                     <Icon className="fill-white w-8" pathClassName="fill-white"/>
                 </Link>
                 <Link href={'/'} className="rounded-full relative overflow-hidden">
-                    <Image src={default_user} alt='Usuario STANNUM Game' className="size-8 aspect-square object-cover"/>
+                    <Image src={mateo} alt='Usuario STANNUM Game' className="size-8 aspect-square object-cover"/>
                 </Link>
             </div>
             <motion.div

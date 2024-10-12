@@ -25,7 +25,7 @@ export const UserProfileInfo = () => {
             <section className="w-full lg:w-1/3 min-h-32 max-h-96 lg:h-auto card flex flex-col gap-4">
                 <h2 className="title-2">Acerca de</h2>
                 <div className="w-[calc(100%+13px)] lg:grow relative overflow-y-auto">
-                    <div className="size-full lg:absolute lg:top-0 lg:left-0">
+                    <div className="size-full pr-4 lg:absolute lg:top-0 lg:left-0">
                         <p className="">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, harum ab modi voluptatibus ut voluptates quisquam esse dignissimos soluta, nostrum laboriosam odit? Error ratione exercitationem dolore perspiciatis similique sunt quia!</p>
                         <p className="">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, harum ab modi voluptatibus ut voluptates quisquam esse dignissimos soluta, nostrum laboriosam odit? Error ratione exercitationem dolore perspiciatis similique sunt quia!</p>
                         <p className="">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, harum ab modi voluptatibus ut voluptates quisquam esse dignissimos soluta, nostrum laboriosam odit? Error ratione exercitationem dolore perspiciatis similique sunt quia!</p>
