@@ -112,7 +112,7 @@ export const RegisterPhotoStep = () => {
                     whileHover={{ backgroundColor: '#66eae5'}}
                     disabled={isLoading}
                     type="button"
-                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center"
                 >
                     {
                         isLoading ?

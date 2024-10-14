@@ -57,10 +57,18 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 // TMD
 export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
 export { TMDCover } from "./dashboard/tmd/home/TMDCover";
+
+// TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
 export { TMDWarmUpLayout } from "./dashboard/tmd/sections/TMDWarmUpLayout";
 export { TMDPreseasonLayout } from "./dashboard/tmd/sections/TMDPreseasonLayout";
 export { TMDSeasonLayout } from "./dashboard/tmd/sections/TMDSeasonLayout";
+
+// TMD LESSONS
+export { LessonVideoPlayer } from "./dashboard/tmd/lessons/LessonVideoPlayer";
+export { LessonDetails } from "./dashboard/tmd/lessons/LessonDetails";
+export { ChangeLessonsButtons } from "./dashboard/tmd/lessons/ChangeLessonsButtons";
+export { LessonMiniatureCard } from "./dashboard/tmd/lessons/LessonMiniatureCard";
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";

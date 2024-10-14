@@ -16,7 +16,7 @@
 }
 
 .range__input::-webkit-slider-thumb:hover{
-    @apply bg-stannum-hover scale-125
+    @apply bg-stannum-light scale-125
 }
 
 .range__input::-moz-range-thumb{

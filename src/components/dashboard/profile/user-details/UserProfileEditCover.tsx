@@ -69,7 +69,7 @@ interface Props{
 export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [selectedLabel, setSelectedLabel] = useState<String>();
+    const [selectedLabel, setSelectedLabel] = useState<string>();
     const [selectedBackground, setSelectedBackground] = useState<StaticImageData>(profile_background_1);
 
     const changeBackground = () => {
@@ -131,7 +131,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                         disabled={isLoading}
                         onClick={changeBackground}
                         type="button"
-                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum disabled:bg-stannum-hover rounded tracking-tighter text-white flex justify-center items-center'
+                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center'
                     >
                         {
                             isLoading ?

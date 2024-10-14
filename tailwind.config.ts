@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'background':{
+        background:{
           DEFAULT: '#0a0a0a',
           sidebar: '#111111'
         },
-        'invalid':{
+        invalid:{
           DEFAULT: '#f45050'
         },
         stannum:{
           // DEFAULT: '#67ccb9',
           // hover:'#8cdccd',
           DEFAULT: '#41cfc9',
-          hover:'#66eae5',
+          light:'#66eae5',
         },
         tmd:{
           DEFAULT:'#144859',
