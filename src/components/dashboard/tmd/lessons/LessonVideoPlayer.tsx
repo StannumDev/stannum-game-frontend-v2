@@ -11,7 +11,6 @@ export const LessonVideoPlayer = async ({ playbackId }: Props) => {
     const { blurDataURL, aspectRatio } = await createBlurUp(playbackId);
 
     return (
-        // <div className='w-full aspect-video relative rounded-lg rounded-e-none border border-card overflow-hidden'>
         <div className='w-full aspect-video relative rounded-lg border border-card overflow-hidden'>
             <MuxPlayer
                 className="w-full aspect-video absolute top-0 left-0"

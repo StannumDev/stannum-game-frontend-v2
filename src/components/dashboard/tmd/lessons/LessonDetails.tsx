@@ -12,7 +12,6 @@ export const LessonDetails = () => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
 
     return (
-        // <div className="size-full card rounded-s-none border-s-0 flex flex-col">
         <div className="w-full card flex flex-col">
             <p className="subtitle-1">Pretemporada | Módulo 01</p>
             <div className="w-full flex justify-between gap-4">
@@ -49,8 +48,6 @@ export const LessonDetails = () => {
                     }
                 </AnimatePresence>
             </div>
-            {/* <div className="mt-4 w-full grow relative overflow-y-auto">
-                <div className="text-sm flex flex-col gap-2 absolute top-0 left-0 pr-4"> */}
             <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
             <div className="mb-4 grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0">
                 <div className="col-span-1 lg:col-span-3 max-h-64 lg:max-h-none pr-4 lg:pr-0 text-sm flex flex-col gap-2 overflow-y-auto">
@@ -87,7 +84,6 @@ export const LessonDetails = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="my-8 grid grid-cols-2 gap-4"> */}
             <ChangeLessonsButtons setIsCompleted={setIsCompleted}/>
         </div>
     )

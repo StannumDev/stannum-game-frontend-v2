@@ -23,8 +23,9 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                 <Link href={'/'} aria-label="Inicio STANNUM Game">
                     <Icon className="fill-white w-8" pathClassName="fill-white"/>
                 </Link>
-                <Link href={'/'} className="rounded-full relative overflow-hidden">
-                    <Image src={mateo} alt='Usuario STANNUM Game' className="size-8 aspect-square object-cover"/>
+                <Link href={'/'} className="size-8 aspect-square rounded-full relative overflow-hidden">
+                    <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+                    <Image priority src={mateo} alt='Usuario STANNUM Game' className="size-full object-cover absolute top-0 left-0 z-10"/>
                 </Link>
             </div>
             <motion.div

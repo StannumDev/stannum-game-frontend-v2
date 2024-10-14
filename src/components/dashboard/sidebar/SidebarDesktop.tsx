@@ -101,8 +101,9 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         transition={{ delay: 0.75 }}
                         className="w-full py-8 px-4 flex justify-start items-center gap-4"
                     >
-                        <Link href={'/dashboard'} className="rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0">
-                            <Image src={mateo} alt='Usuario STANNUM Game' className={`${ isExpanded ? 'w-14' : 'w-11' } aspect-square object-cover transition-200`}/>
+                        <Link href={'/dashboard'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0`}>
+                            <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+                            <Image priority src={mateo} alt='Usuario STANNUM Game' className='size-full object-cover absolute top-0 left-0 z-10 transition-200'/>
                         </Link>
                         <AnimatePresence>
                             {

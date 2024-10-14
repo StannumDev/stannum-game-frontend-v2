@@ -23,11 +23,9 @@ export const UserProfileCover = () => {
 
     return (
         <div className="w-full card rounded-b-none border-b-0 p-0 overflow-hidden relative group/main" >
-            <div
-                onClick={() => { !isLargeScreen && setShowModal(true) }}
-                className="size-full bg-gradient-to-b from-transparent to-black absolute top-0 left-0 z-10"
-            ></div>
-            <Image priority src={profile_background} alt="Profile background STANNUM Game" className="w-full aspect-video lg:aspect-auto lg:h-80 object-cover relative z-0 object-[50%_65%]"/>
+            <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+            <div onClick={() => { !isLargeScreen && setShowModal(true) }} className="size-full bg-gradient-to-b from-transparent to-black absolute top-0 left-0 z-20"></div>
+            <Image priority src={profile_background} alt="Profile background STANNUM Game" className="w-full aspect-video lg:aspect-auto lg:h-80 object-cover relative z-10 object-[50%_65%]"/>
             <UserProfileEditCover
                 showModal={showModal}
                 setShowModal={setShowModal}
