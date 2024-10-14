@@ -24,14 +24,14 @@ export const LessonVideoPlayer = async ({ playbackId }: Props) => {
                 streamType="on-demand"
                 placeholder={blurDataURL}
                 thumbnailTime={5}
-                forwardSeekOffset={10}
-                backwardSeekOffset={10}
+                forwardSeekOffset={5}
+                backwardSeekOffset={5}
                 defaultShowRemainingTime
                 defaultHiddenCaptions={true}
                 primaryColor="rgba(255,255,255,1)"
                 accentColor="#41cfc9"
-                metadataVideoId="videoE01M01"
                 loading='viewport'
+                metadataVideoId="videoE01M01"
                 metadata={{
                     episode: '1',
                     module: '1',

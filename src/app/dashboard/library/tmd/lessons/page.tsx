@@ -22,7 +22,7 @@ export default function TMDLessonsPage() {
                 </div>
             </div>
             <LessonDetails/>
-            <div className="lg:hidden lg:content-visibility-hidden col-span-1 w-full max-h-80 relative overflow-y-auto">
+            <div className="lg:hidden lg:content-visibility-hidden col-span-1 w-full max-h-96 relative overflow-y-auto">
                 <div className="size-full flex flex-col gap-2">
                     <LessonMiniatureCard/>
                     <LessonMiniatureCard/>

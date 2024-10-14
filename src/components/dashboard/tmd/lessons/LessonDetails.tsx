@@ -13,7 +13,7 @@ export const LessonDetails = () => {
 
     return (
         // <div className="size-full card rounded-s-none border-s-0 flex flex-col">
-        <div className="size-full card flex flex-col">
+        <div className="w-full card flex flex-col">
             <p className="subtitle-1">Pretemporada | Módulo 01</p>
             <div className="w-full flex justify-between gap-4">
                 <div className="flex flex-col">
