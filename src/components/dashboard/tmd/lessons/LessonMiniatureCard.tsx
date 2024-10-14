@@ -8,7 +8,7 @@ export const LessonMiniatureCard = () => {
                     className="size-full aspect-video object-cover absolute top-0 left-0"
                     width={160}
                     height={90}
-                    src={'https://image.mux.com/BD02aMIvQ3Nykgeia02rcGRJ9n11CcTHrSOe9e00r8IwY00/thumbnail.png?width=160&height=90&time=5'}
+                    src={`https://image.mux.com/${process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID}/thumbnail.png?width=160&height=90&time=5`}
                     alt="Miniatura video"
                 />
             </div>

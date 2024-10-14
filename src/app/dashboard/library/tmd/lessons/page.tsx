@@ -5,7 +5,7 @@ export default function TMDLessonsPage() {
         <main className="main-container">
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 <div className="col-span-1 lg:col-span-3">
-                    <LessonVideoPlayer playbackId="BD02aMIvQ3Nykgeia02rcGRJ9n11CcTHrSOe9e00r8IwY00"/>
+                    <LessonVideoPlayer playbackId={process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID || ''}/>
                 </div>
                 {/* <div className="col-span-3"> */}
                 <div className="hidden lg:block content-visibility-hidden lg:content-visibility-visible col-span-1 w-[calc(100%+5px)] max-h-none relative overflow-y-auto">
