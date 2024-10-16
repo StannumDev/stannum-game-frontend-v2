@@ -3,7 +3,7 @@ import { FaChevronLeft } from "react-icons/fa6";
 import styles from '@/components/styles/TMDCover.module.css';
 import { MotionWrapperLayout } from '@/components';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
-import background from '@/assets/wallpaper/tmd.webp';
+import background from '@/assets/wallpaper/the_game.webp';
 import Link from 'next/link';
 
 const progress = 55;
@@ -20,8 +20,8 @@ export const TMDCover = () => {
             </div>
             <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
             <div className='size-full absolute top-0 left-0 z-10'>
-                <div className='bg-gradient-to-b from-black/25 via-black/50 to-black/75 size-full absolute top-0 left-0 z-10'></div>
-                <Image priority src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm'/>
+                <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-10'></div>
+                <Image priority src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm object-[50%_30%]'/>
             </div>
             <div className='py-8 lg:py-16 relative z-20'>
                 <Image priority src={logo} alt='Logo TRENNO Mark Digital' className='w-64 lg:w-80 object-contain drop-shadow-md'/>
