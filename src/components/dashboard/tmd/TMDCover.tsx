@@ -13,24 +13,25 @@ export const TMDCover = () => {
     <MotionWrapperLayout>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
-                <Link href={'/dashboard/library/tmd/lessons'} className='size-8 lg:size-10 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-10 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
+                <Link href={'/dashboard/library/tmd/lessons'} className='size-8 lg:size-10 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
                     <span className='sr-only'>Volver atras</span>
                     <FaChevronLeft className='size-4 lg:size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
                 </Link>
             </div>
-            <div className='size-full absolute top-0 left-0 z-0'>
+            <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+            <div className='size-full absolute top-0 left-0 z-10'>
                 <div className='bg-gradient-to-b from-black/25 via-black/50 to-black/75 size-full absolute top-0 left-0 z-10'></div>
                 <Image priority src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm'/>
             </div>
-            <div className='py-8 lg:py-16 relative z-10'>
+            <div className='py-8 lg:py-16 relative z-20'>
                 <Image priority src={logo} alt='Logo TRENNO Mark Digital' className='w-64 lg:w-80 object-contain drop-shadow-md'/>
             </div>
-            <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-10'>
+            <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-30'>
                 <h2 className='w-full px-2 text-stannum bg-stannum/40 rounded'>Top Leader</h2>
                 <p className='mt-1 w-full title-2 text-lg truncate'>STANNUM STANNUM STANNUM STANNUM STANNUM</p>
                 <p className='font-thin text-neutral-400'>3500 Pts</p>
             </div>
-            <div className='w-full lg:w-1/2 py-4 lg:py-6 px-6 lg:px-10 relative top-[1px] z-10'>
+            <div className='w-full lg:w-1/2 py-4 lg:py-6 px-6 lg:px-10 relative top-[1px] z-30'>
                 <svg
                     className="fill-card size-full absolute top-0 left-0 z-0"
                     viewBox="0 0 620 75"

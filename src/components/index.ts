@@ -55,8 +55,8 @@ export { GoalCardHome } from "./dashboard/goals/GoalCardHome";
 export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
+export { TMDCover } from "./dashboard/tmd/TMDCover";
 export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
-export { TMDCover } from "./dashboard/tmd/home/TMDCover";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
