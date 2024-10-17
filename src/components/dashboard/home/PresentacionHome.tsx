@@ -1,37 +1,56 @@
 'use client'
 
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useEffect, useCallback } from 'react';
 import Image from "next/image";
-// import MuxPlayer from "@mux/mux-player-react";
-import { IoPlaySharp } from "react-icons/io5";
-import { Modal, MotionWrapperLayout } from "@/components";
-import background from "@/assets/wallpaper/the_game.webp";
 import { motion, AnimatePresence } from 'framer-motion';
+import { IoPlaySharp } from "react-icons/io5";
+import { Modal, MotionWrapperLayout, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
+import background from "@/assets/wallpaper/the_game.webp";
+
+const steps:Array<number> = [1,2,3,4,5];
 
 export const PresentacionHome = () => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedStep, setSelectedStep] = useState<1|2|3|4|5>(1);
-
-    const steps:Array<number> = [1,2,3,4,5];
-
-    const previousStep = () => {
-        if(!steps.includes(selectedStep - 1)) return;
-        setSelectedStep(selectedStep - 1 as 1|2|3|4|5);
-    }
-
-    const nextStep = () => {
-        if(steps.includes(selectedStep + 1)){
-            setSelectedStep(selectedStep + 1 as 1|2|3|4|5);
-        } else {
-            setShowModal(false);
-        }
-    }
+    const [direction, setDirection] = useState<"prev"|"next">("next");
 
     useEffect(() => {
       setSelectedStep(1)
-    }, [showModal])
-    
+    }, [showModal]);
+
+    const previousStep = useCallback(() => {
+        if (!steps.includes(selectedStep - 1)) return;
+        setDirection("prev");
+        setSelectedStep(selectedStep - 1 as 1 | 2 | 3 | 4 | 5);
+    }, [selectedStep]);
+
+    const nextStep = useCallback(() => {
+        if (!steps.includes(selectedStep + 1)) return;
+        setDirection("next");
+        setSelectedStep(selectedStep + 1 as 1 | 2 | 3 | 4 | 5);
+    }, [selectedStep]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (!showModal) return;
+            if (event.key === 'ArrowLeft') {
+                previousStep();
+            } else if (event.key === 'ArrowRight') {
+                nextStep();
+            }
+        };
+
+        if (showModal) {
+            document.addEventListener('keydown', handleKeyDown);
+        } else {
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [showModal, previousStep, nextStep]);
 
     return (
         <Fragment>
@@ -55,13 +74,12 @@ export const PresentacionHome = () => {
                     </div>
                 </section>
                 <Modal
-                    className="max-w-7xl"
+                    className="max-w-7xl h-auto"
                     showModal={showModal}
                     setShowModal={setShowModal}
                 >
-                    <div className="sm:mt-4 lg:mt-8 size-full flex flex-col justify-center items-center">
+                    <div className="sm:mt-4 lg:mt-2 size-full flex flex-col justify-center items-center">
                         <div className="w-full max-w-sm lg:max-w-3xl relative">
-                            
                             <div className="size-full bg-transparent flex items-center absolute top-0 left-0">
                                 <div className="w-full h-0.5 bg bg-card-light">
                                     <motion.div
@@ -93,19 +111,28 @@ export const PresentacionHome = () => {
                                 }
                             </header>
                         </div>
-                        <div className="grow"></div>
-                        <div className="w-full flex justify-end items-center gap-4">
+                        <AnimatePresence mode='wait' initial={false}>
+                            {
+                                selectedStep === 1 ? <StepOneTutorial direction={direction} key='step_one_tutorial' /> :
+                                selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' /> :
+                                selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
+                                selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
+                                selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :
+                                <div className='grow'></div>
+                            }
+                        </AnimatePresence>
+                        <div className="w-full flex justify-center items-center gap-4">
                             <button
                                 onClick={previousStep}
                                 type="button"
-                                className="w-full lg:w-32 h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                                className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
                             >
                                 Anterior
                             </button>
                             <button
-                                onClick={nextStep}
+                                onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
                                 type="button"
-                                className="w-full lg:w-32 h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                                className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
                             >
                                 {
                                      selectedStep === steps.length ? 'Finalizar' : 'Siguiente'

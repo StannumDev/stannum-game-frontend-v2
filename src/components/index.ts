@@ -85,3 +85,11 @@ export { RegisterPhotoStep } from "./register/steps/RegisterPhotoStep";
 export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
 export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";
 export { ThirdPlaceIcon } from "./svg/ThirdPlaceIcon";
+
+
+// TUTORIAL
+export { StepOneTutorial } from "./dashboard/tutorial/intro/StepOneTutorial";
+export { StepTwoTutorial } from "./dashboard/tutorial/intro/StepTwoTutorial";
+export { StepThreeTutorial } from "./dashboard/tutorial/intro/StepThreeTutorial";
+export { StepFourTutorial } from "./dashboard/tutorial/intro/StepFourTutorial";
+export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
