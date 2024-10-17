@@ -6,9 +6,23 @@ interface Props {
   playbackId: string;
 }
 
+interface BlurData {
+    blurDataURL: string;
+    aspectRatio: number;
+}
+
 export const LessonVideoPlayer = async ({ playbackId }: Props) => {
     
-    const { blurDataURL, aspectRatio } = await createBlurUp(playbackId);
+    const getBlur = async ():Promise<BlurData> => {
+        try {
+            const { blurDataURL, aspectRatio } = await createBlurUp(playbackId);
+            return { blurDataURL, aspectRatio }
+        } catch (error) {
+            return { blurDataURL: '', aspectRatio: 16/9 }
+        }
+    }
+
+    const { blurDataURL, aspectRatio}:BlurData = await getBlur();
 
     return (
         <div className='w-full aspect-video relative rounded-lg border border-card overflow-hidden'>
