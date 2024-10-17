@@ -83,7 +83,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         {
                             links.map((link:SidebarLink, i:number) => (
                                 <motion.li
-                                    key={i}
+                                    key={`sidebar_link_${i}`}
                                     className="w-full"
                                     initial={{ y: 100, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
@@ -109,6 +109,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             {
                                 isExpanded &&
                                     <motion.div
+                                        key={'sidebar_username_desktop'}
                                         initial={{ y: 150, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         exit={{ y: 150, opacity: 0 }}
@@ -120,6 +121,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             {
                                 isExpanded &&
                                 <motion.button
+                                    key={'sidebar_logout_desktop'}
                                     initial={{ y: 150, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     exit={{ y: 150, opacity: 0 }}

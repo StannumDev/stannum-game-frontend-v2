@@ -78,7 +78,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
             >
                 {sections.map((section: NavbarSectionType, i: number) => (
                     <NavbarSectionButton
-                        key={i}
+                        key={`navbar_section_${i}`}
                         section={section}
                         selectedLayout={selectedLayout}
                         handleLayoutChange={handleLayoutChange}

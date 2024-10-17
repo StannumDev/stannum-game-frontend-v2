@@ -111,7 +111,7 @@ export const RankingHome = () => {
                     <div className="mt-2 w-[calc(100%+11px)] lg:w-[calc(100%+13px)] pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 justify-start items-start max-h-80 lg:max-h-64 overflow-y-scroll overflow-x-hidden">
                         {
                             rankings.map((player:SimpleRanking, i:number) => (
-                                <CardRankingHome {...player} key={i}/>
+                                <CardRankingHome {...player} key={`ranking_home_${i}`}/>
                             ))
                         }
                     </div>

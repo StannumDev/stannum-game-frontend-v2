@@ -37,7 +37,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                 <ul className="w-full grid grid-cols-5 justify-center items-center overflow-hidden">
                     {
                         links.map((link:SidebarLink, i:number) => (
-                            <Fragment key={i}>
+                            <Fragment key={`sidebar_mobile_link_${i}`}>
                                 {i === 1 && (
                                     <BuscadorSidebarMobile isSearching={isSearching} setIsSearching={setIsSearching}/>
                                 )}

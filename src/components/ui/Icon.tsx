@@ -22,7 +22,7 @@ export const Icon = ({ className, pathClassName } :Props) => {
     >
       {
         paths.map(({path}:Path, i:number) => (
-          <path key={i} className={pathClassName} fillRule="nonzero" d={path} />
+          <path key={`icon_${i}`} className={pathClassName} fillRule="nonzero" d={path} />
         ))
       }
     </svg>

@@ -110,7 +110,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                         {
                             backgrounds.map(({label, img}, i) => (
                                 <div
-                                    key={i}
+                                    key={`edit_cover_${i}`}
                                     className={`card p-0 aspect-video overflow-hidden group relative cursor-pointer outline outline-2 -outline-offset-1 transition-150 ${ selectedLabel === label ? 'outline-stannum' : 'outline-transparent hover:outline-stannum/40'}`}
                                     onClick={ () => {
                                         setSelectedLabel(label);

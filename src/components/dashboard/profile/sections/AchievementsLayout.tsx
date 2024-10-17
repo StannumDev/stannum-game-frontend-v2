@@ -15,7 +15,7 @@ export const AchievementsLayout = () => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 {
                     achievements.map((achievement:Achievement, i:number)=> (
-                        <ProfileAchievementsCard {...achievement} key={i}/>
+                        <ProfileAchievementsCard {...achievement} key={`achievement_profile_${i}`}/>
                     ))
                 }
             </div>
