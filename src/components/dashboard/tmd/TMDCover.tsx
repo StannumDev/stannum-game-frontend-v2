@@ -1,15 +1,21 @@
+'use client'
+
+import { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { FaChevronLeft } from "react-icons/fa6";
-import styles from '@/components/styles/TMDCover.module.css';
 import { MotionWrapperLayout } from '@/components';
+import styles from '@/components/styles/TMDCover.module.css';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
 import background from '@/assets/wallpaper/the_game.webp';
-import Link from 'next/link';
 
 const progress = 55;
 
 export const TMDCover = () => {
-  return (
+
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+    return (
     <MotionWrapperLayout>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
@@ -18,10 +24,16 @@ export const TMDCover = () => {
                     <FaChevronLeft className='size-4 lg:size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
                 </Link>
             </div>
-            <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+            { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
             <div className='size-full absolute top-0 left-0 z-10'>
                 <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-10'></div>
-                <Image priority src={background} alt='TRENNO Mark Digital' className='size-full object-cover relative z-0 blur-sm object-[50%_30%]'/>
+                <Image
+                    priority
+                    src={background}
+                    alt='TRENNO Mark Digital'
+                    className='size-full object-cover relative z-0 blur-sm object-[50%_30%]'
+                    onLoad={() => setImageLoaded(true)}
+                />
             </div>
             <div className='py-8 lg:py-16 relative z-20'>
                 <Image priority src={logo} alt='Logo TRENNO Mark Digital' className='w-64 lg:w-80 object-contain drop-shadow-md'/>

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebarMobile, Icon, SidebarMobileLink } from '@/components';
-// import default_user from "@/assets/user/default_user.webp";
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
@@ -15,7 +14,8 @@ interface Props{
 }
 
 export const SidebarMobile = ({links, pathname}:Props) => {
-    const [isSearching, setIsSearching] = useState<boolean>(false)
+    const [isSearching, setIsSearching] = useState<boolean>(false);
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     return (
         <div className="lg:hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
@@ -24,8 +24,14 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                     <Icon className="fill-white w-8" pathClassName="fill-white"/>
                 </Link>
                 <Link href={'/'} className="size-8 aspect-square rounded-full relative overflow-hidden">
-                    <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
-                    <Image priority src={mateo} alt='Usuario STANNUM Game' className="size-full object-cover absolute top-0 left-0 z-10"/>
+                    { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
+                    <Image
+                        priority
+                        src={mateo}
+                        alt='Usuario STANNUM Game'
+                        className="size-full object-cover absolute top-0 left-0 z-10"
+                        onLoad={() => setImageLoaded(true)}
+                    />
                 </Link>
             </div>
             <motion.div

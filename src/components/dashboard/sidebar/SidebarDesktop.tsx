@@ -8,7 +8,6 @@ import { GrPowerShutdown } from 'react-icons/gr';
 import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
-// import default_user from "@/assets/user/default_user.webp";
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
@@ -19,6 +18,7 @@ interface Props{
 export const SidebarDesktop = ({links, pathname}:Props) => {
 
     const [isExpanded, setIsExpanded] = useState<boolean>(true)
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     return (
         <Fragment>
@@ -102,8 +102,14 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         className="w-full py-8 px-4 flex justify-start items-center gap-4"
                     >
                         <Link href={'/dashboard'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
-                            <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
-                            <Image priority src={mateo} alt='Usuario STANNUM Game' className='size-full object-cover absolute top-0 left-0 z-10'/>
+                            { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
+                            <Image
+                                priority
+                                src={mateo}
+                                alt='Usuario STANNUM Game'
+                                className='size-full object-cover absolute top-0 left-0 z-10'
+                                onLoad={() => setImageLoaded(true)}
+                            />
                         </Link>
                         <AnimatePresence>
                             {

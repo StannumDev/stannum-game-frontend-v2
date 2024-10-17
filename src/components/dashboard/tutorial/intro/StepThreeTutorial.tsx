@@ -21,11 +21,11 @@ export const StepThreeTutorial = ({direction}:Props) => {
             animate="center"
             exit="exit"
             variants={variants}
-            className="w-full grow py-12 lg:py-8"
+            className="w-full grow py-8 lg:py-8"
         >
             <div className='size-full relative lg:overflow-y-auto'>
                 <div className='size-full text-center flex flex-col lg:flex-row px-4 lg:px-0 gap-8 justify-center items-center lg:absolute lg:top-0 lg:left-0'>
-                    <Image src={photo} alt='Tutorial STANNUM Game' className='w-full max-w-md aspect-square object-cover rounded shrink-0' />
+                    <Image priority src={photo} alt='Tutorial STANNUM Game' className='w-full max-w-md aspect-square object-cover rounded-2xl shrink-0 shadow-md' />
                     <div className='grow max-w-lg text-pretty flex flex-col justify-start items-center'>
                         <h2 className='title-3 text-white font-semibold text-lg lg:text-2xl'>
                             ¡Acepta el desafío y potencia tu crecimiento!

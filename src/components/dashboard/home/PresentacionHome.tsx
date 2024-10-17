@@ -11,6 +11,8 @@ const steps:Array<number> = [1,2,3,4,5];
 
 export const PresentacionHome = () => {
 
+    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedStep, setSelectedStep] = useState<1|2|3|4|5>(1);
     const [direction, setDirection] = useState<"prev"|"next">("next");
@@ -59,7 +61,7 @@ export const PresentacionHome = () => {
                     onClick={() => setShowModal(true)}
                     className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group lg:pointer-events-none"
                 >
-                    <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
+                    { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
                     <div className="size-full bg-gradient-to-br from-transparent to-black/75 absolute top-0 left-0 z-20"></div>
                     <button
                         onClick={() => setShowModal(true)}
@@ -68,7 +70,13 @@ export const PresentacionHome = () => {
                     >
                         <IoPlaySharp className="size-8 lg:size-16 relative left-1 lg:left-2"/>
                     </button>
-                    <Image src={background} priority alt="Presentación STANNUM Game" className="size-full object-cover blur-[1px] absolute top-0 left-0 z-10"/>
+                    <Image
+                        priority
+                        src={background}
+                        alt="Presentación STANNUM Game"
+                        className="size-full object-cover blur-[1px] absolute top-0 left-0 z-10"
+                        onLoad={() => setImageLoaded(true)}
+                    />
                     <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">
                         <p className="text-2xl lg:text-4xl leading-tight">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
                         <p className="hidden lg:block mt-2 w-full max-w-xl text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
