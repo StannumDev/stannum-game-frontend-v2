@@ -22,7 +22,7 @@ export const StepTwoTutorial = ({direction}:Props) => {
             variants={variants}
             className="w-full aspect-video lg:aspect-auto lg:grow my-12 lg:my-8 relative lg:overflow-y-auto"
         >
-            <div className='w-full lg:w-auto lg:h-full aspect-video absolute top-0 left-0 flex flex-col justify-center items-center'>
+            <div className='w-full lg:w-auto lg:h-full aspect-video absolute top-0 right-0 mx-auto left-0 flex flex-col justify-center items-center'>
                 <div className='w-full lg:w-auto lg:h-full aspect-video relative rounded-lg border border-card overflow-hidden'>
                     <MuxPlayer
                         className="size-full absolute top-0 left-0"

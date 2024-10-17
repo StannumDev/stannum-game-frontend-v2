@@ -54,7 +54,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
                         opacity: { delay: 0.1875 },
                         scale: { delay: 0.1875 },
                     }}
-                    className={`w-full h-[75svh] md:h-auto md:aspect-video card relative z-50 ${className}`}
+                    className={`w-full h-[75svh] lg:h-auto lg:aspect-video card relative z-50 ${className}`}
                 >
                     <button onClick={ () => { setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className="size-8 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-10 right-0 transition-all duration-200 ease-in-out">
                         <span className="sr-only">Cerrar</span>
