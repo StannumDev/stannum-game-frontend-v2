@@ -37,7 +37,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
         <AnimatePresence>
         {
             showModal &&
-            <div className="w-full h-dvh px-4 lg:px-0 fixed top-0 left-0 flex justify-center items-center z-[99999999]">
+            <div className={`w-full h-dvh px-4 fixed top-0 left-0 flex justify-center items-center z-[99999999]`}>
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

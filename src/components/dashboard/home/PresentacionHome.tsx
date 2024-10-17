@@ -59,8 +59,8 @@ export const PresentacionHome = () => {
                     showModal={showModal}
                     setShowModal={setShowModal}
                 >
-                    <div className="mt-8 size-full flex flex-col justify-center items-center">
-                        <div className="w-full max-w-3xl relative">
+                    <div className="sm:mt-4 lg:mt-8 size-full flex flex-col justify-center items-center">
+                        <div className="w-full max-w-sm lg:max-w-3xl relative">
                             
                             <div className="size-full bg-transparent flex items-center absolute top-0 left-0">
                                 <div className="w-full h-0.5 bg bg-card-light">
