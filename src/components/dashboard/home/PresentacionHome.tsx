@@ -82,75 +82,75 @@ export const PresentacionHome = () => {
                         <p className="hidden lg:block mt-2 w-full max-w-xl text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
                     </div>
                 </section>
-                <Modal
-                    className="max-w-7xl h-auto"
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                >
-                    <div className="sm:mt-4 lg:mt-2 size-full flex flex-col justify-center items-center">
-                        <div className="w-full max-w-sm lg:max-w-3xl relative">
-                            <div className="size-full bg-transparent flex items-center absolute top-0 left-0">
-                                <div className="w-full h-0.5 bg bg-card-light">
-                                    <motion.div
-                                        aria-hidden
-                                        layout
-                                        transition={{ duration: 0.125 }}
-                                        className={`h-0.5 bg-stannum rounded-full ${ selectedStep <= 1 ? 'w-0' : selectedStep <= 2 ? 'w-1/4' : selectedStep <= 3 ? 'w-2/4' : selectedStep <= 4 ? 'w-3/4' : 'w-full' }`}
-                                    ></motion.div>
-                                </div>
-                            </div>
-                            <header className="w-full flex justify-between items-center font-black text-lg lg:text-2xl relative">
-                                {
-                                    steps.map( step => (
-                                        <div key={`${step}_step`} className='size-10 lg:size-14 rounded-full bg-card-light flex justify-center items-center relative overflow-hidden'>
-                                            <AnimatePresence>
-                                                {
-                                                    step <= selectedStep &&
-                                                    <motion.div
-                                                        initial={{ scale: 0, x: '-100%' }}
-                                                        animate={{ scale: 3, transition: { duration: 0.125, delay: 0.075 } }}
-                                                        exit={{ scale: 0, x:0, transition: { delay: 0, scale: { duration: 0.25 }, x: { duration: 0 } } }}
-                                                        className="size-full rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 absolute top-0 left-0 z-0"
-                                                    ></motion.div>
-                                                }
-                                            </AnimatePresence>
-                                            <span className="relative z-10">{step}</span>
-                                        </div>
-                                    ))
-                                }
-                            </header>
-                        </div>
-                        <AnimatePresence mode='wait' initial={false}>
-                            {
-                                selectedStep === 1 ? <StepOneTutorial direction={direction} key='step_one_tutorial' /> :
-                                selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' /> :
-                                selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
-                                selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
-                                selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :
-                                <div className='grow'></div>
-                            }
-                        </AnimatePresence>
-                        <div className="w-full flex justify-center items-center gap-4">
-                            <button
-                                onClick={previousStep}
-                                type="button"
-                                className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
-                            >
-                                Anterior
-                            </button>
-                            <button
-                                onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
-                                type="button"
-                                className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
-                            >
-                                {
-                                     selectedStep === steps.length ? 'Finalizar' : 'Siguiente'
-                                }
-                            </button>
-                        </div>
-                    </div>
-                </Modal>
             </MotionWrapperLayout>
+            <Modal
+                className="max-w-7xl h-auto"
+                showModal={showModal}
+                setShowModal={setShowModal}
+            >
+                <div className="sm:mt-4 lg:mt-2 size-full flex flex-col justify-center items-center">
+                    <div className="w-full max-w-sm lg:max-w-3xl relative">
+                        <div className="size-full bg-transparent flex items-center absolute top-0 left-0">
+                            <div className="w-full h-0.5 bg bg-card-light">
+                                <motion.div
+                                    aria-hidden
+                                    layout
+                                    transition={{ duration: 0.125 }}
+                                    className={`h-0.5 bg-stannum rounded-full ${ selectedStep <= 1 ? 'w-0' : selectedStep <= 2 ? 'w-1/4' : selectedStep <= 3 ? 'w-2/4' : selectedStep <= 4 ? 'w-3/4' : 'w-full' }`}
+                                ></motion.div>
+                            </div>
+                        </div>
+                        <header className="w-full flex justify-between items-center font-black text-lg lg:text-2xl relative">
+                            {
+                                steps.map( step => (
+                                    <div key={`${step}_step`} className='size-10 lg:size-14 rounded-full bg-card-light flex justify-center items-center relative overflow-hidden'>
+                                        <AnimatePresence>
+                                            {
+                                                step <= selectedStep &&
+                                                <motion.div
+                                                    initial={{ scale: 0, x: '-100%' }}
+                                                    animate={{ scale: 3, transition: { duration: 0.125, delay: 0.075 } }}
+                                                    exit={{ scale: 0, x:0, transition: { delay: 0, scale: { duration: 0.25 }, x: { duration: 0 } } }}
+                                                    className="size-full rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 absolute top-0 left-0 z-0"
+                                                ></motion.div>
+                                            }
+                                        </AnimatePresence>
+                                        <span className="relative z-10">{step}</span>
+                                    </div>
+                                ))
+                            }
+                        </header>
+                    </div>
+                    <AnimatePresence mode='wait' initial={false}>
+                        {
+                            selectedStep === 1 ? <StepOneTutorial direction={direction} key='step_one_tutorial' /> :
+                            selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' /> :
+                            selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
+                            selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
+                            selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :
+                            <div className='grow'></div>
+                        }
+                    </AnimatePresence>
+                    <div className="w-full flex justify-center items-center gap-4">
+                        <button
+                            onClick={previousStep}
+                            type="button"
+                            className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                        >
+                            Anterior
+                        </button>
+                        <button
+                            onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
+                            type="button"
+                            className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                        >
+                            {
+                                    selectedStep === steps.length ? 'Finalizar' : 'Siguiente'
+                            }
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </Fragment>
     )
 }
