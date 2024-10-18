@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation } from "framer-motion";
+import * as motion from "framer-motion/m";
 import { TMDModuleCard } from "@/components";
 
 interface Module{
@@ -33,18 +34,20 @@ export const TMDSeasonLayout = () => {
     const [, setSelectedModule] = useState<number|null>(null)
     
     return (
-        <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1}}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-            className="w-full flex flex-col gap-4"
-        >
-            {
-                modules.map( ({index, title}:Module) => (
-                    <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
-                ))
-            }
-        </motion.section>
+        <LazyMotion features={domAnimation}>
+            <motion.section
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1}}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.1 }}
+                className="w-full flex flex-col gap-4"
+            >
+                {
+                    modules.map( ({index, title}:Module) => (
+                        <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
+                    ))
+                }
+            </motion.section>
+        </LazyMotion>
     )
 }

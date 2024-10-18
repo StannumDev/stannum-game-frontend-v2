@@ -1,9 +1,8 @@
+import { Dispatch, SetStateAction } from "react";
 import { BsFillCollectionPlayFill, BsCompassFill } from "react-icons/bs";
 import { RiFilePaper2Fill } from "react-icons/ri";
 import { FaChevronRight } from "react-icons/fa6";
 import styles from '@/components/styles/TMDModuleCard.module.css';
-import { Dispatch, SetStateAction } from "react";
-
 
 interface Props{
     index: number;

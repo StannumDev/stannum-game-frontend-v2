@@ -1,5 +1,5 @@
-import { LazyMotion, domAnimation } from "framer-motion"
-import * as motion from "framer-motion/m"
+import { LazyMotion, domAnimation } from "framer-motion";
+import * as motion from "framer-motion/m";
 
 export const MotionWrapperLayout = ({children}:{children:React.ReactNode}) => {
   return (
