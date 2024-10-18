@@ -81,9 +81,9 @@ export const TMDSectionsLayout = () => {
                 <div className="px-4 lg:px-6 overflow-x-hidden">
                     <AnimatePresence mode="wait">
                         {
-                            selectedLayout === 'preseason' ? <TMDPreseasonLayout /> :
-                            selectedLayout === 'season' ? <TMDSeasonLayout /> :
-                            selectedLayout === 'warmup' && <TMDWarmUpLayout />
+                            selectedLayout === 'preseason' ? <TMDPreseasonLayout key="TMDPreseasonLayout"/> :
+                            selectedLayout === 'season' ? <TMDSeasonLayout key="TMDSeasonLayout" /> :
+                            selectedLayout === 'warmup' && <TMDWarmUpLayout key="TMDWarmUpLayout" />
                         }
                     </AnimatePresence>
                 </div>

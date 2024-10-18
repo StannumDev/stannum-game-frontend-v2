@@ -71,6 +71,11 @@ export { LessonDetails } from "./dashboard/tmd/lessons/LessonDetails";
 export { ChangeLessonsButtons } from "./dashboard/tmd/lessons/ChangeLessonsButtons";
 export { LessonMiniatureCard } from "./dashboard/tmd/lessons/LessonMiniatureCard";
 
+// TMD PRESEASON
+export { PreseasonModulesGrid } from './dashboard/tmd/modules/preseason/PreseasonModulesGrid'
+export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonModuleOne'
+
+
 // LOGIN
 export { LoginForm } from "./login/LoginForm";
 export { WallpaperLogin } from "./login/WallpaperLogin";

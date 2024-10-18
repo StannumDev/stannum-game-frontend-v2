@@ -1,8 +1,10 @@
-'use client'
-
-import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { TMDModuleCard } from "@/components";
+import { Dispatch, SetStateAction } from "react";
+import { motion } from 'framer-motion';
+
+interface Props{
+    setSelectedModule: Dispatch<SetStateAction<number|null>>
+}
 
 interface Module{
     index: number;
@@ -28,23 +30,20 @@ const modules:Array<Module> = [
     },
 ]
 
-export const TMDWarmUpLayout = () => {
-    
-    const [, setSelectedModule] = useState<number|null>(null)
-    
+export const PreseasonModulesGrid = ({setSelectedModule}:Props) => {
     return (
-        <motion.section
+        <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1}}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.1 }}
             className="w-full flex flex-col gap-4"
         >
-        {
-            modules.map( ({index, title}:Module) => (
-                <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
-            ))
-        }
-        </motion.section>
+            {
+                modules.map( ({index, title}:Module) => (
+                    <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
+                ))
+            }
+        </motion.div>
     )
 }

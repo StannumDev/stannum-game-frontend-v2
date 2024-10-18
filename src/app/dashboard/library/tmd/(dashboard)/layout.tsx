@@ -6,7 +6,7 @@ export const metadata:Metadata = {
  description: 'SEO Title',
 };
 
-export default function TMDLayout({children}:{children: React.ReactNode}) {
+export default function TMDDashboardLayout({children}:{children: React.ReactNode}) {
     return (
         <main className="main-container">
             <TMDCover />
