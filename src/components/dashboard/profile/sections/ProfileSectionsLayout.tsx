@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RiMedalFill } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
-import { AchievementsLayout, MotionWrapperLayout, NavbarSection } from "@/components";
+import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -46,7 +46,7 @@ export const ProfileSectionsLayout = () => {
     }, [pathname, router, setSelectedLayout])
 
     return (
-        <MotionWrapperLayout>
+        <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
                 <NavbarSection
                     sections={sections}
@@ -58,6 +58,6 @@ export const ProfileSectionsLayout = () => {
                     {selectedLayout === 'achievements' && <AchievementsLayout />}
                 </div>
             </section>
-        </MotionWrapperLayout>
+        </MotionWrapperLayoutClient>
     );
 };

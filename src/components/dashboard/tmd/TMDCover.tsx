@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaChevronLeft } from "react-icons/fa6";
-import { MotionWrapperLayout } from '@/components';
+import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/TMDCover.module.css';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
 import background from '@/assets/wallpaper/the_game.webp';
@@ -16,7 +16,7 @@ export const TMDCover = () => {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     return (
-    <MotionWrapperLayout>
+    <MotionWrapperLayoutClient>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
                 <Link href={'/dashboard/library/tmd/lessons'} className='size-8 lg:size-10 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
@@ -69,6 +69,6 @@ export const TMDCover = () => {
                 </div>
             </div>
         </header>
-    </MotionWrapperLayout>
+    </MotionWrapperLayoutClient>
   )
 }

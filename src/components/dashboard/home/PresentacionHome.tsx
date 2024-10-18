@@ -4,7 +4,7 @@ import { Fragment, useState, useEffect, useCallback } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoPlaySharp } from "react-icons/io5";
-import { Modal, MotionWrapperLayout, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
+import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/wallpaper/the_game.webp";
 
 const steps:Array<number> = [1,2,3,4,5];
@@ -56,7 +56,7 @@ export const PresentacionHome = () => {
 
     return (
         <Fragment>
-            <MotionWrapperLayout>
+            <MotionWrapperLayoutClient>
                 <section
                     onClick={() => setShowModal(true)}
                     className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group lg:pointer-events-none"
@@ -82,7 +82,7 @@ export const PresentacionHome = () => {
                         <p className="hidden lg:block mt-2 w-full max-w-xl text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
                     </div>
                 </section>
-            </MotionWrapperLayout>
+            </MotionWrapperLayoutClient>
             <Modal
                 className="max-w-7xl h-auto"
                 showModal={showModal}

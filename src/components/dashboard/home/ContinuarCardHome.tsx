@@ -3,8 +3,8 @@ import { IoPlaySharp } from "react-icons/io5";
 
 export const ContinuarCardHome = () => {
     return (
-        <Link href={'/'} aria-label="Continuar entrenando en ${}" className="w-64 lg:w-auto shrink-0 lg:col-span-1">
-            <article className="w-full aspect-square card flex flex-col justify-start items-start hover:border-card-lightest transition-200 group">
+        <Link href={'/'} aria-label="Continuar entrenando en ${}" className="w-64 lg:w-[calc((100%-2rem)/3)] shrink-0 aspect-square">
+            <article className="size-full card flex flex-col justify-start items-start hover:border-card-lightest transition-200 group">
                 <h3 className="w-full text-start text-2xl font-black">TRENNO MARK DIGITAL</h3>
                 <div className="w-full grow flex justify-start items-end">
                     <div className="w-full flex flex-col gap-2">

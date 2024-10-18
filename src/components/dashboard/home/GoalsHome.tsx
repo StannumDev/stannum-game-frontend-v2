@@ -1,5 +1,3 @@
-'use client'
-
 import { TbInfoHexagon } from "react-icons/tb"
 import { MotionWrapperLayout, GoalCardHome } from "@/components"
 

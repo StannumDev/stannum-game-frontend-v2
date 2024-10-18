@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { RiFireLine, RiFlagLine, RiMedal2Line, RiCustomerService2Line, RiToolsLine, RiTrophyLine, RiShieldStarLine } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
-import { MotionWrapperLayout, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
+import { MotionWrapperLayoutClient, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -69,7 +69,7 @@ export const TMDSectionsLayout = () => {
     }, [pathname, router, setSelectedLayout])
 
     return (
-        <MotionWrapperLayout>
+        <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
                 <h2 className="mb-4 title-2 px-4 lg:px-6">Explora las posiblidades</h2>
                 <NavbarSection
@@ -88,6 +88,6 @@ export const TMDSectionsLayout = () => {
                     </AnimatePresence>
                 </div>
             </section>
-        </MotionWrapperLayout>
+        </MotionWrapperLayoutClient>
     );
 };

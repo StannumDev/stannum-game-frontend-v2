@@ -9,7 +9,6 @@ export const RegisterHandler = () => {
     const [step, setStep] = useState<'email'|'password'|'details'|'photo'>('email')
 
     const nextStep = () => {
-        // setStep(step === 'email' ? 'password' : step === 'password'? 'details' : 'photo');
         setStep(step === 'email' ? 'password' : step === 'password' ? 'details' : step === 'details' ? 'photo' : 'email')
     }
 
