@@ -29,7 +29,7 @@ export const LessonDetails = () => {
                             onClick={() => setIsSaved(!isSaved)}
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
-                            <BookmarkedIcon className="size-5 text-white/75 group-hover:text-white transition-200"/>
+                            <BookmarkedIcon className="size-5 text-stannum group-hover:text-stannum/75 transition-200"/>
                         </motion.button>
                     :
                         <motion.button
@@ -42,7 +42,7 @@ export const LessonDetails = () => {
                             onClick={() => setIsSaved(!isSaved)}
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
-                                <BookmarkIcon className="size-5 text-stannum group-hover:text-stannum/75 transition-200"/>
+                            <BookmarkIcon className="size-5 text-white/75 group-hover:text-white transition-200"/>
                         </motion.button>
                     }
                 </AnimatePresence>

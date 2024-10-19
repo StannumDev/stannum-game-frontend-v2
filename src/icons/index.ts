@@ -6,8 +6,8 @@ export {
     FaRankingStar as RankingStarIcon,
     FaLinkedinIn as LinkedInIcon,
     FaInstagram as InstagramIcon,
-    FaBookmark as BookmarkIcon,
-    FaRegBookmark as BookmarkedIcon,
+    FaBookmark as BookmarkedIcon,
+    FaRegBookmark as BookmarkIcon,
     FaEye as ShowPassowrdIcon,
     FaEyeSlash as HidePasswordIcon
 } from 'react-icons/fa6';

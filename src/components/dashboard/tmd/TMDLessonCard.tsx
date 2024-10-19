@@ -1,13 +1,16 @@
+import Link from 'next/link';
+import { ArrowRightIcon, CheckIcon, PlayIcon } from '@/icons';
 import styles from '@/components/styles/TMDCard.module.css';
 
 interface Props{
     index: number;
     title: string;
+    completed: boolean
 }
 
-export const TMDLessonCard = ({index, title}:Props) => {
+export const TMDLessonCard = ({index, title, completed}:Props) => {
     return (
-        <div className="w-full h-20 flex items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
+        <Link href={'/dashboard/library/tmd/lessons'} className="w-full h-20 flex items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
             <div className={`w-20 h-full bg-stannum flex justify-center items-center shrink-0 ${styles.index__clip__diagonal}`}>
                 <span className='text-4xl font-semibold relative -left-1'>{ index < 10 ? `0${index}` : index }</span>
             </div>
@@ -15,48 +18,25 @@ export const TMDLessonCard = ({index, title}:Props) => {
                 <span className='subtitle-1'>Lección { index < 10 ? `0${index}` : index }</span>
                 <h2 className='w-full title-2 text-xl truncate'>{title}</h2>
             </div>
-            <div className='flex w-fit h-14 relative z-10 shrink-0'>
-                <div className='-mr-8 px-4 bg-card border-2 border-stannum rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center relative z-10'>
-                    Estado
-                </div>
-                <div className='pl-12 pr-4 flex items-center gap-4 bg-card border-2 border-card-light rounded-e-full'>
-                    {/* <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsFillCollectionPlayFill className="size-5 text-neutral-400"/>
-                        <span className="sr-only">Lecciones</span>
+            {
+                completed ?
+                <div className='w-fit flex items-center gap-4 shrink-0 relative z-10'>
+                    <div className='subtitle-1'>Incompleto</div>
+                    <div className='px-8 h-12 bg-card border-2 border-stannum rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
+                        Reproducir
+                        <PlayIcon/>
                     </div>
-                    <div className='size-9 bg-stannum rounded-full flex justify-center items-center'>
-                        <RiFilePaper2Fill className="size-5 text-white"/>
-                        <span className="sr-only">Misiones</span>
-                    </div>
-                    <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsCompassFill className="size-5 text-neutral-400"/>
-                        <span className="sr-only">Instrucciones</span>
-                    </div> */}
                 </div>
+                :
+                <div className='px-8 h-12 bg-stannum rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center gap-2 shrink-0 relative z-10'>
+                    Completado
+                    <CheckIcon/>
+                </div>
+            }
+            <div className='w-4 group-hover:w-14 flex justify-center items-center relative z-10 transition-200 shrink-0'>
+                <ArrowRightIcon className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200"/>
             </div>
-            {/* <div className='flex w-fit h-14 relative z-10 shrink-0'>
-                <div className='-mr-8 px-4 bg-card border-2 border-stannum rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center relative z-10'>
-                    Estado
-                </div>
-                <div className='pl-12 pr-4 flex items-center gap-4 bg-card border-2 border-card-light rounded-e-full'>
-                    <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsFillCollectionPlayFill className="size-5 text-neutral-400"/>
-                        <span className="sr-only">Lecciones</span>
-                    </div>
-                    <div className='size-9 bg-stannum rounded-full flex justify-center items-center'>
-                        <RiFilePaper2Fill className="size-5 text-white"/>
-                        <span className="sr-only">Misiones</span>
-                    </div>
-                    <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsCompassFill className="size-5 text-neutral-400"/>
-                        <span className="sr-only">Instrucciones</span>
-                    </div>
-                </div>
-            </div> */}
-            {/* <div className='w-4 group-hover:w-14 flex justify-center items-center relative z-10 transition-200 shrink-0'>
-                <FaChevronRight className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200"/>
-            </div> */}
             <div className={`w-32 h-full absolute top-0 right-0 ${styles.end__pattern}`}></div>
-        </div>
+        </Link>
     )
 }
