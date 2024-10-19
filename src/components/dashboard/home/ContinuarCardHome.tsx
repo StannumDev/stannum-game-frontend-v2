@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IoPlaySharp } from "react-icons/io5";
+import { PlayIcon } from "@/icons";
 
 export const ContinuarCardHome = () => {
     return (
@@ -10,7 +10,7 @@ export const ContinuarCardHome = () => {
                     <div className="w-full flex flex-col gap-2">
                         <div className="w-full text-neutral-400 group-hover:text-white font-semibold flex justify-start items-center gap-2 transition-200">
                             Continuar
-                            <IoPlaySharp className="relative top-px"/>
+                            <PlayIcon className="relative top-px"/>
                         </div>
                         <div className="w-1/2 group-hover:w-full h-1.5 bg-card-light rounded-lg flex overflow-hidden transition-200" role="progressbar" aria-valuenow={25} aria-valuemin={0} aria-valuemax={0}>
                             <div className="flex flex-col justify-center bg-stannum" style={{ width: '25%' }}></div>

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { FiUnlock, FiUser } from "react-icons/fi";
 import { requestLogin } from "@/services";
+import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
@@ -56,7 +56,7 @@ export const LoginForm = () => {
                     />
                     <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
-                        <FiUser className="size-5 relative transition-200"/>
+                        <UserIcon className="size-5 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Correo electrónico</label>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ export const LoginForm = () => {
                     />
                     <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
-                        <FiUnlock className="w-5 h-4 relative transition-200"/>
+                        <UnlockIcon className="w-5 h-4 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Contraseña</label>
                     </div>
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>

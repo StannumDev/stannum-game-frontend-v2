@@ -4,9 +4,8 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { GrPowerShutdown } from 'react-icons/gr';
-import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 import type { SidebarLink } from '@/interfaces';
+import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
 
@@ -45,9 +44,9 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         >
                             {
                                 isExpanded ?
-                                <LuPanelLeftClose className='size-5'/>
+                                <PanelCloseIcon className='size-5'/>
                                 :
-                                <LuPanelLeftOpen className='size-5'/>
+                                <PanelOpenIcon className='size-5'/>
                             }
                             <span className='sr-only'>{ isExpanded ? 'Cerrar' : 'Abrir'}</span>
                         </motion.button>
@@ -135,7 +134,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0"
                                     >
                                         <span className="sr-only">Cerrar sesión</span>
-                                        <GrPowerShutdown className="text-xl transition-200"/>
+                                        <PowerIcon className="text-xl transition-200"/>
                                     </motion.button>
                                 }
                             </AnimatePresence>

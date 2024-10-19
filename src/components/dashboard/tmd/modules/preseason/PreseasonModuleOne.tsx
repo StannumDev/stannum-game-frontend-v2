@@ -1,19 +1,16 @@
-import { Dispatch, SetStateAction } from 'react';
-import { LazyMotion, domAnimation } from "framer-motion";
-import * as motion from "framer-motion/m";
-import { FaChevronLeft } from 'react-icons/fa6';
-import { TMDModuleCard } from '@/components';
+import { ArrowBackIcon } from '@/icons';
+import { TMDLessonCard } from '@/components';
 
 interface Props{
-    setSelectedModule: Dispatch<SetStateAction<number|null>>
+    restartNavigation: () => void
 }
 
-interface Module{
+interface Lesson{
     index: number;
     title: string;
 }
 
-const modules:Array<Module> = [
+const modules:Array<Lesson> = [
     {
         index: 1,
         title: 'Introducción a la organización digital en la nube'
@@ -24,30 +21,20 @@ const modules:Array<Module> = [
     }
 ]
 
-export const PreseasonModuleOne = ({setSelectedModule}:Props) => {
+export const PreseasonModuleOne = ({restartNavigation}:Props) => {
     return (
-        <LazyMotion features={domAnimation}>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1}}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.1 }}
-                className="w-full flex flex-col gap-4 h-96"
-            >
-                <div className='w-full flex'>
-                    <button type="button" onClick={() => { setSelectedModule(null) }} className='px-2 py-1 rounded-lg text-card-lightest hover:text-white flex justify-center items-center gap-1 lg:hover:bg-card-light transition-200'>
-                        <FaChevronLeft/>
-                        <span className='font-semibold'>Volver</span>
-                    </button>
-                </div>
-                <div className='w-full flex flex-col gap-4'>
-                    {
-                        modules.map( ({index, title}:Module) => (
-                            <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
-                        ))
-                    }
-                </div>
-            </motion.div>
-        </LazyMotion>
+        <div className="w-full">
+            <button type="button" onClick={restartNavigation} className='px-2 py-1 rounded-lg text-card-lightest hover:text-white flex justify-center items-center gap-1 lg:hover:bg-card-light transition-200'>
+                <ArrowBackIcon/>
+                <span className='font-semibold'>Volver</span>
+            </button>
+            <div className='mt-4 w-full flex flex-col gap-4'>
+                {
+                    modules.map( ({index, title}) => (
+                        <TMDLessonCard index={index} title={title} key={index}/>
+                    ))
+                }
+            </div>
+        </div>
     )
 }

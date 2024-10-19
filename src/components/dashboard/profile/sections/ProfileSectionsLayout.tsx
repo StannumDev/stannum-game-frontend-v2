@@ -2,15 +2,15 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { RiMedalFill } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
+import { MedalIcon } from "@/icons";
 import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
         label: "Logros",
         value: "achievements",
-        Icon: RiMedalFill
+        Icon: MedalIcon
     },
     {
         label: "TMD",

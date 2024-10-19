@@ -3,7 +3,7 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
 import Image from "next/image";
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoPlaySharp } from "react-icons/io5";
+import { PlayIcon } from '@/icons';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/wallpaper/the_game.webp";
 
@@ -68,7 +68,7 @@ export const PresentacionHome = () => {
                         type="button"
                         className="size-14 lg:size-32 rounded-full bg-stannum flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 pointer-events-auto hover:scale-105 transition-200"
                     >
-                        <IoPlaySharp className="size-8 lg:size-16 relative left-1 lg:left-2"/>
+                        <PlayIcon className="size-8 lg:size-16 relative left-1 lg:left-2"/>
                     </button>
                     <Image
                         priority

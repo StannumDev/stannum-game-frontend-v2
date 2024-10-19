@@ -2,7 +2,7 @@
  
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { TfiBackLeft } from 'react-icons/tfi';
+import { ArrowBackIcon } from '@/icons';
 
 interface Props{
     className?: string;
@@ -17,8 +17,8 @@ export const GoBackButton = ({className}:Props) => {
             onClick={router.back}
             className={`${className} flex items-center gap-1.5 text-white absolute -translate-y-full`}
         >
-            <TfiBackLeft className="stroke-[0.25] text-base relative top-px"/>
-            <span className="font-light text-lg">Volver</span>
+            <ArrowBackIcon className="stroke-[0.25] text-base relative top-px"/>
+            <span className="font-light text-lg">Atras</span>
         </motion.button>
     )
 }

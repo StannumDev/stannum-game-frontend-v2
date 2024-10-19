@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import { LiaSpinnerSolid } from "react-icons/lia";
+import { SpinnerIcon } from '@/icons';
 
 interface Props{
     isLoading: boolean;
@@ -20,7 +20,7 @@ export const SubmitButtonLoading = ({isLoading, text, className}:Props) => {
         >
             {
                 isLoading ?
-                    <LiaSpinnerSolid className="animate-spin size-6"/>
+                    <SpinnerIcon className="animate-spin size-6"/>
                 :
                     text
             }

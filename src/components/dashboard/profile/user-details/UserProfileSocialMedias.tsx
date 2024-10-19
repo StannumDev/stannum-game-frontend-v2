@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { FaLinkedinIn, FaInstagram,  } from "react-icons/fa6";
-import { TbWorld } from "react-icons/tb";
 import type { SocialMedia } from "@/interfaces";
+import { InstagramIcon, LinkedInIcon, WorldIcon } from "@/icons";
 
 export const UserProfileSocialMedias = () => {
 
@@ -9,17 +8,17 @@ export const UserProfileSocialMedias = () => {
         {
             label: 'Linkedin',
             url: 'https://www.linkedin.com/in/martinmerlini/',
-            Icon: FaLinkedinIn,
+            Icon: LinkedInIcon,
         },
         {
             label: 'Instagram',
             url: 'https://www.instagram.com/martinmerlini.em/',
-            Icon: FaInstagram,
+            Icon: InstagramIcon,
         },
         {
             label: 'Website',
             url: 'https://stannum.com.ar/',
-            Icon: TbWorld,
+            Icon: WorldIcon,
         },
     ]
 

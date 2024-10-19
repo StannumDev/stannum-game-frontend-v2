@@ -2,33 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { GoHomeFill } from "react-icons/go";
-import { RiApps2Fill } from "react-icons/ri";
-import { IoBagHandle } from "react-icons/io5";
-import { PiUserCircleFill } from "react-icons/pi";
 import type { SidebarLink } from "@/interfaces";
+import { AppsIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
 
 const links: Array<SidebarLink> = [
     {
         label: 'Inicio',
         href: '/dashboard',
-        Icon: GoHomeFill,
+        Icon: HomeIcon,
     },
     {
         label: 'Biblioteca',
         href: '/dashboard/library',
-        Icon: RiApps2Fill,
+        Icon: AppsIcon,
     },
     {
         label: 'Tienda',
         href: '/dashboard/store',
-        Icon: IoBagHandle,
+        Icon: StoreIcon,
     },
     {
         label: 'Mi perfil',
         href: '/dashboard/profile',
-        Icon: PiUserCircleFill,
+        Icon: UserCircleIcon,
     },
 ];
 

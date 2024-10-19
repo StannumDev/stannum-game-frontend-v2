@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { FaRankingStar, FaCircleInfo } from "react-icons/fa6";
 import type { SimpleRanking } from "@/interfaces";
+import { InfoCircleIcon, RankingStarIcon } from "@/icons";
 import { MotionWrapperLayout, CardRankingHome } from "@/components";
 import foto from "@/assets/user/default_user.webp";
 import mateo from "@/assets/user/usuario_mateo.webp";
@@ -92,12 +92,12 @@ export const RankingHome = () => {
                 <div className="w-full flex justify-between items-center">
                     <h2 className="w-fit title-2 flex justify-start items-center gap-2">
                         <div>
-                            <FaRankingStar className="text-2xl lg:text-3xl relative -top-px"/>
+                            <RankingStarIcon className="text-2xl lg:text-3xl relative -top-px"/>
                         </div>
                         Top Leaders
                     </h2>
                     <Link href={'/'} className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative group hover:bg-card-hover transition-200">
-                        <FaCircleInfo className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/>
+                        <InfoCircleIcon className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/>
                         Temporada 1
                     </Link>
                 </div>

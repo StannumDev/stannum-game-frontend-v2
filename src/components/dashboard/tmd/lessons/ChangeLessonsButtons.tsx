@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/icons";
 
 interface Props{
     setIsCompleted: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +16,7 @@ export const ChangeLessonsButtons = ({setIsCompleted}:Props) => {
                 type="button"
                 className='flex justify-center items-center gap-1 tracking-tighter text-neutral-400 hover:text-white transition-200'
             >
-                <FaChevronLeft className='text-sm'/>
+                <ArrowLeftIcon className='text-sm'/>
                 <span>Anterior</span>
             </motion.button>
             <motion.button
@@ -27,7 +27,7 @@ export const ChangeLessonsButtons = ({setIsCompleted}:Props) => {
                 className='px-4 py-1.5 bg-stannum rounded-lg tracking-tighter flex justify-center items-center gap-1'
             >
                 Siguiente
-                <FaChevronRight className='text-sm'/>
+                <ArrowRightIcon className='text-sm'/>
             </motion.button>
         </div>
     )

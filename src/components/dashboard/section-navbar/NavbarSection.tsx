@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useRef } from "react";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { NavbarSection as NavbarSectionType } from "@/interfaces";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/icons";
 import { NavbarSectionButton } from "@/components";
 
 interface Props {
@@ -63,18 +63,18 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
     }, [selectedLayout, handleLayoutChange, navigate, sections, sections.length]);
 
     return (
-        <nav className="w-full px-2 lg:px-6 flex justify-between lg:justify-start items-center gap-2 lg:gap-4">
+        <nav className="w-full px-2 lg:px-6 flex justify-between items-center gap-2 lg:gap-4">
             <button
                 type="button"
                 onClick={() => navigate('previous')}
                 disabled={sections.findIndex(section => section.value === selectedLayout) === 0}
                 className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
-                <FaChevronLeft className="size-3" />
+                <ArrowLeftIcon className="size-3" />
             </button>
             <div
                 ref={containerRef}
-                className="w-fit max-w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
+                className="w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
             >
                 {sections.map((section: NavbarSectionType, i: number) => (
                     <NavbarSectionButton
@@ -91,7 +91,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 disabled={sections.findIndex(section => section.value === selectedLayout) === sections.length - 1}
                 className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
-                <FaChevronRight className="size-3" />
+                <ArrowRightIcon className="size-3" />
             </button>
         </nav>
     );

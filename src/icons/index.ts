@@ -1,0 +1,94 @@
+export {
+    FaChevronLeft as ArrowLeftIcon,
+    FaChevronRight as ArrowRightIcon,
+    FaChevronUp as ArrowUpIcon,
+    FaChevronDown as ArrowDownIcon,
+    FaRankingStar as RankingStarIcon,
+    FaLinkedinIn as LinkedInIcon,
+    FaInstagram as InstagramIcon,
+    FaBookmark as BookmarkIcon,
+    FaRegBookmark as BookmarkedIcon,
+    FaEye as ShowPassowrdIcon,
+    FaEyeSlash as HidePasswordIcon
+} from 'react-icons/fa6';
+
+export {
+    IoClose as CloseIcon,
+    IoPlay as PlayIcon,
+    IoPlayCircle as PlayCircleIcon,
+    IoBagHandle as StoreIcon
+} from 'react-icons/io5';
+
+export {
+    CiSearch as SearchIcon,
+    CiAt as AtIcon
+} from "react-icons/ci";
+
+export {
+    TbInfoHexagon as InfoHexagonIcon,
+    TbInfoCircleFilled as InfoCircleIcon,
+    TbWorld as WorldIcon
+} from "react-icons/tb";
+
+export {
+    PiWarningOctagonThin as WarningOctagonIcon,
+    PiUserCircleFill as UserCircleIcon
+} from "react-icons/pi";
+
+export {
+    RiMedalFill as MedalIcon,
+    RiApps2Fill as AppsIcon,
+    RiFilePaper2Fill as PaperIcon,
+    RiFireLine as WarmupIcon,
+    RiFlagLine as PreseasonIcon,
+    RiMedal2Line as SeasonIcon,
+    RiCustomerService2Line as SupportIcon,
+    RiToolsLine as ToolsIcon,
+    RiTrophyLine as TrophyIcon,
+    RiShieldStarLine as MissionsIcon
+} from "react-icons/ri";
+
+export {
+    LiaSpinnerSolid as SpinnerIcon
+} from "react-icons/lia";
+
+export {
+    MdModeEdit as EditIcon,
+    MdAddAPhoto as AddPhotoIcon
+} from "react-icons/md";
+
+export {
+    GoHomeFill as HomeIcon
+} from "react-icons/go";
+
+export {
+    GrPowerShutdown as PowerIcon
+} from 'react-icons/gr';
+
+export {
+    LuPanelLeftClose as PanelCloseIcon,
+    LuPanelLeftOpen as PanelOpenIcon
+} from "react-icons/lu";
+
+export {
+    BsFillCollectionPlayFill as VideosIcon,
+    BsCompassFill as CompassIcon
+} from "react-icons/bs";
+
+export {
+    RxCross1 as CrossIcon,
+    RxCheck as CheckIcon
+} from "react-icons/rx";
+
+export {
+    FiUnlock as UnlockIcon,
+    FiUser as UserIcon
+} from "react-icons/fi";
+
+export {
+    HiSelector as SelectorIcon
+} from "react-icons/hi";
+
+export {
+    TfiBackLeft as ArrowBackIcon
+} from 'react-icons/tfi';

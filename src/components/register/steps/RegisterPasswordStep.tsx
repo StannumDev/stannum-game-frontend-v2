@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CiAt } from "react-icons/ci";
+import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
@@ -40,7 +40,7 @@ export const RegisterPasswordStep = () => {
                     <label htmlFor="username" className="text-white text-base md:text-lg">Elige tu nombre de usuario.</label>
                     <div className="w-full flex">
                         <div className="size-9 bg-card-lighter flex justify-center items-center rounded-s">
-                            <CiAt className="text-neutral-400 stroke-1 text-base md:text-lg"/>
+                            <AtIcon className="text-neutral-400 stroke-1 text-base md:text-lg"/>
                         </div>
                         <div className="grow flex flex-col gap-1 relative">
                             <input

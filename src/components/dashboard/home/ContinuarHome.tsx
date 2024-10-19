@@ -1,4 +1,4 @@
-import { MdPlayCircle } from "react-icons/md";
+import { PlayCircleIcon } from "@/icons";
 import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
 
 export const ContinuarHome = () => {
@@ -6,7 +6,7 @@ export const ContinuarHome = () => {
         <MotionWrapperLayout>
             <section className="w-full">
                 <h2 className="w-full font-black text-2xl text-center flex justify-start items-center gap-1">
-                    <MdPlayCircle/>
+                    <PlayCircleIcon/>
                     Continuar viendo
                 </h2>
                 <div className="mt-2 w-full pb-2 flex gap-4 overflow-x-auto">

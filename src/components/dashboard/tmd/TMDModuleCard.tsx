@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { BsFillCollectionPlayFill, BsCompassFill } from "react-icons/bs";
-import { RiFilePaper2Fill } from "react-icons/ri";
-import { FaChevronRight } from "react-icons/fa6";
-import styles from '@/components/styles/TMDModuleCard.module.css';
+import { ArrowRightIcon, CompassIcon, PaperIcon, VideosIcon } from "@/icons";
+import styles from '@/components/styles/TMDCard.module.css';
 
 interface Props{
     index: number;
@@ -26,21 +24,21 @@ export const TMDModuleCard = ({index, title, setSelectedModule}:Props) => {
                 </div>
                 <div className='pl-12 pr-4 flex items-center gap-4 bg-card border-2 border-card-light rounded-e-full'>
                     <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsFillCollectionPlayFill className="size-5 text-neutral-400"/>
+                        <VideosIcon className="size-5 text-neutral-400"/>
                         <span className="sr-only">Lecciones</span>
                     </div>
                     <div className='size-9 bg-stannum rounded-full flex justify-center items-center'>
-                        <RiFilePaper2Fill className="size-5 text-white"/>
+                        <PaperIcon className="size-5 text-white"/>
                         <span className="sr-only">Misiones</span>
                     </div>
                     <div className='size-9 bg-card-light rounded-full flex justify-center items-center'>
-                        <BsCompassFill className="size-5 text-neutral-400"/>
+                        <CompassIcon className="size-5 text-neutral-400"/>
                         <span className="sr-only">Instrucciones</span>
                     </div>
                 </div>
             </div>
             <div className='w-4 group-hover:w-14 flex justify-center items-center relative z-10 transition-200 shrink-0'>
-                <FaChevronRight className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200"/>
+                <ArrowRightIcon className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200"/>
             </div>
             <div className={`w-32 h-full absolute top-0 right-0 ${styles.end__pattern}`}></div>
         </div>

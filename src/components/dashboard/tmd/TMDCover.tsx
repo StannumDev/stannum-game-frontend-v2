@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaChevronLeft } from "react-icons/fa6";
+import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/TMDCover.module.css';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
@@ -19,9 +19,9 @@ export const TMDCover = () => {
     <MotionWrapperLayoutClient>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
-                <Link href={'/dashboard/library/tmd/lessons'} className='size-8 lg:size-10 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:scale-[0.8] lg:hover:scale-100 lg:hover:bg-card-light transition-200'>
+                <Link href={'/dashboard/library/tmd/lessons'} className='size-6 lg:size-8 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:hover:bg-card-light transition-200'>
                     <span className='sr-only'>Volver atras</span>
-                    <FaChevronLeft className='size-4 lg:size-5 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
+                    <ArrowBackIcon className='size-3 lg:size-4 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
                 </Link>
             </div>
             { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }

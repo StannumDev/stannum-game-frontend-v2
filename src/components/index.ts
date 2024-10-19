@@ -58,6 +58,7 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 // TMD
 export { TMDCover } from "./dashboard/tmd/TMDCover";
 export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
+export { TMDLessonCard } from "./dashboard/tmd/TMDLessonCard";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
@@ -87,15 +88,14 @@ export { RegisterPasswordStep } from "./register/steps/RegisterPasswordStep";
 export { RegisterDetailsStep } from "./register/steps/RegisterDetailsStep";
 export { RegisterPhotoStep } from "./register/steps/RegisterPhotoStep";
 
-// SVGs
-export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
-export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";
-export { ThirdPlaceIcon } from "./svg/ThirdPlaceIcon";
-
-
 // TUTORIAL
 export { StepOneTutorial } from "./dashboard/tutorial/intro/StepOneTutorial";
 export { StepTwoTutorial } from "./dashboard/tutorial/intro/StepTwoTutorial";
 export { StepThreeTutorial } from "./dashboard/tutorial/intro/StepThreeTutorial";
 export { StepFourTutorial } from "./dashboard/tutorial/intro/StepFourTutorial";
 export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
+
+// SVGs
+export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
+export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";
+export { ThirdPlaceIcon } from "./svg/ThirdPlaceIcon";

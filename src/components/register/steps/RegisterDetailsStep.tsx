@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { HiSelector } from "react-icons/hi";
+import { SelectorIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 const schema = z.object({
@@ -94,7 +94,7 @@ export const RegisterDetailsStep = () => {
                             defaultOptionLabel="Seleccionar"
                             classes="w-full h-9 px-2 bg-card-light text-white rounded outline-none focus-visible:outline-none appearance-none"
                         />
-                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><HiSelector/></span>
+                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><SelectorIcon/></span>
                     </div>
                     <FormErrorMessage condition={errors?.country} message="Campo requerido." className="mt-2"/>
                 </div>
@@ -111,7 +111,7 @@ export const RegisterDetailsStep = () => {
                             defaultOptionLabel="Seleccionar"
                             classes="w-full h-9 px-2 bg-card-light text-white rounded outline-none focus-visible:outline-none disabled:opacity-100 appearance-none"
                         />
-                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><HiSelector/></span>
+                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><SelectorIcon/></span>
                     </div>
                     <FormErrorMessage condition={errors?.region} message="Campo requerido." className="mt-2"/>
                 </div>

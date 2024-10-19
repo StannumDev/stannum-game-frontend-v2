@@ -1,5 +1,5 @@
-import { TbInfoHexagon } from "react-icons/tb"
-import { MotionWrapperLayout, GoalCardHome } from "@/components"
+import { InfoHexagonIcon } from "@/icons";
+import { MotionWrapperLayout, GoalCardHome } from "@/components";
 
 export const GoalsHome = () => {
     return (
@@ -8,7 +8,7 @@ export const GoalsHome = () => {
                 <div className="hidden col-span-1 card aspect-square lg:flex flex-col justify-center items-center">
                     <p className="grow text-3xl font-thin uppercase">Monitorea tus <b className="text-stannum font-semibold">goals</b> diariamente</p>
                     <p className="w-full px-3 text-base flex justify-center items-center gap-3">
-                        <TbInfoHexagon className="text-2xl shrink-0 text-stannum"/>
+                        <InfoHexagonIcon className="text-2xl shrink-0 text-stannum"/>
                         <span className="leading-tight">Ver más detalles acerca de mis goals</span>
                     </p>
                 </div>

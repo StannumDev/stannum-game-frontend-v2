@@ -2,7 +2,7 @@
 
 import { SetStateAction } from "react";
 import { motion } from "framer-motion";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { HidePasswordIcon, ShowPassowrdIcon } from "@/icons";
 
 interface Props{
     status: boolean;
@@ -22,7 +22,7 @@ export const ButtonShowPassword = ({status, changeStatus, className, iconClassNa
             onClick={ () => { changeStatus(!status) }}
         >
             {
-                status? <FaEye className={iconClassName}/> : <FaEyeSlash className={iconClassName}/>
+                status ? <ShowPassowrdIcon className={iconClassName}/> : <HidePasswordIcon className={iconClassName}/>
             }
         </motion.button>
     )

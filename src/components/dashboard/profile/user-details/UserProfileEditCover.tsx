@@ -3,9 +3,8 @@
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from 'framer-motion';
-import { LiaSpinnerSolid } from "react-icons/lia";
-import { MdModeEdit } from "react-icons/md";
-import { Modal } from "@/components/ui/Modal";
+import { EditIcon, SpinnerIcon } from "@/icons";
+import { Modal } from "@/components";
 import profile_background_1 from '@/assets/profile/achievement_background_1.webp';
 import profile_background_2 from '@/assets/profile/achievement_background_2.webp';
 import profile_background_3 from '@/assets/profile/achievement_background_3.webp';
@@ -88,7 +87,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                     className="size-8 rounded-lg lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/main:opacity-100 absolute top-2 right-2 z-20 transition-200"
                 >
                     <span className="sr-only">Editar portada</span>
-                    <MdModeEdit className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
+                    <EditIcon className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
                 </button>
             </div>
             <Modal
@@ -135,7 +134,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                     >
                         {
                             isLoading ?
-                                <LiaSpinnerSolid className="animate-spin size-6"/>
+                                <SpinnerIcon className="animate-spin size-6"/>
                             :
                             'Confirmar'
                         }

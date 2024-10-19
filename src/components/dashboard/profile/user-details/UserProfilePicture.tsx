@@ -1,9 +1,9 @@
 'use client'
 
-import Image from "next/image";
-import { MdModeEdit } from "react-icons/md";
-import mateo from "@/assets/user/usuario_mateo.webp";
 import { useState } from "react";
+import Image from "next/image";
+import { EditIcon } from "@/icons";
+import mateo from "@/assets/user/usuario_mateo.webp";
 
 export const UserProfilePicture = () => {
 
@@ -22,7 +22,7 @@ export const UserProfilePicture = () => {
             <div className="content-visibility-hidden lg:content-visibility-visible">
                 <button type="button" className="size-8 rounded-xl lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/picture:opacity-100 absolute top-2 right-2 z-20 transition-200">
                     <span className="sr-only">Editar portada</span>
-                    <MdModeEdit className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
+                    <EditIcon className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
                 </button>
             </div>
         </div>

@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { LazyMotion, domAnimation } from "framer-motion";
-import * as motion from "framer-motion/m";
 import { TMDModuleCard } from "@/components";
 
 interface Props{
@@ -33,20 +31,12 @@ const modules:Array<Module> = [
 
 export const PreseasonModulesGrid = ({setSelectedModule}:Props) => {
     return (
-        <LazyMotion features={domAnimation}>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1}}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.1 }}
-                className="w-full flex flex-col gap-4"
-            >
-                {
-                    modules.map( ({index, title}:Module) => (
-                        <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
-                    ))
-                }
-            </motion.div>
-        </LazyMotion>
+        <div className="w-full flex flex-col gap-4">
+            {
+                modules.map( ({index, title}:Module) => (
+                    <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
+                ))
+            }
+        </div>
     )
 }

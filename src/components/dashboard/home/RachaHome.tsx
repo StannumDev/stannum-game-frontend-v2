@@ -1,4 +1,4 @@
-import { PiWarningOctagonThin } from "react-icons/pi";
+import { WarningOctagonIcon } from "@/icons";
 import { MotionWrapperLayout } from "@/components";
 
 export const RachaHome = () => {
@@ -11,7 +11,7 @@ export const RachaHome = () => {
                         <p className="mt-2 text-sm lg:text-base">Aún no completaste tu entrenamiento del día. <span className="lg:block">Estas a tiempo, pero apresurate o <b className="text-invalid">perderas tu racha!</b></span></p>
                     </div>
                     <div className="lg:grow flex justify-center items-center absolute top-4 right-4">
-                        <PiWarningOctagonThin className="text-invalid size-14 lg:size-24"/>
+                        <WarningOctagonIcon className="text-invalid size-14 lg:size-24"/>
                     </div>
                 </div>
             </section>

@@ -2,7 +2,7 @@
 
 import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { IoCloseOutline } from 'react-icons/io5';
+import { CloseIcon } from '@/icons';
 
 interface Props{
     showModal: boolean;
@@ -59,7 +59,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
                     >
                         <button onClick={ () => { setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className="size-8 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-10 right-0 transition-all duration-200 ease-in-out">
                             <span className="sr-only">Cerrar</span>
-                            <IoCloseOutline className="size-8"/>
+                            <CloseIcon className="size-8"/>
                         </button>
                         <div className="size-full overflow-hidden flex flex-col">
                             { children }

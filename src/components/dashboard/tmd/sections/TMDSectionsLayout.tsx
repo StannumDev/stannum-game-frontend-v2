@@ -2,46 +2,45 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
-import { RiFireLine, RiFlagLine, RiMedal2Line, RiCustomerService2Line, RiToolsLine, RiTrophyLine, RiShieldStarLine } from "react-icons/ri";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
+import { MissionsIcon, PreseasonIcon, SeasonIcon, SupportIcon, ToolsIcon, TrophyIcon, WarmupIcon } from "@/icons";
 import { MotionWrapperLayoutClient, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
         label: "Calentamiento",
         value: "warmup",
-        Icon: RiFireLine
+        Icon: WarmupIcon
     },
     {
         label: "Pre temporada",
         value: "preseason",
-        Icon: RiFlagLine
+        Icon: PreseasonIcon
     },
     {
         label: "Temporada",
         value: "season",
-        Icon: RiMedal2Line
+        Icon: SeasonIcon
     },
     {
         label: "Soporte",
         value: "support",
-        Icon: RiCustomerService2Line
+        Icon: SupportIcon
     },
     {
         label: "Herramientas",
         value: "tools",
-        Icon: RiToolsLine
+        Icon: ToolsIcon
     },
     {
         label: "Ranking",
         value: "ranking",
-        Icon: RiTrophyLine
+        Icon: TrophyIcon
     },
     {
         label: "Misiones",
         value: "missions",
-        Icon: RiShieldStarLine
+        Icon: MissionsIcon
     }
 ];
 
@@ -79,13 +78,11 @@ export const TMDSectionsLayout = () => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 overflow-x-hidden">
-                    <AnimatePresence mode="wait">
-                        {
-                            selectedLayout === 'preseason' ? <TMDPreseasonLayout key="TMDPreseasonLayout"/> :
-                            selectedLayout === 'season' ? <TMDSeasonLayout key="TMDSeasonLayout" /> :
-                            selectedLayout === 'warmup' && <TMDWarmUpLayout key="TMDWarmUpLayout" />
-                        }
-                    </AnimatePresence>
+                    {
+                        selectedLayout === 'warmup' ? <TMDWarmUpLayout/> :
+                        selectedLayout === 'preseason' ? <TMDPreseasonLayout/> :
+                        selectedLayout === 'season' && <TMDSeasonLayout/>
+                    }
                 </div>
             </section>
         </MotionWrapperLayoutClient>

@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
-import { RxCross1, RxCheck } from "react-icons/rx";
+import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
 import { ChangeLessonsButtons } from "@/components";
 
 export const LessonDetails = () => {
@@ -30,7 +29,7 @@ export const LessonDetails = () => {
                             onClick={() => setIsSaved(!isSaved)}
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
-                            <FaRegBookmark className="size-5 text-white/75 group-hover:text-white transition-200"/>
+                            <BookmarkedIcon className="size-5 text-white/75 group-hover:text-white transition-200"/>
                         </motion.button>
                     :
                         <motion.button
@@ -43,7 +42,7 @@ export const LessonDetails = () => {
                             onClick={() => setIsSaved(!isSaved)}
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
-                                <FaBookmark className="size-5 text-stannum group-hover:text-stannum/75 transition-200"/>
+                                <BookmarkIcon className="size-5 text-stannum group-hover:text-stannum/75 transition-200"/>
                         </motion.button>
                     }
                 </AnimatePresence>
@@ -66,12 +65,12 @@ export const LessonDetails = () => {
                             <h2 className="subtitle-1">Estado</h2>
                             { isCompleted ?
                                 <p className="title-3 font-thin text-stannum/75 flex items-center gap-1">
-                                    <RxCheck/>
+                                    <CheckIcon/>
                                     Completado
                                 </p>
                             :
                                 <p className="title-3 font-thin text-invalid/75 flex items-center gap-1">
-                                    <RxCross1 className="text-sm"/>
+                                    <CrossIcon className="text-sm"/>
                                     Pendiente
                                 </p>
                             }

@@ -3,8 +3,7 @@
 import { ChangeEvent, useRef, useState } from "react";
 import { motion } from 'framer-motion';
 import AvatarEditor from 'react-avatar-editor';
-import { MdAddAPhoto } from "react-icons/md";
-import { LiaSpinnerSolid } from "react-icons/lia";
+import { AddPhotoIcon, SpinnerIcon } from "@/icons";
 // import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import styles from "@/components/styles/registerPhotoStep.module.css";
 
@@ -37,7 +36,7 @@ export const RegisterPhotoStep = () => {
                 !file ?
                 <div className="mt-4 w-full max-w-sm aspect-square relative">
                     <div className="size-full border-2 border-dashed border-card-lightest rounded-lg flex justify-center items-center relative z-20 pointer-events-none">
-                        <MdAddAPhoto className="text-card-lightest text-8xl"/>
+                        <AddPhotoIcon className="text-card-lightest text-8xl"/>
                     </div>
                     <label htmlFor="photo" className="size-full absolute top-0 left-0 rounded-lg z-10">
                         <input
@@ -116,7 +115,7 @@ export const RegisterPhotoStep = () => {
                 >
                     {
                         isLoading ?
-                            <LiaSpinnerSolid className="animate-spin size-6"/>
+                            <SpinnerIcon className="animate-spin size-6"/>
                         :
                             'Continuar'
                     }

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { TbInfoHexagon } from "react-icons/tb";
+import { InfoHexagonIcon } from "@/icons";
 import { MotionWrapperLayout } from "@/components";
 import stan_help from "@/assets/home/stan_help.webp";
 
@@ -14,7 +14,7 @@ export const StanHelp = () => {
                     <div className="w-full lg:w-fit lg:pb-6 lg:pt-4">
                         <h2 className="title-2">¿Necesitas ayuda?</h2>
                         <p className="mt-2 w-full lg:max-w-sm">Habla con <b className="text-stannum">STAN, el entrenador de STANNUM</b> para recibir soporte y poder solucionar tus dudas e inconvenientes.</p>
-                        <TbInfoHexagon className="text-2xl text-stannum absolute top-4 lg:top-6 right-4 lg:right-6"/>
+                        <InfoHexagonIcon className="text-2xl text-stannum absolute top-4 lg:top-6 right-4 lg:right-6"/>
                     </div>
                 </div>
             </section>
