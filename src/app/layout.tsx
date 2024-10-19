@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
-    <html lang="es" className="bg-background">
-      <body className={`${satoshi.className} antialiased w-full min-h-svh flex flex-col items-center`}>
+    <html lang="es" className="bg-background ">
+      <body className={`${satoshi.className} antialiased w-full min-h-svh flex flex-col items-center bg-gradient-to-br from-background to-background-sidebar`}>
         {children}
       </body>
     </html>
