@@ -60,6 +60,7 @@ export { TMDCover } from "./dashboard/tmd/TMDCover";
 export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
 export { TMDLessonCard } from "./dashboard/tmd/TMDLessonCard";
 export { TMDInstructionCard } from "./dashboard/tmd/TMDInstructionCard";
+export { TMDInstructionDetails } from "./dashboard/tmd/TMDInstructionDetails";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";

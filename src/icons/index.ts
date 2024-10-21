@@ -16,7 +16,8 @@ export {
     IoClose as CloseIcon,
     IoPlay as PlayIcon,
     IoPlayCircle as PlayCircleIcon,
-    IoBagHandle as StoreIcon
+    IoBagHandle as StoreIcon,
+    IoHourglassSharp as HourglassIcon
 } from 'react-icons/io5';
 
 export {

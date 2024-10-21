@@ -1,19 +1,24 @@
-import Link from 'next/link';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 import Image from 'next/image';
-import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon } from '@/icons';
+import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, HourglassIcon } from '@/icons';
 import styles from '@/components/styles/TMDCard.module.css';
 import instruction_logo from '@/assets/products/tmd/tmd_instructions.webp';
-import { Fragment } from 'react';
 
 interface Props{
     index: number;
     title: string;
-    completed: boolean
+    inProcess?: boolean;
+    completed?: boolean;
+    setSelectedInstruction: Dispatch<SetStateAction<number | null>>
 }
 
-export const TMDInstructionCard = ({index, title, completed}:Props) => {
+export const TMDInstructionCard = ({index, title, inProcess, completed, setSelectedInstruction }:Props) => {
     return (
-        <Link href={'/dashboard/library/tmd?section=preseason'} className={`w-full h-52 flex items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200 ${ completed && 'border-2 border-stannum' }`}>
+        <button
+            type='button'
+            onClick={ () => { setSelectedInstruction(index) } }
+            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200 ${ completed && 'border-2 border-stannum' }`}
+        >
             <div className='h-full aspect-square relative shrink-0'>
                 <Image src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
             </div>
@@ -24,9 +29,9 @@ export const TMDInstructionCard = ({index, title, completed}:Props) => {
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis.
                 </p>
             </div>
-            <div className={`w-fit h-full flex items-center ${ completed && 'bg-gradient-to-r from-transparent from-25% via-stannum via-25% to-stannum-light/75 to-100%' }`}>
+            <div className={`w-fit h-full flex items-center ${ completed ? 'bg-gradient-to-r from-transparent from-25% via-stannum via-25% to-stannum-light/75 to-100%' : inProcess && 'bg-gradient-to-r from-transparent from-25% via-stannum/40 via-25% to-stannum-light/40 to-100%' }`}>
                 <div className='w-[21.5rem] h-full'>
-                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative overflow-y-visible transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : 'bg-transparent' }`}>
+                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative overflow-y-visible transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'bg-card group-hover:bg-card-light' : 'bg-transparent' }`}>
                         <div className='flex flex-col gap-4'>
                             <div className='flex items-center gap-2 relative left-8'>
                                 <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : 'bg-invalid/25'}  flex justify-center items-center`}>
@@ -70,8 +75,19 @@ export const TMDInstructionCard = ({index, title, completed}:Props) => {
                                 <CheckIcon/>
                             </div>
                             <div className='flex flex-col items-center gap-1'>
-                                <p className='title-3 text-base whitespace-nowrap'>Instrucción completada</p>
-                                <p className='text-sm'><b className='title-3 text-sm'>Tu tiempo</b> | 00:05</p>
+                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción en proceso</p>
+                                <p className='mt-1 text-sm'><b className='title-3 text-sm'>Tu tiempo</b> | 00:05</p>
+                            </div>
+                        </Fragment>
+                        :
+                        inProcess ?
+                        <Fragment>
+                            <div className='size-16 bg-card-light/40 rounded-full text-4xl flex justify-center items-center shadow-sm'>
+                                <HourglassIcon/>
+                            </div>
+                            <div className='flex flex-col items-center gap-1'>
+                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción en proceso</p>
+                                <p className='mt-1 text-sm'><b className='title-3 text-sm'>Tiempo actual</b> | 00:05</p>
                             </div>
                         </Fragment>
                         :
@@ -89,6 +105,6 @@ export const TMDInstructionCard = ({index, title, completed}:Props) => {
                     <ArrowRightIcon className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200" />
                 </div>
             </div>
-        </Link>
+        </button>
     )
 }
