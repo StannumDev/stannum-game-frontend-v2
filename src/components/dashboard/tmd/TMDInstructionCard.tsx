@@ -20,7 +20,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, setSelec
             className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200 ${ completed && 'border-2 border-stannum' }`}
         >
             <div className='h-full aspect-square relative shrink-0'>
-                <Image src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
+                <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
             </div>
             <div className='pl-6 grow min-w-0 h-full flex flex-col justify-center pr-8'>
                 <span className='subtitle-1'>Instrucción {index < 10 ? `0${index}` : index}</span>
