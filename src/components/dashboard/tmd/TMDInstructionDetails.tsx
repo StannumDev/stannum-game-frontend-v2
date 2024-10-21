@@ -41,18 +41,40 @@ export const TMDInstructionDetails = () => {
                 </div>
             </div>
             <div className="mt-6 w-full px-6 flex gap-6">
-                <div className="grow">
-                    <div className="w-full flex flex-col gap-2">
-                        <h2 className="title-3">Pasos para el desarrollo de la instrucción</h2>
-                        <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                        <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                        <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                        <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                        <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                    </div>
-                    <div className="mt-6 w-full">
-                        <h2 className="title-3 text-stannum">Entregable</h2>
-                        <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
+                <div className="grow bg-card-light/40 rounded-lg relative">
+                    <div className="size-full p-6 absolute top-0 left-0 overflow-y-auto">
+                        <div className="w-full flex flex-col gap-2">
+                            <h2 className="title-3">Pasos para el desarrollo de la instrucción</h2>
+                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                        </div>
+                        <div className="mt-6 w-full">
+                            <h2 className="title-3 text-stannum">Entregable</h2>
+                            <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full max-w-sm aspect-square bg-invalid/25 border-2 border-dashed border-invalid rounded-lg flex flex-col justify-center items-center gap-4">
