@@ -59,6 +59,7 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 export { TMDCover } from "./dashboard/tmd/TMDCover";
 export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
 export { TMDLessonCard } from "./dashboard/tmd/TMDLessonCard";
+export { TMDInstructionCard } from "./dashboard/tmd/TMDInstructionCard";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";

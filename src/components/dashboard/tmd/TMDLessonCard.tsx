@@ -22,7 +22,7 @@ export const TMDLessonCard = ({index, title, completed}:Props) => {
                 completed ?
                 <div className='w-fit flex items-center gap-4 shrink-0 relative z-10'>
                     <div className='subtitle-1'>Incompleto</div>
-                    <div className='px-8 h-12 bg-card border-2 border-stannum rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
+                    <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
                         Reproducir
                         <PlayIcon/>
                     </div>

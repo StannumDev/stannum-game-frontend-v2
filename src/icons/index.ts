@@ -45,7 +45,8 @@ export {
     RiCustomerService2Line as SupportIcon,
     RiToolsLine as ToolsIcon,
     RiTrophyLine as TrophyIcon,
-    RiShieldStarLine as MissionsIcon
+    RiShieldStarLine as MissionsIcon,
+    RiVipCrownLine as CrownIcon
 } from "react-icons/ri";
 
 export {

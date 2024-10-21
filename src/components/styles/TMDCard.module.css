@@ -18,3 +18,36 @@
     );
     background-size: 128px 80px;
 }
+
+.diagonal__lines::before,
+.diagonal__lines::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.diagonal__lines::before {
+  left: 3.75rem;
+  transform: rotate(30.05deg);
+}
+
+.diagonal__lines::after {
+  right: 3.75rem;
+  transform: rotate(30.05deg);
+}
+
+.diagonal__lines{
+    clip-path: polygon(35% 0, 100% 0, 65% 100%, 0% 100%);
+}
+
+.completed__diagonal__lines::before{
+  transform: rotate(30.5deg);
+}
+
+.completed__diagonal__lines::after{
+  background: rgba(255, 255, 255, 0);
+  transform: rotate(30.5deg);
+}

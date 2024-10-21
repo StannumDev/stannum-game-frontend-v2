@@ -1,5 +1,5 @@
 import { ArrowBackIcon } from '@/icons';
-import { TMDLessonCard } from '@/components';
+import { TMDInstructionCard, TMDLessonCard } from '@/components';
 
 interface Props{
     restartNavigation: () => void
@@ -31,13 +31,26 @@ export const PreseasonModuleOne = ({restartNavigation}:Props) => {
                 <ArrowBackIcon/>
                 <span className='font-semibold'>Atras</span>
             </button>
-            <div className='mt-4 w-full flex flex-col gap-4'>
-                {
-                    modules.map((lesson, i) => (
-                        <TMDLessonCard {...lesson} key={i}/>
-                    ))
-                }
-            </div>
+            <section className='mt-4 w-full'>
+                <h3 className='subtitle-1'>Lecciones</h3>
+                <div className='mt-4 w-full flex flex-col gap-4'>
+                    {
+                        modules.map((lesson, i) => (
+                            <TMDLessonCard {...lesson} key={i}/>
+                        ))
+                    }
+                </div>
+            </section>
+            <section className='mt-6 w-full'>
+                <h3 className='subtitle-1'>Instrucciones</h3>
+                <div className='mt-4 w-full flex flex-col gap-4'>
+                    {
+                        modules.map((lesson, i) => (
+                            <TMDInstructionCard {...lesson} key={i}/>
+                        ))
+                    }
+                </div>
+            </section>
         </div>
     )
 }
