@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
-import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, HourglassIcon } from '@/icons';
+import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, ToolsIcon } from '@/icons';
 import styles from '@/components/styles/TMDCard.module.css';
 import instruction_logo from '@/assets/products/tmd/tmd_instructions.webp';
 
@@ -29,13 +29,13 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis.
                 </p>
             </div>
-            <div className={`w-fit h-full flex items-center ${ completed ? 'bg-gradient-to-r from-transparent from-25% via-stannum via-25% to-stannum-light/75 to-100%' : inProcess && 'bg-gradient-to-r from-transparent from-25% via-stannum/40 via-25% to-stannum-light/40 to-100%' }`}>
+            <div className={`w-fit h-full flex items-center ${ completed ? 'bg-gradient-to-r from-transparent from-25% via-stannum via-25% to-stannum-light/75 to-100%' : inProcess && 'bg-gradient-to-r from-transparent from-25% via-card via-25% to-card-lighter/40 to-100%' }`}>
                 <div className='w-[21.5rem] h-full'>
-                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'bg-card group-hover:bg-card-light' : 'bg-transparent' }`}>
+                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'bg-card group-hover:bg-card-light' : 'bg-card group-hover:bg-card-light' }`}>
                         <div className='flex flex-col gap-4'>
                             <div className='flex items-center gap-2 relative left-8'>
-                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                    <span className={`text-xl ${ completed ? 'text-stannum' : 'text-invalid' }`}>D</span>
+                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : inProcess ? 'bg-card-light' : 'bg-invalid/25'}  flex justify-center items-center`}>
+                                    <span className={`text-xl ${ completed || inProcess ? 'text-stannum' : 'text-invalid' }`}>D</span>
                                 </div>
                                 <div className='flex flex-col'>
                                     <span>Baja</span>
@@ -43,8 +43,8 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                                 </div>
                             </div>
                             <div className='flex items-center gap-2'>
-                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                    <span className={`text-xl ${ completed ? 'text-stannum' : 'text-invalid' }`}>
+                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : inProcess ? 'bg-card-light' : 'bg-invalid/25'}  flex justify-center items-center`}>
+                                    <span className={`text-xl ${ completed || inProcess ? 'text-stannum' : 'text-invalid' }`}>
                                         <CrownIcon />
                                     </span>
                                 </div>
@@ -54,8 +54,8 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                                 </div>
                             </div>
                             <div className='flex items-center gap-2 relative right-8'>
-                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                    <span className={`${completed ? 'text-stannum' : 'text-invalid'}`}>
+                                <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : inProcess ? 'bg-card-light' : 'bg-invalid/25'}  flex justify-center items-center`}>
+                                    <span className={`${completed || inProcess ? 'text-stannum' : 'text-invalid'}`}>
                                         {completed ? <CheckIcon className='size-5' /> : <CrossIcon className='size-4' />}
                                     </span>
                                 </div>
@@ -75,15 +75,15 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                                 <CheckIcon/>
                             </div>
                             <div className='flex flex-col items-center gap-1'>
-                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción en proceso</p>
+                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción completada</p>
                                 <p className='mt-1 text-sm'><b className='title-3 text-sm'>Tu tiempo</b> | 00:05</p>
                             </div>
                         </Fragment>
                         :
                         inProcess ?
                         <Fragment>
-                            <div className='size-16 bg-card-light/40 rounded-full text-4xl flex justify-center items-center shadow-sm'>
-                                <HourglassIcon/>
+                            <div className='size-16 bg-card-light text-stannum rounded-full text-4xl flex justify-center items-center shadow-sm'>
+                                <ToolsIcon/>
                             </div>
                             <div className='flex flex-col items-center gap-1'>
                                 <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción en proceso</p>

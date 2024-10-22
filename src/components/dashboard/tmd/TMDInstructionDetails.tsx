@@ -143,7 +143,7 @@ export const TMDInstructionDetails = () => {
                             </div>
                         : status === 'COMPLETED' &&
                             <div className="size-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4 group relative">
-                                <div className="size-14 bg-stannum-light rounded-full flex justify-center items-center shadow">
+                                <div className="size-14 bg-stannum-light rounded-full flex justify-center items-center shadow-sm">
                                     <CheckIcon className="size-10"/>
                                 </div>
                                 <h3 className="pb-2 title-3 border-b border-white/10">Instrucción completada</h3>
