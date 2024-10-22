@@ -1,6 +1,13 @@
-import { CrossIcon, CrownIcon } from "@/icons"
+'use client'
+
+import { useState, useRef } from "react";
+import { CheckIcon, CrossIcon, CrownIcon, HourglassIcon, ToolsIcon, UploadIcon } from "@/icons";
 
 export const TMDInstructionDetails = () => {
+    
+    const fileInputRef = useRef(null);
+    const [status, setStatus] = useState<'PENDING'|'IN_PROCESS'|'IN_REVIEW'|'COMPLETED'>('PENDING')
+
     return (
         <div className="w-full py-6 bg-card rounded-lg">
             <div className='col-span-3 w-full px-6 flex flex-col'>
@@ -9,8 +16,10 @@ export const TMDInstructionDetails = () => {
             </div>
             <div className="mt-6 p-6 pt-0 border-b border-white/10 flex gap-12">
                 <div className='flex items-center gap-2 relative'>
-                    <div className='size-10 rounded-full bg-invalid/25 flex justify-center items-center shrink-0'>
-                        <span className='text-xl text-invalid'>D</span>
+                    <div className={`size-10 rounded-full flex justify-center items-center shrink-0 ${ status === 'PENDING' ? 'bg-invalid/25' : status === 'IN_PROCESS' || status === 'IN_REVIEW' ? 'bg-card-light' : 'bg-stannum/40'}`}>
+                        <span className={`text-xl ${ status === 'PENDING' ? 'text-invalid' : 'text-stannum'}`}>
+                            D
+                        </span>
                     </div>
                     <div className='flex flex-col'>
                         <span>Baja</span>
@@ -18,8 +27,8 @@ export const TMDInstructionDetails = () => {
                     </div>
                 </div>
                 <div className='flex items-center gap-2 relative'>
-                    <div className='size-10 rounded-full bg-invalid/25 flex justify-center items-center shrink-0'>
-                        <span className='text-xl text-invalid'>
+                    <div className={`size-10 rounded-full flex justify-center items-center shrink-0 ${ status === 'PENDING' ? 'bg-invalid/25' : status === 'IN_PROCESS' || status === 'IN_REVIEW' ? 'bg-card-light' : 'bg-stannum/40'}`}>
+                        <span className={`text-xl ${ status === 'PENDING' ? 'text-invalid' : 'text-stannum'}`}>
                             <CrownIcon />
                         </span>
                     </div>
@@ -29,13 +38,25 @@ export const TMDInstructionDetails = () => {
                     </div>
                 </div>
                 <div className='flex items-center gap-2 relative'>
-                    <div className='size-10 rounded-full bg-invalid/25 flex justify-center items-center shrink-0'>
-                        <span className='text-xl text-invalid'>
-                            <CrossIcon className='size-4' />
+                    <div className={`size-10 rounded-full flex justify-center items-center shrink-0 ${ status === 'PENDING' ? 'bg-invalid/25' : status === 'IN_PROCESS' || status === 'IN_REVIEW' ? 'bg-card-light' : 'bg-stannum/40'}`}>
+                        <span className={`text-xl ${ status === 'PENDING' ? 'text-invalid' : 'text-stannum'}`}>
+                            {
+                                status === 'PENDING' ? <CrossIcon/>
+                                : status === 'IN_PROCESS' ? <ToolsIcon/>
+                                : status === 'IN_REVIEW' ? <HourglassIcon/>
+                                : status === 'COMPLETED' && <CheckIcon/>
+                            }
                         </span>
                     </div>
                     <div className='flex flex-col'>
-                        <span>Pendiente</span>
+                        <span>
+                            {
+                                status === 'PENDING' ? 'Pendiente'
+                                : status === 'IN_PROCESS' ? 'En proceso'
+                                : status === 'IN_REVIEW' ? 'En revisión'
+                                : status === 'COMPLETED' && 'Completado'
+                            }
+                        </span>
                         <span className='subtitle-1'>Estado</span>
                     </div>
                 </div>
@@ -44,7 +65,7 @@ export const TMDInstructionDetails = () => {
                 <div className="grow bg-card-light/40 rounded-lg relative">
                     <div className="size-full p-6 absolute top-0 left-0 overflow-y-auto">
                         <div className="w-full flex flex-col gap-2">
-                            <h2 className="title-3">Pasos para el desarrollo de la instrucción</h2>
+                            <h3 className="title-3">Pasos para el desarrollo de la instrucción</h3>
                             <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
                             <p>Paso 2: Descargar Google Drive en su computadora.</p>
                             <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
@@ -72,20 +93,68 @@ export const TMDInstructionDetails = () => {
                             <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
                         </div>
                         <div className="mt-6 w-full">
-                            <h2 className="title-3 text-stannum">Entregable</h2>
+                            <h3 className="title-3 text-stannum">Entregable</h3>
                             <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-sm aspect-square bg-invalid/25 border-2 border-dashed border-invalid rounded-lg flex flex-col justify-center items-center gap-4">
-                    <CrossIcon className="size-10 text-invalid"/>
-                    <h2 className="pb-2 title-3 border-b border-white/10">Instrucción pendiente</h2>
-                    <p>¡Preparate para comenzar!</p>
-                    <button type="button" className="w-36 h-10 bg-invalid hover:bg-invalid/75 rounded tracking-tighter transition-200">Comenzar</button>
+                <div className="w-full max-w-sm aspect-square">
+                    {
+                        status === 'PENDING' ?
+                            <div className="size-full p-6 bg-invalid/25 border-2 border-dashed border-invalid rounded-lg flex flex-col justify-center items-center gap-4">
+                                <CrossIcon className="size-10 text-invalid"/>
+                                <h3 className="pb-2 title-3 border-b border-white/10">Instrucción pendiente</h3>
+                                <p>¡Preparate para comenzar!</p>
+                                <button
+                                    type="button"
+                                    onClick={ () => { setStatus('IN_PROCESS') } }
+                                    className="w-36 h-10 bg-invalid hover:bg-invalid/75 rounded tracking-tighter transition-200"
+                                >Comenzar</button>
+                            </div>
+                        : status === 'IN_PROCESS' ?
+                            <div className="size-full p-6 bg-transparent border-2 border-dashed border-stannum rounded-lg flex flex-col justify-center items-center gap-4 group relative">
+                                <UploadIcon className="size-10 text-stannum"/>
+                                <h3 className="pb-2 title-3 border-b border-white/10">Instrucción en proceso</h3>
+                                <label htmlFor="uploadFile">Sube tu archivo aquí.</label>
+                                <button
+                                    type="button"
+                                    className="w-36 h-10 group-hover:bg-stannum/40 rounded-full border-2 border-solid border-stannum text-stannum tracking-tighter transition-200"
+                                >
+                                    Subir archivo
+                                </button>
+                                <input
+                                    onClick={ () => { setStatus('IN_REVIEW') } }
+                                    id="uploadFile"
+                                    name="uploadFile"
+                                    ref={fileInputRef}
+                                    type="file"
+                                    className="size-full opacity-0 absolute top-0 left-0 cursor-pointer" 
+                                />
+                                <div className="text-center text-xs text-white/75 font-thin flex flex-col absolute bottom-6 left-0 right-0 mx-auto">
+                                    <p>Tamaño máximo <b className="font-semibold">15MB</b></p>
+                                    <p>Formato <b className="font-semibold">JPG & PNG</b></p>
+                                </div>
+                            </div>
+                        : status === 'IN_REVIEW' ?
+                            <div onClick={ () => { setStatus('COMPLETED') } } className="size-full p-6 bg-stannum/40 border-2 border-dashed border-stannum rounded-lg flex flex-col justify-center items-center gap-4 group relative">
+                                <HourglassIcon className="size-10 text-stannum"/>
+                                <h3 className="pb-2 title-3 border-b border-white/10">Instrucción en revisión</h3>
+                                <p className="w-full text-center">Proximamente veras aquí reflejado el resultado de tu instrucción.</p>
+                            </div>
+                        : status === 'COMPLETED' &&
+                            <div className="size-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4 group relative">
+                                <div className="size-14 bg-stannum-light rounded-full flex justify-center items-center shadow">
+                                    <CheckIcon className="size-10"/>
+                                </div>
+                                <h3 className="pb-2 title-3 border-b border-white/10">Instrucción completada</h3>
+                                <p className="text-6xl font-black">86<small className="text-xl font-thin opacity-75">/100</small></p>
+                                <p className="text-center absolute bottom-6 left-0 right-0 mx-auto">Tu tiempo | 30:58</p>
+                            </div>
+                    }
                 </div>
             </div>
             <div className="mt-6 w-full p-6 pb-0 border-t border-white/10">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum error soluta reprehenderit asperiores? Dolor aspernatur voluptatum tempora ratione. Minima tempore soluta accusamus libero placeat omnis beatae at et dolorum illo!</p>
+                <h3 className="title-3">Videos de apoyo</h3>
             </div>
         </div>
     )

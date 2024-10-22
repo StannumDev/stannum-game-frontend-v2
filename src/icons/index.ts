@@ -84,7 +84,8 @@ export {
 
 export {
     FiUnlock as UnlockIcon,
-    FiUser as UserIcon
+    FiUser as UserIcon,
+    FiUploadCloud as UploadIcon
 } from "react-icons/fi";
 
 export {
