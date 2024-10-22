@@ -1,16 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
 import { ArrowRightIcon, CompassIcon, PaperIcon, VideosIcon } from "@/icons";
 import styles from '@/components/styles/TMDCard.module.css';
 
 interface Props{
     index: number;
     title: string;
-    setSelectedModule: Dispatch<SetStateAction<number|null>>
+    handleModuleChange: (module:number) => void;
 }
 
-export const TMDModuleCard = ({index, title, setSelectedModule}:Props) => {
+export const TMDModuleCard = ({index, title, handleModuleChange}:Props) => {
     return (
-        <div onClick={() => { setSelectedModule(index) }} className="w-full h-20 flex items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
+        <div onClick={() => { handleModuleChange(index) }} className="w-full h-20 flex items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
             <div className={`w-20 h-full bg-stannum flex justify-center items-center shrink-0 ${styles.index__clip__diagonal}`}>
                 <span className='text-4xl font-semibold relative -left-1'>{ index < 10 ? `0${index}` : index }</span>
             </div>

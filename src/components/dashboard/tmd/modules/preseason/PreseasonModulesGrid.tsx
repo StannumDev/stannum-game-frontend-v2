@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { TMDModuleCard } from "@/components";
 
 interface Props{
-    setSelectedModule: Dispatch<SetStateAction<number|null>>
+    handleModuleChange: (module:number) => void;
 }
 
 interface Module{
@@ -29,12 +28,12 @@ const modules:Array<Module> = [
     },
 ]
 
-export const PreseasonModulesGrid = ({setSelectedModule}:Props) => {
+export const PreseasonModulesGrid = ({handleModuleChange}:Props) => {
     return (
         <div className="w-full flex flex-col gap-4">
             {
                 modules.map( ({index, title}:Module) => (
-                    <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
+                    <TMDModuleCard index={index} title={title} handleModuleChange={handleModuleChange} key={index}/>
                 ))
             }
         </div>

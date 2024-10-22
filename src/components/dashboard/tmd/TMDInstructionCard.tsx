@@ -1,4 +1,4 @@
-import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Fragment } from 'react';
 import Image from 'next/image';
 import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, HourglassIcon } from '@/icons';
 import styles from '@/components/styles/TMDCard.module.css';
@@ -9,15 +9,15 @@ interface Props{
     title: string;
     inProcess?: boolean;
     completed?: boolean;
-    setSelectedInstruction: Dispatch<SetStateAction<number | null>>
+    handleInstructionChange: (instruction:number) => void
 }
 
-export const TMDInstructionCard = ({index, title, inProcess, completed, setSelectedInstruction }:Props) => {
+export const TMDInstructionCard = ({index, title, inProcess, completed, handleInstructionChange }:Props) => {
     return (
         <button
             type='button'
-            onClick={ () => { setSelectedInstruction(index) } }
-            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200 ${ completed && 'border-2 border-solid border-stannum' }`}
+            onClick={ () => { handleInstructionChange(index) } }
+            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-card hover:border-card-light' } relative overflow-hidden group cursor-pointer transition-200 `}
         >
             <div className='h-full aspect-square relative shrink-0'>
                 <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
@@ -31,7 +31,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, setSelec
             </div>
             <div className={`w-fit h-full flex items-center ${ completed ? 'bg-gradient-to-r from-transparent from-25% via-stannum via-25% to-stannum-light/75 to-100%' : inProcess && 'bg-gradient-to-r from-transparent from-25% via-stannum/40 via-25% to-stannum-light/40 to-100%' }`}>
                 <div className='w-[21.5rem] h-full'>
-                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative overflow-y-visible transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'bg-card group-hover:bg-card-light' : 'bg-transparent' }`}>
+                    <div className={`w-full h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `bg-card group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'bg-card group-hover:bg-card-light' : 'bg-transparent' }`}>
                         <div className='flex flex-col gap-4'>
                             <div className='flex items-center gap-2 relative left-8'>
                                 <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : 'bg-invalid/25'}  flex justify-center items-center`}>

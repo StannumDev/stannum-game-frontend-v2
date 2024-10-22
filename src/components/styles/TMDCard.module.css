@@ -30,24 +30,19 @@
 }
 
 .diagonal__lines::before {
-  left: 3.75rem;
+  left: 59px;
   transform: rotate(30.05deg);
 }
 
 .diagonal__lines::after {
-  right: 3.75rem;
+  right: 59px;
   transform: rotate(30.05deg);
 }
 
 .diagonal__lines{
-    clip-path: polygon(35% 0, 100% 0, 65% 100%, 0% 100%);
+    clip-path: polygon(34.4% 0, 100% 0, 65.6% 100%, 0% 100%);
+    overflow: visible;
 }
-
-.completed__diagonal__lines::before{
-  transform: rotate(30.5deg);
-}
-
 .completed__diagonal__lines::after{
-  background: rgba(255, 255, 255, 0);
-  transform: rotate(30.5deg);
+  background: transparent;
 }

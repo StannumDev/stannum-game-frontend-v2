@@ -89,7 +89,7 @@
   }
   
   input, textarea, button{
-    @apply outline-none focus-visible:outline-none bg-transparent border-none
+    @apply outline-none focus-visible:outline-none bg-transparent border-0
   }
 
   input:-webkit-autofill,

@@ -1,11 +1,12 @@
-'use client'
-
+import { Fragment } from 'react';
 import { ArrowBackIcon } from '@/icons';
 import { TMDInstructionCard, TMDInstructionDetails, TMDLessonCard } from '@/components';
-import { Fragment, useState } from 'react';
 
 interface Props{
-    restartNavigation: () => void
+    restartModule: () => void;
+    selectedInstruction: number|null;
+    handleInstructionChange: (instruction:number) => void;
+    restartInstruction: () => void
 }
 
 interface Lesson{
@@ -51,13 +52,9 @@ const instructions:Array<Instruction> = [
     }
 ]
 
-export const PreseasonModuleOne = ({restartNavigation}:Props) => {
+export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleInstructionChange, restartInstruction}:Props) => {
 
-    const [selectedInstruction, setSelectedInstruction] = useState<number|null>(null)
-
-    const goBack = () => {
-        selectedInstruction ? setSelectedInstruction(null) : restartNavigation()
-    }
+    const goBack = () => selectedInstruction ? restartInstruction() : restartModule();
 
     return (
         <div className="w-full">
@@ -84,7 +81,7 @@ export const PreseasonModuleOne = ({restartNavigation}:Props) => {
                             <div className='mt-4 w-full flex flex-col gap-4'>
                                 {
                                     instructions.map((instruction, i) => (
-                                        <TMDInstructionCard {...instruction} setSelectedInstruction={setSelectedInstruction} key={i}/>
+                                        <TMDInstructionCard {...instruction} handleInstructionChange={handleInstructionChange} key={i}/>
                                     ))
                                 }
                             </div>

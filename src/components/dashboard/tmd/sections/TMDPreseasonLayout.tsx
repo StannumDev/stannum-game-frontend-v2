@@ -1,23 +1,29 @@
-'use client'
-
-import { useCallback, useState } from 'react';
 import { PreseasonModuleOne, PreseasonModulesGrid } from "@/components";
 
-export const TMDPreseasonLayout = () => {
+interface Props{
+    selectedModule: number|null;
+    handleModuleChange: (module:number) => void;
+    restartModule: () => void;
+    selectedInstruction: number|null;
+    handleInstructionChange: (instruction:number) => void;
+    restartInstruction: () => void;
+}
 
-    const [selectedModule, setSelectedModule] = useState<number|null>(null)
+export const TMDPreseasonLayout = ({ selectedModule, handleModuleChange, restartModule, selectedInstruction, handleInstructionChange, restartInstruction }:Props) => {
 
-    const restartNavigation = useCallback(() => {
-        setSelectedModule(null)
-    },[setSelectedModule])
-    
+    const props = {
+        restartModule,
+        selectedInstruction,
+        handleInstructionChange,
+        restartInstruction
+    }
 
     return (
         <section className="w-full flex flex-col gap-4">
             {
                 !selectedModule ?
-                <PreseasonModulesGrid setSelectedModule={setSelectedModule} key={'PreseasonModulesGrid'}/> :
-                selectedModule === 1 && <PreseasonModuleOne restartNavigation={restartNavigation} key={'PreseasonModuleOne'}/>
+                <PreseasonModulesGrid handleModuleChange={handleModuleChange}/> :
+                selectedModule === 1 && <PreseasonModuleOne {...props}/>
             }
         </section>
     )

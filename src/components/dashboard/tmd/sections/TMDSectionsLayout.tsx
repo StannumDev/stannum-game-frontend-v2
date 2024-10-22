@@ -51,21 +51,91 @@ export const TMDSectionsLayout = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const layout = searchParams.get('section');
+    const layoutParam = searchParams.get('section');
+    const moduleParam = searchParams.get('module');
+    const instructionParam = searchParams.get('instruction');
+
     const [selectedLayout, setSelectedLayout] = useState<sectionOptions>('warmup');
+    const [selectedModule, setSelectedModule] = useState<number|null>(null)
+    const [selectedInstruction, setSelectedInstruction] = useState<number|null>(null)
 
     useEffect(() => {
-        if (layout && ['warmup', 'preseason', 'season', 'support', 'tools', 'ranking', 'missions'].includes(layout)) {
-            setSelectedLayout(layout as sectionOptions);
+        if (layoutParam && ['warmup', 'preseason', 'season', 'support', 'tools', 'ranking', 'missions'].includes(layoutParam)) {
+            setSelectedLayout(layoutParam as sectionOptions);
         } else {
-            router.replace(`${pathname}?section=warmup`, { scroll: false });
+            router.replace(`${pathname}?section=preseason`, { scroll: false });
         }
-    }, [layout, pathname, router]);
+
+        if (moduleParam && parseInt(moduleParam) > 0) {
+            setSelectedModule(parseInt(moduleParam));
+        }
+
+        if (instructionParam && parseInt(instructionParam) > 0) {
+            setSelectedInstruction(parseInt(instructionParam));
+        }
+
+    }, [pathname, router, layoutParam, moduleParam, instructionParam]);
 
     const handleLayoutChange = useCallback((layout: string): void => {
         setSelectedLayout(layout as sectionOptions);
-        router.replace(`${pathname}?section=${layout}`, { scroll: false });
-    }, [pathname, router, setSelectedLayout])
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('section', layout);
+
+        if (selectedModule) params.delete('module');
+        if (selectedInstruction) params.delete('instruction');
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams, selectedModule, selectedInstruction]);
+
+    const handleModuleChange = useCallback((module: number): void => {
+        setSelectedModule(module);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('module', module.toString());
+        params.set('section', selectedLayout);
+
+        if (selectedInstruction) params.delete('instruction');
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams, selectedLayout, selectedInstruction]);
+
+    const restartModule = useCallback(() => {
+        setSelectedModule(null);
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('module');
+
+        if (selectedInstruction) params.delete('instruction');
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams, selectedInstruction]);
+    
+    const handleInstructionChange = useCallback((instruction: number): void => {
+        if (!selectedModule) return;
+
+        setSelectedInstruction(instruction);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('section', selectedLayout);
+        params.set('module', selectedModule.toString());
+        params.set('instruction', instruction.toString());
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams, selectedLayout, selectedModule]);
+
+    const restartInstruction = useCallback(() => {
+        setSelectedInstruction(null);
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('instruction');
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams]);
+
+    const props = {
+        selectedModule,
+        handleModuleChange,
+        restartModule,
+        selectedInstruction,
+        handleInstructionChange,
+        restartInstruction
+    }
 
     return (
         <MotionWrapperLayoutClient>
@@ -79,9 +149,12 @@ export const TMDSectionsLayout = () => {
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 overflow-x-hidden">
                     {
-                        selectedLayout === 'warmup' ? <TMDWarmUpLayout/> :
-                        selectedLayout === 'preseason' ? <TMDPreseasonLayout/> :
-                        selectedLayout === 'season' && <TMDSeasonLayout/>
+                        selectedLayout === 'warmup' ?
+                            <TMDWarmUpLayout {...props}/>
+                        : selectedLayout === 'preseason' ?
+                            <TMDPreseasonLayout {...props}/>
+                        : selectedLayout === 'season' &&
+                            <TMDSeasonLayout {...props}/>
                     }
                 </div>
             </section>

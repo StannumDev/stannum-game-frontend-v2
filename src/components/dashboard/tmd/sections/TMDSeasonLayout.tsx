@@ -1,7 +1,13 @@
-'use client'
-
-import { useState } from 'react';
 import { TMDModuleCard } from "@/components";
+
+interface Props{
+    selectedModule: number|null;
+    handleModuleChange: (module:number) => void;
+    restartModule: () => void;
+    selectedInstruction: number|null;
+    handleInstructionChange: (instruction:number) => void;
+    restartInstruction: () => void;
+}
 
 interface Module{
     index: number;
@@ -15,15 +21,13 @@ const modules:Array<Module> = [
     },
 ]
 
-export const TMDSeasonLayout = () => {
-    
-    const [, setSelectedModule] = useState<number|null>(null)
+export const TMDSeasonLayout = ({ handleModuleChange }:Props) => {
     
     return (
         <section className="w-full flex flex-col gap-4">
             {
                 modules.map( ({index, title}:Module) => (
-                    <TMDModuleCard index={index} title={title} setSelectedModule={setSelectedModule} key={index}/>
+                    <TMDModuleCard index={index} title={title} handleModuleChange={handleModuleChange} key={index}/>
                 ))
             }
         </section>
