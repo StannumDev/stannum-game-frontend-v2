@@ -68,10 +68,18 @@ export const TMDSectionsLayout = () => {
 
         if (moduleParam && parseInt(moduleParam) > 0) {
             setSelectedModule(parseInt(moduleParam));
+        } else {
+            setSelectedModule(null);
         }
 
-        if (instructionParam && parseInt(instructionParam) > 0) {
+        if (instructionParam && !moduleParam) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete('instruction');
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        } else if (instructionParam && parseInt(instructionParam) > 0) {
             setSelectedInstruction(parseInt(instructionParam));
+        } else {
+            setSelectedInstruction(null);
         }
 
     }, [pathname, router, layoutParam, moduleParam, instructionParam]);
