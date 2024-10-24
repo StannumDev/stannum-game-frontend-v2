@@ -133,15 +133,17 @@ export const PresentacionHome = () => {
                     </AnimatePresence>
                     <div className="w-full flex justify-center items-center gap-4">
                         <button
-                            onClick={previousStep}
                             type="button"
+                            onClick={ selectedStep === 1 ? () => { setShowModal(false) } : previousStep}
                             className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
                         >
-                            Anterior
+                            {
+                                selectedStep === 1 ? 'Omitir' : 'Anterior'
+                            }
                         </button>
                         <button
-                            onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
                             type="button"
+                            onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
                             className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
                         >
                             {

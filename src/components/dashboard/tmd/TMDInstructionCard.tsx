@@ -17,7 +17,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
         <button
             type='button'
             onClick={ () => { handleInstructionChange(index) } }
-            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-card hover:border-card-light' } relative overflow-hidden group cursor-pointer transition-200 `}
+            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-white/10 hover:border-white/15' } relative overflow-hidden group cursor-pointer transition-200 `}
         >
             <div className='h-full aspect-square relative shrink-0'>
                 <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
