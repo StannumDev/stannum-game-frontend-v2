@@ -9,12 +9,12 @@ export const TMDInstructionDetails = () => {
     const [status, setStatus] = useState<'PENDING'|'IN_PROCESS'|'IN_REVIEW'|'COMPLETED'>('PENDING')
 
     return (
-        <div className="w-full py-6 bg-card rounded-lg">
-            <div className='col-span-3 w-full px-6 flex flex-col'>
+        <div className="w-full lg:py-6 lg:bg-card lg:rounded-lg">
+            <div className='w-full lg:px-6 flex flex-col'>
                 <span className='subtitle-1'>Instrucción 01</span>
-                <h2 className='w-full title-2 text-xl'>Organización digital Organización digital Organización digital Organización digital Organización digital Organización digital Organización digital Organización digital</h2>
+                <h2 className='w-full title-2 text-xl'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, dolor? In modi natus debitis suscipit aliquid molestiae deserunt.</h2>
             </div>
-            <div className="mt-6 p-6 pt-0 border-b border-white/10 flex gap-12">
+            <div className="mt-6 pb-6 lg:p-6 lg:pt-0 border-b border-white/10 grid grid-cols-2 gap-4 lg:flex lg:gap-12">
                 <div className='flex items-center gap-2 relative'>
                     <div className={`size-10 rounded-full flex justify-center items-center shrink-0 ${ status === 'PENDING' ? 'bg-invalid/25' : status === 'IN_PROCESS' || status === 'IN_REVIEW' ? 'bg-card-light' : 'bg-stannum/40'}`}>
                         <span className={`text-xl ${ status === 'PENDING' ? 'text-invalid' : 'text-stannum'}`}>
@@ -61,44 +61,47 @@ export const TMDInstructionDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-6 w-full px-6 flex gap-6">
-                <div className="grow bg-card-light/40 rounded-lg relative">
-                    <div className="size-full p-6 absolute top-0 left-0 overflow-y-auto">
-                        <div className="w-full flex flex-col gap-2">
-                            <h3 className="title-3">Pasos para el desarrollo de la instrucción</h3>
-                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                            <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
-                            <p>Paso 2: Descargar Google Drive en su computadora.</p>
-                            <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
-                            <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
-                            <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
-                        </div>
-                        <div className="mt-6 w-full">
-                            <h3 className="title-3 text-stannum">Entregable</h3>
-                            <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
+            <div className="mt-6 w-full lg:px-6 flex flex-col lg:flex-row gap-6">
+                <div className="w-full lg:w-auto lg:grow flex flex-col gap-4">
+                    <div className="w-full grow lg:bg-card-light/40 lg:rounded-lg relative">
+                        <h3 className="lg:hidden title-3">Pasos para el desarrollo de la instrucción</h3>
+                        <div className="mt-4 lg:mt-0 w-[calc(100%+5px)] lg:w-full lg:h-full max-h-96 pr-2 lg:p-6 lg:absolute lg:top-0 lg:left-0 overflow-y-auto">
+                            <div className="w-full flex flex-col gap-2">
+                                <h3 className="hidden lg:block title-3">Pasos para el desarrollo de la instrucción</h3>
+                                <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                                <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                                <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                                <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                                <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                                <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                                <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                                <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                                <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                                <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                                <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                                <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                                <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                                <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                                <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                                <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                                <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                                <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                                <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                                <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                                <p>Paso 1: Crear una cuenta en Google Drive, en caso de no tenerla.</p>
+                                <p>Paso 2: Descargar Google Drive en su computadora.</p>
+                                <p>Paso 3: Descargar la carpeta &ldquo;El nombre del negocio&rdquo; en tu escritorio haciendo click en el link adjunto y subirlo a tu cuenta de Google Drive.</p>
+                                <p>Paso 4: Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.</p>
+                                <p>Paso 5: Dar acceso a los miembros de tu equipo a las carpetas correspondientes.</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="w-full">
+                        <h3 className="title-3 text-stannum">Entregable</h3>
+                        <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
+                    </div>
                 </div>
-                <div className="w-full max-w-sm aspect-square">
+                <div className="w-full max-w-md lg:max-w-sm aspect-square">
                     {
                         status === 'PENDING' ?
                             <div className="size-full p-6 bg-invalid/25 border-2 border-dashed border-invalid rounded-lg flex flex-col justify-center items-center gap-4">
