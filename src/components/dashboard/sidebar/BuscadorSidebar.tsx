@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CloseIcon, SearchIcon } from "@/icons";
+import { CrossIcon, SearchIcon } from "@/icons";
 
 interface Props{
     isExpanded: boolean;
@@ -87,7 +87,7 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
                                 className="size-full flex justify-center items-center"
                             >
                                 <span className="sr-only">Limpiar buscador</span>
-                                <CloseIcon className="relative top-[2px] text-card-lighter transition-200"/>
+                                <CrossIcon className="relative top-[2px] text-card-lighter transition-200"/>
                             </motion.button>
                         }
                     </AnimatePresence>

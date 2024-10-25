@@ -7,15 +7,17 @@ interface Props{
     isLoading: boolean;
     text: string;
     className?: string;
+    form?: string;
 }
 
-export const SubmitButtonLoading = ({isLoading, text, className}:Props) => {
+export const SubmitButtonLoading = ({isLoading, text, form, className}:Props) => {
     return (
         <motion.button
             whileTap={{scale: !isLoading ? 1.05 : 1 }}
             whileHover={{ backgroundColor: '#66eae5'}}
-            disabled={isLoading}
             type="submit"
+            form={form}
+            disabled={isLoading}
             className={`${className} bg-stannum disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center`}
         >
             {

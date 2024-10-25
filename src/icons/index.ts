@@ -13,7 +13,6 @@ export {
 } from 'react-icons/fa6';
 
 export {
-    IoClose as CloseIcon,
     IoPlay as PlayIcon,
     IoPlayCircle as PlayCircleIcon,
     IoBagHandle as StoreIcon,
@@ -27,8 +26,10 @@ export {
 
 export {
     TbInfoHexagon as InfoHexagonIcon,
+    TbAlertHexagon as AlertHexagonIcon,
+    TbHelpHexagon as HelpHexagonIcon,
     TbInfoCircleFilled as InfoCircleIcon,
-    TbWorld as WorldIcon
+    TbWorld as WorldIcon,
 } from "react-icons/tb";
 
 export {
@@ -56,7 +57,8 @@ export {
 
 export {
     MdModeEdit as EditIcon,
-    MdAddAPhoto as AddPhotoIcon
+    MdAddAPhoto as AddPhotoIcon,
+    MdOutlineVpnKey as KeyIcon
 } from "react-icons/md";
 
 export {

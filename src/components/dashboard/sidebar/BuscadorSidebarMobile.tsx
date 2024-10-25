@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CloseIcon, SearchIcon } from "@/icons";
+import { CrossIcon, SearchIcon } from "@/icons";
 import { SidebarMobileIndicator } from "@/components";
 
 interface Props{
@@ -101,7 +101,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                             className="size-12 flex justify-center items-center"
                         >
                             <span className="sr-only">Limpiar buscador</span>
-                            <CloseIcon className="text-3xl text-card-lighter"/>
+                            <CrossIcon className="text-3xl text-card-lighter"/>
                         </motion.button>
                     </motion.div>
                     <motion.div

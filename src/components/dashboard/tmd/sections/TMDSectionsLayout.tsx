@@ -85,33 +85,51 @@ export const TMDSectionsLayout = () => {
     }, [pathname, router, layoutParam, moduleParam, instructionParam]);
 
     const handleLayoutChange = useCallback((layout: string): void => {
-        setSelectedLayout(layout as sectionOptions);
         const params = new URLSearchParams(searchParams.toString());
+
+        if (selectedModule){
+            setSelectedModule(null);
+            params.delete('module');
+        };
+
+        if (selectedInstruction){
+            setSelectedInstruction(null);
+            params.delete('instruction');
+        }
+
+        setSelectedLayout(layout as sectionOptions);
         params.set('section', layout);
 
-        if (selectedModule) params.delete('module');
-        if (selectedInstruction) params.delete('instruction');
 
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, [pathname, router, searchParams, selectedModule, selectedInstruction]);
 
     const handleModuleChange = useCallback((module: number): void => {
-        setSelectedModule(module);
         const params = new URLSearchParams(searchParams.toString());
+
+        if (selectedInstruction){
+            setSelectedInstruction(null);
+            params.delete('instruction');
+        }
+
+        setSelectedModule(module);
         params.set('module', module.toString());
         params.set('section', selectedLayout);
 
-        if (selectedInstruction) params.delete('instruction');
 
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, [pathname, router, searchParams, selectedLayout, selectedInstruction]);
 
     const restartModule = useCallback(() => {
-        setSelectedModule(null);
         const params = new URLSearchParams(searchParams.toString());
-        params.delete('module');
+    
+        if (selectedInstruction){
+            setSelectedInstruction(null);
+            params.delete('instruction');
+        }
 
-        if (selectedInstruction) params.delete('instruction');
+        setSelectedModule(null);
+        params.delete('module');
 
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, [pathname, router, searchParams, selectedInstruction]);

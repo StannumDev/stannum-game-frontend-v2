@@ -2,7 +2,7 @@
 
 import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CloseIcon } from '@/icons';
+import { CrossIcon } from '@/icons';
 
 interface Props{
     showModal: boolean;
@@ -57,9 +57,9 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
                         }}
                         className={`w-full h-[75svh] lg:h-auto lg:aspect-video card relative z-50 ${className}`}
                     >
-                        <button onClick={ () => { setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className="size-8 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-10 right-0 transition-all duration-200 ease-in-out">
+                        <button onClick={ () => { setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className="size-6 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute top-4 right-4 z-[9999999999] transition-all duration-200 ease-in-out">
                             <span className="sr-only">Cerrar</span>
-                            <CloseIcon className="size-8"/>
+                            <CrossIcon className="size-8"/>
                         </button>
                         <div className="size-full overflow-hidden flex flex-col">
                             { children }

@@ -49,7 +49,7 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
                 <motion.div
                     layoutId="activeSidebar"
                     transition={{ duration: 0.125, type: 'spring', bounce: 0 }}
-                    className="size-full bg-gradient-to-br from-stannum to-teal-200 absolute top-0 left-0 z-0"
+                    className="size-full bg-gradient-to-br from-stannum to-stannum-light absolute top-0 left-0 z-0"
                 ></motion.div>
             }
             <AnimatePresence mode="popLayout" initial={false}>
