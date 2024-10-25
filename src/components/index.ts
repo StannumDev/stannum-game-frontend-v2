@@ -61,12 +61,15 @@ export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
 export { TMDLessonCard } from "./dashboard/tmd/TMDLessonCard";
 export { TMDInstructionCard } from "./dashboard/tmd/TMDInstructionCard";
 export { TMDInstructionDetails } from "./dashboard/tmd/TMDInstructionDetails";
+export { TMDTeamRankingCard } from "./dashboard/tmd/TMDTeamRankingCard";
+export { TMDPlayerRankingCard } from "./dashboard/tmd/TMDPlayerRankingCard";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
 export { TMDWarmUpLayout } from "./dashboard/tmd/sections/TMDWarmUpLayout";
 export { TMDPreseasonLayout } from "./dashboard/tmd/sections/TMDPreseasonLayout";
 export { TMDSeasonLayout } from "./dashboard/tmd/sections/TMDSeasonLayout";
+export { TMDRankingLayout } from "./dashboard/tmd/sections/TMDRankingLayout";
 
 // TMD LESSONS
 export { LessonVideoPlayer } from "./dashboard/tmd/lessons/LessonVideoPlayer";
@@ -77,7 +80,6 @@ export { LessonMiniatureCard } from "./dashboard/tmd/lessons/LessonMiniatureCard
 // TMD PRESEASON
 export { PreseasonModulesGrid } from './dashboard/tmd/modules/preseason/PreseasonModulesGrid'
 export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonModuleOne'
-
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";

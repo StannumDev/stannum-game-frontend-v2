@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { MissionsIcon, PreseasonIcon, SeasonIcon, SupportIcon, ToolsIcon, TrophyIcon, WarmupIcon } from "@/icons";
-import { MotionWrapperLayoutClient, NavbarSection, TMDPreseasonLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
+import { MotionWrapperLayoutClient, NavbarSection, TMDPreseasonLayout, TMDRankingLayout, TMDSeasonLayout, TMDWarmUpLayout } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -179,8 +179,10 @@ export const TMDSectionsLayout = () => {
                             <TMDWarmUpLayout {...props}/>
                         : selectedLayout === 'preseason' ?
                             <TMDPreseasonLayout {...props}/>
-                        : selectedLayout === 'season' &&
+                        : selectedLayout === 'season' ?
                             <TMDSeasonLayout {...props}/>
+                        : selectedLayout === 'ranking' &&
+                            <TMDRankingLayout/>
                     }
                 </div>
             </section>
