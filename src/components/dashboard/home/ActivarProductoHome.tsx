@@ -1,18 +1,18 @@
 'use client'
 
-import { Fragment, useEffect, useState } from "react";
+import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { KeyIcon, AlertHexagonIcon } from '@/icons';
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/wallpaper/activar_producto.webp";
 import redeem_code from "@/assets/wallpaper/redeem_code.webp";
-import { KeyIcon, AlertHexagonIcon } from '@/icons';
-import { motion } from 'framer-motion';
 
 const schema = z.object({
-    productCode: z.string()
+    code: z.string()
       .nonempty("Campo requerido.")
       .regex(/^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$/, "Formato incorrecto. Debe ser XXXX-XXXX-XXXX-XXXX con letras y números.")
       .transform((val) => val.toUpperCase()),
@@ -26,7 +26,33 @@ export const ActivarProductoHome = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-    const { register, handleSubmit, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
+    const { register, handleSubmit, setValue, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toUpperCase();
+        let cleanValue = value.replace(/[^A-Z0-9-]/g, '');
+
+        if (cleanValue.length > 0) {
+            cleanValue = cleanValue
+                .split('')
+                .filter((char, index) => {
+                    if (char === '-' && (index !== 4 && index !== 9 && index !== 14)) {
+                        return false;
+                    }
+                    return true;
+                })
+                .join('');
+        }
+    
+        const parts = cleanValue.replace(/-/g, '').match(/.{1,4}/g) || [];
+        let formattedValue = parts.join('-');
+    
+        if (value.endsWith('-') && [5, 10, 15].includes(value.length)) {
+            formattedValue += '-';
+        }
+    
+        setValue('code', formattedValue.substring(0, 19));
+    };
 
     const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
         setIsLoading(true);
@@ -46,7 +72,7 @@ export const ActivarProductoHome = () => {
         reset();
         setIsLoading(false);
         setIsSubmitted(false);
-    }, [showModal])
+    }, [showModal, reset])
     
 
     return (
@@ -79,28 +105,29 @@ export const ActivarProductoHome = () => {
                     <main className="w-full lg:max-w-[calc(384px+4rem)] p-6 g:p-8 flex flex-col text-center lg:text-start">
                         <h2 className="title-2 text-5xl text-stannum">Activa un <span className="block text-white">producto</span></h2>
                         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 lg:mt-6 w-full max-w-sm flex flex-col gap-2" id="formActivarProducto">
-                            <label htmlFor="productCode" className="w-full max-w-xs">Ingresa tu código de activación para comenzar tu entrenamiento.</label>
+                            <label htmlFor="code" className="w-full max-w-xs">Ingresa tu código de activación para comenzar tu entrenamiento.</label>
                             <div className='mt-2 w-full relative'>
                                 <input
                                     type='text'
                                     minLength={19}
                                     maxLength={19}
-                                    id="productCode"
+                                    id="code"
                                     autoComplete="off"
                                     disabled={isSubmitted}
                                     placeholder="XXXX-XXXX-XXXX-XXXX"
                                     className="w-full h-10 ps-10 pr-2 bg-card rounded tracking-wide uppercase placeholder:text-card-lightest placeholder:tracking-wide disabled:text-card-lighter"
-                                    {...register("productCode",{
+                                    {...register("code",{
                                         required: true,
                                         minLength: 19,
-                                        maxLength: 19
+                                        maxLength: 19,
+                                        onChange: handleInputChange
                                     })}
                                 />
                                 <div className={`size-10 flex justify-center items-center absolute top-0 left-0 ${ isSubmitted ? 'text-card-lighter' : 'text-card-lightest'}`}>
                                     <KeyIcon className="size-5 -rotate-45"/>
                                 </div>
                             </div>
-                            <FormErrorMessage condition={errors?.productCode} message={errors?.productCode?.message}/>
+                            <FormErrorMessage condition={errors?.code} message={errors?.code?.message}/>
                         </form>
                         {
                             isSubmitted &&

@@ -59,22 +59,18 @@ export const PresentacionHome = () => {
             <MotionWrapperLayoutClient>
                 <section
                     onClick={() => setShowModal(true)}
-                    className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group lg:pointer-events-none"
+                    className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
                 >
                     { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
-                    <div className="size-full bg-gradient-to-br from-transparent to-black/75 absolute top-0 left-0 z-20"></div>
-                    <button
-                        onClick={() => setShowModal(true)}
-                        type="button"
-                        className="size-14 lg:size-32 rounded-full bg-stannum flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 pointer-events-auto hover:scale-105 transition-200"
-                    >
+                    <div className="size-full bg-gradient-to-br from-transparent to-black/75 group-hover:to-black/50 absolute top-0 left-0 z-20 transition-200"></div>
+                    <button type="button" className="size-14 lg:size-32 rounded-full bg-gradient-to-br from-stannum to-stannum-light flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 group-hover:scale-125 transition-200">
                         <PlayIcon className="size-8 lg:size-16 relative left-1"/>
                     </button>
                     <Image
                         priority
                         src={background}
                         alt="Presentación STANNUM Game"
-                        className="size-full object-cover blur-[1px] absolute top-0 left-0 z-10"
+                        className="size-full object-cover blur-none lg:blur-[4px] group-hover:blur-none absolute top-0 left-0 z-10 transition-200"
                         onLoad={() => setImageLoaded(true)}
                     />
                     <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">

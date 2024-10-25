@@ -82,7 +82,7 @@ export const TMDSectionsLayout = () => {
             setSelectedInstruction(null);
         }
 
-    }, [pathname, router, layoutParam, moduleParam, instructionParam]);
+    }, [pathname, router, layoutParam, moduleParam, instructionParam, searchParams]);
 
     const handleLayoutChange = useCallback((layout: string): void => {
         const params = new URLSearchParams(searchParams.toString());
