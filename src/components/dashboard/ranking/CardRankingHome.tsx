@@ -1,10 +1,11 @@
 import Image from "next/image"
 import type { SimpleRanking } from "@/interfaces"
 import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
+import Link from "next/link"
 
 export const CardRankingHome = ({position, name, photo, enterprise, points}:SimpleRanking) => {
   return (
-      <article className="w-full bg-card-light px-1 lg:px-4 py-2 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2">
+      <Link href={'/dashboard/profile'} className="w-full bg-card-light px-1 lg:px-4 py-2 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2">
           <h3 className="col-span-2 lg:col-span-1 flex justify-center items-center relative">
               <span className="sr-only">
                 { position === 1 ? 'Primer puesto' : position === 2 ? 'Segundo puesto' : position === 3 ? 'Tercer puesto' : `Puesto número ${position}` }
@@ -17,6 +18,6 @@ export const CardRankingHome = ({position, name, photo, enterprise, points}:Simp
           </h3>
           <h3 className="col-span-3 lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>
           <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{points}</h3>
-      </article>
+      </Link>
   )
 }

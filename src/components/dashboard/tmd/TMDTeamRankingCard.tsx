@@ -3,9 +3,46 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
+import { SimpleRanking } from "@/interfaces";
 import { ArrowDownIcon } from "@/icons";
 import { FirstPlaceIcon, TMDPlayerRankingCard } from "@/components";
+import mateo from '@/assets/user/usuario_mateo.webp';
 import photo from '@/assets/user/default_user.webp';
+
+const players:Array<SimpleRanking> = [
+    {
+        position: 1,
+        name:"Mateo Bernabé Lohezic",
+        username:"mateolohezic",
+        photo: mateo,
+        enterprise: "Desarrollador",
+        points: 100,
+    },
+    {
+        position: 2,
+        name:"Nicolas Darelli",
+        username:"nicodarelli",
+        photo: photo,
+        enterprise: "Diseñador UI/UX",
+        points: 93,
+    },
+    {
+        position: 3,
+        name:"Nani Ghiotto",
+        username:"nanighiotto",
+        photo: photo,
+        enterprise: "Director de Marketing",
+        points: 87,
+    },
+    {
+        position: 4,
+        name:"Martin Merlini",
+        username:"martinmerlini",
+        photo: photo,
+        enterprise: "Director Estratégico",
+        points: 86,
+    },
+]
 
 export const TMDTeamRankingCard = () => {
 
@@ -62,11 +99,11 @@ export const TMDTeamRankingCard = () => {
                             exit={{ height: 0 }}
                             className="w-full flex flex-col relative z-0"
                         >
-                            <TMDPlayerRankingCard/>
-                            <TMDPlayerRankingCard/>
-                            <TMDPlayerRankingCard/>
-                            <TMDPlayerRankingCard/>
-                            <TMDPlayerRankingCard/>
+                            {
+                                players.map( (player, i) => (
+                                    <TMDPlayerRankingCard player={player} key={i}/>
+                                ))
+                            }
                         </motion.div>
                     }
                 </AnimatePresence>
