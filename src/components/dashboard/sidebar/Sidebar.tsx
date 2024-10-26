@@ -35,12 +35,12 @@ export const Sidebar = () => {
     
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsLargeScreen(window.innerWidth >= 1024);
+            window && setIsLargeScreen(window.innerWidth >= 1024);
         };
         checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
+        window && window.addEventListener('resize', checkScreenSize);
         return () => {
-            window.removeEventListener('resize', checkScreenSize);
+            window && window.removeEventListener('resize', checkScreenSize);
         };
     }, []);
 

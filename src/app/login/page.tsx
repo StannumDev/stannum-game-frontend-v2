@@ -9,7 +9,7 @@ export default function LoginPage() {
                 <WallpaperLogin/>
                 <div className="my-16 lg:my-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">
                     <div className="w-full max-w-sm flex flex-col justify-start items-center lg:items-start relative">
-                        <GoBackButton className="-top-4 lg:-top-8 left-0"/>
+                        <GoBackButton className=" absolute -top-4 lg:-top-8 left-0 -translate-y-full"/>
                         <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-semibold block sm:inline">STANNUM Game</b></p>
                         <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
                         <LoginForm/>

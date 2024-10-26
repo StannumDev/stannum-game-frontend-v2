@@ -22,10 +22,12 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
     return (
         <Fragment>
             <motion.div
+                initial={{ maxWidth: 0 }}
                 animate={{ maxWidth: isExpanded ? 320 : 80 }}
                 className='hidden lg:block lg:w-64 2xl:w-80 min-h-svh shrink-0'
             >
                 <motion.div
+                    initial={{ maxWidth: 0 }}
                     animate={{ maxWidth: isExpanded ? 320 : 80 }}
                     className="hidden lg:block w-full min-h-svh sticky top-0 left-0"
                 >

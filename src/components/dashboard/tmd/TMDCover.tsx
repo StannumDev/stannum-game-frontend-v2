@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
@@ -15,14 +15,20 @@ export const TMDCover = () => {
 
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
+    const router = useRouter();
+
     return (
     <MotionWrapperLayoutClient>
         <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
-                <Link href={'/dashboard/library'} className='size-6 lg:size-8 bg-card rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:hover:bg-card-light transition-200'>
+                <button
+                    type='button'
+                    onClick={router.back}
+                    className='size-6 lg:size-8 bg-card/50 rounded-full lg:flex justify-center items-center absolute top-2 lg:top-4 left-2 lg:left-4 z-20 group lg:hover:bg-card transition-200'
+                >
                     <span className='sr-only'>Volver atras</span>
                     <ArrowBackIcon className='size-3 lg:size-4 stroke-1 text-neutral-400 group-hover:text-white transition-200'/>
-                </Link>
+                </button>
             </div>
             { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
             <div className='size-full absolute top-0 left-0 z-10'>

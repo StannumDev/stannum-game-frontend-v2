@@ -58,7 +58,7 @@ export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleIn
 
     return (
         <div className="w-full">
-            <button type="button" onClick={goBack} className='px-2 py-1 rounded-lg text-card-lightest hover:text-white flex justify-center items-center gap-1 lg:hover:bg-card-light transition-200'>
+            <button type="button" onClick={goBack} className='px-2 py-1 rounded-lg text-card-lightest hover:text-white flex justify-center items-center gap-1 lg:hover:bg-card transition-200'>
                 <ArrowBackIcon/>
                 <span className='font-semibold'>Atras</span>
             </button>

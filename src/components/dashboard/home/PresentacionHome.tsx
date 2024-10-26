@@ -62,7 +62,7 @@ export const PresentacionHome = () => {
                     className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
                 >
                     { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
-                    <div className="size-full bg-gradient-to-br from-transparent to-black/75 group-hover:to-black/50 absolute top-0 left-0 z-20 transition-200"></div>
+                    <div className="size-full bg-gradient-to-br from-transparent to-black/50 group-hover:to-black/75 absolute top-0 left-0 z-20 transition-200"></div>
                     <button type="button" className="size-14 lg:size-32 rounded-full bg-gradient-to-br from-stannum to-stannum-light flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 group-hover:scale-125 transition-200">
                         <PlayIcon className="size-8 lg:size-16 relative left-1"/>
                     </button>
@@ -70,7 +70,7 @@ export const PresentacionHome = () => {
                         priority
                         src={background}
                         alt="Presentación STANNUM Game"
-                        className="size-full object-cover blur-none lg:blur-[2px] group-hover:blur-none absolute top-0 left-0 z-10 transition-200"
+                        className="size-full object-cover lg:group-hover:blur-[2px] absolute top-0 left-0 z-10 transition-200"
                         onLoad={() => setImageLoaded(true)}
                     />
                     <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">
