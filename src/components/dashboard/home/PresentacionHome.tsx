@@ -70,7 +70,7 @@ export const PresentacionHome = () => {
                         priority
                         src={background}
                         alt="Presentación STANNUM Game"
-                        className="size-full object-cover blur-none lg:blur-[4px] group-hover:blur-none absolute top-0 left-0 z-10 transition-200"
+                        className="size-full object-cover blur-none lg:blur-[2px] group-hover:blur-none absolute top-0 left-0 z-10 transition-200"
                         onLoad={() => setImageLoaded(true)}
                     />
                     <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">

@@ -27,8 +27,12 @@ export const TMDPlayerRankingCard = ({player}:Props) => {
                 <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full"/>
                 <span className="whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
             </h3>
-            <h3 className="col-span-4 text-sm lg:text-base">{enterprise}</h3>
-            <h3 className="col-span-2 text-sm lg:text-base">{points} Pts</h3>
+            <h3 className="col-span-4 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>
+            <h3 className="col-span-2 text-sm lg:text-base">
+                <div className="w-14 text-end">
+                    <span className="relative right-0.5">{points} Pts</span>
+                </div>
+            </h3>
             <h3 className="col-span-1 text-sm lg:text-base flex justify-center">
                 <div className="bg-card-lighter size-8 rounded-full flex justify-center items-center opacity-0 group-hover:opacity-100 transition-200">
                     <UserIcon className="size-5"/>

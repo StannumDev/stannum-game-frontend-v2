@@ -42,6 +42,14 @@ const players:Array<SimpleRanking> = [
         enterprise: "Director Estratégico",
         points: 86,
     },
+    {
+        position: 5,
+        name:"Alejandro de la Zerda Alejandro de la Zerda Alejandro de la Zerda Alejandro de la Zerda",
+        username:"alezerda",
+        photo: photo,
+        enterprise: "Director INVEO Director INVEO Director INVEO Director INVEO Director INVEO Director INVEO",
+        points: 84,
+    },
 ]
 
 export const TMDTeamRankingCard = () => {
@@ -64,7 +72,7 @@ export const TMDTeamRankingCard = () => {
                     <FirstPlaceIcon/>
                 </h3>
                 <h3 className="col-span-4 flex items-center gap-2 lg:gap-4">
-                    <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full"/>
+                    <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full drop-shadow-sm"/>
                     <span className="whitespace-nowrap truncate text-sm lg:text-base">STANNUM</span>
                 </h3>
                 <h3 className="col-span-4 text-sm lg:text-base">
@@ -80,7 +88,11 @@ export const TMDTeamRankingCard = () => {
                         }
                     </AnimatePresence>
                 </h3>
-                <h3 className="col-span-2 text-sm lg:text-base">85 Pts</h3>
+                <h3 className="col-span-2 text-sm lg:text-base">
+                    <div className="w-14 text-end">
+                        <span className="relative right-0.5">85 Pts</span>
+                    </div>
+                </h3>
                 <h3 className="col-span-1 text-sm lg:text-base flex justify-center">
                     <motion.span
                         animate={{ opacity: isHovered || isExpanded ? 1 : 0, rotate: isExpanded ? '-180deg' : 0 }}
