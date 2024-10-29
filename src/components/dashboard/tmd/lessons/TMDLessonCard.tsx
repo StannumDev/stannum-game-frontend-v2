@@ -10,7 +10,7 @@ interface Props{
 
 export const TMDLessonCard = ({index, title, completed}:Props) => {
     return (
-        <Link href={'/dashboard/library/tmd/lessons'} className="w-full h-16 lg:h-20 flex items-center bg-card/25 hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
+        <Link href={'/dashboard/library/tmd/lessons'} className="w-full h-16 lg:h-20 flex items-center bg-card lg:bg-card/25 lg:hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
             <div className={`h-full aspect-square ${ completed ? 'lg:bg-stannum' : 'lg:bg-card' } flex justify-center items-center shrink-0 ${styles.index__clip__diagonal}`}>
                 <span className='text-2xl lg:text-4xl font-semibold lg:relative lg:-left-1'>{ index < 10 ? `0${index}` : index }</span>
             </div>
