@@ -10,11 +10,11 @@
 @layer components {
 
   .title-2{
-    @apply text-xl lg:text-2xl font-black uppercase
+    @apply text-xl lg:text-2xl font-black uppercase text-pretty
   }
 
   .title-3{
-    @apply text-lg lg:text-xl font-black
+    @apply text-lg lg:text-xl font-black text-pretty
   }
 
   .subtitle-1{

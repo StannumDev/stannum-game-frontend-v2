@@ -63,7 +63,7 @@ export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleIn
             </button>
             <div className='mt-4 w-full flex flex-col'>
                 <span className='subtitle-1'>Módulo 01</span>
-                <h2 className='title-2 text-pretty'>Introducción a la organización digital en la nube</h2>
+                <h2 className='title-2 text-lg lg:text-2xl'>Introducción a la organización digital en la nube</h2>
             </div>
             <div className='mt-6 w-full'>
                 {
