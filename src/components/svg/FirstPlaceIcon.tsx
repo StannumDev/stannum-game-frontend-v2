@@ -1,10 +1,10 @@
 export const FirstPlaceIcon = () => {
     return (
         <div className="relative overflow-visible">
-            <div className="text-sm lg:text-base font-black size-9 lg:size-10 absolute top-0 left-0 flex justify-center items-center">
+            <div className="text-sm lg:text-base font-black size-8 lg:size-10 absolute top-0 left-0 flex justify-center items-center">
                 <span className="relative top-[2px]">1</span>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 3 40 40" fill="none" className="size-9 lg:size-10">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 3 40 40" fill="none" className="size-8 lg:size-10">
                 <g filter="url(#filter0_d_1736_131)">
                     <path className='fill-stannum opacity-60' fillRule="evenodd" clipRule="evenodd" d="M19.8953 4L28.1907 9.07598H34.7466H35.5563L35.3023 9.84483L34.522 12.2065L34.3893 12.6082H33.9663H33.653V31.9212L20.3874 40.9999L7.1218 31.9212V12.6082H6.65475H6.34L6.16648 12.3456L4.60582 9.98388L4.00586 9.07598H5.09409H12.5715L19.8953 4ZM19.9453 5.876L25.1357 9.07598H15.3316L19.9453 5.876ZM6.18232 10.2465L6.96949 11.4377H33.5433L33.9369 10.2465H6.18232Z"/>
                 </g>
