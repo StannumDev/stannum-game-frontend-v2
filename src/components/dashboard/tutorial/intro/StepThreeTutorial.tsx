@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import photo from '@/assets/wallpaper/the_game.webp';
+import photo from '@/assets/background/the_game.webp';
 
 interface Props{
     direction: 'prev'|'next'

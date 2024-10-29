@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { KeyIcon, AlertHexagonIcon } from '@/icons';
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
-import activar_producto from "@/assets/wallpaper/activar_producto.webp";
-import redeem_code from "@/assets/wallpaper/redeem_code.webp";
+import activar_producto from "@/assets/background/activar_producto.webp";
+import redeem_code from "@/assets/background/redeem_code.webp";
 
 const schema = z.object({
     code: z.string()

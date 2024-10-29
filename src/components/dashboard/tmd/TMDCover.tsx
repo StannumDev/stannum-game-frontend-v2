@@ -7,7 +7,7 @@ import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/TMDCover.module.css';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
-import background from '@/assets/wallpaper/the_game.webp';
+import background from '@/assets/background/the_game.webp';
 
 const progress = 55;
 

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { LazyMotion, domAnimation } from "framer-motion"
 import * as motion from "framer-motion/m"
-import wallpaper from "@/assets/wallpaper/login.webp";
+import background from "@/assets/background/login.webp";
 
-export const WallpaperLogin = () => {
+export const BackgroundLogin = () => {
     return (
         <LazyMotion features={domAnimation}>
             <motion.aside
@@ -12,7 +12,7 @@ export const WallpaperLogin = () => {
                 transition={{ type:'spring', bounce: 0 }}
                 className="w-full lg:w-1/2 aspect-video max-h-64 lg:max-h-none lg:aspect-auto lg:h-svh relative"
             >
-                <Image src={wallpaper} alt='Iniciar sesión' className="size-full object-cover absolute top-0 left-0"/>
+                <Image src={background} alt='Iniciar sesión' className="size-full object-cover absolute top-0 left-0"/>
             </motion.aside>
         </LazyMotion>
     )

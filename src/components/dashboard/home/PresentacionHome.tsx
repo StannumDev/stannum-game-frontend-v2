@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayIcon } from '@/icons';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
-import background from "@/assets/wallpaper/the_game.webp";
+import background from "@/assets/background/the_game.webp";
 
 const steps:Array<number> = [1,2,3,4,5];
 

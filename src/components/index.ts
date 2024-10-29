@@ -57,6 +57,7 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
 export { TMDCover } from "./dashboard/tmd/TMDCover";
+export { TMDSectionsLayout } from "./dashboard/tmd/TMDSectionsLayout";
 export { TMDPendingModuleCard } from "./dashboard/tmd/modules/TMDPendingModuleCard";
 export { TMDCompletedModuleCard } from "./dashboard/tmd/modules/TMDCompletedModuleCard";
 export { TMDBlockedModuleCard } from "./dashboard/tmd/modules/TMDBlockedModuleCard";
@@ -67,7 +68,6 @@ export { TMDTeamRankingCard } from "./dashboard/tmd/ranking/TMDTeamRankingCard";
 export { TMDPlayerRankingCard } from "./dashboard/tmd/ranking/TMDPlayerRankingCard";
 
 // TMD SECTIONS
-export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";
 export { TMDWarmUpLayout } from "./dashboard/tmd/sections/TMDWarmUpLayout";
 export { TMDPreseasonLayout } from "./dashboard/tmd/sections/TMDPreseasonLayout";
 export { TMDSeasonLayout } from "./dashboard/tmd/sections/TMDSeasonLayout";
@@ -85,7 +85,7 @@ export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonM
 
 // LOGIN
 export { LoginForm } from "./login/LoginForm";
-export { WallpaperLogin } from "./login/WallpaperLogin";
+export { BackgroundLogin } from "./login/BackgroundLogin";
 
 // REGISTER
 export { RegisterHandler } from "./register/RegisterHandler";
