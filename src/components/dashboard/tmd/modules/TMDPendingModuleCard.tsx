@@ -1,5 +1,5 @@
 import { ArrowRightIcon, CompassIcon, PaperIcon, VideosIcon } from "@/icons";
-import styles from '@/components/styles/TMDCard.module.css';
+import styles from '@/components/styles/TMDModuleCard.module.css';
 
 interface Props{
     index: number;
@@ -14,16 +14,16 @@ export const TMDPendingModuleCard = ({index, title, handleModuleChange}:Props) =
     const progressValue = 50 + (100 - 50) * (1 - percentage / 100);
 
     return (
-        <div onClick={() => { handleModuleChange(index) }} className='w-full h-20 bg-card/25 hover:bg-card-light/40 flex items-center rounded-lg relative overflow-hidden group cursor-pointer transition-200'>
-            <div className={`h-full w-20 bg-card-light ${styles.index__clip__diagonal} flex justify-center items-center shrink-0`}>
-                <span className='text-4xl relative -left-1 font-semibold'>{ index < 10 ? `0${index}` : index }</span>
+        <div onClick={() => { handleModuleChange(index) }} className='w-full h-16 lg:h-20 bg-card lg:bg-card/25 hover:bg-card-light/40 flex items-center rounded-lg relative overflow-hidden group cursor-pointer transition-200'>
+            <div className={`h-full aspect-square lg:bg-card-light ${styles.index__clip__diagonal} flex justify-center items-center shrink-0`}>
+                <span className='text-2xl lg:text-4xl lg:relative lg:-left-1 font-semibold'>{ index < 10 ? `0${index}` : index }</span>
             </div>
-            <div className='ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-8'>
-                <span className='subtitle-1 text-sm'>Módulo { index < 10 ? `0${index}` : index }</span>
-                <h2 className='w-full title-2 text-xl truncate'>{title}</h2>
+            <div className='lg:ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-4'>
+                <span className='subtitle-1 lg:text-sm'>Módulo { index < 10 ? `0${index}` : index }</span>
+                <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
             </div>
-            <div className='w-fit p-2 flex items-center gap-2 bg-card border-2 border-card-light rounded-full shrink-0 relative z-10'>
-                <div className='size-9 bg-card-light rounded-full flex justify-center items-center relative'>
+            <div className='w-fit lg:p-2 flex items-center gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full shrink-0 relative z-10'>
+                <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
                     <span className="sr-only">Lecciones</span>
                     <VideosIcon className="size-4 text-white/50"/>
                     <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,7 @@ export const TMDPendingModuleCard = ({index, title, handleModuleChange}:Props) =
                     <span className="sr-only">Misiones</span>
                     <PaperIcon className="size-4 text-stannum"/>
                 </div>
-                <div className='size-9 bg-card-light rounded-full flex justify-center items-center relative'>
+                <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
                     <span className="sr-only">Instrucciones</span>
                     <CompassIcon className="size-4 text-white/50"/>
                     <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +47,7 @@ export const TMDPendingModuleCard = ({index, title, handleModuleChange}:Props) =
             <div className='w-4 group-hover:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
                 <ArrowRightIcon className='size-4 opacity-0 group-hover:opacity-100 relative right-1 transition-200'/>
             </div>
-            <div className={`w-32 h-full absolute top-0 right-0 ${styles.end__pattern}`}></div>
+            <div className={`hidden lg:block w-32 h-full absolute top-0 right-0 ${styles.end__pattern}`}></div>
         </div>
     )
 }
