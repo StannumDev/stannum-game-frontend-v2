@@ -5,8 +5,8 @@ export const MotionWrapperLayout = ({children}:{children:React.ReactNode}) => {
   return (
     <LazyMotion features={domAnimation}>
       <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', bounce: 0 }}
         className="w-full"
       >

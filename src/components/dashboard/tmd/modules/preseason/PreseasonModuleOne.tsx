@@ -12,7 +12,7 @@ interface Props{
 interface Lesson{
     index: number;
     title: string;
-    completed: boolean
+    completed?: boolean
 }
 
 interface Instruction{
@@ -26,12 +26,11 @@ const lessons:Array<Lesson> = [
     {
         index: 1,
         title: 'Introducción a la organización digital en la nube',
-        completed: false
+        completed: true
     },
     {
         index: 2,
-        title: 'Áreas funcionales',
-        completed: true
+        title: 'Áreas funcionales'
     }
 ]
 

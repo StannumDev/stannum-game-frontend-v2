@@ -85,7 +85,6 @@ export {
 } from "react-icons/rx";
 
 export {
-    FiUnlock as UnlockIcon,
     FiUser as UserIcon,
     FiUploadCloud as UploadIcon
 } from "react-icons/fi";
@@ -95,5 +94,7 @@ export {
 } from "react-icons/hi";
 
 export {
+    TfiLock  as LockIcon,
+    TfiUnlock as UnlockIcon,
     TfiBackLeft as ArrowBackIcon
 } from 'react-icons/tfi';

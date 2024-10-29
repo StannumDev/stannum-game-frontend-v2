@@ -57,12 +57,14 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
 // TMD
 export { TMDCover } from "./dashboard/tmd/TMDCover";
-export { TMDModuleCard } from "./dashboard/tmd/TMDModuleCard";
-export { TMDLessonCard } from "./dashboard/tmd/TMDLessonCard";
-export { TMDInstructionCard } from "./dashboard/tmd/TMDInstructionCard";
-export { TMDInstructionDetails } from "./dashboard/tmd/TMDInstructionDetails";
-export { TMDTeamRankingCard } from "./dashboard/tmd/TMDTeamRankingCard";
-export { TMDPlayerRankingCard } from "./dashboard/tmd/TMDPlayerRankingCard";
+export { TMDPendingModuleCard } from "./dashboard/tmd/modules/TMDPendingModuleCard";
+export { TMDCompletedModuleCard } from "./dashboard/tmd/modules/TMDCompletedModuleCard";
+export { TMDBlockedModuleCard } from "./dashboard/tmd/modules/TMDBlockedModuleCard";
+export { TMDLessonCard } from "./dashboard/tmd/lessons/TMDLessonCard";
+export { TMDInstructionCard } from "./dashboard/tmd/instructions/TMDInstructionCard";
+export { TMDInstructionDetails } from "./dashboard/tmd/instructions/TMDInstructionDetails";
+export { TMDTeamRankingCard } from "./dashboard/tmd/ranking/TMDTeamRankingCard";
+export { TMDPlayerRankingCard } from "./dashboard/tmd/ranking/TMDPlayerRankingCard";
 
 // TMD SECTIONS
 export { TMDSectionsLayout } from "./dashboard/tmd/sections/TMDSectionsLayout";

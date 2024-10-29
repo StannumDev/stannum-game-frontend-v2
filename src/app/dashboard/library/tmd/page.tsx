@@ -1,16 +1,16 @@
 import { Metadata } from "next";
-import { TMDCover } from "@/components";
+import { TMDCover, TMDSectionsLayout } from "@/components";
 
 export const metadata:Metadata = {
  title: 'SEO Title',
  description: 'SEO Title',
 };
 
-export default function TMDDashboardLayout({children}:{children: React.ReactNode}) {
+export default function TMDDashboardPage() {
     return (
         <main className="main-container">
             <TMDCover />
-            {children}
+            <TMDSectionsLayout/>
         </main>
     );
 }

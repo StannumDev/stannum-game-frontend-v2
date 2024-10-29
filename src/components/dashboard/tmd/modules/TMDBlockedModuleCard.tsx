@@ -1,0 +1,31 @@
+import styles from '@/components/styles/TMDCard.module.css';
+import { LockIcon } from '@/icons';
+
+interface Props{
+    index: number;
+    title: string;
+}
+
+export const TMDBlockedModuleCard = ({index, title}:Props) => {
+    return (
+        <div className='w-full h-20 pr-4 bg-card/25 flex items-center rounded-lg relative overflow-hidden'>
+            <div className={`h-full w-20 bg-card-light ${styles.index__clip__diagonal} flex justify-center items-center shrink-0`}>
+                <span className='text-4xl text-white/25 font-semibold relative -left-1'>{ index < 10 ? `0${index}` : index }</span>
+            </div>
+            <div className='ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-8'>
+                <span className='subtitle-1 text-sm text-white/25'>Módulo { index < 10 ? `0${index}` : index }</span>
+                <h2 className='w-full title-2 text-xl truncate text-white/25'>{title}</h2>
+            </div>
+            <div className='w-fit mr-[7.5rem] flex items-center gap-4 shrink-0 relative z-10'>
+                <div className='subtitle-1 text-white/25'>Completa el módulo anterior</div>
+                <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
+                    Bloqueado
+                </div>
+            </div>
+            <div className='h-full absolute top-0 right-2 translate-x- flex justify-center items-center overflow-hidden'>
+                <LockIcon className='size-12 text-white/50'/>
+            </div>
+            <div className={`w-32 h-full absolute top-0 right-0 ${styles.blocked__end__pattern}`}></div>
+        </div>
+    )
+}

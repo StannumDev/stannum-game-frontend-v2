@@ -63,7 +63,7 @@ export const TMDTeamRankingCard = () => {
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
                 onClick={ () => setIsExpanded(!isExpanded) }
-                className={`w-full p-4 grid grid-cols-12 items-center gap-1 lg:gap-2 relative z-10 cursor-pointer transition-200 ${ isExpanded ? 'rounded-t-lg bg-stannum/75' : 'rounded-lg bg-card hover:bg-card-light/75' }`}
+                className={`w-full p-4 grid grid-cols-12 items-center gap-1 lg:gap-2 relative z-10 cursor-pointer transition-200 ${ isExpanded ? 'rounded-t-lg bg-stannum/40' : 'rounded-lg bg-card hover:bg-card-light/75' }`}
             >
                 <h3 className="col-span-1 flex justify-center items-center relative">
                     <span className="sr-only">

@@ -17,7 +17,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
         <button
             type='button'
             onClick={ () => { handleInstructionChange(index) } }
-            className={`w-full h-52 flex text-start items-center bg-card hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-white/10 hover:border-white/15' } relative overflow-hidden group cursor-pointer transition-200 `}
+            className={`w-full h-52 flex text-start items-center bg-card/25 hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-white/10 hover:border-white/15' } relative overflow-hidden group cursor-pointer transition-200 `}
         >
             <div className='h-full aspect-square relative shrink-0'>
                 <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
@@ -92,7 +92,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                         </Fragment>
                         :
                         <Fragment>
-                            <div className='w-full h-12 bg-card border-2 border-card-light rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center'>
+                            <div className='w-full h-12 border-2 border-card-light rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center'>
                                 Ver más
                             </div>
                             <div className='w-full h-12 bg-card-light rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center relative z-10'>
@@ -101,8 +101,8 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                         </Fragment>
                     }
                 </div>
-                <div className='w-4 group-hover:w-14 flex justify-center items-center relative z-10 transition-200 shrink-0'>
-                    <ArrowRightIcon className="size-6 opacity-0 group-hover:opacity-100 relative right-1 transition-200" />
+                <div className='w-4 group-hover:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
+                    <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 relative right-1 transition-200" />
                 </div>
             </div>
         </button>
