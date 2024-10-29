@@ -64,7 +64,7 @@ export const PresentacionHome = () => {
                     { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
                     <div className="size-full bg-gradient-to-br from-transparent to-black/50 group-hover:to-black/75 absolute top-0 left-0 z-20 transition-200"></div>
                     <button type="button" className="size-14 lg:size-24 rounded-full bg-white/25 flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 group-hover:scale-125 transition-200">
-                        <PlayIcon className="size-8 lg:size-14 relative left-1"/>
+                        <PlayIcon className="size-8 lg:size-14 relative left-0.5 lg:left-1"/>
                     </button>
                     <Image
                         priority
