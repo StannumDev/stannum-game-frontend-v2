@@ -12,7 +12,7 @@ export const TMDBlockedModuleCard = ({index, title}:Props) => {
             <div className={`h-full aspect-square lg:bg-card-light ${styles.index__clip__diagonal} flex justify-center items-center shrink-0`}>
                 <span className='text-2xl lg:text-4xl text-white/25 font-semibold lg:relative lg:-left-1'>{ index < 10 ? `0${index}` : index }</span>
             </div>
-            <div className='lg:ml-4 grow min-w-0 overflow-x-hidden flex flex-col relative z-10 pr-28'>
+            <div className='lg:ml-4 grow min-w-0 overflow-x-hidden flex flex-col relative z-10 pr-28 lg:pr-4'>
                 <span className='subtitle-1 lg:text-sm text-white/25'>Módulo { index < 10 ? `0${index}` : index }</span>
                 <h2 className='w-full title-2 text-base lg:text-xl truncate text-white/25'>{title}</h2>
             </div>

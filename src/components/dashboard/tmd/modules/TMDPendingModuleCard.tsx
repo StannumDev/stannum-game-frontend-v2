@@ -22,26 +22,29 @@ export const TMDPendingModuleCard = ({index, title, handleModuleChange}:Props) =
                 <span className='subtitle-1 lg:text-sm'>Módulo { index < 10 ? `0${index}` : index }</span>
                 <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
             </div>
-            <div className='w-fit lg:p-2 flex items-center gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full shrink-0 relative z-10'>
-                <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
-                    <span className="sr-only">Lecciones</span>
-                    <VideosIcon className="size-4 text-white/50"/>
-                    <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
-                        <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: progressValue }}/>
-                    </svg>
-                </div>
-                <div className='size-9 bg-stannum/40 rounded-full flex justify-center items-center relative'>
-                    <span className="sr-only">Misiones</span>
-                    <PaperIcon className="size-4 text-stannum"/>
-                </div>
-                <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
-                    <span className="sr-only">Instrucciones</span>
-                    <CompassIcon className="size-4 text-white/50"/>
-                    <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
-                        <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: progressValue }}/>
-                    </svg>
+            <div className="w-fit flex items-center lg:gap-4 shrink-0">
+                <div className='hidden lg:block subtitle-1 text-white/25'>En proceso</div>
+                <div className='lg:p-2 flex gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full relative z-10'>
+                    <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
+                        <span className="sr-only">Lecciones</span>
+                        <VideosIcon className="size-4 text-white/50"/>
+                        <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
+                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: progressValue }}/>
+                        </svg>
+                    </div>
+                    <div className='size-9 bg-stannum/40 rounded-full flex justify-center items-center relative'>
+                        <span className="sr-only">Misiones</span>
+                        <PaperIcon className="size-4 text-stannum"/>
+                    </div>
+                    <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
+                        <span className="sr-only">Instrucciones</span>
+                        <CompassIcon className="size-4 text-white/50"/>
+                        <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
+                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: progressValue }}/>
+                        </svg>
+                    </div>
                 </div>
             </div>
             <div className='w-4 group-hover:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>

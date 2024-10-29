@@ -12,7 +12,7 @@ export const TMDCompletedModuleCard = ({index, title, handleModuleChange}:Props)
             <div className='h-full aspect-square flex justify-center items-center shrink-0'>
                 <span className='text-2xl font-semibold'>{ index < 10 ? `0${index}` : index }</span>
             </div>
-            <div className='grow min-w-0 overflow-x-hidden flex flex-col pr-8'>
+            <div className='grow min-w-0 overflow-x-hidden flex flex-col pr-4'>
                 <span className='subtitle-1 text-stannum'>Módulo { index < 10 ? `0${index}` : index }</span>
                 <h2 className='w-full title-2 text-base truncate'>{title}</h2>
             </div>
