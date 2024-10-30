@@ -44,12 +44,7 @@ export const LessonVideoPlayer = async ({ playbackId }: Props) => {
                 primaryColor="rgba(255,255,255,1)"
                 accentColor="#41cfc9"
                 loading='viewport'
-                metadataVideoId="videoE01M01"
-                metadata={{
-                    product: 'TMD',
-                    episode: '1',
-                    module: '1',
-                }}
+                metadataVideoId="TMDL01M01"
                 metadataVideoTitle="Organización digital - Módulo 01 - TRENNO Mark Digital"
                 metadataViewerUserId="mateolohezic"
                 title="Organización digital - Módulo 01 - TRENNO Mark Digital"
