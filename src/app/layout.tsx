@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Head from "next/head";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -94,6 +95,9 @@ export const viewport: Viewport = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
     <html lang="es" className="bg-background">
+      <Head>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+      </Head>
       <body className={`${satoshi.className} antialiased w-full min-h-svh flex flex-col items-center bg-gradient-to-br from-background to-background-sidebar`}>
         {children}
       </body>
