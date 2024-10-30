@@ -19,7 +19,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
 
     return (
         <div className="lg:hidden w-full min-h-[calc(100dvh+env(safe-area-inset-top))] fixed top-0 left-0 pointer-events-none z-[9999999]">
-            <div className='w-full h-40 bg-red-500 flex items-end absolute -top-12 left-0 right-0 mx-auto'>
+            <div className='w-full h-40 bg-backgroudn flex items-end absolute -top-28 left-0 right-0 mx-auto'>
                 <div className='w-full h-12 px-4 py-2 bg-background flex justify-between items-center pointer-events-auto'>
                     <Link href={'/'} aria-label="Inicio STANNUM Game">
                         <Icon className="fill-white w-8" pathClassName="fill-white"/>
