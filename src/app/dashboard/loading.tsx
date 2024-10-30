@@ -1,6 +1,7 @@
 export default function Loading() {
     return (
         <main className="grow w-full flex flex-col justify-center items-center">
+            <h1 className="sr-only">Cargando...</h1>
             <div role="status" className="size-24 bg-gradient-to-br from-card to-card-light rounded-full flex justify-center items-center relative">
                 <svg className="size-full animate-spin-fast" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

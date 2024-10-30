@@ -1,8 +1,31 @@
+import { Metadata } from "next";
 import { LessonVideoPlayer, LessonMiniatureCard, LessonDetails } from "@/components";
+
+export const metadata: Metadata = {
+    title: 'Organización digital - Módulo 01 - TRENNO Mark Digital',
+    description: "Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.",
+    keywords: ['emprendedores', 'STANNUM'],
+    openGraph: {
+        title: 'Organización digital - Módulo 01 - TRENNO Mark Digital | STANNUM Game',
+        description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
+        url: 'https://stanumgame.com/dashboard/library/tmd',
+        siteName: 'STANNUM',
+        locale: 'es_AR',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        site: 'https://stannumgame.com/dashboard/library/tmd',
+        creator: 'STANNUM',
+        title: 'Organización digital - Módulo 01 - TRENNO Mark Digital | STANNUM Game',
+        description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
+    },
+};
 
 export default function TMDLessonsPage() {
     return (
         <main className="main-container">
+            <h1 className="sr-only">Organización digital, Módulo 01, TRENNO Mark Digital STANNUM Game</h1>
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 <div className="col-span-1 lg:col-span-3">
                     <LessonVideoPlayer playbackId={process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID || ''}/>

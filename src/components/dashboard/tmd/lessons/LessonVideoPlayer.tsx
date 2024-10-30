@@ -46,13 +46,13 @@ export const LessonVideoPlayer = async ({ playbackId }: Props) => {
                 loading='viewport'
                 metadataVideoId="videoE01M01"
                 metadata={{
+                    product: 'TMD',
                     episode: '1',
                     module: '1',
-                    title: 'Lesson 1',
                 }}
-                metadataVideoTitle="E01M01"
-                metadataViewerUserId="Organización digital"
-                title="Organización digital"
+                metadataVideoTitle="Organización digital - Módulo 01 - TRENNO Mark Digital"
+                metadataViewerUserId="mateolohezic"
+                title="Organización digital - Módulo 01 - TRENNO Mark Digital"
             />
         </div>
     );

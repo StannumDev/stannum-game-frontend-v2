@@ -52,7 +52,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             }
                             <span className='sr-only'>{ isExpanded ? 'Cerrar' : 'Abrir'}</span>
                         </motion.button>
-                        <Link href={'/dashboard'} aria-label="Inicio STANNUM Game" className={`h-6 ${isExpanded ? 'w-40' : 'w-12'} relative block hover:scale-105 translate-all duration-200 ease-in-out`}>
+                        <Link href={'/dashboard'} aria-label="Inicio STANNUM Game" className={`${isExpanded ? 'w-44 ' : 'w-12'} h-10 relative block hover:scale-105 translate-all duration-200 ease-in-out`}>
                             <AnimatePresence mode='popLayout' initial={false}>
                                 {
                                     isExpanded ?
@@ -64,7 +64,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         key='logoNavbar'
                                         className='block'
                                     >
-                                        <Logo className="fill-white h-6" pathClassName="fill-white"/>
+                                        <Logo className="fill-white w-44" pathClassName="fill-white"/>
                                     </motion.span>
                                     :
                                     <motion.span
@@ -73,9 +73,9 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         exit={{ x: 150, opacity: 0 }}
                                         transition={{ x:{ duration: 0.25 }, opacity:{ duration: 0.125 } }}
                                         key='iconNavbar'
-                                        className='h-6 w-12 flex justify-center items-center absolute top-0 left-0 right-0 mx-auto'
+                                        className='h-10 w-12 flex justify-center items-start absolute top-0 left-0 right-0 mx-auto'
                                     >
-                                        <Icon className="fill-white h-6" pathClassName="fill-white"/>
+                                        <Icon className="fill-white" pathClassName="fill-white"/>
                                     </motion.span>
                                 }
                             </AnimatePresence>

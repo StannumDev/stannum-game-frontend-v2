@@ -1,10 +1,32 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { GoBackButton, LoginForm, BackgroundLogin } from "@/components";
+
+export const metadata: Metadata = {
+  title: 'Inicia sesión',
+  description: "Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.",
+  keywords: ['emprendedores', 'STANNUM'],
+  openGraph: {
+      title: 'Inicia sesión | STANNUM Game',
+      description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
+      url: 'https://stanumgame.com/login',
+      siteName: 'STANNUM',
+      locale: 'es_AR',
+      type: 'website',
+  },
+  twitter: {
+      card: 'summary_large_image',
+      site: 'https://stannumgame.com/login',
+      creator: 'STANNUM',
+      title: 'Inicia sesión | STANNUM Game',
+      description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
+  },
+};
 
 export default function LoginPage() {
     return (
         <main className="grow w-full flex flex-col justify-start items-center bg-card">
-            <h1 className="sr-only">Iniciar sesión</h1>
+            <h1 className="sr-only">Inicia sesión en STANNUM Game</h1>
             <section className="w-full flex flex-col lg:flex-row justify-start items-start min-h-svh">
                 <BackgroundLogin/>
                 <div className="my-16 lg:my-0 w-full lg:w-1/2 lg:h-svh flex justify-center lg:justify-start items-center px-4 lg:pl-24">

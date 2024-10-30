@@ -69,6 +69,14 @@
   .content-visibility-auto{
     content-visibility: auto;
   }
+
+  .custom-svg{
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
+    image-rendering: optimizeQuality;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

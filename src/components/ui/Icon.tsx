@@ -18,7 +18,7 @@ export const Icon = ({ className, pathClassName } :Props) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="125 350 830 420"
       fill="none"
-      className={`${className} object-contain shape-rendering-geometricPrecision text-rendering-geometricPrecision image-rendering-optimizeQuality fill-rule-evenodd clip-rule-evenodd`}
+      className={`${className} custom-svg`}
     >
       {
         paths.map(({path}:Path, i:number) => (
