@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { SidebarLink } from '@/interfaces';
 import { BuscadorSidebarMobile, Icon, SidebarMobileLink } from '@/components';
+import styles from '@/components/styles/sidebar.module.css';
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
@@ -18,8 +19,8 @@ export const SidebarMobile = ({links, pathname}:Props) => {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     return (
-        <div className="lg:hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
-            <div className="w-full px-4 py-2 h-12 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0">
+        <div className="lg:hidden w-full min-h-[calc(100dvh+env(safe-area-inset-top))] fixed top-0 left-0 pointer-events-none z-[9999999]">
+            <div className={`w-full min-h-12 bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0 ${styles.sidebar__mobile}`}>
                 <Link href={'/'} aria-label="Inicio STANNUM Game">
                     <Icon className="fill-white w-8" pathClassName="fill-white"/>
                 </Link>
