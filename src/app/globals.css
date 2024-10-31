@@ -22,7 +22,10 @@
   }
 
   .main-container{
-    @apply mt-12 mb-14 lg:my-0 grow min-w-0 lg:min-h-svh pt-2 lg:pt-4 p-4 flex flex-col gap-4 overflow-x-hidden
+    margin-top: calc(3rem + env(safe-area-inset-top));
+    margin-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+    padding-inline: 1rem;
+    @apply lg:my-0 grow min-w-0 min-h-svh pt-2 lg:pt-4 p-4 flex flex-col gap-4 overflow-x-hidden
   }
 
   .card {
@@ -76,6 +79,12 @@
     image-rendering: optimizeQuality;
     fill-rule: evenodd;
     clip-rule: evenodd;
+  }
+
+  @media (width >= 1024px){
+    .main-container{
+      padding-top: calc(1rem + env(safe-area-inset-top));
+    }
   }
 }
 

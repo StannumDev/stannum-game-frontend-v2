@@ -40,7 +40,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
             {/* </div>
             <div className="lg:hidden w-full min-h-100dvh fixed top-0 left-0 pointer-events-none z-[9999999]"> */}
                 <motion.div
-                    className='w-full pb-2 bg-background pointer-events-auto absolute bottom-0 left-0'
+                    className={`w-full pb-2 bg-background pointer-events-auto absolute bottom-0 left-0 ${styles.sidebar__links}`}
                     initial={{ y: '100%', opacity: 1 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ type: 'spring', bounce: 0 }}
