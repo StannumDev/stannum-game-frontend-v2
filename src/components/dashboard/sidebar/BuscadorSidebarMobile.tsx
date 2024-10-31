@@ -64,13 +64,13 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 isSearching &&
                 <Fragment>
                     <motion.div
-                        className="w-full pl-3 h-16 bg-card flex justify-center items-center fixed top-0 left-0 z-[99999999] pointer-events-auto"
+                        className="w-full pl-3 h-16 bg-background-sidebar flex justify-center items-center fixed top-0 left-0 z-[99999999] pointer-events-auto"
                         initial={{ y: '-100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '-100%' }}
                         transition={{ type: 'spring', bounce: 0, duration: 0.375 }}
                     >
-                        <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-card-light rounded-lg flex flex-row-reverse justify-center items-center">
+                        <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-card rounded-lg flex flex-row-reverse justify-center items-center">
                             <label htmlFor="search" className="sr-only">Buscar en STANNUM Game</label>
                             <input
                                 type='search'
@@ -89,7 +89,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                                 whileTap={{ scale: 1.25, color: 'white' }}
                                 className="px-2 h-10 text-card-lighter peer-focus-visible:text-card-lightest flex justify-center items-center"
                             >
-                                <SearchIcon className="text-xl transition-200"/>
+                                <SearchIcon className="size-5 transition-200"/>
                             </motion.button>
                         </form>
                         <motion.button
@@ -101,7 +101,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                             className="size-12 flex justify-center items-center"
                         >
                             <span className="sr-only">Limpiar buscador</span>
-                            <CrossIcon className="text-3xl text-card-lighter"/>
+                            <CrossIcon className="size-6 text-card-lighter"/>
                         </motion.button>
                     </motion.div>
                     <motion.div

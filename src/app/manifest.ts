@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'STANNUM Game',
     start_url: 'https://stannumgame.com/',
     display: 'standalone',
-    background_color: '#1f1f1f',
-    theme_color: '#1f1f1f',
+    background_color: '#0a0a0a',
+    theme_color: '#0a0a0a',
     icons: [
         {
             src: '/assets/favicon.ico',
