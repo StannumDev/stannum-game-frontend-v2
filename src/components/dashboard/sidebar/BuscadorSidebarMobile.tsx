@@ -64,7 +64,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 isSearching &&
                 <Fragment>
                     <motion.div
-                        className="w-full pl-3 h-16 bg-background-sidebar flex justify-center items-center fixed top-0 left-0 z-[99999999] pointer-events-auto"
+                        className="w-full pl-3 h-16 bg-background flex justify-center items-center fixed top-0 left-0 z-[99999999] pointer-events-auto"
                         initial={{ y: '-100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '-100%' }}
