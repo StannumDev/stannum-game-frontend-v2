@@ -55,6 +55,7 @@ export const RegisterDetailsStep = () => {
                         <label htmlFor="name" className="text-white text-base md:text-lg">Nombre</label>
                         <input
                             type='text'
+                            enterKeyHint="next"
                             maxLength={50}
                             id="name"
                             autoComplete="name"
@@ -73,6 +74,7 @@ export const RegisterDetailsStep = () => {
                         <label htmlFor="name" className="text-white text-base md:text-lg">Fecha de nacimiento</label>
                         <input
                             type='date'
+                            enterKeyHint="next"
                             id="birthdate"
                             autoComplete="bday"
                             className="w-full h-9 px-2 bg-card-light text-white rounded"
@@ -120,6 +122,7 @@ export const RegisterDetailsStep = () => {
                         <label htmlFor="enterprise" className="text-white text-base md:text-lg">Empresa</label>
                         <input
                             type='text'
+                            enterKeyHint="next"
                             maxLength={50}
                             id="enterprise"
                             autoComplete="organization"
@@ -138,6 +141,7 @@ export const RegisterDetailsStep = () => {
                         <label htmlFor="enterpriseRole" className="text-white text-base md:text-lg">Tu rol en la empresa</label>
                         <input
                             type='text'
+                            enterKeyHint="next"
                             maxLength={50}
                             id="enterpriseRole"
                             autoComplete="organization-title"

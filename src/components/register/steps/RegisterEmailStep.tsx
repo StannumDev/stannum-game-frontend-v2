@@ -5,7 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { validateReCAPTCHA } from "@/services";
+// import { validateReCAPTCHA } from "@/services";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 // import { checkEmailExist } from "@/services/register";
 
@@ -45,11 +45,12 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
         setReCAPTCHAError(false);
         setReCAPTCHAErrorMessage('');
         try {
-            const success:boolean = await validateReCAPTCHA(value);
-            if(!success){
-                errorReCAPTCHA('Reintente completar el ReCAPTCHA.');
-                setReCAPTCHACompleted(false);
-            }
+            console.log(value)
+            // const success:boolean = await validateReCAPTCHA(value);
+            // if(!success){
+            //     errorReCAPTCHA('Reintente completar el ReCAPTCHA.');
+            //     setReCAPTCHACompleted(false);
+            // }
             setReCAPTCHACompleted(true);
         } catch (error:unknown) {
             // setRecaptchaError(true)
@@ -92,6 +93,8 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                     <label htmlFor="email" className="text-white text-base md:text-lg text-center md:text-start md:px-0 mb-2 md:mb-0">Elige el correo electrónico que usaras para tu cuenta.</label>
                     <input
                         type='email'
+                        inputMode="email"
+                        enterKeyHint="done"
                         maxLength={50}
                         id="email"
                         autoComplete="email"
@@ -106,11 +109,11 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                 </div>
                 <FormErrorMessage condition={errors?.email} message={errors?.email?.message} className="mt-2"/>
             </div>
-            <div className="mt-8 w-full h-20 flex justify-center items-center">
+            <div className="mt-8 w-full h-[78px] flex justify-center items-center">
                 <ReCAPTCHA
                     size={'normal'}
                     hl='es-419'
-                    theme={'dark'}
+                    theme={'light'}
                     ref={reCAPTCHARef}
                     onError={ () => { errorReCAPTCHA('Hubo un error, complete de nuevo el ReCAPTCHA.') }}
                     onExpired={ () => { errorReCAPTCHA('El ReCAPTCHA expiró, vuelva a completarlo.') }}

@@ -76,6 +76,8 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                                 <label htmlFor="search" className="sr-only">Buscar en STANNUM Game</label>
                                 <input
                                     type='search'
+                                    inputMode="search"
+                                    enterKeyHint="search"
                                     maxLength={50}
                                     id="search"
                                     autoComplete="off"

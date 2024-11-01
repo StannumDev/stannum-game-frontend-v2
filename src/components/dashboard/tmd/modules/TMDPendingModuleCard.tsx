@@ -23,7 +23,7 @@ export const TMDPendingModuleCard = ({index, title, handleModuleChange}:Props) =
                 <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
             </div>
             <div className="w-fit flex items-center lg:gap-4 shrink-0">
-                <div className='hidden lg:block subtitle-1 text-white/25'>En proceso</div>
+                <div className='sr-only lg:not-sr-only subtitle-1 text-white/25'>En proceso</div>
                 <div className='lg:p-2 flex gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full relative z-10'>
                     <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
                         <span className="sr-only">Lecciones</span>

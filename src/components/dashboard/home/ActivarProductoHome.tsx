@@ -109,6 +109,7 @@ export const ActivarProductoHome = () => {
                             <div className='mt-2 w-full relative'>
                                 <input
                                     type='text'
+                                    enterKeyHint="done"
                                     minLength={19}
                                     maxLength={19}
                                     id="code"

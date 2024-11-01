@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
     return (
-        <main className="grow w-full flex flex-col justify-start items-center bg-card">
+        <main className="grow w-full flex flex-col justify-start items-center bg-background lg:bg-card">
             <h1 className="sr-only">Inicia sesión en STANNUM Game</h1>
             <section className="w-full flex flex-col lg:flex-row justify-start items-start min-h-svh">
                 <BackgroundLogin/>
@@ -35,10 +35,10 @@ export default function LoginPage() {
                         <p className="w-full text-3xl text-white font-light">Ingresa a <b className="text-stannum font-semibold block sm:inline">STANNUM Game</b></p>
                         <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
                         <LoginForm/>
-                        <div className="lg:mt-12 w-full flex flex-col justify-center items-center text-center">
-                            <div className="w-full h-[2px] bg-card-lighter opacity-25 hidden lg:block"></div>
+                        <div className="lg:mt-8 w-full flex flex-col justify-center items-center text-center">
+                            <div className="w-full h-[2px] bg-white/10 opacity-25 hidden lg:block"></div>
                             <p className="mt-6 w-full text-neutral-400">¿Aún no tienes una cuenta?</p>
-                            <Link href={'/register'} className="mt-3 w-full lg:w-fit bg-card-light h-9 px-5 text-white rounded-lg text-sm font-semibold flex justify-center items-center hover:bg-card-lighter transition-200">Registrarse gratis</Link>
+                            <Link href={'/register'} className="mt-3 w-full lg:w-fit bg-card lg:bg-card-light h-9 px-5 rounded-lg text-sm font-semibold flex justify-center items-center hover:bg-card-light lg:hover:bg-card-lighter transition-200">Registrarse gratis</Link>
                         </div>
                     </div>
                 </div>

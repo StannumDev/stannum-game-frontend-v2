@@ -20,14 +20,14 @@ export const TMDLessonCard = ({index, title, completed}:Props) => {
             </div>
             { completed ?
                 <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 bg-stannum rounded-full flex justify-center items-center lg:gap-2 shrink-0 relative z-10'>
-                    <span className='hidden lg:inline text-lg tracking-widest font-semibold uppercase'>Completado</span>
+                    <span className='sr-only lg:not-sr-only text-lg tracking-widest font-semibold uppercase'>Completado</span>
                     <CheckIcon className='size-6 lg:size-5'/>
                 </div>
                 :
                 <div className='w-fit flex items-center lg:gap-4 shrink-0 relative z-10'>
-                    <div className='hidden lg:block subtitle-1'>Pendiente</div>
+                    <div className='sr-only lg:not-sr-only subtitle-1'>Pendiente</div>
                     <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 lg:bg-card lg:border-2 lg:border-card-light rounded-full flex justify-center items-center gap-2 transition-200'>
-                        <span className='hidden lg:inline text-lg tracking-widest font-semibold uppercase'>Reproducir</span>
+                        <span className='sr-only lg:not-sr-only text-lg tracking-widest font-semibold uppercase'>Reproducir</span>
                         <PlayIcon className='size-6 lg:size-5'/>
                     </div>
                 </div>

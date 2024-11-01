@@ -45,6 +45,7 @@ export const RegisterPasswordStep = () => {
                         <div className="grow flex flex-col gap-1 relative">
                             <input
                                 type='text'
+                                enterKeyHint="next"
                                 minLength={6}
                                 maxLength={25}
                                 id="username"
@@ -64,14 +65,15 @@ export const RegisterPasswordStep = () => {
             </div>
             <div className="mt-6 md:mt-4 w-full">
                 <div className='w-full flex flex-col gap-1 relative'>
-                    <label htmlFor="password" className="text-white text-base md:text-lg">Ahora crea tu contraseña!</label>
+                    <label htmlFor="password" className="md:text-lg">Ahora crea tu contraseña!</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
+                        enterKeyHint="next"
                         minLength={6}
                         maxLength={25}
                         id="password"
                         autoComplete="password"
-                        className={`peer w-full h-9 px-2 bg-card-light text-white rounded-t ${ !showPassword && 'tracking-widest'}`}
+                        className={`peer w-full h-9 px-2 bg-card-light rounded-t ${ !showPassword && 'tracking-widest'}`}
                         {...register("password",{
                             required: true,
                             minLength: 6,
@@ -86,9 +88,10 @@ export const RegisterPasswordStep = () => {
             </div>
             <div className="mt-6 md:mt-4 w-full">
                 <div className='w-full flex flex-col gap-1 relative'>
-                    <label htmlFor="passwordRepeat" className="text-white text-base md:text-lg leading-tight mb-2">Repite tu contraseña.</label>
+                    <label htmlFor="passwordRepeat" className="md:text-lg leading-tight mb-2">Repite tu contraseña.</label>
                     <input
                         type={showPasswordRepeat ? 'text' : 'password'}
+                        enterKeyHint="done"
                         minLength={6}
                         maxLength={25}
                         id="passwordRepeat"

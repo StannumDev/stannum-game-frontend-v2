@@ -45,10 +45,12 @@ export const LoginForm = () => {
                 <div className='w-full flex flex-col gap-1 relative'>
                     <input
                         type='text'
+                        inputMode="email"
+                        enterKeyHint="next"
                         maxLength={50}
                         id="username"
-                        autoComplete="username"
-                        className="peer order-2 w-full h-9 px-2 bg-card-light text-white rounded-t"
+                        autoComplete="email"
+                        className="peer order-2 w-full h-9 px-2 bg-card lg:bg-card-light rounded-t"
                         {...register("username",{
                             required: true,
                             maxLength: 50
@@ -57,16 +59,17 @@ export const LoginForm = () => {
                     <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
                         <UserIcon className="size-5 relative transition-200"/>
-                        <label htmlFor="username" className="text-lg transition-200">Correo electrónico</label>
+                        <label htmlFor="username" className="text-lg transition-200">Usuario o correo electrónico</label>
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="-mt-2"/>
                 <div className='w-full max-w-xl flex flex-col justify-start items-start gap-1 relative'>
                     <input
                         type={ showPassword ? 'text' : 'password'}
+                        enterKeyHint="done"
                         maxLength={50}
                         autoComplete="password"
-                        className="peer order-2 w-full h-9 px-2 bg-card-light text-white rounded-t"
+                        className="peer order-2 w-full h-9 px-2 bg-card lg:bg-card-light rounded-t"
                         {...register("password",{
                             required: true,
                             maxLength: 50
