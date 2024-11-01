@@ -23,10 +23,10 @@ export const SidebarMobile = ({links, pathname}:Props) => {
             {/* <div className="lg:hidden w-full min-h-[calc(100dvh+env(safe-area-inset-top))] fixed top-0 left-0 pointer-events-none z-[9999999]"> */}
             <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
                 <div className={`w-full bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0 right-0 mx-auto ${styles.sidebar}`}>
-                    <Link href={'/'} aria-label="Inicio STANNUM Game">
+                    <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
                         <Icon className="fill-white w-8" pathClassName="fill-white"/>
                     </Link>
-                    <Link href={'/'} className="size-8 aspect-square rounded-full relative overflow-hidden">
+                    <Link href={'/dashboard/profile'} className="size-8 aspect-square rounded-full relative overflow-hidden">
                         { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
                         <Image
                             priority
@@ -40,7 +40,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
             {/* </div>
             <div className="lg:hidden w-full min-h-100dvh fixed top-0 left-0 pointer-events-none z-[9999999]"> */}
                 <motion.div
-                    className={`w-full pb-2 bg-background pointer-events-auto absolute bottom-0 left-0 ${styles.sidebar__links}`}
+                    className={`w-full bg-background pointer-events-auto absolute bottom-0 left-0 ${styles.sidebar__links}`}
                     initial={{ y: '100%', opacity: 1 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ type: 'spring', bounce: 0 }}
