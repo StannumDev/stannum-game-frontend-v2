@@ -5,7 +5,6 @@ export { FormErrorMessage } from "./ui/FormErrorMessage";
 export { SubmitButtonLoading } from "./ui/SubmitButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";
 export { ButtonShowPassword } from "./ui/ButtonShowPassword";
-export { ProgressCircle } from "./ui/ProgressCircle";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 export { MotionWrapperLayoutClient } from "./ui/MotionWrapperLayoutClient";
 export { Modal } from "./ui/Modal";
