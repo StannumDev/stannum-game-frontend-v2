@@ -39,7 +39,7 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
         <Link
             href={href}
             aria-label={`Navegar a ${label}`}
-            className={`w-full py-4 px-8 flex items-center transition-200 relative
+            className={`w-full h-14 px-8 flex items-center transition-200 relative
                 ${ isActive ? linkVariants.active : linkVariants.inactive}
                 ${isExpanded ? 'justify-start' : 'justify-center'}
             `}

@@ -35,7 +35,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         initial={{ x: '-100%', opacity: 1 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ type: 'spring', duration: 0.375 }}
-                        className="w-full min-h-svh bg-background-sidebar overflow-hidden pt-16 flex flex-col justify-start items-center relative"
+                        className="w-full min-h-svh bg-transparent border-r border-card overflow-hidden pt-16 flex flex-col justify-start items-center relative"
                     >
                         <motion.button
                             type="button"

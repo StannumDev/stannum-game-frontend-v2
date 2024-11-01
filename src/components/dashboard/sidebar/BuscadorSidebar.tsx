@@ -69,7 +69,7 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
                 <motion.button
                     type='submit'
                     whileTap={{ scale: isExpanded ? 1.25 : 1, color: 'white' }}
-                    className={`${isExpanded ? 'size-9 text-card-lighter peer-focus-visible:text-card-lightest' : 'size-12 text-neutral-400 group-hover:text-neutral-200'} flex justify-center items-center`}
+                    className={`${isExpanded ? 'size-9 text-card-lighter peer-focus-visible:text-card-lightest' : 'w-full h-14 text-neutral-400 group-hover:text-neutral-200'} flex justify-center items-center`}
                 >
                     <SearchIcon className={`${ isExpanded ? 'size-5' : 'size-7' } transition-200`}/>
                 </motion.button>

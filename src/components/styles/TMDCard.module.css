@@ -42,7 +42,7 @@
   position: absolute;
   width: 2px;
   height: 250px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(51, 51, 51, 1);
   z-index: 1;
 }
 
