@@ -143,7 +143,7 @@ export const TMDSectionsLayout = () => {
         params.set('module', selectedModule.toString());
         params.set('instruction', instruction.toString());
 
-        router.push(`${pathname}?${params.toString()}`, { scroll: true,  });
+        router.push(`${pathname}?${params.toString()}`, { scroll: false,  });
     }, [pathname, router, searchParams, selectedLayout, selectedModule]);
 
     const restartInstruction = useCallback(() => {
