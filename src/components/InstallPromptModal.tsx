@@ -10,7 +10,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export const InstallPromptModal = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState<boolean>(false);
 
@@ -62,35 +62,37 @@ export const InstallPromptModal = () => {
   return (
     !isInstalled && (
       <Modal
-        className="max-w-2xl"
+        className="max-w-2xl h-auto"
         showModal={showModal}
         setShowModal={setShowModal}
       >
-        <div className="size-full pt-8 flex flex-col justify-start items-center">
-          <STANNUMIcon className='w-32' pathClassName='fill-stannum'/>
-          <h2 className='mt-8 title-2 text-3xl'>¡Instala STANNUM Game!</h2>
-          <p>Disfruta de la <b className='text-stannum'>experiencia completa</b> en tu dispositivo instalando nuestra aplicación.</p>
-          <div className='mt-6 w-full flex gap-4'>
+        <div className="size-full pt-4 lg:pt-8 text-center flex flex-col justify-start items-center">
+          <STANNUMIcon className='w-20 lg:w-32' pathClassName='fill-stannum'/>
+          <h2 className='mt-6 lg:mt-8 title-2 text-xl lg:text-3xl'>¡Instala STANNUM Game!</h2>
+          <p className='mt-2 lg:mt-0 text-sm lg:text-base'>Disfruta de la <b className='text-stannum'>experiencia completa</b> en tu dispositivo instalando nuestra aplicación.</p>
+          <div className='mt-4 lg:mt-6 w-full flex'>
+            <button
+              type="button"
+              onClick={handleDontShowAgain}
+              className="text-sm font-semibold text-white/50 hover:text-white tracking-tighter flex justify-center items-center transition-200"
+            >
+              No mostrar más
+            </button>
+          </div>
+          <div className='mt-2 w-full flex gap-4'>
             <button
               onClick={() => { setShowModal(false) }}
               type="button"
-              className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
+              className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter flex justify-center items-center transition-200"
             >
               Cancelar
             </button>
             <button
               type="button"
               onClick={handleInstallClick}
-              className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
+              className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
             >
               Instalar
-            </button>
-            <button
-              type="button"
-              onClick={handleDontShowAgain}
-              className="w-full h-9 text-sm font-semibold bg-transparent border-2 border-card-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
-            >
-              No mostrar más
             </button>
           </div>
         </div>
