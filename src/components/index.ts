@@ -1,6 +1,6 @@
 // UI
-export { Logo } from "./ui/Logo";
-export { Icon } from "./ui/Icon";
+export { STANNUMLogo } from "./ui/STANNUMLogo";
+export { STANNUMIcon } from "./ui/STANNUMIcon";
 export { FormErrorMessage } from "./ui/FormErrorMessage";
 export { SubmitButtonLoading } from "./ui/SubmitButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";
@@ -8,6 +8,7 @@ export { ButtonShowPassword } from "./ui/ButtonShowPassword";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 export { MotionWrapperLayoutClient } from "./ui/MotionWrapperLayoutClient";
 export { Modal } from "./ui/Modal";
+export { InstallPromptModal } from "./ui/InstallPromptModal";
 
 // SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";

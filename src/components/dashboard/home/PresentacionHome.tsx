@@ -59,7 +59,7 @@ export const PresentacionHome = () => {
             <MotionWrapperLayoutClient>
                 <section
                     onClick={() => setShowModal(true)}
-                    className="w-full card aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
+                    className="w-full card card-link aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
                 >
                     { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
                     <div className="size-full bg-gradient-to-br from-transparent to-black/50 group-hover:to-black/75 absolute top-0 left-0 z-20 transition-200"></div>
@@ -80,7 +80,7 @@ export const PresentacionHome = () => {
                 </section>
             </MotionWrapperLayoutClient>
             <Modal
-                className="max-w-7xl h-auto"
+                className="max-w-7xl h-auto lg:aspect-video"
                 showModal={showModal}
                 setShowModal={setShowModal}
             >

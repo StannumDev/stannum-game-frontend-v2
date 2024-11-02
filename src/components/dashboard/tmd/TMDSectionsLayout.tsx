@@ -63,7 +63,7 @@ export const TMDSectionsLayout = () => {
         if (layoutParam && ['warmup', 'preseason', 'season', 'support', 'tools', 'ranking', 'missions'].includes(layoutParam)) {
             setSelectedLayout(layoutParam as sectionOptions);
         } else {
-            router.replace(`${pathname}?section=preseason`, { scroll: false });
+            router.push(`${pathname}?section=preseason`, { scroll: true });
         }
 
         if (moduleParam && parseInt(moduleParam) > 0) {
@@ -75,7 +75,7 @@ export const TMDSectionsLayout = () => {
         if (instructionParam && !moduleParam) {
             const params = new URLSearchParams(searchParams.toString());
             params.delete('instruction');
-            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+            router.push(`${pathname}?${params.toString()}`, { scroll: true });
         } else if (instructionParam && parseInt(instructionParam) > 0) {
             setSelectedInstruction(parseInt(instructionParam));
         } else {
@@ -101,7 +101,7 @@ export const TMDSectionsLayout = () => {
         params.set('section', layout);
 
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}`, { scroll: true });
     }, [pathname, router, searchParams, selectedModule, selectedInstruction]);
 
     const handleModuleChange = useCallback((module: number): void => {
@@ -117,7 +117,7 @@ export const TMDSectionsLayout = () => {
         params.set('section', selectedLayout);
 
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}`, { scroll: true });
     }, [pathname, router, searchParams, selectedLayout, selectedInstruction]);
 
     const restartModule = useCallback(() => {
@@ -131,7 +131,7 @@ export const TMDSectionsLayout = () => {
         setSelectedModule(null);
         params.delete('module');
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}`, { scroll: true });
     }, [pathname, router, searchParams, selectedInstruction]);
     
     const handleInstructionChange = useCallback((instruction: number): void => {
@@ -143,7 +143,7 @@ export const TMDSectionsLayout = () => {
         params.set('module', selectedModule.toString());
         params.set('instruction', instruction.toString());
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}`, { scroll: true,  });
     }, [pathname, router, searchParams, selectedLayout, selectedModule]);
 
     const restartInstruction = useCallback(() => {
@@ -151,7 +151,7 @@ export const TMDSectionsLayout = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('instruction');
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}`, { scroll: true });
     }, [pathname, router, searchParams]);
 
     const props = {

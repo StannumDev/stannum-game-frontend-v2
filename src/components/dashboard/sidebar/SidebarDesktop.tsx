@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { SidebarLink } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
-import { BuscadorSidebar, Icon, Logo, SidebarDesktopLink } from '@/components';
+import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
@@ -64,7 +64,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         key='logoNavbar'
                                         className='block'
                                     >
-                                        <Logo className="fill-white w-44" pathClassName="fill-white"/>
+                                        <STANNUMLogo className="fill-white w-44" pathClassName="fill-white"/>
                                     </motion.span>
                                     :
                                     <motion.span
@@ -75,7 +75,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         key='iconNavbar'
                                         className='h-10 w-12 flex justify-center items-start absolute top-0 left-0 right-0 mx-auto'
                                     >
-                                        <Icon className="fill-white" pathClassName="fill-white"/>
+                                        <STANNUMIcon className="fill-white" pathClassName="fill-white"/>
                                     </motion.span>
                                 }
                             </AnimatePresence>

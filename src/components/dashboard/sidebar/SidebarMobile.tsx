@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { SidebarLink } from '@/interfaces';
-import { BuscadorSidebarMobile, Icon, SidebarMobileLink } from '@/components';
+import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
 import styles from '@/components/styles/sidebar.module.css';
 import mateo from "@/assets/user/usuario_mateo.webp";
 
@@ -23,7 +23,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
             <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
                 <div className={`w-full bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0 right-0 mx-auto ${styles.sidebar}`}>
                     <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
-                        <Icon className="fill-white w-8" pathClassName="fill-white"/>
+                        <STANNUMIcon className="fill-white w-8" pathClassName="fill-white"/>
                     </Link>
                     <Link href={'/dashboard/profile'} className="size-8 aspect-square rounded-full relative overflow-hidden">
                         { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }

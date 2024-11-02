@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Logo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
+import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 
 export const RegisterHandler = () => {
 
@@ -18,7 +18,7 @@ export const RegisterHandler = () => {
                 <GoBackButton className="absolute -top-4 lg:-top-4 left-0 -translate-y-full"/>
                 <button className="absolute top-0 right-0 text-white bg-red-500 p-2" onClick={nextStep}>asdasd</button>
                 <div className="w-full flex flex-col justify-center items-center gap-4">
-                    <Logo className="fill-white w-40" pathClassName="fill-white"/>
+                    <STANNUMLogo className="fill-white w-40" pathClassName="fill-white"/>
                     <h2 className="text-3xl md:text-5xl font-black text-white uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
                 </div>
                 <AnimatePresence mode="wait" initial={false}>

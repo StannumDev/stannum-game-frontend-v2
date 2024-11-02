@@ -62,7 +62,8 @@ export {
 } from "react-icons/md";
 
 export {
-    GoHomeFill as HomeIcon
+    GoHomeFill as HomeIcon,
+    GoDownload as DownloadIcon
 } from "react-icons/go";
 
 export {

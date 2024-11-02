@@ -93,7 +93,7 @@ export const ActivarProductoHome = () => {
                 </button>
             </MotionWrapperLayoutClient>
             <Modal
-                className="max-w-5xl h-auto p-0"
+                className="max-w-5xl lg:aspect-video h-auto p-0"
                 showModal={showModal}
                 setShowModal={setShowModal}
             >

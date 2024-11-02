@@ -91,7 +91,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                 </button>
             </div>
             <Modal
-                className="max-w-7xl flex-col"
+                className="max-w-7xl lg:aspect-video flex-col"
                 showModal={showModal}
                 setShowModal={setShowModal}
             >
