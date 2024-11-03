@@ -75,7 +75,7 @@ export const PresentacionHome = () => {
                     />
                     <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">
                         <p className="text-2xl lg:text-4xl leading-tight">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
-                        <p className="hidden lg:block mt-2 w-full max-w-xl text-base">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
+                        <p className="hidden lg:block mt-2 w-full max-w-xl">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
                     </div>
                 </section>
             </MotionWrapperLayoutClient>
@@ -131,7 +131,7 @@ export const PresentacionHome = () => {
                         <button
                             type="button"
                             onClick={ selectedStep === 1 ? () => { setShowModal(false) } : previousStep}
-                            className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                            className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter flex justify-center items-center transition-200"
                         >
                             {
                                 selectedStep === 1 ? 'Omitir' : 'Anterior'
@@ -140,7 +140,7 @@ export const PresentacionHome = () => {
                         <button
                             type="button"
                             onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
-                            className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center transition-200"
+                            className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
                         >
                             {
                                     selectedStep === steps.length ? 'Finalizar' : 'Siguiente'

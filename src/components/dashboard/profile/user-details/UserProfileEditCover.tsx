@@ -82,8 +82,8 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
         <Fragment>
             <div className="content-visibility-hidden lg:content-visibility-visible">
                 <button
-                    onClick={() => setShowModal(true)}
                     type="button"
+                    onClick={() => setShowModal(true)}
                     className="size-8 rounded-lg lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/main:opacity-100 absolute top-2 right-2 z-20 transition-200"
                 >
                     <span className="sr-only">Editar portada</span>

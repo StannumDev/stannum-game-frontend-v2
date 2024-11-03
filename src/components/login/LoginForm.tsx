@@ -57,13 +57,13 @@ export const LoginForm = () => {
                         })}
                     />
                     <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
-                    <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
+                    <div className="order-1 w-full flex items-center gap-1 peer-focus-visible:text-stannum">
                         <UserIcon className="size-5 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Usuario o correo electrónico</label>
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="-mt-2"/>
-                <div className='w-full max-w-xl flex flex-col justify-start items-start gap-1 relative'>
+                <div className='w-full max-w-xl flex flex-col items-start gap-1 relative'>
                     <input
                         type={ showPassword ? 'text' : 'password'}
                         enterKeyHint="done"
@@ -76,7 +76,7 @@ export const LoginForm = () => {
                         })}
                     />
                     <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
-                    <div className="order-1 w-full flex items-center gap-1 text-white peer-focus-visible:text-stannum">
+                    <div className="order-1 w-full flex items-center gap-1 peer-focus-visible:text-stannum">
                         <UnlockIcon className="w-5 h-4 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Contraseña</label>
                     </div>

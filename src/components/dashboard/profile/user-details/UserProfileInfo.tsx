@@ -1,7 +1,9 @@
+import { UserProfileEditInfo } from "@/components";
+
 export const UserProfileInfo = () => {
     return (
         <div className="w-full flex flex-wrap gap-4">
-            <section className="w-full lg:w-[calc((100%/3)*2-16px)] card">
+            <section className="w-full lg:w-[calc((100%/3)*2-16px)] card relative">
                 <h2 className="title-2">Información</h2>
                 <div className="mt-4 w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
@@ -20,6 +22,7 @@ export const UserProfileInfo = () => {
                         <h3 className="text-sm text-neutral-500 font-semibold">Rol</h3>
                         <p className="w-full title-3 truncate">Desarrollador Full-Stack</p>
                     </div>
+                    <UserProfileEditInfo/>
                 </div>
             </section>
             <section className="w-full lg:w-1/3 min-h-32 max-h-96 lg:h-auto card flex flex-col gap-4">

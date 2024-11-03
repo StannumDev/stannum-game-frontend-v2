@@ -35,7 +35,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                         initial={{ x: '-100%', opacity: 1 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ type: 'spring', duration: 0.375 }}
-                        className="w-full min-h-svh bg-transparent border-r border-card overflow-hidden pt-16 flex flex-col justify-start items-center relative"
+                        className="w-full min-h-svh bg-transparent border-r border-card overflow-hidden pt-16 flex flex-col items-center relative"
                     >
                         <motion.button
                             type="button"
@@ -100,7 +100,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.75 }}
-                            className="w-full py-8 px-4 flex justify-start items-center gap-4"
+                            className="w-full py-8 px-4 flex items-center gap-4"
                         >
                             <Link href={'/dashboard'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
                                 { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }

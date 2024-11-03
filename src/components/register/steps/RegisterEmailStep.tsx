@@ -90,7 +90,7 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="w-full">
                 <div className='w-full flex flex-col gap-1 relative'>
-                    <label htmlFor="email" className="text-white text-base md:text-lg text-center md:text-start md:px-0 mb-2 md:mb-0">Elige el correo electrónico que usaras para tu cuenta.</label>
+                    <label htmlFor="email" className="md:text-lg text-center md:text-start md:px-0 mb-2 md:mb-0">Elige el correo electrónico que usaras para tu cuenta.</label>
                     <input
                         type='email'
                         inputMode="email"
@@ -98,14 +98,13 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                         maxLength={50}
                         id="email"
                         autoComplete="email"
-                        placeholder="ejemplo@stannumgame.com"
-                        className="peer w-full h-9 px-2 bg-card-light text-white rounded-t lowercase placeholder:opacity-50"
+                        placeholder="stannum@stannumgame.com"
+                        className="mt-2 w-full h-10 px-2 border-b border-card-lighter lowercase focus-visible:border-stannum placeholder:opacity-50 transition-200"
                         {...register("email",{
                             required: true,
                             maxLength: 50
                         })}
-                        />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
+                    />
                 </div>
                 <FormErrorMessage condition={errors?.email} message={errors?.email?.message} className="mt-2"/>
             </div>

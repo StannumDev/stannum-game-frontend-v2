@@ -37,28 +37,25 @@ export const RegisterPasswordStep = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="w-full">
                 <div className='w-full flex flex-col gap-1'>
-                    <label htmlFor="username" className="text-white text-base md:text-lg">Elige tu nombre de usuario.</label>
-                    <div className="w-full flex">
-                        <div className="size-9 bg-card-lighter flex justify-center items-center rounded-s">
-                            <AtIcon className="text-neutral-400 stroke-1 text-base md:text-lg"/>
+                    <label htmlFor="username" className="md:text-lg">Elige tu nombre de usuario.</label>
+                    <div className="w-full relative">
+                        <div className="pl-2 h-10 flex justify-center items-center absolute top-0 left-0">
+                            <AtIcon className="text-white/25 size-4 md:size-5"/>
                         </div>
-                        <div className="grow flex flex-col gap-1 relative">
-                            <input
-                                type='text'
-                                enterKeyHint="next"
-                                minLength={6}
-                                maxLength={25}
-                                id="username"
-                                autoComplete="username"
-                                className="peer w-full h-9 px-2 bg-card-light text-white rounded-tr lowercase"
-                                {...register("username",{
-                                    required: true,
-                                    minLength: 6,
-                                    maxLength: 25
-                                })}
-                                />
-                            <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
-                        </div>
+                        <input
+                            type='text'
+                            enterKeyHint="next"
+                            minLength={6}
+                            maxLength={25}
+                            id="username"
+                            autoComplete="username"
+                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter lowercase focus-visible:border-stannum placeholder:opacity-50 transition-200'
+                            {...register("username",{
+                                required: true,
+                                minLength: 6,
+                                maxLength: 25
+                            })}
+                        />
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>
@@ -73,7 +70,8 @@ export const RegisterPasswordStep = () => {
                         maxLength={25}
                         id="password"
                         autoComplete="password"
-                        className={`peer w-full h-9 px-2 bg-card-light rounded-t ${ !showPassword && 'tracking-widest'}`}
+                        placeholder="********"
+                        className={`w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("password",{
                             required: true,
                             minLength: 6,
@@ -81,7 +79,6 @@ export const RegisterPasswordStep = () => {
                         })}
                     />
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                 </div>
                 <p className="mt-2 text-sm text-neutral-400">Debe contener al menos una minúscula, una mayúscula y un número.</p>
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="mt-2"/>
@@ -96,7 +93,8 @@ export const RegisterPasswordStep = () => {
                         maxLength={25}
                         id="passwordRepeat"
                         autoComplete="password"
-                        className={`peer w-full h-9 px-2 bg-card-light text-white rounded-t ${ !showPasswordRepeat && 'tracking-widest'}`}
+                        placeholder="********"
+                        className={`w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("passwordRepeat",{
                             required: true,
                             minLength: 6,
@@ -104,7 +102,6 @@ export const RegisterPasswordStep = () => {
                         })}
                     />
                     <ButtonShowPassword status={showPasswordRepeat} changeStatus={setShowPasswordRepeat} className="absolute bottom-0 right-0 size-9"/>
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                 </div>
                 <FormErrorMessage condition={errors?.passwordRepeat} message={errors?.passwordRepeat?.message} className="mt-2"/>
             </div>

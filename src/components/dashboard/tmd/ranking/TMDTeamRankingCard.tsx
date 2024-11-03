@@ -72,7 +72,7 @@ export const TMDTeamRankingCard = () => {
                     <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full drop-shadow-sm"/>
                     <span className="whitespace-nowrap truncate text-sm lg:text-base">STANNUM</span>
                 </h3>
-                <h3 className="hidden lg:block col-span-4 text-base">
+                <h3 className="hidden lg:block col-span-4">
                     <AnimatePresence>
                         { isExpanded &&
                             <motion.span

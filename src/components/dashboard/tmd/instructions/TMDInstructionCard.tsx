@@ -30,8 +30,8 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
                 </p>
             </div>
             <div className={`w-full lg:w-fit h-full flex flex-col lg:flex-row items-center ${ completed ? 'lg:bg-gradient-to-r lg:from-transparent lg:from-25% lg:via-stannum lg:via-25% lg:to-stannum-light/75 lg:to-100%' : inProcess && 'lg:bg-gradient-to-r lg:from-transparent lg:from-25% lg:via-card lg:via-25% lg:to-card-lighter/40 lg:to-100%' }`}>
-                <div className={`mt-4 lg:mt-0 lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `lg:bg-card lg:group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'lg:bg-card lg:group-hover:bg-card-light' : 'lg:bg-card lg:group-hover:bg-card-light' }`}>
-                    <div className='grid grid-cols-2 lg:flex lg:flex-col gap-4'>
+                <div className={`mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `lg:bg-card lg:group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'lg:bg-card lg:group-hover:bg-card-light' : 'lg:bg-card lg:group-hover:bg-card-light' }`}>
+                    <div className='w-full lg:w-auto grid grid-cols-2 lg:flex lg:flex-col gap-4'>
                         <div className='flex items-center gap-2 lg:relative lg:left-8'>
                             <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : inProcess ? 'bg-card-light' : 'bg-invalid/25'}  flex justify-center items-center`}>
                                 <span className={`text-xl ${ completed || inProcess ? 'text-stannum' : 'text-invalid' }`}>D</span>

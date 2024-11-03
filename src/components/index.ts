@@ -40,6 +40,7 @@ export { UserProfileEditCover } from "./dashboard/profile/user-details/UserProfi
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";
 export { UserProfileSocialMedias } from "./dashboard/profile/user-details/UserProfileSocialMedias";
 export { UserProfileInfo } from "./dashboard/profile/user-details/UserProfileInfo";
+export { UserProfileEditInfo } from "./dashboard/profile/user-details/UserProfileEditInfo";
 export { ProfileSectionsLayout } from "./dashboard/profile/sections/ProfileSectionsLayout";
 export { AchievementsLayout } from "./dashboard/profile/sections/AchievementsLayout";
 

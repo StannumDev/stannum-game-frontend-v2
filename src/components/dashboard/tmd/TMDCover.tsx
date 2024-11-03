@@ -61,7 +61,7 @@ export const TMDCover = () => {
                 <div className='w-full flex flex-col justify-center items-center relative z-10'>
                     <h2 className='text-xs lg:text-sm font-semibold uppercase tracking-widest text-card-lightest'>Progreso total</h2>
                     <div className='mt-2 w-full max-w-md flex justify-center items-center gap-2'>
-                        <div className='text-sm leading-none font-bold text-white'>{progress}%</div>
+                        <div className='text-sm leading-none font-bold'>{progress}%</div>
                         <div
                             className="w-full h-5 bg-card border border-card-light rounded-full flex overflow-hidden transition-200"
                             role="progressbar"

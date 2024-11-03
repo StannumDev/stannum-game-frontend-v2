@@ -31,7 +31,7 @@ export const RegisterPhotoStep = () => {
 
     return (
         <div className="w-full flex flex-col justify-center items-center">
-            <p className="text-center text-white">¡Añade una foto de perfil!</p>
+            <p className="text-center">¡Añade una foto de perfil!</p>
             {
                 !file ?
                 <div className="mt-4 w-full max-w-sm aspect-square relative">
@@ -66,7 +66,7 @@ export const RegisterPhotoStep = () => {
                     </div>
                     <div className="mt-4 w-full">
                         <div className="w-full flex justify-center items-center gap-1">
-                            <label htmlFor="zoom" className="w-16 text-center text-base lg:text-lg text-white">x{zoom} <span className="sr-only">Elegir zoom</span></label>
+                            <label htmlFor="zoom" className="w-16 text-center lg:text-lg">x{zoom} <span className="sr-only">Elegir zoom</span></label>
                             <input
                                 type='range'
                                 name="zoom"
@@ -80,7 +80,7 @@ export const RegisterPhotoStep = () => {
                             />
                         </div>
                         <div className="mt-4 w-full flex justify-center items-center gap-1">
-                            <label htmlFor="zoom" className="w-16 text-center text-base lg:text-lg text-white">{rotate}°<span className="sr-only">Elegir rotación</span></label>
+                            <label htmlFor="zoom" className="w-16 text-center lg:text-lg">{rotate}°<span className="sr-only">Elegir rotación</span></label>
                             <input
                                 type='range'
                                 name="rotate"
@@ -102,7 +102,7 @@ export const RegisterPhotoStep = () => {
                     whileHover={{ backgroundColor: '#515151'}}
                     disabled={isLoading}
                     type="submit"
-                    className="w-full md:w-32 h-10 text-sm font-semibold bg-card-light disabled:bg-card-lighter rounded tracking-tighter text-white flex justify-center items-center"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-card-light disabled:bg-card-lighter rounded tracking-tighter flex justify-center items-center"
                 >
                     Omitir
                 </motion.button>
@@ -111,7 +111,7 @@ export const RegisterPhotoStep = () => {
                     whileHover={{ backgroundColor: '#66eae5'}}
                     disabled={isLoading}
                     type="button"
-                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center"
                 >
                     {
                         isLoading ?

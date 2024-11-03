@@ -5,7 +5,7 @@ export const ContinuarHome = () => {
     return (
         <MotionWrapperLayout>
             <section className="w-full">
-                <h2 className="w-full font-black text-2xl text-center flex justify-start items-center gap-1">
+                <h2 className="w-full font-black text-2xl text-center flex items-center gap-1">
                     <PlayCircleIcon/>
                     Continuar viendo
                 </h2>

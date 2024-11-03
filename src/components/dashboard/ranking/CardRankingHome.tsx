@@ -12,7 +12,7 @@ export const CardRankingHome = ({position, name, photo, enterprise, points}:Simp
               </span>
             { position === 1 ? <FirstPlaceIcon/> : position === 2 ? <SecondPlaceIcon/>: position === 3 ? <ThirdPlaceIcon/> : <span className="text-sm lg:text-base font-black">{position}</span> }
           </h3>
-          <h3 className="col-span-5 lg:col-span-4 lg:pl-2 flex justify-start items-center gap-2 lg:gap-3">
+          <h3 className="col-span-5 lg:col-span-4 lg:pl-2 flex items-center gap-2 lg:gap-3">
               <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full"/>
               <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </h3>

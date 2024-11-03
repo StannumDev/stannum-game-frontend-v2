@@ -74,7 +74,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
             </button>
             <div
                 ref={containerRef}
-                className="w-full flex justify-start items-center gap-4 overflow-x-auto scrollbar-hide"
+                className="w-full flex items-center gap-4 overflow-x-auto scrollbar-hide"
             >
                 {sections.map((section: NavbarSectionType, i: number) => (
                     <NavbarSectionButton

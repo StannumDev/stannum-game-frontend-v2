@@ -4,7 +4,7 @@ import { ProfileAchievementsCard } from "@/components"
 
 export const AchievementsLayout = () => {
     return (
-        <section className="w-full flex flex-col justify-start items-start gap-8">
+        <section className="w-full flex flex-col items-start gap-8">
             <header>
                 <div className="w-full lg:w-fit flex flex-col lg:flex-row justify-center lg:justify-start items-center gap-2 lg:gap-4">
                     <h2 className="w-fit title-2">Logros y trofeos</h2>

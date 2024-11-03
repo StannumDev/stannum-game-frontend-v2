@@ -24,7 +24,7 @@ export const StepFiveTutorial = ({direction}:Props) => {
             <h2 className='w-full text-2xl lg:text-5xl font-black uppercase'>
                 ¡Estas listo para <span className='block lg:inline'>comenzar tu viaje!</span>
             </h2>
-            <p className='mt-2 w-full max-w-2xl font-thin text-base lg:text-lg text-white/50'>Has adquirido las herramientas necesarias para enfrentarte a desafíos reales. Desde hoy, tu progreso estará en tus manos y <b className='text-stannum font-semibold'>cada decisión te acercará más a tus objetivos</b> personales y profesionales. En <b className='text-white font-semibold'>STANNUM Game</b> tendrás acceso a <b className='text-stannum font-semibold'>recursos exclusivos, misiones diarias,</b> y la oportunidad de <b className='text-stannum font-semibold'>medir tu evolución de manera continua.</b></p>
+            <p className='mt-2 w-full max-w-2xl font-thin lg:text-lg text-white/50'>Has adquirido las herramientas necesarias para enfrentarte a desafíos reales. Desde hoy, tu progreso estará en tus manos y <b className='text-stannum font-semibold'>cada decisión te acercará más a tus objetivos</b> personales y profesionales. En <b className='text-white font-semibold'>STANNUM Game</b> tendrás acceso a <b className='text-stannum font-semibold'>recursos exclusivos, misiones diarias,</b> y la oportunidad de <b className='text-stannum font-semibold'>medir tu evolución de manera continua.</b></p>
         </motion.main>
     )
 }

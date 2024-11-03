@@ -21,7 +21,6 @@ export {
 
 export {
     CiSearch as SearchIcon,
-    CiAt as AtIcon
 } from "react-icons/ci";
 
 export {
@@ -58,7 +57,8 @@ export {
 export {
     MdModeEdit as EditIcon,
     MdAddAPhoto as AddPhotoIcon,
-    MdOutlineVpnKey as KeyIcon
+    MdOutlineVpnKey as KeyIcon,
+    MdAlternateEmail as AtIcon
 } from "react-icons/md";
 
 export {

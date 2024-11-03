@@ -29,20 +29,12 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
         }
         checkActive()
     }, [pathname, href])
-    
-    const linkVariants = {
-        active: 'text-white',
-        inactive: 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200',
-    }
 
     return (
         <Link
             href={href}
             aria-label={`Navegar a ${label}`}
-            className={`w-full h-14 px-8 flex items-center transition-200 relative
-                ${ isActive ? linkVariants.active : linkVariants.inactive}
-                ${isExpanded ? 'justify-start' : 'justify-center'}
-            `}
+            className={`w-full h-14 px-8 flex items-center transition-200 relative ${ !isActive && 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200' } ${!isExpanded && 'justify-center'}`}
         >
             {
                 isActive &&
@@ -60,7 +52,7 @@ export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -150, opacity: 0 }}
                         transition={{ x:{ duration: 0.25 }, opacity:{ duration: 0.125 } }}
-                        className="flex justify-start items-center gap-2 relative z-10"
+                        className="flex items-center gap-2 relative z-10"
                         key='textSidebarLinkDesktop'
                     >
                         <Icon className="size-5"/>

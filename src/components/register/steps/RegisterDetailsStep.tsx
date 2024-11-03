@@ -30,6 +30,7 @@ type Schema = z.infer<typeof schema>
 export const RegisterDetailsStep = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const { register, handleSubmit, setValue, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
     const [country, setCountry] = useState<string>('');
@@ -48,11 +49,11 @@ export const RegisterDetailsStep = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <p className="text-center text-white text-sm md:text-base">Ahora, ¡Cuéntanos un poco sobre ti!</p>
+            <p className="text-center text-sm md:text-base">Ahora, ¡Cuéntanos un poco sobre ti!</p>
             <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="text-white text-base md:text-lg">Nombre</label>
+                        <label htmlFor="name" className="md:text-lg">Nombre</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -60,7 +61,7 @@ export const RegisterDetailsStep = () => {
                             id="name"
                             autoComplete="name"
                             autoCapitalize="true"
-                            className="w-full h-9 px-2 bg-card-light text-white rounded"
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                             {...register("name",{
                                 required: true,
                                 maxLength: 50
@@ -71,13 +72,13 @@ export const RegisterDetailsStep = () => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="text-white text-base md:text-lg">Fecha de nacimiento</label>
+                        <label htmlFor="name" className="md:text-lg">Fecha de nacimiento</label>
                         <input
                             type='date'
                             enterKeyHint="next"
                             id="birthdate"
                             autoComplete="bday"
-                            className="w-full h-9 px-2 bg-card-light text-white rounded"
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                             {...register("birthdate",{
                                 required: true
                             })}
@@ -87,22 +88,22 @@ export const RegisterDetailsStep = () => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="text-white text-base md:text-lg">País</label>
+                        <label htmlFor="name" className="md:text-lg">País</label>
                         <CountryDropdown
                             value={country}
                             onChange={(val) => { setCountry(val); setValue("country", val) }}
                             name="country"
                             id="country"
                             defaultOptionLabel="Seleccionar"
-                            classes="w-full h-9 px-2 bg-card-light text-white rounded outline-none focus-visible:outline-none appearance-none"
+                            classes="w-full h-10 px-2 bg-transparent focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
                         />
-                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><SelectorIcon/></span>
+                        <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                     </div>
                     <FormErrorMessage condition={errors?.country} message="Campo requerido." className="mt-2"/>
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="text-white text-base md:text-lg">Región</label>
+                        <label htmlFor="name" className="md:text-lg">Región</label>
                         <RegionDropdown
                             country={country}
                             value={region}
@@ -111,15 +112,15 @@ export const RegisterDetailsStep = () => {
                             id="region"
                             disableWhenEmpty={true}
                             defaultOptionLabel="Seleccionar"
-                            classes="w-full h-9 px-2 bg-card-light text-white rounded outline-none focus-visible:outline-none disabled:opacity-100 appearance-none"
+                            classes="w-full h-10 px-2 bg-transparent focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
                         />
-                        <span className="text-sm absolute bottom-3 right-2 text-white pointer-events-none"><SelectorIcon/></span>
+                        <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                     </div>
                     <FormErrorMessage condition={errors?.region} message="Campo requerido." className="mt-2"/>
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="enterprise" className="text-white text-base md:text-lg">Empresa</label>
+                        <label htmlFor="enterprise" className="md:text-lg">Empresa</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -127,7 +128,7 @@ export const RegisterDetailsStep = () => {
                             id="enterprise"
                             autoComplete="organization"
                             autoCapitalize="true"
-                            className="w-full h-9 px-2 bg-card-light text-white rounded"
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                             {...register("enterprise",{
                                 required: true,
                                 maxLength: 50
@@ -138,7 +139,7 @@ export const RegisterDetailsStep = () => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="enterpriseRole" className="text-white text-base md:text-lg">Tu rol en la empresa</label>
+                        <label htmlFor="enterpriseRole" className="md:text-lg">Tu rol en la empresa</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -146,7 +147,7 @@ export const RegisterDetailsStep = () => {
                             id="enterpriseRole"
                             autoComplete="organization-title"
                             autoCapitalize="true"
-                            className="w-full h-9 px-2 bg-card-light text-white rounded"
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                             {...register("enterpriseRole",{
                                 required: true,
                                 maxLength: 50
@@ -158,14 +159,14 @@ export const RegisterDetailsStep = () => {
             </div>
             <div className="mt-4 w-full">
                 <div className='w-full flex flex-col gap-1'>
-                    <label htmlFor="aboutme" className="text-white text-base md:text-lg">Sobre mí</label>
+                    <label htmlFor="aboutme" className="md:text-lg">Sobre mí</label>
                     <textarea
                         maxLength={500}
                         id="aboutme"
                         autoComplete="off"
                         autoCapitalize="true"
                         placeholder='Cuéntanos un poco sobre ti...'
-                        className="w-full h-72 md:h-52 p-2 bg-card-light text-white rounded resize-none placeholder:text-neutral-400"
+                        className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 transition-200"
                         {...register("aboutme",{
                             required: true,
                             maxLength: 50

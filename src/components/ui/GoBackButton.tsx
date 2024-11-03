@@ -17,7 +17,7 @@ export const GoBackButton = ({className}:Props) => {
             onClick={router.back}
             className={`${className} flex items-center gap-1.5`}
         >
-            <ArrowBackIcon className="stroke-[0.25] text-base relative top-px"/>
+            <ArrowBackIcon className="stroke-[0.25] relative top-px"/>
             <span className="font-light text-lg">Atras</span>
         </motion.button>
     )

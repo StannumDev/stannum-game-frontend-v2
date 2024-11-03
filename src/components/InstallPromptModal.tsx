@@ -65,7 +65,7 @@ export const InstallPromptModal = () => {
         showModal={showModal}
         setShowModal={setShowModal}
       >
-        <div className="size-full pt-4 lg:pt-8 text-center flex flex-col justify-start items-center">
+        <div className="size-full pt-4 lg:pt-8 text-center flex flex-col items-center">
           <STANNUMIcon className='w-20 lg:w-32' pathClassName='fill-stannum'/>
           <h2 className='mt-6 lg:mt-8 title-2 text-xl lg:text-3xl'>¡Instala STANNUM Game!</h2>
           <p className='mt-2 lg:mt-0 text-sm lg:text-base'>Disfruta de la <b className='text-stannum'>experiencia completa</b> en tu dispositivo instalando nuestra aplicación.</p>

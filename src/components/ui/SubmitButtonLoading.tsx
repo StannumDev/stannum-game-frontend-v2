@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion';
 import { SpinnerIcon } from '@/icons';
 
 interface Props{
@@ -12,13 +11,11 @@ interface Props{
 
 export const SubmitButtonLoading = ({isLoading, text, form, className}:Props) => {
     return (
-        <motion.button
-            whileTap={{scale: !isLoading ? 1.05 : 1 }}
-            whileHover={{ backgroundColor: '#66eae5'}}
+        <button
             type="submit"
             form={form}
             disabled={isLoading}
-            className={`${className} bg-stannum disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center`}
+            className={`bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200 ${className}`}
         >
             {
                 isLoading ?
@@ -26,6 +23,6 @@ export const SubmitButtonLoading = ({isLoading, text, form, className}:Props) =>
                 :
                     text
             }
-        </motion.button>
+        </button>
     )
 }
