@@ -29,8 +29,7 @@ export const InstallPromptModal = () => {
     };
 
     const HIDE_INSTALLATION = Cookies.get('HIDE_INSTALLATION') === 'true';
-
-    if (!HIDE_INSTALLATION) {
+    if(!HIDE_INSTALLATION){
       checkInstallationStatus();
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.addEventListener('appinstalled', () => {

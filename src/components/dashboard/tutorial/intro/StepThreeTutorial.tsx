@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import photo from '@/assets/background/the_game.webp';
+import photo from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props{
     direction: 'prev'|'next'
@@ -25,7 +25,7 @@ export const StepThreeTutorial = ({direction}:Props) => {
         >
             <div className='size-full relative lg:overflow-y-auto'>
                 <div className='size-full text-center flex flex-col lg:flex-row px-4 lg:px-0 gap-8 justify-center items-center lg:absolute lg:top-0 lg:left-0'>
-                    <Image priority src={photo} alt='Tutorial STANNUM Game' className='w-full max-w-md aspect-square object-cover rounded-2xl shrink-0 shadow-md' />
+                    <Image priority src={photo} alt='Tutorial STANNUM Game' className='w-full max-w-md aspect-square object-cover object-[90%_50%] rounded-2xl shrink-0 shadow-md' />
                     <div className='grow max-w-lg text-pretty flex flex-col justify-start items-center'>
                         <h2 className='title-3 text-white font-semibold text-lg lg:text-2xl'>
                             ¡Acepta el desafío y potencia tu crecimiento!

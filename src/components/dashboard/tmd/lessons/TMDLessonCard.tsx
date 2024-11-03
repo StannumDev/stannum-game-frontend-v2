@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRightIcon, CheckIcon, PlayIcon } from '@/icons';
-import styles from '@/components/styles/TMDCard.module.css';
+import styles from '@/components/styles/TMDLessonCard.module.css';
 
 interface Props{
     index: number;

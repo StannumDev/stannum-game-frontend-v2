@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
 import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, ToolsIcon } from '@/icons';
-import styles from '@/components/styles/TMDCard.module.css';
-import instruction_logo from '@/assets/products/tmd/tmd_instructions.webp';
+import styles from '@/components/styles/TMDInstructionCard.module.css';
+import instruction_logo from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props{
     index: number;
@@ -20,7 +20,7 @@ export const TMDInstructionCard = ({index, title, inProcess, completed, handleIn
             className={`w-full lg:h-52 p-4 lg:p-0 bg-card/25 hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-card hover:border-card-light' } text-start flex flex-col lg:flex-row items-center relative overflow-hidden group cursor-pointer transition-200 `}
         >
             <div className='hidden lg:block h-full aspect-square relative shrink-0'>
-                <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-cover ${ !completed && 'grayscale' }`} />
+                <Image priority src={instruction_logo} alt='Instrucción TRENNO Mark Digital' className={`size-full absolute top-0 left-0 object-[90%_50%] object-cover ${ !completed && 'grayscale' }`} />
             </div>
             <div className='lg:pl-6 w-full lg:w-auto grow lg:min-w-0 lg:h-full lg:pr-8 flex flex-col justify-center gap-2 lg:gap-0'>
                 <span className='subtitle-1'>Instrucción {index < 10 ? `0${index}` : index}</span>
