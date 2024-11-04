@@ -50,8 +50,8 @@ const paths:Array<Path> = [
 export const STANNUMLogo = ({ className, pathClassName } :Props) => {
   return (
     <svg
+      aria-describedby="Logo de STANNUM"
       xmlns="http://www.w3.org/2000/svg"
-      // viewBox="16 8 120 18"
       viewBox="0 0 896 202"
       fill="none"
       className={`${className} custom-svg`}

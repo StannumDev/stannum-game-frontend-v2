@@ -31,10 +31,10 @@ export const UserProfileSocialMedias = () => {
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="lg:p-2 lg:rounded-lg lg:bg-card-light lg:hover:bg-card-lighter flex justify-center items-center group/link transition-200"
+                        className="lg:p-2 lg:rounded-lg lg:bg-card-light/40 lg:hover:bg-card-light flex justify-center items-center group/link transition-200"
                     >
                         <span className="sr-only">{label}</span>
-                        <Icon className="size-5 text-white/50 group-hover/link:text-white transition-200"/>
+                        <Icon className="size-5 text-card-lightest group-hover/link:text-white transition-200"/>
                     </Link>
                 ))
             }

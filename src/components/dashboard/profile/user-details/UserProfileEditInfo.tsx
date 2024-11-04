@@ -128,7 +128,7 @@ export const UserProfileEditInfo = () => {
                                     name="country"
                                     id="country"
                                     defaultOptionLabel="Seleccionar"
-                                    classes="w-full h-10 px-2 bg-transparent focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
+                                    classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
                                 />
                                 <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                             </div>
@@ -145,7 +145,7 @@ export const UserProfileEditInfo = () => {
                                     id="region"
                                     disableWhenEmpty={true}
                                     defaultOptionLabel="Seleccionar"
-                                    classes="w-full h-10 px-2 bg-transparent focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none disabled:opacity-25 appearance-none transition-200"
+                                    classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none disabled:opacity-25 appearance-none transition-200"
                                 />
                                 <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                             </div>

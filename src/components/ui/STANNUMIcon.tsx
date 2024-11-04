@@ -15,6 +15,7 @@ const paths:Array<Path> = [
 export const STANNUMIcon = ({ className, pathClassName } :Props) => {
   return (
     <svg
+      aria-describedby="Icono de STANNUM"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="125 350 830 420"
       fill="none"
