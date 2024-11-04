@@ -8,7 +8,7 @@ export const UserProfileDetails = () => {
             <MotionWrapperLayout>
                 <section className="w-full flex flex-col relative lg:static">
                     <UserProfileCover/>
-                    <div className="w-full card pt-0 rounded-t-none lg:relative">
+                    <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
                             <UserProfilePicture/>
                             <p className="mt-4 title-2">aledelazerda</p>

@@ -23,19 +23,18 @@ export const UserProfileSocialMedias = () => {
     ]
 
     return (
-        <div className="flex lg:justify-end items-center lg:items-end gap-2 absolute top-4 lg:bottom-6 left-4 lg:right-6 z-10">
-            {
-                socialMedias && socialMedias.length > 0 &&
+        <div className="mt-4 lg:mt-0 flex justify-center lg:justify-end items-center lg:items-end gap-2 lg:absolute lg:bottom-6 lg:right-6 z-10 pointer-events-auto">
+            { socialMedias && socialMedias.length > 0 &&
                 socialMedias.map(({label, url, Icon}:SocialMedia, i:number) => (
                     <Link
                         key={`socialmedia_${i}`}
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="size-7 lg:size-10 rounded-lg lg:rounded-xl bg-card-light hover:bg-card-lighter flex justify-center items-center group/link transition-200"
+                        className="lg:p-2 lg:rounded-lg lg:bg-card-light lg:hover:bg-card-lighter flex justify-center items-center group/link transition-200"
                     >
                         <span className="sr-only">{label}</span>
-                        <Icon className="size-4 lg:size-5 text-neutral-400 group-hover/link:text-white transition-200"/>
+                        <Icon className="size-5 text-white/50 group-hover/link:text-white transition-200"/>
                     </Link>
                 ))
             }

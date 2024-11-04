@@ -10,7 +10,7 @@ export const UserProfilePicture = () => {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
     return (
-        <div className="size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md relative overflow-hidden z-20 group/picture outline outline-2 outline-stannum">
+        <div className="size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md relative overflow-hidden z-50 group/picture outline outline-2 outline-stannum">
             { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
             <Image
                 priority
