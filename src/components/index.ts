@@ -35,6 +35,7 @@ export { StanHelp } from "./dashboard/home/StanHelp";
 // PROFILE
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
 export { UserProfilePicture } from "./dashboard/profile/user-details/UserProfilePicture";
+export { UserProfileEditPicture } from "./dashboard/profile/user-details/UserProfileEditPicture";
 export { UserProfileCover } from "./dashboard/profile/user-details/UserProfileCover";
 export { UserProfileEditCover } from "./dashboard/profile/user-details/UserProfileEditCover";
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";
@@ -95,7 +96,7 @@ export { RegisterHandler } from "./register/RegisterHandler";
 export { RegisterEmailStep } from "./register/steps/RegisterEmailStep";
 export { RegisterPasswordStep } from "./register/steps/RegisterPasswordStep";
 export { RegisterDetailsStep } from "./register/steps/RegisterDetailsStep";
-export { RegisterPhotoStep } from "./register/steps/RegisterPhotoStep";
+export { RegisterPictureStep } from "./register/steps/RegisterPictureStep";
 
 // TUTORIAL
 export { StepOneTutorial } from "./dashboard/tutorial/intro/StepOneTutorial";

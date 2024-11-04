@@ -47,11 +47,10 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                                 <STANNUMIcon className="fill-white w-8" pathClassName="fill-white"/>
                             </Link>
                             <Link href={'/dashboard/profile'} className="size-8 aspect-square rounded-full relative overflow-hidden">
-                                <span>Foto de perfil</span>
                                 <Image
                                     priority
                                     src={mateo}
-                                    alt='Usuario STANNUM Game'
+                                    alt='Foto de perfil Usuario STANNUM Game'
                                     className="size-full object-cover absolute top-0 left-0 z-10"
                                 />
                             </Link>

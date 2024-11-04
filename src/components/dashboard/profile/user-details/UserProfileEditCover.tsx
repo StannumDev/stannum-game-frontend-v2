@@ -2,7 +2,6 @@
 
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import { motion } from 'framer-motion';
 import { EditIcon, SpinnerIcon } from "@/icons";
 import { Modal } from "@/components";
 import profile_background_1 from '@/assets/profile/achievement_background_1.webp';
@@ -124,13 +123,11 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                     </div>
                 </div>
                 <div className="mt-4 lg:mt-6 w-full flex justify-end items-center">
-                    <motion.button
-                        whileTap={{scale: !isLoading ? 1.05 : 1 }}
-                        whileHover={{ backgroundColor: '#66eae5'}}
+                    <button
+                        type="button"
                         disabled={isLoading}
                         onClick={changeBackground}
-                        type="button"
-                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter text-white flex justify-center items-center'
+                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200'
                     >
                         {
                             isLoading ?
@@ -138,7 +135,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                             :
                             'Confirmar'
                         }
-                    </motion.button>
+                    </button>
                 </div>
             </Modal>
         </Fragment>

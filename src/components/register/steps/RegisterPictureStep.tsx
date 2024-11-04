@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import AvatarEditor from 'react-avatar-editor';
 import { AddPhotoIcon, SpinnerIcon } from "@/icons";
 // import { FormErrorMessage, SubmitButtonLoading } from "@/components";
-import styles from "@/components/styles/registerPhotoStep.module.css";
+import styles from "@/components/styles/pictureEditor.module.css";
 
-export const RegisterPhotoStep = () => {
+export const RegisterPictureStep = () => {
 
     const [isLoading] = useState<boolean>(false);
     const [zoom, setZoom] = useState<number>(1)
@@ -43,7 +43,7 @@ export const RegisterPhotoStep = () => {
                             id="photo"
                             type="file"
                             accept=".jpg, .jpeg, .png, .webp, .avif, .tiff"
-                            className="size-full absolute top-0 left-0 opacity-0"
+                            className="size-full absolute top-0 left-0 opacity-0 cursor-pointer"
                             onChange={handleFileChange}
                             />
                     </label>

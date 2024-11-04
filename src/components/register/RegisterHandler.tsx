@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
+import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPictureStep } from "@/components";
 
 export const RegisterHandler = () => {
 
@@ -33,7 +33,7 @@ export const RegisterHandler = () => {
                         {step === 'email' && <RegisterEmailStep nextStep={nextStep} />}
                         {step === 'password' && <RegisterPasswordStep />}
                         {step === 'details' && <RegisterDetailsStep />}
-                        {step === 'photo' && <RegisterPhotoStep />}
+                        {step === 'photo' && <RegisterPictureStep />}
                     </motion.div>
                 </AnimatePresence>
             </motion.div>
