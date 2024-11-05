@@ -1,6 +1,5 @@
 interface Props{
-    className: string;
-    pathClassName: string;
+    className: string
 }
 
 interface Path{
@@ -12,18 +11,18 @@ const paths:Array<Path> = [
   { path: "M595.041 732.197C578.457 732.197 564.996 718.736 564.996 702.152V506.914C564.996 495.93 570.919 485.915 580.503 480.638C590.087 475.362 601.825 475.685 611.086 481.5L916.597 673.615C930.704 682.445 934.904 700.967 926.073 715.074C917.243 729.182 898.72 733.381 884.613 724.551L625.194 561.404V702.26C625.194 718.736 611.732 732.197 595.041 732.197Z" },
 ]
 
-export const STANNUMIcon = ({ className, pathClassName } :Props) => {
+export const STANNUMIcon = ({ className } :Props) => {
   return (
     <svg
       aria-describedby="Icono de STANNUM"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="125 350 830 420"
       fill="none"
-      className={`${className} custom-svg`}
+      className={`custom-svg ${className}`}
     >
       {
         paths.map(({path}:Path, i:number) => (
-          <path key={`icon_${i}`} className={pathClassName} fillRule="nonzero" d={path} />
+          <path key={`icon_${i}`} fillRule="nonzero" d={path} />
         ))
       }
     </svg>

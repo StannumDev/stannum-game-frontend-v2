@@ -1,6 +1,7 @@
-import { NextResponse, type NextRequest } from 'next/server';
+// import { NextResponse, type NextRequest } from 'next/server';
 
-export function middleware(request:NextRequest) {
+// export function middleware(request:NextRequest) {
+export function middleware() {
 
   // const token = request.cookies.get('token')?.value
 
@@ -12,9 +13,9 @@ export function middleware(request:NextRequest) {
   //   return NextResponse.redirect(new URL('/login', request.url))
   // }
   
-  if (request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
-  }
+  // if (request.nextUrl.pathname === '/') {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url))
+  // }
 
   return
 }

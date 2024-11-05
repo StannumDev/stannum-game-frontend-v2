@@ -44,7 +44,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                             className={`w-full bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0 right-0 mx-auto ${styles.sidebar}`}
                         >
                             <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
-                                <STANNUMIcon className="fill-white w-8" pathClassName="fill-white"/>
+                                <STANNUMIcon className="fill-white w-8"/>
                             </Link>
                             <Link href={'/dashboard/profile'} className="size-8 aspect-square rounded-full relative overflow-hidden">
                                 <Image

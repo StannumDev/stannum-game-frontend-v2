@@ -64,7 +64,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         key='logoNavbar'
                                         className='block'
                                     >
-                                        <STANNUMLogo className="fill-white w-44" pathClassName="fill-white"/>
+                                        <STANNUMLogo className="fill-white w-44"/>
                                     </motion.span>
                                     :
                                     <motion.span
@@ -75,7 +75,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         key='iconNavbar'
                                         className='h-10 w-12 flex justify-center items-start absolute top-0 left-0 right-0 mx-auto'
                                     >
-                                        <STANNUMIcon className="fill-white" pathClassName="fill-white"/>
+                                        <STANNUMIcon className="fill-white"/>
                                     </motion.span>
                                 }
                             </AnimatePresence>
