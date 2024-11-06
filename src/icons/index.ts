@@ -9,7 +9,12 @@ export {
     FaBookmark as BookmarkedIcon,
     FaRegBookmark as BookmarkIcon,
     FaEye as ShowPassowrdIcon,
-    FaEyeSlash as HidePasswordIcon
+    FaEyeSlash as HidePasswordIcon,
+    FaChessKing as ChessKingicon,
+    FaChessQueen as ChessQueenIcon,
+    FaChessKnight as ChessKnightIcon,
+    FaChessBishop as ChessBishopIcon,
+    FaChessPawn as ChessPawnIcon,
 } from 'react-icons/fa6';
 
 export {
