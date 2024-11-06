@@ -5,24 +5,24 @@ import { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons";
 import { NavbarSectionButton } from "@/components";
 
-interface Props {
+interface Props<T> {
     sections: Array<NavbarSectionType>;
-    selectedLayout: string;
-    handleLayoutChange: (layout: string) => void;
+    selectedLayout: T;
+    handleLayoutChange: (layout: T) => void;
 }
 
-export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: Props) => {
+export const NavbarSection = <T extends string>({ sections, selectedLayout, handleLayoutChange }: Props<T>) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const navigate = useCallback((direction: 'previous' | 'next') => {
         const currentIndex = sections.findIndex(section => section.value === selectedLayout);
 
         if (direction === 'previous' && currentIndex > 0) {
-            handleLayoutChange(sections[currentIndex - 1].value);
+            handleLayoutChange(sections[currentIndex - 1].value as T);
         }
 
         if (direction === 'next' && currentIndex < sections.length - 1) {
-            handleLayoutChange(sections[currentIndex + 1].value);
+            handleLayoutChange(sections[currentIndex + 1].value as T);
         }
     }, [sections, selectedLayout, handleLayoutChange]);
 
@@ -53,7 +53,7 @@ export const NavbarSection = ({ sections, selectedLayout, handleLayoutChange }: 
                 navigate('next');
             } else if (!isNaN(Number(event.key)) && Number(event.key) >= 1 && Number(event.key) <= sections.length) {
                 const sectionIndex = Number(event.key) - 1;
-                handleLayoutChange(sections[sectionIndex].value);
+                handleLayoutChange(sections[sectionIndex].value as T);
             }
         };
         document.addEventListener('keydown', handleKeyDown);

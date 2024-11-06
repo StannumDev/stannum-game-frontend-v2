@@ -1,5 +1,5 @@
+import { LibraryCover, LibrarySectionsLayout } from "@/components";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
     title: 'Biblioteca',
@@ -26,9 +26,8 @@ export default function LibraryPage() {
     return (
         <main className="main-container">
             <h1 className="sr-only">Biblioteca STANNUM Game</h1>
-            <div>
-                <Link href='/dashboard/library/tmd' className="bg-card-light py-1 px-4 rounded-lg">TMD</Link>
-            </div>
+            <LibraryCover/>
+            <LibrarySectionsLayout/>
         </main>
     );
 }

@@ -22,7 +22,7 @@ const sections: Array<NavbarSectionType> = [
     },
 ];
 
-type sectionOptions = 'achievements' | 'tmd' | 'proem'
+type SectionOptions = 'achievements' | 'tmd' | 'proem'
 
 export const ProfileSectionsLayout = () => {
     const router = useRouter();
@@ -30,25 +30,25 @@ export const ProfileSectionsLayout = () => {
     const searchParams = useSearchParams();
 
     const layout = searchParams.get('section');
-    const [selectedLayout, setSelectedLayout] = useState<sectionOptions>('achievements');
+    const [selectedLayout, setSelectedLayout] = useState<SectionOptions>('achievements');
 
     useEffect(() => {
         if (layout && ['achievements', 'tmd', 'proem'].includes(layout)) {
-            setSelectedLayout(layout as sectionOptions);
+            setSelectedLayout(layout as SectionOptions);
         } else {
             router.replace(`${pathname}?section=achievements`, { scroll: false });
         }
     }, [layout, pathname, router]);
 
     const handleLayoutChange = useCallback((layout: string): void => {
-        setSelectedLayout(layout as sectionOptions);
+        setSelectedLayout(layout as SectionOptions);
         router.replace(`${pathname}?section=${layout}`, { scroll: false });
     }, [pathname, router, setSelectedLayout])
 
     return (
         <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
-                <NavbarSection
+                <NavbarSection<SectionOptions>
                     sections={sections}
                     selectedLayout={selectedLayout}
                     handleLayoutChange={handleLayoutChange}

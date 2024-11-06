@@ -44,7 +44,7 @@ const sections: Array<NavbarSectionType> = [
     }
 ];
 
-type sectionOptions = 'warmup' | 'preseason' | 'season' | 'support' | 'tools' | 'ranking' | 'missions';
+type SectionOptions = 'warmup' | 'preseason' | 'season' | 'support' | 'tools' | 'ranking' | 'missions';
 
 export const TMDSectionsLayout = () => {
     const router = useRouter();
@@ -55,13 +55,13 @@ export const TMDSectionsLayout = () => {
     const moduleParam = searchParams.get('module');
     const instructionParam = searchParams.get('instruction');
 
-    const [selectedLayout, setSelectedLayout] = useState<sectionOptions>('warmup');
+    const [selectedLayout, setSelectedLayout] = useState<SectionOptions>('warmup');
     const [selectedModule, setSelectedModule] = useState<number|null>(null)
     const [selectedInstruction, setSelectedInstruction] = useState<number|null>(null)
 
     useEffect(() => {
         if (layoutParam && ['warmup', 'preseason', 'season', 'support', 'tools', 'ranking', 'missions'].includes(layoutParam)) {
-            setSelectedLayout(layoutParam as sectionOptions);
+            setSelectedLayout(layoutParam as SectionOptions);
         } else {
             router.push(`${pathname}?section=preseason`, { scroll: false });
         }
@@ -97,7 +97,7 @@ export const TMDSectionsLayout = () => {
             params.delete('instruction');
         }
 
-        setSelectedLayout(layout as sectionOptions);
+        setSelectedLayout(layout as SectionOptions);
         params.set('section', layout);
 
 
@@ -167,7 +167,7 @@ export const TMDSectionsLayout = () => {
         <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
                 <h2 className="mb-4 title-2 px-4 lg:px-6">Explora las posiblidades</h2>
-                <NavbarSection
+                <NavbarSection<SectionOptions>
                     sections={sections}
                     selectedLayout={selectedLayout}
                     handleLayoutChange={handleLayoutChange}

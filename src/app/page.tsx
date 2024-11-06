@@ -28,18 +28,18 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <main className="w-full flex justify-center relative">
-      <section className="w-full lg:w-auto lg:grow h-full lg:h-auto min-h-svh flex justify-center items-center fixed lg:relative top-0 left-0">
-        <div className="lg:size-full lg:relative">
-          <STANNUMLogo className="hidden lg:block w-44 fill-white lg:absolute lg:top-8 lg:left-8 z-20"/>
+      <h1 className="sr-only">Bienvenido a STANNUM Game</h1>
+      <section className="w-full lg:w-auto lg:grow h-full lg:h-auto min-h-svh flex justify-center items-center fixed lg:relative top-0 left-0 overflow-y-hidden">
+        <div className="lg:size-full lg:relative min-h-lvh">
           <div className="size-full absolute top-0 left-0 bg-gradient-to-br lg:bg-gradient-to-r from-background/25 lg:from-transparent via-background/75 lg:via-background/50 to-background lg:to-background z-10"></div>
           <div className="size-full absolute top-0 left-0 z-0">
-            <Image src={background} alt="Presentación STANNUM Game" className="size-full object-cover object-[75%_50%] lg:object-[100%_50%]"/>
+            <Image priority src={background} alt="Presentación STANNUM Game" className="size-full object-cover object-[75%_50%] lg:object-[100%_50%]"/>
           </div>
         </div>
       </section>
       <section className="w-full max-w-3xl min-h-svh p-4 lg:p-12 lg:bg-gradient-to-r lg:from-background lg:to-card/40 text-center flex flex-col justify-center items-center relative z-50">
-        <h1 className="w-full text-4xl lg:text-6xl font-thin">Bienvenido a <b className="block font-black text-stannum">STANNUM Game</b></h1>
-        <h2 className="mt-8 subtitle-1 text-base lg:text-lg text-white">Una nueva forma de aprender</h2>
+        <STANNUMLogo className="w-60 lg:w-80 fill-white"/>
+        <h2 className="mt-8 lg:mt-12 subtitle-1 text-base lg:text-lg text-stannum">Una nueva forma de aprender</h2>
         <p className="mt-2 w-full max-w-lg text-sm lg:text-base text-white/75">Desarrollamos una forma de enseñanza que combina, los objetivos desafiantes que tienen los grandes deportistas, con lo divertido de los videojuegos.</p>
         <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Si ya tienes una cuenta...</p>
         <Link

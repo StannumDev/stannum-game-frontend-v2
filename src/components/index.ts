@@ -59,6 +59,12 @@ export { GoalCardHome } from "./dashboard/goals/GoalCardHome";
 // RANKING
 export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 
+// LIBRARY
+export { LibraryCover } from "./dashboard/library/LibraryCover";
+export { LibrarySectionsLayout } from "./dashboard/library/LibrarySectionsLayout";
+export { LibraryAllSection } from "./dashboard/library/sections/LibraryAllSection";
+export { LibraryCard } from "./dashboard/library/LibraryCard";
+
 // TMD
 export { TMDCover } from "./dashboard/tmd/TMDCover";
 export { TMDSectionsLayout } from "./dashboard/tmd/TMDSectionsLayout";
