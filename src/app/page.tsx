@@ -5,11 +5,11 @@ import { STANNUMLogo } from "@/components";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: 'Conoce STANNUM Game',
+  title: 'STANNUM Game',
   description: "Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.",
   keywords: ['emprendedores', 'STANNUM'],
   openGraph: {
-      title: 'Conoce STANNUM Game',
+      title: 'STANNUM Game',
       description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
       url: 'https://stanumgame.com',
       siteName: 'STANNUM',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
       card: 'summary_large_image',
       site: 'https://stannumgame.com',
       creator: 'STANNUM',
-      title: 'Conoce STANNUM Game',
+      title: 'STANNUM Game',
       description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
   },
 };
