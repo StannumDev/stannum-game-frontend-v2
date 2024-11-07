@@ -48,12 +48,18 @@ export const TMDCover = () => {
             </div>
             <div className='w-full lg:w-1/2 py-4 lg:py-6 px-6 lg:px-10 relative top-[1px] z-30'>
                 <svg
-                    className="fill-card size-full absolute top-0 left-0 z-0"
+                    className="size-full absolute top-0 left-0 z-0"
                     viewBox="0 0 620 75"
                     xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="none"
                 >
-                    <path d="M17.7635 36.9353C26.1378 18.9904 30.325 10.0179 38.19 5.00894C46.055 0 55.9564 0 75.7592 0H546.67C567.656 0 578.149 0 586.275 5.50185C594.401 11.0037 598.298 20.7461 606.092 40.231L620 75H0L17.7635 36.9353Z"/>
+                    <defs>
+                        <linearGradient id="gradientFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#1f1f1f" />
+                            <stop offset="100%" stopColor="#333333" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#gradientFill)" d="M17.7635 36.9353C26.1378 18.9904 30.325 10.0179 38.19 5.00894C46.055 0 55.9564 0 75.7592 0H546.67C567.656 0 578.149 0 586.275 5.50185C594.401 11.0037 598.298 20.7461 606.092 40.231L620 75H0L17.7635 36.9353Z"/>
                 </svg>
                 <div className='w-full flex flex-col justify-center items-center relative z-10'>
                     <h2 className='text-xs lg:text-sm font-semibold uppercase tracking-widest text-card-lightest'>Progreso total</h2>
