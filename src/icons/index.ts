@@ -44,6 +44,7 @@ export {
 export {
     RiMedalFill as MedalIcon,
     RiApps2Fill as AppsIcon,
+    RiApps2AddFill as NewAppsIcon,
     RiFilePaper2Fill as PaperIcon,
     RiFireLine as WarmupIcon,
     RiFlagLine as PreseasonIcon,

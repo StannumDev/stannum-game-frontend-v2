@@ -8,6 +8,7 @@ import type { SidebarLink } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
+import { useRouter } from 'next/navigation';
 
 interface Props{
     links:Array<SidebarLink>;
@@ -16,8 +17,14 @@ interface Props{
 
 export const SidebarDesktop = ({links, pathname}:Props) => {
 
-    const [isExpanded, setIsExpanded] = useState<boolean>(true)
+    const [isExpanded, setIsExpanded] = useState<boolean>(true);
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+
+    const router = useRouter();
+
+    const logout = () => {
+        router.push('/');
+    }
 
     return (
         <Fragment>
@@ -102,7 +109,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             transition={{ delay: 0.75 }}
                             className="w-full py-8 px-4 flex items-center gap-4"
                         >
-                            <Link href={'/dashboard'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
+                            <Link href={'/dashboard/profile'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
                                 { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
                                 <Image
                                     priority
@@ -122,7 +129,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                             exit={{ y: 150, opacity: 0 }}
                                             className='grow truncate'
                                         >
-                                            <Link href={'/dashboard'} className="w-full lowercase truncate">mateolohezicmateolohezic</Link>
+                                            <Link href={'/dashboard/profile'} className="w-full lowercase truncate">mateolohezicmateolohezic</Link>
                                         </motion.div>
                                 }
                                 {
@@ -133,6 +140,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         animate={{ y: 0, opacity: 1 }}
                                         exit={{ y: 150, opacity: 0 }}
                                         type="button"
+                                        onClick={logout}
                                         className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0"
                                     >
                                         <span className="sr-only">Cerrar sesión</span>

@@ -2,20 +2,21 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FaChessPawn, FaChessQueen, FaChessKing, FaChessKnight } from 'react-icons/fa6';
+import { FaChessPawn, FaChessKing, FaChessKnight } from 'react-icons/fa6';
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { LibraryAllSection, MotionWrapperLayoutClient, NavbarSection } from "@/components";
+import { AppsIcon } from "@/icons";
 
 const sections: Array<NavbarSectionType> = [
     {
         label: "Todos",
         value: "",
-        Icon: FaChessKing
+        Icon: AppsIcon
     },
     {
         label: "Principales",
         value: "main",
-        Icon: FaChessQueen,
+        Icon: FaChessKing
     },
     {
         label: "Gratuitos",

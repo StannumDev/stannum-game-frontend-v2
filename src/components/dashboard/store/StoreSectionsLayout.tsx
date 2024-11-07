@@ -3,19 +3,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
-import { ChessBishopIcon, ChessKingicon, ChessKnightIcon, ChessPawnIcon, ChessQueenIcon } from "@/icons";
+import { ChessBishopIcon, ChessKingicon, ChessKnightIcon, ChessPawnIcon, NewAppsIcon } from "@/icons";
 import { StoreAllSection, MotionWrapperLayoutClient, NavbarSection } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
         label: "Todos",
         value: "",
-        Icon: ChessKingicon
+        Icon: NewAppsIcon
     },
     {
         label: "Principales",
         value: "main",
-        Icon: ChessQueenIcon,
+        Icon: ChessKingicon
     },
     {
         label: "Gratuitos",
