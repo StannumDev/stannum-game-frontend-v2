@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { ChessBishopIcon, ChessKingicon, ChessKnightIcon, ChessPawnIcon, NewAppsIcon } from "@/icons";
-import { StoreAllSection, MotionWrapperLayoutClient, NavbarSection } from "@/components";
+import { StoreAllSection, MotionWrapperLayoutClient, NavbarSection, StoreTutorial } from "@/components";
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -59,12 +59,14 @@ export const StoreSectionsLayout = () => {
         layout ? params.set('section', layout) : params.delete('section');
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
-    
 
     return (
         <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
-                <h2 className="mb-4 title-2 px-4 lg:px-6">Conoce nuestros programas</h2>
+                <div className="mb-4 w-full px-4 lg:px-6 flex justify-between lg:justify-start items-start lg:items-center gap-2">
+                    <h2 className="title-2">Conoce nuestros programas</h2>
+                    <StoreTutorial/>
+                </div>
                 <NavbarSection<SectionOptions>
                     sections={sections}
                     selectedLayout={selectedLayout}

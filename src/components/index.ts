@@ -67,6 +67,7 @@ export { LibraryCard } from "./dashboard/library/LibraryCard";
 
 // STORE
 export { StoreCover } from "./dashboard/store/StoreCover";
+export { StoreTutorial } from "./dashboard/store/StoreTutorial";
 export { StoreSectionsLayout } from "./dashboard/store/StoreSectionsLayout";
 export { StoreAllSection } from "./dashboard/store/sections/StoreAllSection";
 export { StoreCard } from "./dashboard/store/StoreCard";
