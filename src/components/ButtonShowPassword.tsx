@@ -18,7 +18,7 @@ export const ButtonShowPassword = ({status, changeStatus, className, iconClassNa
             initial={{opacity: 0.5}}
             whileHover={{opacity: 1}}
             whileTap={{scale:1.1}}
-            className={`${className} absolute bottom-0 right-0 size-9 flex justify-center items-center`}
+            className={`flex justify-center items-center ${className}`}
             onClick={ () => { changeStatus(!status) }}
         >
             {

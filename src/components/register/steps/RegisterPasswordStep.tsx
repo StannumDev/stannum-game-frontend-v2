@@ -71,14 +71,14 @@ export const RegisterPasswordStep = () => {
                         id="password"
                         autoComplete="password"
                         placeholder="********"
-                        className={`w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
+                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("password",{
                             required: true,
                             minLength: 6,
                             maxLength: 25
                         })}
                     />
-                    <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
+                    <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
                 </div>
                 <p className="mt-2 text-sm text-neutral-400">Debe contener al menos una minúscula, una mayúscula y un número.</p>
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="mt-2"/>
@@ -94,14 +94,14 @@ export const RegisterPasswordStep = () => {
                         id="passwordRepeat"
                         autoComplete="password"
                         placeholder="********"
-                        className={`w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
+                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("passwordRepeat",{
                             required: true,
                             minLength: 6,
                             maxLength: 25
                         })}
                     />
-                    <ButtonShowPassword status={showPasswordRepeat} changeStatus={setShowPasswordRepeat} className="absolute bottom-0 right-0 size-9"/>
+                    <ButtonShowPassword status={showPasswordRepeat} changeStatus={setShowPasswordRepeat} className="absolute bottom-0 right-0 size-10"/>
                 </div>
                 <FormErrorMessage condition={errors?.passwordRepeat} message={errors?.passwordRepeat?.message} className="mt-2"/>
             </div>

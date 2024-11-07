@@ -42,7 +42,7 @@ export const LoginForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mt-6 lg:mt-8">
             <div className="w-full flex flex-col gap-4">
-                <div className='w-full flex flex-col gap-1 relative'>
+                <div className='w-full flex flex-col gap-1'>
                     <input
                         type='text'
                         inputMode="email"
@@ -50,37 +50,35 @@ export const LoginForm = () => {
                         maxLength={50}
                         id="username"
                         autoComplete="email"
-                        className="peer order-2 w-full h-9 px-2 bg-card lg:bg-card-light rounded-t"
+                        className="peer order-2 w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                         {...register("username",{
                             required: true,
                             maxLength: 50
                         })}
                     />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 peer-focus-visible:text-stannum">
                         <UserIcon className="size-5 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Usuario o correo electrónico</label>
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="-mt-2"/>
-                <div className='w-full max-w-xl flex flex-col items-start gap-1 relative'>
+                <div className='w-full flex flex-col items-start gap-1 relative'>
                     <input
                         type={ showPassword ? 'text' : 'password'}
                         enterKeyHint="done"
                         maxLength={50}
                         autoComplete="password"
-                        className="peer order-2 w-full h-9 px-2 bg-card lg:bg-card-light rounded-t"
+                        className="peer order-2 w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum transition-200"
                         {...register("password",{
                             required: true,
                             maxLength: 50
                         })}
                     />
-                    <span className="w-0 peer-focus-visible:w-full h-[2px] bg-gradient-to-r from-card to-stannum to-100 absolute bottom-0 translate-y-full transition-200"></span>
                     <div className="order-1 w-full flex items-center gap-1 peer-focus-visible:text-stannum">
                         <UnlockIcon className="w-5 h-4 relative transition-200"/>
                         <label htmlFor="username" className="text-lg transition-200">Contraseña</label>
                     </div>
-                    <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-9"/>
+                    <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
                 </div>
                 <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="-mt-2"/>
             </div>
