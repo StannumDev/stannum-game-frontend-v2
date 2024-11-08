@@ -1,18 +1,26 @@
 import Image from 'next/image';
 import { MotionWrapperLayout, STANNUMLogo } from '@/components';
 import background from '@/assets/background/stannum_game_trophy.webp';
+import texture from '@/assets/background/dotted_texture.svg';
 
 export const LibraryCover = () => {
     return (
         <MotionWrapperLayout>
             <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
                 <div className='size-full absolute top-0 left-0 z-10'>
-                    <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-10'></div>
+                    <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-20'></div>
                     <Image
                         priority
                         src={background}
                         alt='Biblioteca STANNUM Game'
-                        className='size-full object-cover relative z-0 blur-sm object-[50%_30%]'
+                        className='size-full object-cover relative blur-sm object-[50%_30%] z-0'
+                    />
+                    <Image
+                        priority
+                        src={texture}
+                        aria-hidden
+                        alt='Textura'
+                        className='size-full object-cover opacity-100 lg:opacity-50 absolute top-0 left-0 z-10'
                     />
                 </div>
                 <div className='py-8 lg:py-16 relative z-20'>

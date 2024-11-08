@@ -9,7 +9,7 @@ import * as z from "zod";
 import { KeyIcon, AlertHexagonIcon } from '@/icons';
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
-import redeem_code from "@/assets/background/redeem_code.webp";
+import redeem_code from "@/assets/background/stannum_game_trophy.webp";
 
 const schema = z.object({
     code: z.string()
@@ -100,7 +100,7 @@ export const ActivarProductoHome = () => {
                 <div className="size-full flex flex-col lg:flex-row rounded-lg divide-card divide-x">
                     <div className="w-full lg:grow h-48 lg:h-auto relative">
                         <div className="size-full bg-gradient-to-br from-transparent to-black/75 absolute top-0 left-0 z-10"></div>
-                        <Image src={redeem_code} alt="Activar producto STANNUM Game" className="size-full object-cover rounded-t-lg lg:rounded-t-none lg:rounded-s-lg"/>
+                        <Image src={redeem_code} fill alt="Activar producto STANNUM Game" className="size-full object-cover object-[90%_50%] rounded-t-lg lg:rounded-t-none lg:rounded-s-lg"/>
                     </div>
                     <main className="w-full lg:max-w-[calc(384px+4rem)] p-6 g:p-8 flex flex-col text-center lg:text-start">
                         <h2 className="title-2 text-5xl text-stannum">Activa un <span className="block text-white">producto</span></h2>

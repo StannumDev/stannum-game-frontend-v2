@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/TMDCover.module.css';
 import logo from '@/assets/products/tmd/tmd_logo.webp';
 import background from '@/assets/background/the_game.webp';
-import Link from 'next/link';
+import texture from '@/assets/background/dotted_texture.svg';
 
 const progress = 55;
 
@@ -29,13 +30,20 @@ export const TMDCover = () => {
             </div>
             { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
             <div className='size-full absolute top-0 left-0 z-10'>
-                <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-10'></div>
+                <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-20'></div>
                 <Image
                     priority
                     src={background}
                     alt='TRENNO Mark Digital'
-                    className='size-full object-cover relative z-0 blur-sm object-[50%_30%]'
+                    className='size-full object-cover relative blur-sm object-[50%_30%] z-0'
                     onLoad={() => setImageLoaded(true)}
+                />
+                <Image
+                    priority
+                    src={texture}
+                    aria-hidden
+                    alt='Textura'
+                    className='size-full object-cover opacity-100 lg:opacity-50 absolute top-0 left-0 z-10'
                 />
             </div>
             <div className='py-8 lg:py-16 relative z-20'>
