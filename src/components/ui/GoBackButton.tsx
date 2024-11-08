@@ -1,7 +1,6 @@
 'use client'
  
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { ArrowBackIcon } from '@/icons';
 
 interface Props{
@@ -11,14 +10,13 @@ interface Props{
 export const GoBackButton = ({className}:Props) => {
     const router = useRouter()
     return (
-        <motion.button
-            whileHover={{ opacity: 0.75 }}
+        <button
             type='button'
             onClick={router.back}
-            className={`${className} flex items-center gap-1.5`}
+            className={`px-2 py-1 rounded-lg hover:bg-white/10 flex items-center gap-1.5 transition-200 ${className}`}
         >
-            <ArrowBackIcon className="stroke-[0.25] relative top-px"/>
-            <span className="font-light text-lg">Atras</span>
-        </motion.button>
+            <ArrowBackIcon/>
+            <span className="font-light">Atras</span>
+        </button>
     )
 }

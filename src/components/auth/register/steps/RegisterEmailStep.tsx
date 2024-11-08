@@ -108,17 +108,19 @@ export const RegisterEmailStep = ({nextStep}:Props) => {
                 </div>
                 <FormErrorMessage condition={errors?.email} message={errors?.email?.message} className="mt-2"/>
             </div>
-            <div className="mt-8 w-full h-[78px] flex justify-center items-center">
-                <ReCAPTCHA
-                    size={'normal'}
-                    hl='es-419'
-                    theme={'light'}
-                    ref={reCAPTCHARef}
-                    onError={ () => { errorReCAPTCHA('Hubo un error, complete de nuevo el ReCAPTCHA.') }}
-                    onExpired={ () => { errorReCAPTCHA('El ReCAPTCHA expiró, vuelva a completarlo.') }}
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-                    onChange={handleReCAPTCHA}
-                />
+            <div className="mt-8 mx-auto w-[300px] h-[74px] flex justify-center items-center overflow-hidden relative">
+                <div className="w-[304px] h-[78px] absolute -top-px -left-[1px] scale-[1.02]">
+                    <ReCAPTCHA
+                        size={'normal'}
+                        hl='es-419'
+                        theme={'dark'}
+                        ref={reCAPTCHARef}
+                        onError={ () => { errorReCAPTCHA('Hubo un error, complete de nuevo el ReCAPTCHA.') }}
+                        onExpired={ () => { errorReCAPTCHA('El ReCAPTCHA expiró, vuelva a completarlo.') }}
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+                        onChange={handleReCAPTCHA}
+                    />
+                </div>
             </div>
             <FormErrorMessage condition={reCAPTCHAError} message={reCAPTCHAErrorMessage} className="mt-2 text-center"/>
             <div className="mt-8 w-full flex justify-center">

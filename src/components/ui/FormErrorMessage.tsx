@@ -17,7 +17,7 @@ export const FormErrorMessage = ({condition, message="Campo requerido.", classNa
                     <motion.p
                         initial={{x:50, opacity: 0, height: 0}}
                         animate={{x:0, opacity:1, height: 16}}
-                        exit={{x:50, opacity: 0, height: 0}}
+                        exit={{x:50, opacity: 0, height: 0, margin: 0}}
                         transition={{ type:"spring" }}
                         className={`w-full text-invalid text-xs ${className}`}
                     >

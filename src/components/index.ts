@@ -101,15 +101,18 @@ export { PreseasonModulesGrid } from './dashboard/tmd/modules/preseason/Preseaso
 export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonModuleOne'
 
 // LOGIN
-export { LoginForm } from "./login/LoginForm";
-export { BackgroundLogin } from "./login/BackgroundLogin";
+export { LoginForm } from "./auth/login/LoginForm";
+export { BackgroundLogin } from "./auth/login/BackgroundLogin";
 
 // REGISTER
-export { RegisterHandler } from "./register/RegisterHandler";
-export { RegisterEmailStep } from "./register/steps/RegisterEmailStep";
-export { RegisterPasswordStep } from "./register/steps/RegisterPasswordStep";
-export { RegisterDetailsStep } from "./register/steps/RegisterDetailsStep";
-export { RegisterPictureStep } from "./register/steps/RegisterPictureStep";
+export { RegisterHandler } from "./auth/register/RegisterHandler";
+export { RegisterEmailStep } from "./auth/register/steps/RegisterEmailStep";
+export { RegisterPasswordStep } from "./auth/register/steps/RegisterPasswordStep";
+export { RegisterDetailsStep } from "./auth/register/steps/RegisterDetailsStep";
+export { RegisterPictureStep } from "./auth/register/steps/RegisterPictureStep";
+
+// PASSWORD RECOVERY
+export { PasswordRecoveryHandler } from "./auth/password-recovery/PasswordRecoveryHandler";
 
 // TUTORIAL
 export { StepOneTutorial } from "./dashboard/tutorial/intro/StepOneTutorial";

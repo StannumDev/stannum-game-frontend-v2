@@ -8,9 +8,10 @@ import * as z from "zod";
 import { requestLogin } from "@/services";
 import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
+import Link from "next/link";
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido."),
+    username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
     password: z.string().nonempty("Campo requerido."),
 })
 
@@ -41,7 +42,7 @@ export const LoginForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mt-6 lg:mt-8">
-            <div className="w-full flex flex-col gap-4">
+            <div className="w-full flex flex-col">
                 <div className='w-full flex flex-col gap-1'>
                     <input
                         type='text'
@@ -61,8 +62,8 @@ export const LoginForm = () => {
                         <label htmlFor="username" className="text-lg transition-200">Usuario o correo electrónico</label>
                     </div>
                 </div>
-                <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="-mt-2"/>
-                <div className='w-full flex flex-col items-start gap-1 relative'>
+                <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-4"/>
+                <div className='mt-4 w-full flex flex-col items-start gap-1 relative'>
                     <input
                         type={ showPassword ? 'text' : 'password'}
                         enterKeyHint="done"
@@ -80,11 +81,12 @@ export const LoginForm = () => {
                     </div>
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
                 </div>
-                <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="-mt-2"/>
+                <div className="mt-4 w-full flex justify-end">
+                    <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="w-fit"/>
+                    <Link href={"/password-recovery"} className="text-xs font-semibold uppercase tracking-widest text-card-lightest hover:text-stannum whitespace-nowrap transition-200">¿Olvidaste tu contraseña?</Link>
+                </div>
             </div>
-            <div className="mt-8 w-full flex justify-end">
-                <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="w-full lg:w-32 h-9 text-sm font-semibold"/>
-            </div>
+            <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-9 text-sm font-semibold"/>
         </form>
     )
 }
