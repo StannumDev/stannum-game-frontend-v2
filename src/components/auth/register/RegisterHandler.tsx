@@ -18,7 +18,7 @@ export const RegisterHandler = () => {
                 <GoBackButton className="absolute -top-4 lg:-top-4 left-0 -translate-y-full"/>
                 <button className="absolute top-0 right-0 bg-red-500 p-2" onClick={nextStep}>asdasd</button>
                 <div className="w-full flex flex-col justify-center items-center gap-4">
-                    <STANNUMLogo className="fill-white w-40"/>
+                    <STANNUMLogo className="fill-white w-40 hidden md:block"/>
                     <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
                 </div>
                 <div className="w-full overflow-x-hidden">
@@ -29,7 +29,7 @@ export const RegisterHandler = () => {
                             animate={{ height: 'auto', opacity: 1, }}
                             exit={{ height: 0, opacity: 0, }}
                             transition={{ bounce: 0 }}
-                            className="w-full mt-6 md:mt-8 overflow-hidden md:min-h-48 flex flex-col justify-center items-center"
+                            className="w-full mt-4 md:mt-6 overflow-hidden md:min-h-48 flex flex-col justify-center items-center"
                         >
                             {
                                 step === 'email' ? <RegisterEmailStep nextStep={nextStep} /> :

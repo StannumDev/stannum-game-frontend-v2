@@ -77,14 +77,14 @@ export const PasswordRecoveryHandler = () => {
     }
 
     return (
-        <section className="w-full min-h-svh px-4 md:px-0 py-12 md:py-0 flex justify-center items-center">
+        <section className="w-full min-h-svh px-4 md:px-0 py-12 lg:py-24 flex justify-center items-center">
             <div className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
                 <GoBackButton className="absolute -top-4 lg:-top-4 left-0 -translate-y-full"/>
-                <div className="w-full text-center flex flex-col justify-center items-center gap-6">
-                    <STANNUMLogo className="fill-white w-40"/>
+                <div className="w-full text-center flex flex-col justify-center items-center gap-4">
+                    <STANNUMLogo className="fill-white w-40 hidden md:block"/>
                     <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black block">RECUPERA</b> TU CONTRASEÑA</h2>
                 </div>
-                <div className="w-full mt-6 md:mt-8 overflow-hidden md:min-h-48 flex flex-col justify-center items-center">
+                <div className="w-full mt-4 md:mt-6 overflow-hidden md:min-h-48 flex flex-col justify-center items-center">
                     { !isSended ?
                         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
                             <div className="w-full">
@@ -107,7 +107,7 @@ export const PasswordRecoveryHandler = () => {
                                 </div>
                                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>
                             </div>
-                            <div className="mt-8 mx-auto w-[300px] h-[74px] flex justify-center items-center overflow-hidden relative">
+                            <div className="mt-8 mx-auto w-[300px] h-[74px] border border-card-light rounded-lg flex justify-center items-center overflow-hidden relative">
                                 <div className="w-[304px] h-[78px] absolute -top-px -left-[1px] scale-[1.02]">
                                     <ReCAPTCHA
                                         size={'normal'}
@@ -128,9 +128,9 @@ export const PasswordRecoveryHandler = () => {
                         </form>
                         :
                         <div className="grow flex flex-col items-center text-center">
-                            <p className="md:text-lg">Si una cuenta está asociada a la información proporcionada, <b className="text-stannum">recibirás un correo</b> con un enlace de recuperación. <b className="text-stannum">Revisa tu bandeja de entrada</b>, spam o correo no deseado.</p>
-                            <p className="mt-4 text-sm text-white/40 grow">Si no recibes un correo en unos minutos, intenta nuevamente o contacta con soporte para más asistencia.</p>
-                            <Link href={"/"} className="mt-8 w-full md:w-32 h-10 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200">Volver al inicio</Link>
+                            <p className="md:text-lg">Si una cuenta está asociada a la información proporcionada, <b className="text-stannum">recibirás un correo</b> con un enlace de recuperación. Revisa tu <b className="text-stannum">bandeja de entrada</b>, spam o correo no deseado.</p>
+                            <p className="mt-4 text-xs md:text-sm text-white/40 grow">Si no recibes un correo en unos minutos, intenta nuevamente o contacta con soporte para más asistencia.</p>
+                            <Link href={"/"} className="mt-4 md:mt-8 w-full md:w-32 h-10 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200">Volver al inicio</Link>
                         </div>
                     }
                 </div>
