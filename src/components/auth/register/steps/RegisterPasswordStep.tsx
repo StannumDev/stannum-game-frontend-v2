@@ -7,6 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
+interface Props{
+    nextStep:() => void
+}
+
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario invalido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
     password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/, "Contraseña invalida.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres."),
@@ -15,7 +19,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterPasswordStep = () => {
+export const RegisterPasswordStep = ({nextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -26,10 +30,11 @@ export const RegisterPasswordStep = () => {
         setIsLoading(true);
         try {
             console.log(data);
-            // setIsLoading(false);
+            setIsLoading(false);
+            nextStep();
         } catch (error:unknown) {
             console.log(error);
-            // setIsLoading(false);
+            setIsLoading(false);
         }
     }
 

@@ -8,6 +8,10 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { SelectorIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 
+interface Props{
+    nextStep:() => void
+}
+
 const schema = z.object({
     name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
     birthdate: z.string().nonempty("Campo requerido.")
@@ -27,7 +31,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterDetailsStep = () => {
+export const RegisterDetailsStep = ({nextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -40,10 +44,11 @@ export const RegisterDetailsStep = () => {
         setIsLoading(true);
         try {
             console.log(data);
-            // setIsLoading(false);
+            setIsLoading(false);
+            nextStep();
         } catch (error:unknown) {
             console.log(error);
-            // setIsLoading(false);
+            setIsLoading(false);
         }
     }
 

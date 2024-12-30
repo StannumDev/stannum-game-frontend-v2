@@ -13,7 +13,7 @@ export const StoreTutorial = () => {
             <button
                 type="button"
                 onClick={() => setShowModal(true)}
-                className="hover:bg-card-light rounded size-7 flex justify-center items-center transition-200"
+                className="text-stannum/50 hover:text-stannum hover:bg-card-light rounded size-7 flex justify-center items-center transition-200"
             >
                 <HelpHexagonIcon className="size-5"/>
             </button>
