@@ -21,21 +21,31 @@ export const LoginForm = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
-    // const [errorMessage, setErrorMessage] = useState<string|null>();
+    const [errorMessage, setErrorMessage] = useState<string|null>();
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
     const router = useRouter();
 
     const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
         setIsLoading(true);
-        // setErrorMessage(null);
+        setErrorMessage(null);
         try {
-            console.log(data);
-            await requestLogin(data);
-            // callToast(response);
-            setIsLoading(false)
+            router.prefetch('/dashboard');
+            const response = await requestLogin(data);
+            console.log(response)
             router.push('/dashboard');
+            setIsLoading(false)
         } catch (error:unknown) {
-            console.log(error);
+            setIsLoading(false);
+
+            if (error && typeof error === 'object' && 'status' in error && 'message' in error) {
+                const { message } = error as { status: number; message: string };
+                setErrorMessage(message);
+            } else {
+                setErrorMessage("An unexpected error occurred");
+            }
+    
+            console.error("Login error:", error);
+        } finally {
             setIsLoading(false);
         }
     }
@@ -86,6 +96,7 @@ export const LoginForm = () => {
                     <Link href={"/password-recovery"} className="text-xs font-semibold uppercase tracking-widest text-card-lightest hover:text-stannum whitespace-nowrap transition-200">¿Olvidaste tu contraseña?</Link>
                 </div>
             </div>
+            <FormErrorMessage condition={!!errorMessage} message={errorMessage||''} className="mt-4 w-fit"/>
             <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-9 text-sm font-semibold"/>
         </form>
     )
