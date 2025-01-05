@@ -9,6 +9,7 @@ import { requestLogin } from "@/services";
 import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 import Link from "next/link";
+import { errorHandler } from "@/helpers";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
@@ -25,30 +26,21 @@ export const LoginForm = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
     const router = useRouter();
 
-    const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
+    const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
         setIsLoading(true);
         setErrorMessage(null);
         try {
             router.prefetch('/dashboard');
-            const response = await requestLogin(data);
-            console.log(response)
-            router.push('/dashboard');
-            setIsLoading(false)
-        } catch (error:unknown) {
-            setIsLoading(false);
-
-            if (error && typeof error === 'object' && 'status' in error && 'message' in error) {
-                const { message } = error as { status: number; message: string };
-                setErrorMessage(message);
-            } else {
-                setErrorMessage("An unexpected error occurred");
-            }
-    
-            console.error("Login error:", error);
+            const success = await requestLogin(data);
+            if (success) router.push('/dashboard');
+        } catch (error: unknown) {
+            const appError = errorHandler(error);
+            setErrorMessage(appError.friendlyMessage);
+            console.error(`[${appError.code}] ${appError.techMessage}`);
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mt-6 lg:mt-8">

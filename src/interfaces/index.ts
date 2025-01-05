@@ -1,3 +1,4 @@
+export type { AppError } from './AppError';
 export type { SidebarLink } from './SidebarLink';
 
 export type { NavbarSection } from './NavbarSection';
