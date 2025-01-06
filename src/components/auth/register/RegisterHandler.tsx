@@ -3,10 +3,30 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPictureStep } from "@/components";
+import { RegisterState } from "@/interfaces";
+
+
 
 export const RegisterHandler = () => {
 
     const [step, setStep] = useState<'email'|'password'|'details'|'photo'>('email')
+    const [registerState, setRegisterState] = useState<RegisterState>({
+        email: "",
+        username: "",
+        password: "",
+        name: "",
+        birthdate: "",
+        country: "",
+        region: "",
+        enterprise: "",
+        enterpriseRole: "",
+        aboutme: "",
+    });
+
+    const updateRegisterState = (data: Partial<RegisterState>) => {
+        setRegisterState((prev) => ({ ...prev, ...data }));
+        console.log(registerState)
+    };
 
     const nextStep = () => {
         setStep(step === 'email' ? 'password' : step === 'password' ? 'details' : step === 'details' ? 'photo' : 'email')
@@ -32,9 +52,9 @@ export const RegisterHandler = () => {
                             className="w-full mt-4 md:mt-6 overflow-hidden md:min-h-48 flex flex-col justify-center items-center"
                         >
                             {
-                                step === 'email' ? <RegisterEmailStep nextStep={nextStep} /> :
-                                step === 'password' ? <RegisterPasswordStep nextStep={nextStep} /> :
-                                step === 'details' ? <RegisterDetailsStep nextStep={nextStep} /> :
+                                step === 'email' ? <RegisterEmailStep nextStep={nextStep} updateRegisterState={updateRegisterState} /> :
+                                step === 'password' ? <RegisterPasswordStep nextStep={nextStep} updateRegisterState={updateRegisterState} /> :
+                                step === 'details' ? <RegisterDetailsStep nextStep={nextStep} updateRegisterState={updateRegisterState} /> :
                                 step === 'photo' && <RegisterPictureStep />
                             }
                         </motion.div>

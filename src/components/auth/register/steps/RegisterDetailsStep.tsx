@@ -7,50 +7,60 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { SelectorIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
+import { RegisterState } from "@/interfaces";
 
 interface Props{
-    nextStep:() => void
+    nextStep:() => void,
+    updateRegisterState: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
     name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
     birthdate: z.string().nonempty("Campo requerido.")
-    .refine(date => {
-        const today = new Date();
-        const birthDate = new Date(date);
-        const age = today.getFullYear() - birthDate.getFullYear();
-        return age >= 18;
-    }, { message: "Debes tener al menos 18 años." }),
+        .refine(date => {
+            const today = new Date();
+            const birthDate = new Date(date);
+            const age = today.getFullYear() - birthDate.getFullYear();
+            return age >= 18;
+        }, { message: "Debes tener al menos 18 años." }),
     country: z.string().nonempty("Campo requerido."),
     region: z.string().nonempty("Campo requerido."),
     enterprise: z.string().nonempty("Campo requerido.").max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().nonempty("Campo requerido.").max(50, "Debe contener menos de 50 caracteres."),
-    website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
+    // website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
     aboutme: z.string().nonempty("Campo requerido.").max(500, "Debe contener menos de 500 caracteres.")
 });
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterDetailsStep = ({nextStep}:Props) => {
+export const RegisterDetailsStep = ({nextStep, updateRegisterState}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const { register, handleSubmit, setValue, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
-    const [country, setCountry] = useState<string>('');
-    const [region, setRegion] = useState<string>('');
+    const [location, setLocation] = useState({ country: "", region: "" });
 
-    const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
+    const handleCountryChange = (val: string) => {
+        setLocation({ ...location, country: val });
+        setValue("country", val);
+    };
+
+    const handleRegionChange = (val: string) => {
+        setLocation({ ...location, region: val });
+        setValue("region", val);
+    };
+
+    const onSubmit: SubmitHandler<Schema> = async (data) => {
         setIsLoading(true);
         try {
-            console.log(data);
-            setIsLoading(false);
+            updateRegisterState(data);
             nextStep();
-        } catch (error:unknown) {
-            console.log(error);
+        } catch (error: unknown) {
+            console.error("Error durante el envío:", error);
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -95,8 +105,8 @@ export const RegisterDetailsStep = ({nextStep}:Props) => {
                     <div className='w-full flex flex-col gap-1 relative'>
                         <label htmlFor="name" className="md:text-lg">País</label>
                         <CountryDropdown
-                            value={country}
-                            onChange={(val) => { setCountry(val); setValue("country", val) }}
+                            value={location.country}
+                            onChange={handleCountryChange}
                             name="country"
                             id="country"
                             defaultOptionLabel="Seleccionar"
@@ -110,9 +120,9 @@ export const RegisterDetailsStep = ({nextStep}:Props) => {
                     <div className='w-full flex flex-col gap-1 relative'>
                         <label htmlFor="name" className="md:text-lg">Región</label>
                         <RegionDropdown
-                            country={country}
-                            value={region}
-                            onChange={(val) => { setRegion(val); setValue("region", val) }}
+                            country={location.country}
+                            value={location.region}
+                            onChange={handleRegionChange}
                             name="region"
                             id="region"
                             disableWhenEmpty={true}

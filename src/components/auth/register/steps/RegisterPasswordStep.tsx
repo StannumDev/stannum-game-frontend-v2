@@ -4,39 +4,47 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { checkUsernameExists } from "@/services";
 import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
+import { RegisterState } from "@/interfaces";
 
 interface Props{
-    nextStep:() => void
+    nextStep:() => void,
+    updateRegisterState: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario invalido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
-    password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/, "Contraseña invalida.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres."),
-    passwordRepeat: z.string().nonempty("Campo requerido.")
+    username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
+    password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/, "Contraseña inválida.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres."),
+    passwordRepeat: z.string().nonempty("Campo requerido."),
 }).refine((data) => data.password === data.passwordRepeat, { message: "Las contraseñas no coinciden.", path: ["passwordRepeat"] });
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterPasswordStep = ({nextStep}:Props) => {
+export const RegisterPasswordStep = ({nextStep, updateRegisterState}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordRepeat, setShowPasswordRepeat] = useState<boolean>(false);
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
-    const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
+    const onSubmit: SubmitHandler<Schema> = async ({ username, password }: Schema) => {
         setIsLoading(true);
         try {
-            console.log(data);
-            setIsLoading(false);
+            const usernameAvailable = await checkUsernameExists(username);
+            if (!usernameAvailable) {
+                setIsLoading(false);
+                return;
+            }
+            updateRegisterState({ username, password });
             nextStep();
-        } catch (error:unknown) {
-            console.log(error);
+        } catch (error) {
+            console.error("Error en el registro:", error);
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">

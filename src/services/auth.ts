@@ -1,8 +1,8 @@
 'use client';
 
-import { errorHandler } from '@/helpers';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { errorHandler } from '@/helpers';
 
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
@@ -17,6 +17,36 @@ export const requestLogin = async (data: { username: string; password: string })
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
 
+        return response.data.success;
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const checkEmailExists = async (email: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/check-email`, { email });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.success;
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const checkUsernameExists = async (username: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/check-username`,{ username });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.success;
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const validateReCAPTCHA = async (token: string | null): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/validate-recaptcha`, { token });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
         throw errorHandler(error);

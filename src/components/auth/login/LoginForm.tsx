@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
+import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { requestLogin } from "@/services";
+import { errorHandler } from "@/helpers";
+import { AppError } from "@/interfaces";
 import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
-import Link from "next/link";
-import { errorHandler } from "@/helpers";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
@@ -34,7 +35,7 @@ export const LoginForm = () => {
             const success = await requestLogin(data);
             if (success) router.push('/dashboard');
         } catch (error: unknown) {
-            const appError = errorHandler(error);
+            const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);
             console.error(`[${appError.code}] ${appError.techMessage}`);
         } finally {
