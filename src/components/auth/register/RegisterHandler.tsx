@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createUser } from "@/services";
 import { RegisterState } from "@/interfaces";
@@ -22,21 +22,22 @@ export const RegisterHandler = () => {
         aboutme: "",
     });
 
-    const updateRegisterState = (data: Partial<RegisterState>) => {
-        setRegisterState((prev) => ({ ...prev, ...data }));
-    };
-
-    const handleNextStep = async () => {
-        if (step === 'details') {
-            try {
-                await createUser(registerState);
-            } catch (error: unknown) {
-                console.error("Error creating user:", error);
-                return;
+    const handleNextStep = useCallback(
+        async (newData: Partial<RegisterState> = {}) => {
+            const updatedState = { ...registerState, ...newData };
+            if (step === 'details') {
+                try {
+                    await createUser(updatedState);
+                } catch (error) {
+                    console.error("Error creating user:", error);
+                    return;
+                }
             }
-        }
-        setStep(step === 'email' ? 'password' : step === 'password' ? 'details' : step === 'details' ? 'photo' : 'email');
-    }
+            setRegisterState(updatedState);
+            setStep(step === 'email' ? 'password' : step === 'password' ? 'details' : step === 'details' ? 'photo' : 'email');
+        },
+        [registerState, step]
+    );
 
     return (
         <section className="w-full min-h-svh px-4 md:px-0 py-12 lg:py-24 flex justify-center items-center">
@@ -57,9 +58,9 @@ export const RegisterHandler = () => {
                             className="w-full mt-4 md:mt-6 overflow-hidden md:min-h-48 flex flex-col justify-center items-center"
                         >
                             {
-                                step === 'email' ? <RegisterEmailStep handleNextStep={handleNextStep} updateRegisterState={updateRegisterState} /> :
-                                step === 'password' ? <RegisterPasswordStep handleNextStep={handleNextStep} updateRegisterState={updateRegisterState} /> :
-                                step === 'details' ? <RegisterDetailsStep handleNextStep={handleNextStep} updateRegisterState={updateRegisterState} /> :
+                                step === 'email' ? <RegisterEmailStep handleNextStep={handleNextStep} /> :
+                                step === 'password' ? <RegisterPasswordStep handleNextStep={handleNextStep} /> :
+                                step === 'details' ? <RegisterDetailsStep handleNextStep={handleNextStep} /> :
                                 step === 'photo' && <RegisterPictureStep />
                             }
                         </motion.div>

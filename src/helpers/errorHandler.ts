@@ -11,19 +11,20 @@ export const errorHandler = (error: unknown): AppError => {
             code: data?.code || "UNKNOWN_ERROR",
             type: data?.type || "error",
             showAlert: data?.showAlert ?? true,
-            title: data?.title || "Unexpected Error",
+            title: data?.title || "Error desconocido",
             techMessage: data?.techMessage || "An unknown error occurred.",
             friendlyMessage: data?.friendlyMessage || "Ocurrió un error inesperado.",
         };
+    } else {
+        console.log('55555')
+        return {
+            success: false,
+            code: "UNKNOWN_ERROR",
+            type: "error",
+            showAlert: true,
+            title: "Error desconocido",
+            techMessage: "An unexpected error occurred.",
+            friendlyMessage: "Ocurrió un error inesperado.",
+        };
     }
-
-    return {
-        success: false,
-        code: "UNKNOWN_ERROR",
-        type: "error",
-        showAlert: true,
-        title: "Error desconocido",
-        techMessage: "An unexpected error occurred.",
-        friendlyMessage: "Ocurrió un error inesperado.",
-    };
 };

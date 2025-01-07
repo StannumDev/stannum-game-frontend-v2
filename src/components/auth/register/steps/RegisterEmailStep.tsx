@@ -10,8 +10,7 @@ import { RegisterState } from "@/interfaces";
 import { validateReCAPTCHA, checkEmailExists } from "@/services";
 
 interface Props {
-    handleNextStep: () => void;
-    updateRegisterState: (data: Partial<RegisterState>) => void;
+    handleNextStep: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
@@ -20,7 +19,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>;
 
-export const RegisterEmailStep = ({ handleNextStep, updateRegisterState }: Props) => {
+export const RegisterEmailStep = ({ handleNextStep }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [reCAPTCHAError, setReCAPTCHAError] = useState<string | null>(null);
     const { register, handleSubmit, formState: { errors } } = useForm<Schema>({
@@ -66,12 +65,12 @@ export const RegisterEmailStep = ({ handleNextStep, updateRegisterState }: Props
 
             const emailAvailable = await checkEmailExists(email);
             if (!emailAvailable) {
+                console.error("El correo electrónico ya está en uso.");
                 setIsLoading(false);
                 return;
             }
 
-            updateRegisterState({ email });
-            handleNextStep();
+            await handleNextStep({ email });
         } catch (error) {
             console.error("Error en el registro:", error);
         } finally {

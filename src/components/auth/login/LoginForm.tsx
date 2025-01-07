@@ -37,7 +37,6 @@ export const LoginForm = () => {
         } catch (error: unknown) {
             const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);
-            console.error(`[${appError.code}] ${appError.techMessage}`);
         } finally {
             setIsLoading(false);
         }

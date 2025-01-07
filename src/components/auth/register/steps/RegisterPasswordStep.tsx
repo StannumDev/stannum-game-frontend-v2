@@ -10,8 +10,7 @@ import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/com
 import { RegisterState } from "@/interfaces";
 
 interface Props{
-    handleNextStep:() => void,
-    updateRegisterState: (data: Partial<RegisterState>) => void
+    handleNextStep: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
@@ -22,7 +21,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterPasswordStep = ({handleNextStep, updateRegisterState}:Props) => {
+export const RegisterPasswordStep = ({handleNextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -34,11 +33,11 @@ export const RegisterPasswordStep = ({handleNextStep, updateRegisterState}:Props
         try {
             const usernameAvailable = await checkUsernameExists(username);
             if (!usernameAvailable) {
+                console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
-            updateRegisterState({ username, password });
-            handleNextStep();
+            await handleNextStep({ username, password });
         } catch (error) {
             console.error("Error en el registro:", error);
         } finally {

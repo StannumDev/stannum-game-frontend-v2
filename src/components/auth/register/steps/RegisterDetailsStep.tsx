@@ -10,8 +10,7 @@ import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import { RegisterState } from "@/interfaces";
 
 interface Props{
-    handleNextStep:() => void,
-    updateRegisterState: (data: Partial<RegisterState>) => void
+    handleNextStep: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
@@ -33,7 +32,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterDetailsStep = ({handleNextStep, updateRegisterState}:Props) => {
+export const RegisterDetailsStep = ({handleNextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { register, handleSubmit, setValue, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
@@ -56,8 +55,11 @@ export const RegisterDetailsStep = ({handleNextStep, updateRegisterState}:Props)
                 console.error("Country and region must be selected.");
                 return;
             }
-            updateRegisterState(data);
-            handleNextStep();
+            await handleNextStep({
+                ...data,
+                country: location.country,
+                region: location.region,
+            });
         } catch (error: unknown) {
             console.error("Error durante el envío:", error);
         } finally {
