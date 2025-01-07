@@ -10,19 +10,19 @@ import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/com
 import { RegisterState } from "@/interfaces";
 
 interface Props{
-    nextStep:() => void,
+    handleNextStep:() => void,
     updateRegisterState: (data: Partial<RegisterState>) => void
 }
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
-    password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/, "Contraseña inválida.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres."),
+    password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/, "Debe contener al menos una minúscula, una mayúscula y un número, y tener entre 8 y 50 caracteres.").min(8, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
     passwordRepeat: z.string().nonempty("Campo requerido."),
 }).refine((data) => data.password === data.passwordRepeat, { message: "Las contraseñas no coinciden.", path: ["passwordRepeat"] });
 
 type Schema = z.infer<typeof schema>
 
-export const RegisterPasswordStep = ({nextStep, updateRegisterState}:Props) => {
+export const RegisterPasswordStep = ({handleNextStep, updateRegisterState}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export const RegisterPasswordStep = ({nextStep, updateRegisterState}:Props) => {
                 return;
             }
             updateRegisterState({ username, password });
-            nextStep();
+            handleNextStep();
         } catch (error) {
             console.error("Error en el registro:", error);
         } finally {
@@ -79,16 +79,16 @@ export const RegisterPasswordStep = ({nextStep, updateRegisterState}:Props) => {
                     <input
                         type={showPassword ? 'text' : 'password'}
                         enterKeyHint="next"
-                        minLength={6}
-                        maxLength={25}
+                        minLength={8}
+                        maxLength={50}
                         id="password"
                         autoComplete="password"
                         placeholder="********"
                         className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("password",{
                             required: true,
-                            minLength: 6,
-                            maxLength: 25
+                            minLength: 8,
+                            maxLength: 50
                         })}
                     />
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
@@ -102,16 +102,16 @@ export const RegisterPasswordStep = ({nextStep, updateRegisterState}:Props) => {
                     <input
                         type={showPasswordRepeat ? 'text' : 'password'}
                         enterKeyHint="done"
-                        minLength={6}
-                        maxLength={25}
+                        minLength={8}
+                        maxLength={50}
                         id="passwordRepeat"
                         autoComplete="password"
                         placeholder="********"
                         className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("passwordRepeat",{
                             required: true,
-                            minLength: 6,
-                            maxLength: 25
+                            minLength: 8,
+                            maxLength: 50
                         })}
                     />
                     <ButtonShowPassword status={showPasswordRepeat} changeStatus={setShowPasswordRepeat} className="absolute bottom-0 right-0 size-10"/>

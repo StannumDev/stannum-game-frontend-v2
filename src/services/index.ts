@@ -1,1 +1,1 @@
-export { requestLogin, checkEmailExists, checkUsernameExists, validateReCAPTCHA } from './auth';
+export { requestLogin, checkEmailExists, checkUsernameExists, validateReCAPTCHA, createUser } from './auth';
