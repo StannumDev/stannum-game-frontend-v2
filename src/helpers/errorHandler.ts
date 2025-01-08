@@ -16,7 +16,6 @@ export const errorHandler = (error: unknown): AppError => {
             friendlyMessage: data?.friendlyMessage || "Ocurrió un error inesperado.",
         };
     } else {
-        console.log('55555')
         return {
             success: false,
             code: "UNKNOWN_ERROR",

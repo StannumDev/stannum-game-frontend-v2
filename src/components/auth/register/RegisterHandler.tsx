@@ -7,7 +7,7 @@ import { RegisterState } from "@/interfaces";
 import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPictureStep } from "@/components";
 
 export const RegisterHandler = () => {
-
+    
     const [step, setStep] = useState<'email'|'password'|'details'|'photo'>('email')
     const [registerState, setRegisterState] = useState<RegisterState>({
         email: "",
