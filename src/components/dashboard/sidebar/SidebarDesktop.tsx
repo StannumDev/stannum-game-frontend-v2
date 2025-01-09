@@ -1,14 +1,16 @@
 'use client'
 
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
+import { getProfilePhoto } from '@/services';
+import { errorHandler } from '@/helpers';
 import type { SidebarLink } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
-import { useRouter } from 'next/navigation';
 
 interface Props{
     links:Array<SidebarLink>;
@@ -18,13 +20,35 @@ interface Props{
 export const SidebarDesktop = ({links, pathname}:Props) => {
 
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
-    const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+    const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+    const [isLoadingPhoto, setIsLoadingPhoto] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const router = useRouter();
 
     const logout = () => {
         router.push('/');
     }
+
+    useEffect(() => {
+        const fetchProfilePhoto = async () => {
+            setIsLoadingPhoto(true);
+            setErrorMessage(null);
+            try {
+                const url = await getProfilePhoto();
+                console.log(url);
+                setProfilePhotoUrl(url);
+            } catch (error) {
+                const appError = errorHandler(error);
+                setErrorMessage(appError.friendlyMessage);
+                console.log(errorMessage);
+                console.error(`[${appError.code}] ${appError.techMessage}`);
+            } finally {
+                setIsLoadingPhoto(false);
+            }
+        };
+        fetchProfilePhoto();
+    }, []);
 
     return (
         <Fragment>
@@ -110,14 +134,18 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             className="w-full py-8 px-4 flex items-center gap-4"
                         >
                             <Link href={'/dashboard/profile'} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
-                                { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
-                                <Image
-                                    priority
-                                    src={mateo}
-                                    alt='Usuario STANNUM Game'
-                                    className='size-full object-cover absolute top-0 left-0 z-10'
-                                    onLoad={() => setImageLoaded(true)}
-                                />
+                                { isLoadingPhoto ?
+                                    <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0"></div>
+                                :
+                                    <Image
+                                        priority
+                                        width={56}
+                                        height={56}
+                                        src={profilePhotoUrl ? profilePhotoUrl : mateo}
+                                        alt="Usuario STANNUM Game"
+                                        className="size-full object-cover absolute top-0 left-0 z-10"
+                                    />
+                                }
                             </Link>
                             <AnimatePresence>
                                 {

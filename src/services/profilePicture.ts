@@ -42,3 +42,26 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<void> => {
         throw errorHandler(error);
     }
 };
+
+export const getProfilePhoto = async (): Promise<string> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) {
+            throw new Error("Token is missing. Please log in again.");
+        }
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PICTURE_URL}/get-photo`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response?.data?.success || !response.data?.url) {
+            throw new Error("Unexpected response structure.");
+        }
+
+        return response.data.url;
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
