@@ -24,7 +24,7 @@ const links: Array<SidebarLink> = [
     },
     {
         label: 'Mi perfil',
-        href: '/dashboard/profile',
+        href: '/dashboard/profile/mateolohezic',
         Icon: UserCircleIcon,
     },
 ];

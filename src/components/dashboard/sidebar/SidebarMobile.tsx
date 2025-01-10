@@ -1,13 +1,16 @@
 'use client'
 
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import type { SidebarLink } from '@/interfaces';
+import { getUserSidebarDetails } from '@/services';
+import { errorHandler } from '@/helpers';
+import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
 import styles from '@/components/styles/sidebar.module.css';
 import mateo from "@/assets/user/usuario_mateo.webp";
+
 
 interface Props{
     links: Array<SidebarLink>;
@@ -16,6 +19,8 @@ interface Props{
 
 export const SidebarMobile = ({links, pathname}:Props) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
+    const [userData, setUserData] = useState<UserSidebarDetails | null>(null);
+    // const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [isShow, setIsShow] = useState(true);
     const { scrollY } = useScroll();
@@ -30,6 +35,23 @@ export const SidebarMobile = ({links, pathname}:Props) => {
         );
         setLastScroll(scrollYPosition);
     });
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            // setIsLoading(true);
+            try {
+                const details = await getUserSidebarDetails();
+                setUserData(details);
+            } catch (error) {
+                const appError = errorHandler(error);
+                console.error(`[${appError.code}] ${appError.techMessage}`);
+            } finally {
+                // setIsLoading(false);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     return (
         <>
@@ -46,12 +68,13 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                             <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
                                 <STANNUMIcon className="fill-white w-8"/>
                             </Link>
-                            <Link href={'/dashboard/profile'} className="size-8 aspect-square rounded-full relative overflow-hidden">
+                            <Link href={'/dashboard/profile/mateolohezic'} className="size-8 aspect-square rounded-full relative overflow-hidden">
                                 <Image
                                     priority
-                                    src={mateo}
+                                    src={userData?.profilePhoto || mateo}
                                     alt='Foto de perfil Usuario STANNUM Game'
                                     className="size-full object-cover absolute top-0 left-0 z-10"
+                                    onError={(e) => (e.currentTarget.src = mateo.src)}
                                 />
                             </Link>
                         </motion.div>

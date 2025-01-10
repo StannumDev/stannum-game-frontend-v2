@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { FullUserDetails } from "@/interfaces";
 import { UserProfileEditPicture } from "@/components";
 import mateo from "@/assets/user/usuario_mateo.webp";
 
-export const UserProfilePicture = () => {
+interface Props{
+    user: FullUserDetails
+}
 
+export const UserProfilePicture = ({user}:Props) => {
+    console.log(user)
     const [showModal, setShowModal] = useState<boolean>(false);
 
     return (
@@ -14,9 +19,12 @@ export const UserProfilePicture = () => {
             <div onClick={() => setShowModal(true)} className="lg:hidden size-full opacity-0 absolute top-0 left-0 z-20"></div>
             <Image
                 priority
-                src={mateo}
+                width={192}
+                height={192}
+                src={user.profilePhoto || mateo}
                 alt="Perfil de usuario STANNUM Game"
                 className="size-full object-cover absolute top-0 left-0 z-10"
+                onError={(e) => (e.currentTarget.src = mateo.src)}
             />
             <UserProfileEditPicture showModal={showModal} setShowModal={setShowModal}/>
         </div>

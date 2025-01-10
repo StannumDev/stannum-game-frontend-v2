@@ -16,7 +16,7 @@ export const TMDPlayerRankingCard = ({player}:Props) => {
     const [isUser] = useState<boolean>( username === 'mateolohezic' )
 
     return (
-        <Link href={'/dashboard/profile'} className={`w-full px-4 py-2 lg:p-4 last:rounded-b-lg odd:bg-card hover:bg-card-light/75 grid grid-cols-8 lg:grid-cols-12 items-center gap-4 lg:gap-2 cursor-pointer group ${ isUser && 'text-stannum' }`}>
+        <Link href={'/dashboard/profile/mateolohezic'} className={`w-full px-4 py-2 lg:p-4 last:rounded-b-lg odd:bg-card hover:bg-card-light/75 grid grid-cols-8 lg:grid-cols-12 items-center gap-4 lg:gap-2 cursor-pointer group ${ isUser && 'text-stannum' }`}>
             <h3 className="col-span-1 flex justify-center items-center relative">
                 <span className="sr-only">
                     Segundo puesto

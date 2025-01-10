@@ -10,6 +10,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'stannumgame2025.s3.sa-east-1.amazonaws.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'stannumgame2025.s3.sa-east-1.amazonaws.com',
+            },
         ],
     },
 };
