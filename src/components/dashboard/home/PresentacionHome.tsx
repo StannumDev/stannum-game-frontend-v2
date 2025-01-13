@@ -1,8 +1,11 @@
 'use client'
 
-import { Fragment, useState, useEffect, useCallback } from 'react';
+import { Fragment, useState, useEffect, useCallback, useRef } from 'react';
 import Image from "next/image";
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { driver, type Driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import { PlayIcon } from '@/icons';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/background/the_game.webp";
@@ -11,8 +14,11 @@ const steps:Array<number> = [1,2,3,4,5];
 
 export const PresentacionHome = () => {
 
+    const introRef = useRef<HTMLDivElement | null>(null);
+    const driverRef = useRef<Driver | null>(null);
+    
+    const pathname = usePathname();
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedStep, setSelectedStep] = useState<1|2|3|4|5>(1);
     const [direction, setDirection] = useState<"prev"|"next">("next");
@@ -54,31 +60,139 @@ export const PresentacionHome = () => {
         };
     }, [showModal, previousStep, nextStep]);
 
+    useEffect(() => {
+        const startIntro = () => {
+            if (!introRef.current) return;
+
+            const driverInstance = driver({
+                animate: true,
+                allowClose: false,
+                stageRadius: 8,
+                stagePadding: 0,
+                showButtons: ["next", "previous", "close"],
+                nextBtnText: 'Siguiente',
+                prevBtnText: 'Volver',
+                doneBtnText: 'Listo',
+                steps: [
+                    {
+                        element: "#highlight-me",
+                        popover: {
+                            title: "Bienvenido a <b class='text-stannum font-semibold'>STANNUM Game</b>",
+                            description: "Descubre cómo aprovechar al máximo la plataforma con este breve tutorial introductorio.",
+                            side: "bottom",
+                            align: "center",
+                            showButtons: ["next"]
+                        },
+                    },
+                    {
+                        element: '#goals-section',
+                        popover: {
+                            title: "Tus Objetivos",
+                            description: "Establece metas personales para mantenerte motivado y seguir avanzando.",
+                            side: "right",
+                            align: "start",
+                        },
+                    },
+                    {
+                        element: '#continue-training',
+                        popover: {
+                            title: "Continúa tu Entrenamiento",
+                            description: "Accede a tus programas activos y sigue mejorando tus habilidades. ¡Empieza ahora!",
+                            side: "top",
+                            align: "end",
+                        },
+                    },
+                    {
+                        element: '#streak-section',
+                        popover: {
+                            title: "Tu Racha de Entrenamiento",
+                            description: "Consulta tu progreso diario. Mantén tu racha activa para obtener mejores resultados.",
+                            side: "left",
+                            align: "center",
+                        },
+                    },
+                    {
+                        element: '#top-leaders',
+                        popover: {
+                            title: "Ranking de Líderes",
+                            description: "Descubre los jugadores más destacados y compite para subir en la clasificación.",
+                            side: "top",
+                            align: "start",
+                        },
+                    },
+                    {
+                        element: '#stan-help',
+                        popover: {
+                            title: "Ayuda de STAN",
+                            description: "¿Necesitas ayuda? Haz clic aquí para hablar con nuestra inteligencia artificial y resolver tus dudas.",
+                            side: "top",
+                            align: "start",
+                        },
+                    },
+                    {
+                        element: '#sidebar-buttons',
+                        popover: {
+                            title: "Navegación",
+                            description: "Desde aquí puedes acceder a las principales secciones: Inicio, Biblioteca, Tienda y Perfil.",
+                            side: "right",
+                            align: "start",
+                        },
+                    },
+                    {
+                        element: introRef.current,
+                        popover: {
+                            title: "¡Estás Listo!",
+                            description: "Ya conoces lo básico de la plataforma. Para más detalles, consulta nuestros videos introductorios.",
+                            side: "bottom",
+                            align: "center",
+                        },
+                    }
+                ],
+            });
+
+            driverRef.current = driverInstance;
+            driverInstance.drive();
+        };
+
+        startIntro();
+    }, []);
+
+    useEffect(() => {
+        return () => {driverRef.current && driverRef.current.destroy()};
+    }, [pathname]);
+
+    const showTutorial = () => {
+        driverRef.current && driverRef.current.destroy();
+        setShowModal(true);
+    };
+
     return (
         <Fragment>
-            <MotionWrapperLayoutClient>
-                <section
-                    onClick={() => setShowModal(true)}
-                    className="w-full card card-link aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
-                >
-                    { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
-                    <div className="size-full bg-gradient-to-br from-transparent to-black/50 group-hover:to-black/75 absolute top-0 left-0 z-20 transition-200"></div>
-                    <button type="button" className="size-14 lg:size-24 rounded-full bg-white/25 flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 group-hover:scale-125 transition-200">
-                        <PlayIcon className="size-8 lg:size-14 relative left-0.5 lg:left-1"/>
-                    </button>
-                    <Image
-                        priority
-                        src={background}
-                        alt="Presentación STANNUM Game"
-                        className="size-full object-cover lg:group-hover:blur-[2px] absolute top-0 left-0 z-10 transition-200"
-                        onLoad={() => setImageLoaded(true)}
-                    />
-                    <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">
-                        <p className="text-2xl lg:text-4xl leading-tight">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
-                        <p className="hidden lg:block mt-2 w-full max-w-xl">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
-                    </div>
-                </section>
-            </MotionWrapperLayoutClient>
+            <div ref={introRef} className='w-full'>
+                <MotionWrapperLayoutClient>
+                    <section
+                        onClick={showTutorial}
+                        className="w-full card card-link aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
+                    >
+                        { !imageLoaded && <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div> }
+                        <div className="size-full bg-gradient-to-br from-transparent to-black/50 group-hover:to-black/75 absolute top-0 left-0 z-20 transition-200"></div>
+                        <button type="button" className="size-14 lg:size-24 rounded-full bg-white/25 flex justify-center items-center absolute lg:relative bottom-6 lg:bottom-0 right-6 lg:right-0 z-30 group-hover:scale-125 transition-200">
+                            <PlayIcon className="size-8 lg:size-14 relative left-0.5 lg:left-1"/>
+                        </button>
+                        <Image
+                            priority
+                            src={background}
+                            alt="Presentación STANNUM Game"
+                            className="size-full object-cover lg:group-hover:blur-[2px] absolute top-0 left-0 z-10 transition-200"
+                            onLoad={() => setImageLoaded(true)}
+                        />
+                        <div className="w-full static lg:absolute lg:bottom-8 lg:left-6 z-30">
+                            <p className="text-2xl lg:text-4xl leading-tight">Bienvenido a <b className="block font-semibold">STANNUM Game</b></p>
+                            <p className="hidden lg:block mt-2 w-full max-w-xl">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
+                        </div>
+                    </section>
+                </MotionWrapperLayoutClient>
+            </div>
             <Modal
                 className="max-w-7xl h-auto lg:aspect-video"
                 showModal={showModal}

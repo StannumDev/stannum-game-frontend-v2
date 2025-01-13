@@ -68,7 +68,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                             <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
                                 <STANNUMIcon className="fill-white w-8"/>
                             </Link>
-                            <Link href={'/dashboard/profile/mateolohezic'} className="size-8 aspect-square rounded-full relative overflow-hidden">
+                            <Link href={`/dashboard/profile/${userData?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden">
                                 <Image
                                     priority
                                     src={userData?.profilePhoto || mateo}

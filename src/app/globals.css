@@ -147,7 +147,6 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  /* background-color: #67ccb9; */
   background-color: #41cfc9;
   cursor: pointer;
   border-radius: .5rem;
@@ -155,5 +154,42 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #66eae5;
-  /* background-color: #8cdccd; */
+}
+
+.driver-popover{
+  @apply !p-3 !rounded-lg !bg-gradient-to-br !from-background-sidebar !to-card !border-none
+}
+
+.driver-popover-arrow-side-bottom{
+  @apply !border-b-card
+}
+
+.driver-popover-arrow-side-top{
+  @apply !border-t-card
+}
+
+.driver-popover-arrow-side-left{
+  @apply !border-l-card
+}
+
+.driver-popover-arrow-side-right{
+  @apply !border-e-card
+}
+
+.driver-popover-title{
+  @apply !text-xl !font-satoshi !text-pretty text-white !leading-tight
+}
+
+.driver-popover-description{
+  @apply !font-satoshi text-white !text-sm !mt-2
+}
+
+.driver-popover-prev-btn {
+  text-shadow: none !important;
+  @apply !px-2 !py-1 !rounded-md !bg-transparent hover:!bg-white/10 !text-white !font-satoshi !border-none transition-200 !filter-none
+}
+
+.driver-popover-next-btn {
+  text-shadow: none !important;
+  @apply !px-2 !py-1 !rounded-md !bg-transparent hover:!bg-white/10 !text-white !font-satoshi !border-none transition-200 !filter-none
 }

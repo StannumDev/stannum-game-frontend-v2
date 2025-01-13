@@ -4,7 +4,7 @@ import { MotionWrapperLayout } from "@/components";
 export const RachaHome = () => {
     return (
         <MotionWrapperLayout>
-            <section className="w-full card lg:pr-0 border border-invalid shadow-lg shadow-[rgba(244,80,80,0.25)] relative">
+            <section id="streak-section" className="w-full card lg:pr-0 border border-invalid shadow-lg shadow-[rgba(244,80,80,0.25)] relative">
                 <div className="w-full flex justify-center lg:justify-start items-stretch">
                     <div className="w-full lg:w-fit">
                         <h2 className="title-2">¡Todavia <b className="text-invalid font-black">no <span className="block">entrenaste hoy!</span></b></h2>

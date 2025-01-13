@@ -99,7 +99,7 @@ const rankings:Array<SimpleRanking> = [
 export const RankingHome = () => {
     return (
         <MotionWrapperLayout>
-            <section className="w-full card">
+            <section id="top-leaders" className="w-full card">
                 <div className="w-full flex justify-between items-center">
                     <h2 className="w-fit title-2 flex items-center gap-2">
                         <div>

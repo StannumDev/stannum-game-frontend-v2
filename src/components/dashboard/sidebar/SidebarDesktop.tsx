@@ -106,7 +106,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                 }
                             </AnimatePresence>
                         </Link>
-                        <ul className="mt-24 w-full grow">
+                        <ul id='sidebar-buttons' className="mt-24 w-full grow">
                             {
                                 links.map((link:SidebarLink, i:number) => (
                                     <motion.li
@@ -153,7 +153,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                             exit={{ y: 150, opacity: 0 }}
                                             className='grow truncate'
                                         >
-                                            <Link href={'/dashboard/profile/mateolohezic'} className="w-full lowercase truncate">
+                                            <Link href={`/dashboard/profile/${userData?.username}`} className="w-full lowercase truncate">
                                                 { userData?.username || 'Mi perfil' }
                                             </Link>
                                         </motion.div>

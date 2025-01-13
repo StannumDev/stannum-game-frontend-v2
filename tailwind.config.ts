@@ -36,7 +36,10 @@ const config: Config = {
       },
       animation: {
         "spin-fast": 'spin .5s linear infinite',
-      }
+      },
+      fontFamily: {
+        satoshi: "var(--satoshi), sans-serif",
+      },
     },
   },
   plugins: [],

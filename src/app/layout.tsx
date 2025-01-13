@@ -94,7 +94,7 @@ export const viewport: Viewport = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
     <html lang="es" className="bg-background">
-      <body className={`${satoshi.className} antialiased w-full min-h-svh flex flex-col items-center bg-background lg:bg-gradient-to-br lg:from-background lg:to-background-sidebar`}>
+      <body className={`${satoshi.className} ${satoshi.variable} antialiased w-full min-h-svh flex flex-col items-center bg-background lg:bg-gradient-to-br lg:from-background lg:to-background-sidebar`}>
         {children}
       </body>
     </html>

@@ -4,10 +4,10 @@ import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
 export const ContinuarHome = () => {
     return (
         <MotionWrapperLayout>
-            <section className="w-full">
+            <section id="continue-training" className="w-full">
                 <h2 className="w-full font-black text-2xl text-center flex items-center gap-1">
                     <PlayCircleIcon/>
-                    Continuar viendo
+                    Continuar entrenando
                 </h2>
                 <div className="mt-2 w-full pb-2 flex gap-4 overflow-x-auto">
                     <ContinuarCardHome/>

@@ -22,7 +22,7 @@ const schema = z.object({
     enterprise: z.string().nonempty("Campo requerido.").max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().nonempty("Campo requerido.").max(50, "Debe contener menos de 50 caracteres."),
     website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
-    aboutme: z.string().nonempty("Campo requerido.").max(500, "Debe contener menos de 500 caracteres.")
+    aboutme: z.string().nonempty("Campo requerido.").max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
 type Schema = z.infer<typeof schema>
@@ -194,7 +194,7 @@ export const UserProfileEditInfo = () => {
                         <div className='w-full flex flex-col gap-1'>
                             <label htmlFor="aboutme" className="md:text-lg">Sobre mí</label>
                             <textarea
-                                maxLength={500}
+                                maxLength={2600}
                                 id="aboutme"
                                 autoComplete="off"
                                 autoCapitalize="true"
@@ -202,7 +202,7 @@ export const UserProfileEditInfo = () => {
                                 className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 transition-200"
                                 {...register("aboutme",{
                                     required: true,
-                                    maxLength: 50
+                                    maxLength: 2600
                                 })}
                             />
                         </div>

@@ -6,7 +6,7 @@ import stan_help from "@/assets/home/stan_help.webp";
 export const StanHelp = () => {
     return (
         <MotionWrapperLayout>
-            <section className="w-full card lg:pl-0 pb-0 lg:pt-2 relative">
+            <section id="stan-help" className="w-full card lg:pl-0 pb-0 lg:pt-2 relative">
                 <div className="w-full flex flex-col-reverse lg:flex-row justify-center items-center">
                     <div className="mt-2 lg:mt-0 w-full lg:w-auto lg:grow flex justify-end lg:justify-center items-end">
                         <Image src={stan_help} alt="Obtén ayuda de Stan" draggable={false} className="w-44 lg:w-full object-contain"/>
