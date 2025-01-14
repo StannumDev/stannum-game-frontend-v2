@@ -71,6 +71,8 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                             <Link href={`/dashboard/profile/${userData?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden">
                                 <Image
                                     priority
+                                    width={32}
+                                    height={32}
                                     src={userData?.profilePhoto || mateo}
                                     alt='Foto de perfil Usuario STANNUM Game'
                                     className="size-full object-cover absolute top-0 left-0 z-10"
@@ -86,7 +88,7 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                     animate={{ y: 0 }}
                     transition={{ type: 'spring', bounce: 0 }}
                 >
-                    <ul className="w-full grid grid-cols-5 justify-center items-center overflow-hidden">
+                    <ul id='sidebar-buttons' className="w-full grid grid-cols-5 justify-center items-center overflow-hidden">
                         {
                             links.map((link:SidebarLink, i:number) => (
                                 <Fragment key={`sidebar_mobile_link_${i}`}>
