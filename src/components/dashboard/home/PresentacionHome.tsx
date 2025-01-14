@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { driver, type Driver } from "driver.js";
 import "driver.js/dist/driver.css";
+import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
+import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/background/the_game.webp";
@@ -23,8 +25,26 @@ export const PresentacionHome = () => {
     const [selectedStep, setSelectedStep] = useState<1|2|3|4|5>(1);
     const [direction, setDirection] = useState<"prev"|"next">("next");
 
+    const [isTutorialCompleted, setIsTutorialCompleted] = useState<boolean>(false);
+    const [canStartTutorial, setCanStartTutorial] = useState<boolean>(false);
+    
+    const completeTutorial = async () => {
+        try {
+            await markTutorialAsCompleted("initial_tutorial");
+            setIsTutorialCompleted(true);
+            console.log("completado")
+        } catch (error) {
+            console.error("Error marking tutorial as completed:", error);
+        }
+    };
+  
+    const showTutorial = () => {
+        driverRef.current && driverRef.current.destroy();
+        setShowModal(true);
+    };
+
     useEffect(() => {
-      setSelectedStep(1)
+        setSelectedStep(1);
     }, [showModal]);
 
     const previousStep = useCallback(() => {
@@ -61,8 +81,24 @@ export const PresentacionHome = () => {
     }, [showModal, previousStep, nextStep]);
 
     useEffect(() => {
+        const checkTutorialCompletion = async () => {
+            try {
+                const completed = await getTutorialStatus("initial_tutorial");
+                setIsTutorialCompleted(completed);
+                setCanStartTutorial(true);
+            } catch (error) {
+                const appError = errorHandler(error);
+                console.error(`[${appError.code}] ${appError.techMessage}`);
+            }
+        };
+
+        checkTutorialCompletion();
+    }, []);
+
+    useEffect(() => {
+        
         const startIntro = () => {
-            if (!introRef.current) return;
+            if (!canStartTutorial || isTutorialCompleted || !introRef.current) return;
 
             const driverInstance = driver({
                 animate: true,
@@ -73,6 +109,7 @@ export const PresentacionHome = () => {
                 nextBtnText: 'Siguiente',
                 prevBtnText: 'Volver',
                 doneBtnText: 'Listo',
+                onDestroyed: completeTutorial,
                 steps: [
                     {
                         element: "#highlight-me",
@@ -155,16 +192,11 @@ export const PresentacionHome = () => {
         };
 
         startIntro();
-    }, []);
+    }, [canStartTutorial, isTutorialCompleted]);
 
     useEffect(() => {
         return () => {driverRef.current && driverRef.current.destroy()};
     }, [pathname]);
-
-    const showTutorial = () => {
-        driverRef.current && driverRef.current.destroy();
-        setShowModal(true);
-    };
 
     return (
         <Fragment>

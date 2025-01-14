@@ -62,7 +62,33 @@ export const getUserDetailsByUsername = async (username: string): Promise<FullUs
         }
         return response.data.data as FullUserDetails;
     } catch (error) {
-        // console.error("Error fetching user details by username:", error);
         return null;
+    }
+};
+
+export const getTutorialStatus = async (tutorialName: string): Promise<boolean> => {
+    try {
+        const token = Cookies.get("token");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data?.tutorial?.isCompleted || false;
+    } catch (error:unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const markTutorialAsCompleted = async (tutorialName: string): Promise<void> => {
+    try {
+        const token = Cookies.get("token");
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}/complete`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    } catch (error:unknown) {
+        throw errorHandler(error);
     }
 };
