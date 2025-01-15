@@ -92,8 +92,7 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                     />
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
                 </div>
-                <p className="mt-2 text-sm text-neutral-400">Debe contener al menos una minúscula, una mayúscula y un número.</p>
-                <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="mt-2"/>
+                <p className={`mt-2 text-xs ${errors?.password ? 'text-invalid' : 'text-neutral-400'}`}>Debe contener al menos una minúscula, una mayúscula, un número y tener entre 8 a 50 caracteres.</p>
             </div>
             <div className="mt-6 md:mt-4 w-full">
                 <div className='w-full flex flex-col gap-1 relative'>

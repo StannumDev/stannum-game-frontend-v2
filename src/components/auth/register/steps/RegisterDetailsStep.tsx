@@ -14,14 +14,14 @@ interface Props{
 }
 
 const schema = z.object({
-    name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
+    name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
     birthdate: z.string().nonempty("Campo requerido.")
         .refine(date => {
             const today = new Date();
             const birthDate = new Date(date);
             const age = today.getFullYear() - birthDate.getFullYear();
-            return age >= 18;
-        }, { message: "Debes tener al menos 18 años." }),
+            return age >= 18 && birthDate <= today;
+        }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
     country: z.string().nonempty("Campo requerido."),
     region: z.string().nonempty("Campo requerido."),
     enterprise: z.string().nonempty("Campo requerido.").max(100, "Debe contener menos de 100 caracteres."),
@@ -73,10 +73,11 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
             <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="md:text-lg">Nombre</label>
+                        <label htmlFor="name" className="md:text-lg">Nombre completo</label>
                         <input
                             type='text'
                             enterKeyHint="next"
+                            minLength={2}
                             maxLength={50}
                             id="name"
                             autoComplete="name"
@@ -84,6 +85,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
                             {...register("name",{
                                 required: true,
+                                minLength: 2,
                                 maxLength: 50
                             })}
                             />
