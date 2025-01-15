@@ -31,13 +31,14 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
     const onSubmit: SubmitHandler<Schema> = async ({ username, password }: Schema) => {
         setIsLoading(true);
         try {
-            const usernameAvailable = await checkUsernameExists(username);
+            const normalizedUsername = username.toLowerCase();
+            const usernameAvailable = await checkUsernameExists(normalizedUsername);
             if (!usernameAvailable) {
                 console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
-            await handleNextStep({ username, password });
+            await handleNextStep({ username: normalizedUsername, password });
         } catch (error) {
             console.error("Error en el registro:", error);
         } finally {
@@ -61,7 +62,7 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                             maxLength={25}
                             id="username"
                             autoComplete="username"
-                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter lowercase focus-visible:border-stannum placeholder:opacity-50 transition-200'
+                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 transition-200'
                             {...register("username",{
                                 required: true,
                                 minLength: 6,
