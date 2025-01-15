@@ -71,3 +71,15 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
         throw errorHandler(error);
     }
 };
+
+export const logout = (): void => {
+    try {
+        Cookies.remove('token', { path: '/' });
+        Object.keys(Cookies.get()).forEach((cookie) => {
+            cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
+        });
+        window.location.href = '/';
+    } catch (error) {
+        console.error("Error during logout:", error);
+    }
+};

@@ -67,6 +67,9 @@ export const getUserDetailsByUsername = async (username: string): Promise<FullUs
 };
 
 export const getTutorialStatus = async (tutorialName: string): Promise<boolean> => {
+    const cookieKey = `tutorial_${tutorialName}`;
+    const cookieValue = Cookies.get(cookieKey);
+    if (cookieValue !== undefined) return cookieValue === "true";
     try {
         const token = Cookies.get("token");
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}`, {
@@ -74,13 +77,16 @@ export const getTutorialStatus = async (tutorialName: string): Promise<boolean> 
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data?.tutorial?.isCompleted || false;
-    } catch (error:unknown) {
+        const isCompleted = response.data?.tutorial?.isCompleted || false;
+        Cookies.set(cookieKey, String(isCompleted), { expires: 365 });
+        return isCompleted;
+    } catch (error: unknown) {
         throw errorHandler(error);
     }
 };
 
 export const markTutorialAsCompleted = async (tutorialName: string): Promise<void> => {
+    const cookieKey = `tutorial_${tutorialName}`;
     try {
         const token = Cookies.get("token");
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}/complete`, {}, {
@@ -88,7 +94,8 @@ export const markTutorialAsCompleted = async (tutorialName: string): Promise<voi
                 Authorization: `Bearer ${token}`,
             },
         });
-    } catch (error:unknown) {
+        Cookies.set(cookieKey, "true", { expires: 365 });
+    } catch (error: unknown) {
         throw errorHandler(error);
     }
 };

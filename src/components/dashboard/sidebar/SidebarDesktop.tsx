@@ -3,9 +3,8 @@
 import { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getUserSidebarDetails  } from '@/services';
+import { getUserSidebarDetails, logout  } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
@@ -22,12 +21,6 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
     const [userData, setUserData] = useState<UserSidebarDetails|null>(null);
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    const router = useRouter();
-
-    const logout = () => {
-        router.push('/');
-    }
 
     useEffect(() => {
         const fetchUserData = async () => {
