@@ -5,8 +5,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { updateUserProfile } from "@/services";
+import { FullUserDetails } from "@/interfaces";
 import { EditIcon, SelectorIcon } from "@/icons";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
+
+interface Props{
+    user: FullUserDetails
+}
 
 const schema = z.object({
     name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
@@ -21,50 +27,53 @@ const schema = z.object({
     region: z.string().nonempty("Campo requerido."),
     enterprise: z.string().nonempty("Campo requerido.").max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().nonempty("Campo requerido.").max(50, "Debe contener menos de 50 caracteres."),
-    website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
+    // website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
     aboutme: z.string().nonempty("Campo requerido.").max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
 type Schema = z.infer<typeof schema>
 
-export const UserProfileEditInfo = () => {
+export const UserProfileEditInfo = ({user}:Props) => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { register, handleSubmit, setValue, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) });
 
-    const [country, setCountry] = useState<string>('');
-    const [region, setRegion] = useState<string>('');
+    const [country, setCountry] = useState<string|undefined>('');
+    const [region, setRegion] = useState<string|undefined>('');
 
     const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
         setIsLoading(true);
         try {
-            console.log(data);
-            setTimeout(() => {
-                setIsLoading(false);
+            console.log(data)
+            const success = await updateUserProfile(data);
+            if (success) {
+                console.log("Perfil actualizado con éxito.");
                 setShowModal(false);
-            }, 2000);
-        } catch (error:unknown) {
-            console.log(error);
-            // setIsLoading(false);
+            }
+        } catch (error) {
+            console.error("Error al actualizar el perfil:", error);
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         const handleFormValues = () => {
-            setValue('name', 'Mateo');
-            setValue('birthdate', '2001-12-20');
-            setValue('country', 'Argentina');
-            setCountry('Argentina');
-            setValue('region', 'Tucumán');
-            setRegion('Tucumán');
-            setValue('enterprise', 'STANNUM');
-            setValue('enterpriseRole', 'Desarrollador');
-            setValue('aboutme', 'Me gusta mucho jugar a la compu');
+            setValue('name', user.profile.name);
+            const dateOnly = new Date(user.profile.birthdate||"").toISOString().split("T")[0];
+            setValue('birthdate', dateOnly);
+            setValue('country', user.profile.country || "");
+            setCountry(user.profile.country);
+            setValue('region', user.profile.region || "");
+            setRegion(user.profile.region);
+            setValue('enterprise', user.enterprise?.name || "");
+            setValue('enterpriseRole', user.enterprise?.jobPosition || "");
+            setValue('aboutme', user.profile.aboutMe || "");
         }
         handleFormValues();
-    }, [showModal, setValue])
+    }, [user, showModal, setValue])
     
     return (
         <Fragment>
@@ -123,7 +132,7 @@ export const UserProfileEditInfo = () => {
                             <div className='w-full flex flex-col gap-1 relative'>
                                 <label htmlFor="name" className="md:text-lg">País</label>
                                 <CountryDropdown
-                                    value={country}
+                                    value={country||""}
                                     onChange={(val) => { setCountry(val); setValue("country", val) }}
                                     name="country"
                                     id="country"
@@ -138,8 +147,8 @@ export const UserProfileEditInfo = () => {
                             <div className='w-full flex flex-col gap-1 relative'>
                                 <label htmlFor="name" className="md:text-lg">Región</label>
                                 <RegionDropdown
-                                    country={country}
-                                    value={region}
+                                    country={country||""}
+                                    value={region||""}
                                     onChange={(val) => { setRegion(val); setValue("region", val) }}
                                     name="region"
                                     id="region"

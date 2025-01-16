@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getUserDetailsByUsername } from "@/services";
+import { getUserDetailsByUsernameServer } from "@/services";
 import { UserProfileDetails, ProfileSectionsLayout } from "@/components";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     try {
-        const user = await getUserDetailsByUsername(params.username);
+        const user = await getUserDetailsByUsernameServer(params.username);
 
         if (!user) {
             return {
@@ -41,7 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProfilePage({ params }: Props) {
-    const user = await getUserDetailsByUsername(params.username);
+    const user = await getUserDetailsByUsernameServer(params.username);
+
     if (!user) {
         return (
             <main className="main-container">

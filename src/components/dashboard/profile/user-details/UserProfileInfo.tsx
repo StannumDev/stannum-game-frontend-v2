@@ -27,7 +27,7 @@ export const UserProfileInfo = ({user}:Props) => {
                         <h3 className="text-sm text-neutral-500 font-semibold">Rol</h3>
                         <p className="w-full title-3 truncate">{user?.enterprise?.jobPosition}</p>
                     </div>
-                    <UserProfileEditInfo/>
+                    <UserProfileEditInfo user={user}/>
                 </div>
             </section>
             <section className="w-full lg:w-1/3 min-h-32 max-h-96 lg:h-auto card flex flex-col gap-4">

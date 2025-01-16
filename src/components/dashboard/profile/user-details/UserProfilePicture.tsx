@@ -11,7 +11,6 @@ interface Props{
 }
 
 export const UserProfilePicture = ({user}:Props) => {
-    console.log(user)
     const [showModal, setShowModal] = useState<boolean>(false);
 
     return (
