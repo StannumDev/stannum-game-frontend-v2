@@ -9,6 +9,10 @@ export const requestLogin = async (data: { username: string; password: string })
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data);
 
+        Object.keys(Cookies.get()).forEach((cookie) => {
+            cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
+        });
+        
         Cookies.set('token', response.data.token, {
             secure: process.env.NEXT_PUBLIC_ENV === 'production',
             sameSite: 'Strict',
