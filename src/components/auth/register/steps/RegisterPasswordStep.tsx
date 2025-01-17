@@ -14,7 +14,7 @@ interface Props{
 }
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido.").regex(/^[a-z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
+    username: z.string().nonempty("Campo requerido.").regex(/^[a-zA-Z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
     password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/, "Debe contener al menos una minúscula, una mayúscula y un número, y tener entre 8 y 50 caracteres.").min(8, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
     passwordRepeat: z.string().nonempty("Campo requerido."),
 }).refine((data) => data.password === data.passwordRepeat, { message: "Las contraseñas no coinciden.", path: ["passwordRepeat"] });
@@ -31,14 +31,13 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
     const onSubmit: SubmitHandler<Schema> = async ({ username, password }: Schema) => {
         setIsLoading(true);
         try {
-            const normalizedUsername = username.toLowerCase();
-            const usernameAvailable = await checkUsernameExists(normalizedUsername);
+            const usernameAvailable = await checkUsernameExists(username);
             if (!usernameAvailable) {
                 console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
-            await handleNextStep({ username: normalizedUsername, password });
+            await handleNextStep({ username, password });
         } catch (error) {
             console.error("Error en el registro:", error);
         } finally {
