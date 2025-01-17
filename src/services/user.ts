@@ -53,7 +53,6 @@ export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
 export const getUserDetailsByUsername = async (username: string): Promise<FullUserDetails | null> => {
     try {
         const token = Cookies.get("token");
-        console.log(token)
         if (!token) throw tokenError
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/profile/${username}`, {
@@ -62,13 +61,11 @@ export const getUserDetailsByUsername = async (username: string): Promise<FullUs
                 "Content-Type": "application/json",
             },
         });
-        console.log(response)
         if (!response?.data?.success || !response.data?.data) {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
         return response.data.data as FullUserDetails;
     } catch (error) {
-        // console.log(error)
         return null;
     }
 };

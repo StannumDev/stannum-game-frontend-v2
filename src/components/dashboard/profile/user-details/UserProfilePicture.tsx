@@ -7,10 +7,11 @@ import { UserProfileEditPicture } from "@/components";
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
-    user: FullUserDetails
+    user: FullUserDetails,
+    fetchUserData: () => Promise<void>
 }
 
-export const UserProfilePicture = ({user}:Props) => {
+export const UserProfilePicture = ({user, fetchUserData}:Props) => {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     return (
@@ -25,7 +26,7 @@ export const UserProfilePicture = ({user}:Props) => {
                 className="size-full object-cover absolute top-0 left-0 z-10"
                 onError={(e) => (e.currentTarget.src = mateo.src)}
             />
-            <UserProfileEditPicture showModal={showModal} setShowModal={setShowModal}/>
+            <UserProfileEditPicture showModal={showModal} setShowModal={setShowModal} fetchUserData={fetchUserData}/>
         </div>
     )
 }

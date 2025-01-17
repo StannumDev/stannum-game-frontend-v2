@@ -5,43 +5,50 @@ import { AddPhotoIcon, EditIcon, SpinnerIcon } from "@/icons";
 import { Modal } from "@/components";
 import AvatarEditor from 'react-avatar-editor';
 import styles from "@/components/styles/pictureEditor.module.css";
+import { preprocessImage, uploadProfilePhoto } from "@/services";
 
 interface Props{
-    showModal: boolean;
-    setShowModal: Dispatch<SetStateAction<boolean>>;
+    showModal: boolean,
+    setShowModal: Dispatch<SetStateAction<boolean>>,
+    fetchUserData: () => Promise<void>
 }
 
-export const UserProfileEditPicture = ({showModal, setShowModal}:Props) => {
+export const UserProfileEditPicture = ({showModal, setShowModal, fetchUserData}:Props) => {
     
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    
     const [zoom, setZoom] = useState<number>(1)
     const [rotate, setRotate] = useState<number>(0)
-    const [file, setFile] = useState<string|null>(null)
+    const [file, setFile] = useState<File|null>(null)
     const editorRef = useRef(null);
     
-    const handleFileChange = (event:ChangeEvent<HTMLInputElement>):void => {
-        if (!event?.target?.files || !event?.target?.files[0]){
-            return;
-        }
-        
-        const fileSizeInMB = event.target.files[0].size / (1024 * 1024);
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0];
+        if (!selectedFile) return;
+    
+        const fileSizeInMB = selectedFile.size / (1024 * 1024);
         if (fileSizeInMB > 20) {
-            // callToast({ message: 'El archivo no puede superar los 20 MB' });
-            return;
+          console.error("El archivo no puede superar los 20 MB.");
+          return;
         }
-
-        setFile(URL.createObjectURL(event.target.files[0]));
-        return;
+        setFile(selectedFile);
     };
 
-    const onSubmit = () => {
+    const handleUpload = async () => {
+        if (!file || !editorRef.current) return;
         setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
+        try {
+            const imageBlob = await preprocessImage(editorRef.current);
+            const formData = new FormData();
+            formData.append("photo", imageBlob!);
+            await uploadProfilePhoto(formData);
+            await fetchUserData();
             setShowModal(false);
-        }, 2000);
-    }
+        } catch (error) {
+            console.error("Error al subir la foto:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         setFile(null);
@@ -143,7 +150,7 @@ export const UserProfileEditPicture = ({showModal, setShowModal}:Props) => {
                             </button>
                             <button
                                 type="button"
-                                onClick={onSubmit}
+                                onClick={handleUpload}
                                 disabled={isLoading}
                                 className="w-full h-10 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
                             >

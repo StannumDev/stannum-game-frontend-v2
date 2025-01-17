@@ -33,6 +33,7 @@ export { RankingHome } from "./dashboard/home/RankingHome";
 export { StanHelp } from "./dashboard/home/StanHelp";
 
 // PROFILE
+export { UserProfileWrapper } from "./dashboard/profile/UserProfileWrapper";
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
 export { UserProfilePicture } from "./dashboard/profile/user-details/UserProfilePicture";
 export { UserProfileEditPicture } from "./dashboard/profile/user-details/UserProfileEditPicture";

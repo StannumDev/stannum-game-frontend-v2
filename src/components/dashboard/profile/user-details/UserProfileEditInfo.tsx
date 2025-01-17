@@ -11,7 +11,8 @@ import { EditIcon, SelectorIcon } from "@/icons";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 interface Props{
-    user: FullUserDetails
+    user: FullUserDetails,
+    fetchUserData: () => Promise<void>
 }
 
 const schema = z.object({
@@ -33,7 +34,7 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const UserProfileEditInfo = ({user}:Props) => {
+export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,6 +51,7 @@ export const UserProfileEditInfo = ({user}:Props) => {
             const success = await updateUserProfile(data);
             if (success) {
                 console.log("Perfil actualizado con éxito.");
+                await fetchUserData();
                 setShowModal(false);
             }
         } catch (error) {

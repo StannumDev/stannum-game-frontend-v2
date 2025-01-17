@@ -3,10 +3,11 @@ import { UserProfileCover, UserProfilePicture, UserProfileSocialMedias, UserProf
 import { FullUserDetails } from "@/interfaces";
 
 interface Props{
-    user: FullUserDetails
+    user: FullUserDetails,
+    fetchUserData: () => Promise<void>
 }
 
-export const UserProfileDetails = ({user}:Props) => {
+export const UserProfileDetails = ({user, fetchUserData}:Props) => {
 
     return (
         <Fragment>
@@ -15,7 +16,7 @@ export const UserProfileDetails = ({user}:Props) => {
                     <UserProfileCover/>
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
-                            <UserProfilePicture user={user}/>
+                            <UserProfilePicture user={user} fetchUserData={fetchUserData}/>
                             <p className="mt-4 title-2">{user?.username}</p>
                             <p className="font-semibold text-stannum">{user?.enterprise?.name}</p>
                         </div>
@@ -30,7 +31,7 @@ export const UserProfileDetails = ({user}:Props) => {
                 </div>
             </MotionWrapperLayout>
             <MotionWrapperLayout>
-                <UserProfileInfo user={user}/>
+                <UserProfileInfo user={user} fetchUserData={fetchUserData}/>
             </MotionWrapperLayout>
         </Fragment>
     )

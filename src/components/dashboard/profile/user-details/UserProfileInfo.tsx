@@ -2,10 +2,11 @@ import { UserProfileEditInfo } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 
 interface Props{
-    user: FullUserDetails
+    user: FullUserDetails,
+    fetchUserData: () => Promise<void>
 }
 
-export const UserProfileInfo = ({user}:Props) => {
+export const UserProfileInfo = ({user, fetchUserData}:Props) => {
     return (
         <div className="w-full flex flex-wrap gap-4">
             <section className="w-full lg:w-[calc((100%/3)*2-16px)] card relative">
@@ -27,7 +28,7 @@ export const UserProfileInfo = ({user}:Props) => {
                         <h3 className="text-sm text-neutral-500 font-semibold">Rol</h3>
                         <p className="w-full title-3 truncate">{user?.enterprise?.jobPosition}</p>
                     </div>
-                    <UserProfileEditInfo user={user}/>
+                    <UserProfileEditInfo user={user} fetchUserData={fetchUserData}/>
                 </div>
             </section>
             <section className="w-full lg:w-1/3 min-h-32 max-h-96 lg:h-auto card flex flex-col gap-4">

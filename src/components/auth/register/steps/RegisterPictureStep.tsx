@@ -29,10 +29,7 @@ export const RegisterPictureStep = () => {
     };
 
     const handleUpload = async () => {
-        if (!file || !editorRef.current) {
-            console.log("Selecciona una foto antes de continuar.");
-            return;
-        }
+        if (!file || !editorRef.current) return;
         setIsLoading(true);
         try {
             const imageBlob = await preprocessImage(editorRef.current);
