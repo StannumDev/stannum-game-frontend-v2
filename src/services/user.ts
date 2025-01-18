@@ -22,7 +22,7 @@ export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
         const token = Cookies.get("token");
         if (!token) throw tokenError
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/sidebar-details`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/sidebar-details`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -55,7 +55,7 @@ export const getUserDetailsByUsername = async (username: string): Promise<FullUs
         const token = Cookies.get("token");
         if (!token) throw tokenError
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/profile/${username}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export const getTutorialStatus = async (tutorialName: string): Promise<boolean> 
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -95,7 +95,7 @@ export const markTutorialAsCompleted = async (tutorialName: string): Promise<voi
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/tutorial/${tutorialName}/complete`, {}, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}/complete`, {}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -110,7 +110,7 @@ export const updateUserProfile = async (data:{name:string, birthdate:string, cou
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/edit`, data, {
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/edit`, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

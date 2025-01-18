@@ -24,7 +24,7 @@ export const getUserDetailsByUsernameServer = async (username: string): Promise<
         const token = await cookies().get('token')
         if (!token) throw tokenError
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/profile/${username}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
             headers: {
                 Authorization: `Bearer ${token.value}`,
                 "Content-Type": "application/json",
