@@ -114,6 +114,7 @@ export { RegisterPictureStep } from "./auth/register/steps/RegisterPictureStep";
 
 // PASSWORD RECOVERY
 export { PasswordRecoveryHandler } from "./auth/password-recovery/PasswordRecoveryHandler";
+export { PasswordRecoveryNewPassword } from "./auth/password-recovery/PasswordRecoveryNewPassword";
 
 // TUTORIAL
 export { StepOneTutorial } from "./dashboard/tutorial/intro/StepOneTutorial";

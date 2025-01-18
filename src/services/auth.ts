@@ -60,7 +60,7 @@ export const validateReCAPTCHA = async (token: string | null): Promise<boolean> 
 
 export const createUser = async (userData: RegisterState): Promise<boolean> => {
     try {
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, userData);
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/register`, userData);
         if (!data?.success || !data?.token) throw new Error("Unexpected response structure");
 
         Cookies.set('token', data.token, {
@@ -85,5 +85,25 @@ export const logout = (): void => {
         window.location.href = '/';
     } catch (error) {
         console.error("Error during logout:", error);
+    }
+};
+
+export const sendPasswordRecoveryEmail = async (username: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-recovery`, { username });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.success;
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const changePasswordWithToken = async (token: string, password: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { token, password });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.success;
+    } catch (error) {
+        throw errorHandler(error);
     }
 };

@@ -21,11 +21,9 @@ type Schema = z.infer<typeof schema>;
 
 export const RegisterEmailStep = ({ handleNextStep }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
+    const { register, handleSubmit, formState: { errors } } = useForm<Schema>({resolver: zodResolver(schema)});
+    
     const [reCAPTCHAError, setReCAPTCHAError] = useState<string | null>(null);
-    const { register, handleSubmit, formState: { errors } } = useForm<Schema>({
-        resolver: zodResolver(schema),
-    });
-
     const reCAPTCHARef = useRef<ReCAPTCHA | null>(null);
     const [reCAPTCHACompleted, setReCAPTCHACompleted] = useState(false);
 

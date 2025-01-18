@@ -1,12 +1,15 @@
 'use client'
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { sendPasswordRecoveryEmail, validateReCAPTCHA } from "@/services";
+import { errorHandler } from "@/helpers";
 import { STANNUMLogo, GoBackButton, FormErrorMessage, SubmitButtonLoading } from "@/components";
-import Link from "next/link";
+import { AppError } from "@/interfaces";
 
 const schema = z.object({
     username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
@@ -21,60 +24,53 @@ export const PasswordRecoveryHandler = () => {
 
     const [isSended, setIsSended] = useState<boolean>(false);
 
-    const [reCAPTCHACompleted, setReCAPTCHACompleted] = useState<boolean>(true) // TODO: poner en false
-    const [reCAPTCHAError, setReCAPTCHAError] = useState<boolean>(false);
-    const [reCAPTCHAErrorMessage, setReCAPTCHAErrorMessage] = useState<string>('');
+    const [reCAPTCHAError, setReCAPTCHAError] = useState<string | null>(null);
     const reCAPTCHARef = useRef<ReCAPTCHA | null>(null);
+    const [reCAPTCHACompleted, setReCAPTCHACompleted] = useState(false);
 
     const resetReCAPTCHA = () => {
         if (reCAPTCHARef?.current) {
-            reCAPTCHARef?.current?.reset();
+            reCAPTCHARef.current.reset();
+        }
+        setReCAPTCHAError(null);
+        setReCAPTCHACompleted(false);
+    };
+    
+    const handleReCAPTCHA = async (token: string | null) => {
+        try {
+            const isValid = await validateReCAPTCHA(token);
+            if (!isValid) {
+                setReCAPTCHAError("ReCAPTCHA no válido, por favor intente nuevamente.");
+                resetReCAPTCHA();
+                return;
+            }
+            setReCAPTCHACompleted(true);
+            setReCAPTCHAError(null);
+        } catch (error) {
+            console.error("Error validando reCAPTCHA:", error);
+            setReCAPTCHAError("Ocurrió un error al validar el reCAPTCHA. Inténtalo de nuevo.");
+            resetReCAPTCHA();
         }
     };
 
-    const errorReCAPTCHA = (message:string) => {
-        setReCAPTCHAErrorMessage(message);
-        setReCAPTCHAError(true);
-        resetReCAPTCHA();
-    }
-
-    const handleReCAPTCHA = async (value:string|null) => {
-        setReCAPTCHAError(false);
-        setReCAPTCHAErrorMessage('');
-        try {
-            console.log(value)
-            // const success:boolean = await validateReCAPTCHA(value);
-            // if(!success){
-            //     errorReCAPTCHA('Reintente completar el ReCAPTCHA.');
-            //     setReCAPTCHACompleted(false);
-            // }
-            setReCAPTCHACompleted(true);
-        } catch (error:unknown) {
-            // setRecaptchaError(true)
-            // setRecaptchaErrorMessage(error.response.data.message)
-            console.log(error);
-            resetReCAPTCHA();
-        }
-    }
-
-    const onSubmit:SubmitHandler<Schema> = async ({username}:Schema) => {
+    const onSubmit: SubmitHandler<Schema> = async ({ username }: Schema) => {
         setIsLoading(true);
         try {
-            if(!reCAPTCHACompleted){
-                setReCAPTCHAErrorMessage('Debe completar el ReCAPTCHA.');
-                setReCAPTCHAError(true);
-                resetReCAPTCHA();
+            if (!reCAPTCHACompleted) {
+                setReCAPTCHAError("Debe completar el reCAPTCHA.");
                 setIsLoading(false);
-                return
+                return;
             }
-            console.log(username);
-            setIsLoading(false);
-            setIsSended(true);
-        } catch (error:unknown) {
-            console.log(error);
+
+            const success = await sendPasswordRecoveryEmail(username);
+            if (success) setIsSended(true);
+        } catch (error) {
+            const appError:AppError = errorHandler(error);
+            console.log(appError);
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <section className="w-full min-h-svh px-4 md:px-0 py-12 lg:py-24 flex justify-center items-center">
@@ -108,20 +104,20 @@ export const PasswordRecoveryHandler = () => {
                                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>
                             </div>
                             <div className="mt-8 mx-auto w-[300px] h-[74px] border border-card-light rounded-lg flex justify-center items-center overflow-hidden relative">
-                                <div className="w-[304px] h-[78px] absolute -top-px -left-[1px] scale-[1.02]">
+                                <div className="w-[304px] h-[78px] absolute -top-px scale-[1.0125]">
                                     <ReCAPTCHA
-                                        size={'normal'}
-                                        hl='es-419'
-                                        theme={'dark'}
+                                        size="normal"
+                                        hl="es-419"
+                                        theme="dark"
                                         ref={reCAPTCHARef}
-                                        onError={ () => { errorReCAPTCHA('Hubo un error, complete de nuevo el ReCAPTCHA.') }}
-                                        onExpired={ () => { errorReCAPTCHA('El ReCAPTCHA expiró, vuelva a completarlo.') }}
-                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                                        onError={() => setReCAPTCHAError("Hubo un error con el reCAPTCHA.")}
+                                        onExpired={() => setReCAPTCHAError("El reCAPTCHA expiró. Por favor, inténtalo nuevamente.")}
                                         onChange={handleReCAPTCHA}
                                     />
                                 </div>
                             </div>
-                            <FormErrorMessage condition={reCAPTCHAError} message={reCAPTCHAErrorMessage} className="mt-2 text-center"/>
+                            <FormErrorMessage condition={!!reCAPTCHAError} message={reCAPTCHAError || ''} className="mt-2 text-center" />
                             <div className="mt-8 w-full flex justify-center">
                                 <SubmitButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>
                             </div>
