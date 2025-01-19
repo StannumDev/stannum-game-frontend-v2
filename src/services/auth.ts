@@ -91,17 +91,24 @@ export const logout = (): void => {
 export const sendPasswordRecoveryEmail = async (username: string): Promise<boolean> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-recovery`, { username });
-        if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error) {
         throw errorHandler(error);
     }
 };
 
-export const changePasswordWithToken = async (token: string, password: string): Promise<boolean> => {
+export const verifyPasswordRecoveryOTP = async (username: string, otp: string): Promise<boolean> => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { token, password });
-        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/verify-recovery-otp`, { username, otp });
+        return response.data.success;
+    } catch (error) {
+        throw errorHandler(error);
+    }
+};
+
+export const changePasswordWithOTP = async (username: string, otp: string, password: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { username, otp, password });
         return response.data.success;
     } catch (error) {
         throw errorHandler(error);

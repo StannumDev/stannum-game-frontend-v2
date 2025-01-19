@@ -88,10 +88,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-
-}
-
 @layer base {
   * {
     user-select: none;

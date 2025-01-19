@@ -114,6 +114,8 @@ export { RegisterPictureStep } from "./auth/register/steps/RegisterPictureStep";
 
 // PASSWORD RECOVERY
 export { PasswordRecoveryHandler } from "./auth/password-recovery/PasswordRecoveryHandler";
+export { PasswordRecoveryEmail } from "./auth/password-recovery/PasswordRecoveryEmail";
+export { PasswordRecoveryOTP } from "./auth/password-recovery/PasswordRecoveryOTP";
 export { PasswordRecoveryNewPassword } from "./auth/password-recovery/PasswordRecoveryNewPassword";
 
 // TUTORIAL
@@ -127,3 +129,6 @@ export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
 export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
 export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";
 export { ThirdPlaceIcon } from "./svg/ThirdPlaceIcon";
+
+// SHADCN
+export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./ui/input-otp"
