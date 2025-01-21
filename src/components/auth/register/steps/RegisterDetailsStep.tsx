@@ -82,7 +82,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             id="name"
                             autoComplete="name"
                             autoCapitalize="true"
-                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                            disabled={isLoading}
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("name",{
                                 required: true,
                                 minLength: 2,
@@ -100,7 +101,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             enterKeyHint="next"
                             id="birthdate"
                             autoComplete="bday"
-                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                            disabled={isLoading}
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("birthdate",{
                                 required: true
                             })}
@@ -117,7 +119,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             name="country"
                             id="country"
                             defaultOptionLabel="Seleccionar"
-                            classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
+                            disabled={isLoading}
+                            classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none disabled:text-white/75 appearance-none transition-200"
                         />
                         <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                     </div>
@@ -134,7 +137,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             id="region"
                             disableWhenEmpty={true}
                             defaultOptionLabel="Seleccionar"
-                            classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none appearance-none transition-200"
+                            disabled={isLoading}
+                            classes="w-full h-10 px-2 bg-transparent lg:focus:bg-card border-b border-card-lighter focus-visible:border-stannum outline-none focus-visible:outline-none disabled:text-white/75 appearance-none transition-200"
                         />
                         <span className="text-sm absolute bottom-3 right-2 pointer-events-none"><SelectorIcon/></span>
                     </div>
@@ -150,7 +154,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             id="enterprise"
                             autoComplete="organization"
                             autoCapitalize="true"
-                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                            disabled={isLoading}
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("enterprise",{
                                 required: true,
                                 maxLength: 50
@@ -169,7 +174,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             id="enterpriseRole"
                             autoComplete="organization-title"
                             autoCapitalize="true"
-                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                            disabled={isLoading}
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("enterpriseRole",{
                                 required: true,
                                 maxLength: 50
@@ -188,7 +194,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                         autoComplete="off"
                         autoCapitalize="true"
                         placeholder='Cuéntanos un poco sobre ti...'
-                        className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 transition-200"
+                        disabled={isLoading}
+                        className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 disabled:text-white/75 transition-200"
                         {...register("aboutme",{
                             required: true,
                             maxLength: 2600

@@ -61,7 +61,8 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                             maxLength={25}
                             id="username"
                             autoComplete="username"
-                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 transition-200'
+                            disabled={isLoading}
+                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 transition-200'
                             {...register("username",{
                                 required: true,
                                 minLength: 6,
@@ -83,7 +84,8 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                         id="password"
                         autoComplete="password"
                         placeholder="********"
-                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
+                        disabled={isLoading}
+                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 ${ !showPassword && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("password",{
                             required: true,
                             minLength: 8,
@@ -105,7 +107,8 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                         id="passwordRepeat"
                         autoComplete="password"
                         placeholder="********"
-                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
+                        disabled={isLoading}
+                        className={`w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 ${ !showPasswordRepeat && 'tracking-widest'} transition-colors ease-in-out duration-200`}
                         {...register("passwordRepeat",{
                             required: true,
                             minLength: 8,

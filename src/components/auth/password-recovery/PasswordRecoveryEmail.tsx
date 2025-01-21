@@ -72,7 +72,8 @@ export const PasswordRecoveryEmail = ({ onSubmit, isLoading }: Props) => {
                         id="username"
                         autoComplete="username"
                         placeholder="stannum@stannumgame.com"
-                        className="mt-2 w-full h-10 px-2 border-b border-card-lighter lowercase focus-visible:border-stannum placeholder:opacity-50 transition-200"
+                        disabled={isLoading}
+                        className="mt-2 w-full h-10 px-2 border-b border-card-lighter lowercase focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 transition-200"
                         {...register("username",{
                             required: true,
                             maxLength: 50

@@ -53,7 +53,8 @@ export const LoginForm = () => {
                         maxLength={50}
                         id="username"
                         autoComplete="email"
-                        className="peer order-2 w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                        disabled={isLoading}
+                        className="peer order-2 w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                         {...register("username",{
                             required: true,
                             maxLength: 50
@@ -71,7 +72,8 @@ export const LoginForm = () => {
                         enterKeyHint="done"
                         maxLength={50}
                         autoComplete="password"
-                        className="peer order-2 w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum transition-200"
+                        disabled={isLoading}
+                        className="peer order-2 w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                         {...register("password",{
                             required: true,
                             maxLength: 50

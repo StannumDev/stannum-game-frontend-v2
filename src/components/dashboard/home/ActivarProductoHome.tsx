@@ -114,9 +114,9 @@ export const ActivarProductoHome = () => {
                                     maxLength={19}
                                     id="code"
                                     autoComplete="off"
-                                    disabled={isSubmitted}
+                                    disabled={isSubmitted||isLoading}
                                     placeholder="XXXX-XXXX-XXXX-XXXX"
-                                    className="w-full h-10 ps-10 pr-2 bg-card rounded tracking-wide uppercase placeholder:text-card-lightest placeholder:tracking-wide disabled:text-card-lighter"
+                                    className="w-full h-10 ps-10 pr-2 bg-card rounded tracking-wide uppercase placeholder:text-card-lightest placeholder:tracking-wide disabled:text-white/75"
                                     {...register("code",{
                                         required: true,
                                         minLength: 19,
