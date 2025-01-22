@@ -10,5 +10,5 @@ export interface RegisterState {
     enterpriseRole: string;
     website?: string;
     aboutme: string;
-    picture?: File | string;
+    photo?: File | string;
 }

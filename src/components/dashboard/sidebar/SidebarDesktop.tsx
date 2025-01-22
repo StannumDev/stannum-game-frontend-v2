@@ -21,6 +21,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
     const [userData, setUserData] = useState<UserSidebarDetails|null>(null);
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [profilePhotoError, setProfilePhotoError] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -129,10 +130,10 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         priority
                                         width={56}
                                         height={56}
-                                        src={userData?.profilePhoto || mateo}
+                                        src={ profilePhotoError || !userData?.profilePhoto ? mateo : userData?.profilePhoto}
                                         alt="Usuario STANNUM Game"
                                         className="size-full object-cover absolute top-0 left-0 z-10"
-                                        onError={(e) => (e.currentTarget.src = mateo.src)}
+                                        onError={() => setProfilePhotoError(true)}
                                     />
                                 }
                             </Link>

@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createUser } from "@/services";
 import { RegisterState } from "@/interfaces";
-import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPictureStep } from "@/components";
+import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 
 export const RegisterHandler = () => {
     
@@ -61,7 +61,7 @@ export const RegisterHandler = () => {
                                 step === 'email' ? <RegisterEmailStep handleNextStep={handleNextStep} /> :
                                 step === 'password' ? <RegisterPasswordStep handleNextStep={handleNextStep} /> :
                                 step === 'details' ? <RegisterDetailsStep handleNextStep={handleNextStep} /> :
-                                step === 'photo' && <RegisterPictureStep />
+                                step === 'photo' && <RegisterPhotoStep />
                             }
                         </motion.div>
                     </AnimatePresence>

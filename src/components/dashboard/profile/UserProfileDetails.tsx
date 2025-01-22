@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { UserProfileCover, UserProfilePicture, UserProfileSocialMedias, UserProfileLevel, MotionWrapperLayout, UserProfileInfo } from "@/components";
+import { UserProfileCover, UserProfilePhoto, UserProfileSocialMedias, UserProfileLevel, MotionWrapperLayout, UserProfileInfo } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 
 interface Props{
@@ -16,7 +16,7 @@ export const UserProfileDetails = ({user, fetchUserData}:Props) => {
                     <UserProfileCover/>
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
-                            <UserProfilePicture user={user} fetchUserData={fetchUserData}/>
+                            <UserProfilePhoto user={user} fetchUserData={fetchUserData}/>
                             <p className="mt-4 title-2">{user?.username}</p>
                             <p className="font-semibold text-stannum">{user?.enterprise?.name}</p>
                         </div>

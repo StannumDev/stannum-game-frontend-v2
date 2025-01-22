@@ -20,6 +20,7 @@ interface Props{
 export const SidebarMobile = ({links, pathname}:Props) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [userData, setUserData] = useState<UserSidebarDetails | null>(null);
+    const [profilePhotoError, setProfilePhotoError] = useState(false);
     // const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [isShow, setIsShow] = useState(true);
@@ -73,10 +74,10 @@ export const SidebarMobile = ({links, pathname}:Props) => {
                                     priority
                                     width={32}
                                     height={32}
-                                    src={userData?.profilePhoto || mateo}
+                                    src={ profilePhotoError || !userData?.profilePhoto ? mateo : userData?.profilePhoto}
                                     alt='Foto de perfil Usuario STANNUM Game'
                                     className="size-full object-cover absolute top-0 left-0 z-10"
-                                    onError={(e) => (e.currentTarget.src = mateo.src)}
+                                    onError={() => setProfilePhotoError(true)}
                                 />
                             </Link>
                         </motion.div>

@@ -32,9 +32,26 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<void> => {
             throw new Error("Token is missing. Please log in again.");
         }
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PICTURE_URL}/upload-photo`, formData, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PHOTO_URL}/upload-photo`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const deleteProfilePhoto = async (): Promise<void> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) {
+            throw new Error("Token is missing. Please log in again.");
+        }
+
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PHOTO_URL}/delete-photo`, {
+            headers: {
                 Authorization: `Bearer ${token}`,
             },
         });

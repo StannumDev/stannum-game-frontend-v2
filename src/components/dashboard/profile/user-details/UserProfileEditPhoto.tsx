@@ -4,7 +4,7 @@ import { ChangeEvent, Dispatch, Fragment, SetStateAction, useEffect, useRef, use
 import { AddPhotoIcon, EditIcon, SpinnerIcon } from "@/icons";
 import { Modal } from "@/components";
 import AvatarEditor from 'react-avatar-editor';
-import styles from "@/components/styles/pictureEditor.module.css";
+import styles from "@/components/styles/photoEditor.module.css";
 import { preprocessImage, uploadProfilePhoto } from "@/services";
 
 interface Props{
@@ -13,7 +13,7 @@ interface Props{
     fetchUserData: () => Promise<void>
 }
 
-export const UserProfileEditPicture = ({showModal, setShowModal, fetchUserData}:Props) => {
+export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Props) => {
     
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [zoom, setZoom] = useState<number>(1)
@@ -62,9 +62,9 @@ export const UserProfileEditPicture = ({showModal, setShowModal, fetchUserData}:
                 <button
                     type="button"
                     onClick={() => setShowModal(true)}
-                    className="size-8 rounded-xl lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/picture:opacity-100 absolute top-2 right-2 z-20 transition-200"
+                    className="size-8 rounded-xl lg:flex justify-center items-center bg-card-light hover:bg-card-lighter group/container opacity-0 group-hover/photo:opacity-100 absolute top-2 right-2 z-20 transition-200"
                 >
-                    <span className="sr-only">Editar portada</span>
+                    <span className="sr-only">Editar foto de perfil</span>
                     <EditIcon className="size-5 text-neutral-400 group-hover/container:text-white transition-200"/>
                 </button>
             </div>

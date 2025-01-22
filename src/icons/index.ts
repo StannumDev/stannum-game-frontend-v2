@@ -15,6 +15,7 @@ export {
     FaChessKnight as ChessKnightIcon,
     FaChessBishop as ChessBishopIcon,
     FaChessPawn as ChessPawnIcon,
+    FaTrashCan as TrashIcon
 } from 'react-icons/fa6';
 
 export {

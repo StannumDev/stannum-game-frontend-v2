@@ -35,8 +35,9 @@ export { StanHelp } from "./dashboard/home/StanHelp";
 // PROFILE
 export { UserProfileWrapper } from "./dashboard/profile/UserProfileWrapper";
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
-export { UserProfilePicture } from "./dashboard/profile/user-details/UserProfilePicture";
-export { UserProfileEditPicture } from "./dashboard/profile/user-details/UserProfileEditPicture";
+export { UserProfilePhoto } from "./dashboard/profile/user-details/UserProfilePhoto";
+export { UserProfileEditPhoto } from "./dashboard/profile/user-details/UserProfileEditPhoto";
+export { UserProfileDeletePhoto } from "./dashboard/profile/user-details/UserProfileDeletePhoto";
 export { UserProfileCover } from "./dashboard/profile/user-details/UserProfileCover";
 export { UserProfileEditCover } from "./dashboard/profile/user-details/UserProfileEditCover";
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";
@@ -110,7 +111,7 @@ export { RegisterHandler } from "./auth/register/RegisterHandler";
 export { RegisterEmailStep } from "./auth/register/steps/RegisterEmailStep";
 export { RegisterPasswordStep } from "./auth/register/steps/RegisterPasswordStep";
 export { RegisterDetailsStep } from "./auth/register/steps/RegisterDetailsStep";
-export { RegisterPictureStep } from "./auth/register/steps/RegisterPictureStep";
+export { RegisterPhotoStep } from "./auth/register/steps/RegisterPhotoStep";
 
 // PASSWORD RECOVERY
 export { PasswordRecoveryHandler } from "./auth/password-recovery/PasswordRecoveryHandler";

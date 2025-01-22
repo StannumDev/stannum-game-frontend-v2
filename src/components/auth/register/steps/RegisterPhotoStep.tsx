@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import AvatarEditor from "react-avatar-editor";
 import { AddPhotoIcon, SpinnerIcon } from "@/icons";
 import { preprocessImage, uploadProfilePhoto } from "@/services";
-import styles from "@/components/styles/pictureEditor.module.css";
+import styles from "@/components/styles/photoEditor.module.css";
 import { errorHandler } from "@/helpers";
 
-export const RegisterPictureStep = () => {
+export const RegisterPhotoStep = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [zoom, setZoom] = useState<number>(1);
     const [rotate, setRotate] = useState<number>(0);
