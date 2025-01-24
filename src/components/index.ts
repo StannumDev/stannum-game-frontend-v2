@@ -106,6 +106,10 @@ export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonM
 export { LoginForm } from "./auth/login/LoginForm";
 export { BackgroundLogin } from "./auth/login/BackgroundLogin";
 
+// GOOGLE AUTH
+export { GoogleAuthButton } from "./auth/google/GoogleAuthButton";
+export { GoogleAuthUsername } from "./auth/google/GoogleAuthUsername";
+
 // REGISTER
 export { RegisterHandler } from "./auth/register/RegisterHandler";
 export { RegisterEmailStep } from "./auth/register/steps/RegisterEmailStep";

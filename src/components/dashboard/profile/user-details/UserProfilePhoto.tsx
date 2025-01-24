@@ -15,6 +15,7 @@ export const UserProfilePhoto = ({user, fetchUserData}:Props) => {
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
+    // console.log(user?.preferences?.hasProfilePhoto)
 
     return (
         <div className="size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md relative overflow-hidden z-50 group/photo outline outline-2 outline-stannum">

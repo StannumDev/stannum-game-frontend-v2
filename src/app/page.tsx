@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import background from '@/assets/background/stannum_game_trophy.webp';
-import { STANNUMLogo } from "@/components";
+import { GoogleAuthButton, STANNUMLogo } from "@/components";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -41,14 +41,22 @@ export default function LandingPage() {
         <STANNUMLogo className="w-60 lg:w-80 fill-white"/>
         <h2 className="mt-8 lg:mt-12 subtitle-1 text-base lg:text-lg text-stannum">Una nueva forma de aprender</h2>
         <p className="mt-2 w-full max-w-lg text-sm lg:text-base text-white/75">Desarrollamos una forma de enseñanza que combina, los objetivos desafiantes que tienen los grandes deportistas, con lo divertido de los videojuegos.</p>
-        <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Si ya tienes una cuenta...</p>
+        <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Si ya tienes una cuenta</p>
         <Link href={'/login'} className="mt-2 w-full max-w-lg h-12 bg-stannum hover:bg-stannum-light rounded lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200">
           Inicia sesión
         </Link>
-        <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">O regístrate gratis ahora!</p>
+        <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Regístrate gratis ahora!</p>
         <Link href={'/register'} className="mt-2 w-full max-w-lg h-12 bg-card-light lg:bg-card hover:bg-card-lighter lg:hover:bg-card-light rounded lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200">
           Regístrarme ahora
         </Link>
+        <div className="mt-12 w-full max-w-lg flex justify-center items-center gap-4">
+          <div className="grow h-px bg-card-lightest"></div>
+          <p className="shrink-0 subtitle-1">O inicia sesión con</p>
+          <div className="grow h-px bg-card-lightest"></div>
+        </div>
+        <div className="mt-6 w-full flex justify-center">
+          <GoogleAuthButton/>
+        </div>
       </section>
     </main>
   );

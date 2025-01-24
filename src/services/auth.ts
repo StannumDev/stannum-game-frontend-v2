@@ -2,8 +2,23 @@
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { googleLogout } from '@react-oauth/google';
 import { errorHandler } from '@/helpers';
 import { RegisterState } from '@/interfaces';
+
+const tokenError = {
+    response: {
+        data: {
+            success: false,
+            code: "AUTH_TOKEN_MISSING",
+            type: "error",
+            showAlert: true,
+            title: "Token no encontrado",
+            techMessage: "The authentication token is missing from cookies.",
+            friendlyMessage: "No se encontró el token de sesión. Por favor, inicia sesión nuevamente.",
+        },
+    },
+}
 
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
@@ -78,6 +93,7 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
 
 export const logout = (): void => {
     try {
+        googleLogout();
         Cookies.remove('token', { path: '/' });
         Object.keys(Cookies.get()).forEach((cookie) => {
             cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
@@ -109,6 +125,45 @@ export const verifyPasswordRecoveryOTP = async (username: string, otp: string): 
 export const changePasswordWithOTP = async (username: string, otp: string, password: string): Promise<boolean> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { username, otp, password });
+        return response.data.success;
+    } catch (error) {
+        throw errorHandler(error);
+    }
+};
+
+export const googleLogin = async (googleToken: string): Promise<string> => {
+    try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken });
+        
+        const { token, success, username } = response.data;
+        if (!success || !token || !username) throw new Error("Unexpected response structure");
+
+        Cookies.set('token', token, {
+            secure: process.env.NEXT_PUBLIC_ENV === 'production',
+            sameSite: 'Strict',
+            path: '/',
+            expires: 365,
+        });
+
+        return username;
+    } catch (error) {
+        throw errorHandler(error);
+    }
+};
+
+export const updateUsername = async (username: string): Promise<boolean> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) throw tokenError
+
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/update-username`, { username },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error) {
         throw errorHandler(error);

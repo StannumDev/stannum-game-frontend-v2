@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import "./globals.css";
 
 const satoshi = localFont({
@@ -93,10 +94,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
-    <html lang="es" className="bg-background">
-      <body className={`${satoshi.className} ${satoshi.variable} antialiased w-full min-h-svh flex flex-col items-center bg-background lg:bg-gradient-to-br lg:from-background lg:to-background-sidebar`}>
-        {children}
-      </body>
-    </html>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID||''}>
+      <html lang="es" className="bg-background">
+        <body className={`${satoshi.className} ${satoshi.variable} antialiased w-full min-h-svh flex flex-col items-center bg-background lg:bg-gradient-to-br lg:from-background lg:to-background-sidebar`}>
+          {children}
+        </body>
+      </html>
+    </GoogleOAuthProvider>
   );
 }

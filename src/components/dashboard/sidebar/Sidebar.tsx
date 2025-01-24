@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import type { SidebarLink } from "@/interfaces";
+import { usePathname, useRouter } from "next/navigation";
+import type { SidebarLink, UserSidebarDetails } from "@/interfaces";
 import { AppsIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
+import { getUserSidebarDetails } from "@/services";
+import { errorHandler } from "@/helpers";
 
 const links: Array<SidebarLink> = [
     {
@@ -31,7 +33,11 @@ const links: Array<SidebarLink> = [
 
 export const Sidebar = () => {
     const pathname = usePathname();
+    const router = useRouter();
+
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [userData, setUserData] = useState<UserSidebarDetails|null>(null);
     
     useEffect(() => {
         const checkScreenSize = () => {
@@ -44,10 +50,31 @@ export const Sidebar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            setIsLoading(true);
+            try {
+                const userFetch = await getUserSidebarDetails()
+                if(userFetch.username.startsWith("google_")){
+                    router.push('/register/google');
+                    return;
+                }
+                setUserData(userFetch);
+            } catch (error) {
+                const appError = errorHandler(error);
+                console.error(`[${appError.code}] ${appError.techMessage}`);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     return ( 
     isLargeScreen ?
-        <SidebarDesktop links={links} pathname={pathname} />
+        <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={isLoading} />
     :
-        <SidebarMobile links={links} pathname={pathname} />
+        <SidebarMobile user={userData} links={links} pathname={pathname} isLoading={isLoading} />
     )
 };

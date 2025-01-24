@@ -1,43 +1,26 @@
 'use client'
 
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getUserSidebarDetails, logout  } from '@/services';
-import { errorHandler } from '@/helpers';
+import { logout  } from '@/services';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props{
-    links:Array<SidebarLink>;
-    pathname: string
+    user: UserSidebarDetails|null;
+    links: Array<SidebarLink>;
+    pathname: string;
+    isLoading: boolean;
 }
 
-export const SidebarDesktop = ({links, pathname}:Props) => {
+export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
 
-    const [userData, setUserData] = useState<UserSidebarDetails|null>(null);
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            setIsLoading(true);
-            try {
-                setUserData(await getUserSidebarDetails());
-            } catch (error) {
-                const appError = errorHandler(error);
-                console.error(`[${appError.code}] ${appError.techMessage}`);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     return (
         <Fragment>
@@ -122,7 +105,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                             transition={{ delay: 0.75 }}
                             className="w-full py-8 px-4 flex items-center gap-4"
                         >
-                            <Link href={`/dashboard/profile/${userData?.username}`} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
+                            <Link href={`/dashboard/profile/${user?.username}`} className={`${ isExpanded ? 'size-14' : 'size-11' } aspect-square rounded-full outline outline-2 outline-stannum relative overflow-hidden shrink-0 transition-200`}>
                                 { isLoading ?
                                     <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0"></div>
                                 :
@@ -130,7 +113,7 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                         priority
                                         width={56}
                                         height={56}
-                                        src={ profilePhotoError || !userData?.profilePhoto ? mateo : userData?.profilePhoto}
+                                        src={ profilePhotoError || !user?.profilePhoto ? mateo : user?.profilePhoto}
                                         alt="Usuario STANNUM Game"
                                         className="size-full object-cover absolute top-0 left-0 z-10"
                                         onError={() => setProfilePhotoError(true)}
@@ -147,8 +130,8 @@ export const SidebarDesktop = ({links, pathname}:Props) => {
                                             exit={{ y: 150, opacity: 0 }}
                                             className='grow truncate'
                                         >
-                                            <Link href={`/dashboard/profile/${userData?.username}`} className="w-full lowercase truncate">
-                                                { userData?.username || 'Mi perfil' }
+                                            <Link href={`/dashboard/profile/${user?.username}`} className="w-full lowercase truncate">
+                                                { user?.username || 'Mi perfil' }
                                             </Link>
                                         </motion.div>
                                 }

@@ -64,7 +64,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     useEffect(() => {
         const handleFormValues = () => {
             setValue('name', user.profile.name);
-            const dateOnly = new Date(user.profile.birthdate||"").toISOString().split("T")[0];
+            const dateOnly = user.profile.birthdate ? new Date(user.profile.birthdate).toISOString().split("T")[0] : '';
             setValue('birthdate', dateOnly);
             setValue('country', user.profile.country || "");
             setCountry(user.profile.country);

@@ -106,3 +106,7 @@ export {
     TfiUnlock as UnlockIcon,
     TfiBackLeft as ArrowBackIcon
 } from 'react-icons/tfi';
+
+export {
+    FcGoogle as GoogleColourIcon
+} from "react-icons/fc";
