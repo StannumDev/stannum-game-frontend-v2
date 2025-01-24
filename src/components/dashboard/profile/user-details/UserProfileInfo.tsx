@@ -22,7 +22,7 @@ export const UserProfileInfo = ({user, fetchUserData}:Props) => {
                     </div>
                     <div>
                         <h3 className="text-sm text-neutral-500 font-semibold">Ubicación</h3>
-                        <p className="w-full title-3 truncate">{user?.profile?.region}, {user?.profile?.country}</p>
+                        <p className="w-full title-3 truncate">{user?.profile?.region} {user?.profile?.region && user?.profile?.country && ','} {user?.profile?.country}</p>
                     </div>
                     <div>
                         <h3 className="text-sm text-neutral-500 font-semibold">Rol</h3>
