@@ -1,10 +1,10 @@
 'use client'
 
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { UserProfileDetails, ProfileSectionsLayout } from "@/components";
-import { FullUserDetails } from "@/interfaces";
 import { getUserDetailsByUsername } from "@/services";
 import { errorHandler } from "@/helpers";
+import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
+import { FullUserDetails } from "@/interfaces";
 
 interface Props{
     username: string;
@@ -32,7 +32,9 @@ export const UserProfileWrapper = ({username}:Props) => {
     }, [username, fetchUserData]);
 
     if(!userData || isLoading){
-        return (<></>)
+        return (
+            <LoadingScreen/>
+        )
     }
 
     return (

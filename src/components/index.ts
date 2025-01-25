@@ -11,6 +11,7 @@ export { GoBackButton } from "./ui/GoBackButton";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 export { MotionWrapperLayoutClient } from "./ui/MotionWrapperLayoutClient";
 export { Modal } from "./ui/Modal";
+export { LoadingScreen } from "./ui/LoadingScreen";
 
 // SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";

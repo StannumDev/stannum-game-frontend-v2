@@ -8,29 +8,6 @@ import { SidebarDesktop, SidebarMobile } from "@/components";
 import { getUserSidebarDetails } from "@/services";
 import { errorHandler } from "@/helpers";
 
-const links: Array<SidebarLink> = [
-    {
-        label: 'Inicio',
-        href: '/dashboard',
-        Icon: HomeIcon,
-    },
-    {
-        label: 'Biblioteca',
-        href: '/dashboard/library',
-        Icon: AppsIcon,
-    },
-    {
-        label: 'Tienda',
-        href: '/dashboard/store',
-        Icon: StoreIcon,
-    },
-    {
-        label: 'Mi perfil',
-        href: '/dashboard/profile/mateolohezic',
-        Icon: UserCircleIcon,
-    },
-];
-
 export const Sidebar = () => {
     const pathname = usePathname();
     const router = useRouter();
@@ -69,7 +46,30 @@ export const Sidebar = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [router]);
+    
+    const links: Array<SidebarLink> = [
+        {
+            label: 'Inicio',
+            href: '/dashboard',
+            Icon: HomeIcon,
+        },
+        {
+            label: 'Biblioteca',
+            href: '/dashboard/library',
+            Icon: AppsIcon,
+        },
+        {
+            label: 'Tienda',
+            href: '/dashboard/store',
+            Icon: StoreIcon,
+        },
+        {
+            label: 'Mi perfil',
+            href: `${userData?.username ? `/dashboard/profile/${userData?.username}` : '/dashboard'}`,
+            Icon: UserCircleIcon,
+        },
+    ];
 
     return ( 
     isLargeScreen ?
