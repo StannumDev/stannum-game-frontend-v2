@@ -52,9 +52,18 @@ export const GoogleAuthButton = () => {
             <button
                 onClick={() => login()}
                 disabled={isLoading}
-                className="size-12 p-2 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card hover:border-card-lightest disabled:hover:border-card disabled:opacity-50 flex justify-center items-center transition-150"
+                className="h-12 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card hover:border-card-lightest disabled:hover:border-card disabled:opacity-50 flex justify-center items-center overflow-hidden transition-150"
             >
-                { !isLoading ? <GoogleColourIcon className='size-full'/> : <SpinnerIcon className="animate-spin size-full"/> }
+                <div className='h-full aspect-square bg-card flex justify-center items-center'>
+                    { !isLoading ?
+                        <GoogleColourIcon className='size-8'/>
+                    :
+                        <SpinnerIcon className="animate-spin size-8"/>
+                    }
+                </div>
+                <div className='p-2 flex justify-center items-center'>
+                    <span className='text-sm font-semibold'>Continuar con Google</span>
+                </div>
                 <span className='sr-only'>Iniciar sesión con Google</span>
             </button>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||"Ocurrio un error inesperado."} className="mt-2"/>
