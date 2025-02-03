@@ -97,14 +97,14 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                     <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="w-full">
                             <div className='w-full flex flex-col gap-1'>
-                                <label htmlFor="name" className="md:text-lg">Nombre</label>
+                                <label htmlFor="name" className="md:text-lg">Nombre completo</label>
                                 <input
                                     type='text'
                                     enterKeyHint="next"
                                     maxLength={50}
                                     id="name"
                                     autoComplete="name"
-                                    autoCapitalize="true"
+                                    autoCapitalize="words"
                                     disabled={isLoading}
                                     className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                                     {...register("name",{

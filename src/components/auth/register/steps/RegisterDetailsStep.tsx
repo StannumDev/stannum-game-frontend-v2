@@ -81,7 +81,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             maxLength={50}
                             id="name"
                             autoComplete="name"
-                            autoCapitalize="true"
+                            autoCapitalize="words"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("name",{
