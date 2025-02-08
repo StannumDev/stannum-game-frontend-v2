@@ -1,12 +1,9 @@
 'use client'
 
 import { Dispatch, Fragment, SetStateAction, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { CrossIcon, SearchIcon } from "@/icons";
+import { useSearchHandler } from "@/hooks";
 import { SidebarMobileIndicator } from "@/components";
 import styles from "@/components/styles/sidebar.module.css";
 
@@ -15,30 +12,13 @@ interface Props{
     setIsSearching: Dispatch<SetStateAction<boolean>>
 }
 
-const schema = z.object({
-    search: z.string().nonempty().min(1).max(50),
-})
-
-type Schema = z.infer<typeof schema>
-
 export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
 
-    const { register, handleSubmit, reset, setFocus } = useForm<Schema>({ resolver: zodResolver(schema) })
-    const router = useRouter();
-
-    const onSubmit:SubmitHandler<Schema> = async ({search}:Schema) => {
-        try {
-            console.log(search);
-            // callToast(response);
-            router.push('/login');
-        } catch (error:unknown) {
-            console.log(error);
-        }
-    }
+    const { register, handleSubmit, onSubmit, reset, setFocus } = useSearchHandler();
 
     useEffect(() => {
-        isSearching && setFocus("search")
-    }, [isSearching, setFocus])
+        isSearching && setFocus("search");
+    }, [isSearching, setFocus]);
 
     return (
     <Fragment>
@@ -98,7 +78,10 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                             </form>
                             <motion.button
                                 type="button"
-                                onClick={() => { reset(); setIsSearching(false) }}
+                                onClick={() => {
+                                    reset();
+                                    setIsSearching(false);
+                                }}
                                 initial={{ x: '100%', opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ type: 'spring', bounce: 0 }}
@@ -111,7 +94,10 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                     </motion.div>
                     <motion.div
                         className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[9999999]"
-                        onClick={ () => { reset(); setIsSearching(false) }}
+                        onClick={() => {
+                            reset();
+                            setIsSearching(false);
+                        }}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

@@ -22,4 +22,5 @@ export type {
     TeamDetails,
     TestDetails,
     UserProfile,
+    UserSearchResult
 } from './user';

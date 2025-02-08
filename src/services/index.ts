@@ -23,7 +23,8 @@ export {
     getUserDetailsByUsername,
     getTutorialStatus,
     markTutorialAsCompleted,
-    updateUserProfile
+    updateUserProfile,
+    searchUsers
 } from './user';
 
 export {

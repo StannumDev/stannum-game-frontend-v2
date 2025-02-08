@@ -79,3 +79,9 @@ export interface FullUserDetails extends BaseUser {
     level?: LevelDetails;
     achievements?: Array<AchievementDetails>;
 }
+
+export interface UserSearchResult extends BaseUser {
+    name: string;
+    enterprise?: string;
+    jobPosition?: string;
+}

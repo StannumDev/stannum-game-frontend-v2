@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { errorHandler } from "@/helpers";
-import type { FullUserDetails, UserSidebarDetails } from "@/interfaces";
+import type { FullUserDetails, UserSearchResult, UserSidebarDetails } from "@/interfaces";
 
 const tokenError = {
     response: {
@@ -118,6 +118,24 @@ export const updateUserProfile = async (data:{name:string, birthdate:string, cou
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
+        throw errorHandler(error);
+    }
+};
+
+export const searchUsers = async (query: string): Promise<Array<UserSearchResult>> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) throw tokenError;
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/search-users`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: { query },
+        });
+        if (!response?.data?.success || !response.data?.data) throw new Error("Unexpected response structure");
+        return response.data.data as Array<UserSearchResult>;
+    } catch (error) {
         throw errorHandler(error);
     }
 };

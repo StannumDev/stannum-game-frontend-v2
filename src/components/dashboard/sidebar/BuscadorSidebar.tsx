@@ -1,43 +1,23 @@
 'use client'
 
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { CrossIcon, SearchIcon } from "@/icons";
+import { useSearchHandler } from "@/hooks";
 
 interface Props{
     isExpanded: boolean;
     setIsExpanded: Dispatch<SetStateAction<boolean>>
 }
 
-const schema = z.object({
-    search: z.string().nonempty().min(1).max(50),
-})
-
-type Schema = z.infer<typeof schema>
-
 export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
 
-    const { register, handleSubmit, watch, reset, setFocus } = useForm<Schema>({ resolver: zodResolver(schema) })
-    const router = useRouter();
+    const { register, handleSubmit, onSubmit, reset, setFocus, watch } = useSearchHandler();
 
     const openSearchSidebar = () => {
         setIsExpanded(true);
-        setFocus("search")
-    }
-
-    const onSubmit:SubmitHandler<Schema> = async ({search}:Schema) => {
-        try {
-            console.log(search);
-            // callToast(response);
-            router.push('/login');
-        } catch (error:unknown) {
-            console.log(error);
-        }
-    }
+        setFocus("search");
+    };
 
     return (
         <motion.div

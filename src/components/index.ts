@@ -1,6 +1,7 @@
 // COMPONENTS
 export { ButtonShowPassword } from "./ButtonShowPassword";
 export { InstallPromptModal } from "./InstallPromptModal";
+export { SearchResultsList } from "./dashboard/SearchResultsList";
 
 // UI
 export { STANNUMLogo } from "./ui/STANNUMLogo";
