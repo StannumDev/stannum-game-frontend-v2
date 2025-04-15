@@ -30,3 +30,12 @@ export {
 export {
     getUserDetailsByUsernameServer
 } from './userServer';
+
+export {
+    markLessonAsCompleted
+} from './lesson';
+
+export {
+    verifyProductKey,
+    activateProductKey
+} from './productKey'

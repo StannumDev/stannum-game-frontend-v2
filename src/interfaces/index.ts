@@ -24,3 +24,9 @@ export type {
     UserProfile,
     UserSearchResult
 } from './user';
+
+export type {
+    Lesson,
+    Module,
+    Program
+} from './programs'

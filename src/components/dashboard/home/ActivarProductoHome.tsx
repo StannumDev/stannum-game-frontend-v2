@@ -7,6 +7,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { KeyIcon, AlertHexagonIcon } from '@/icons';
+import { errorHandler } from "@/helpers";   
+import { activateProductKey, verifyProductKey } from "@/services";
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
 import redeem_code from "@/assets/background/stannum_game_trophy.webp";
@@ -20,13 +22,22 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
+interface ProductInfo {
+    product: string;
+    team: string;
+    used: boolean;
+};
+
 export const ActivarProductoHome = () => {
+
+    const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-    const { register, handleSubmit, setValue, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
+    const { register, handleSubmit, setValue, watch, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.toUpperCase();
@@ -54,25 +65,45 @@ export const ActivarProductoHome = () => {
         setValue('code', formattedValue.substring(0, 19));
     };
 
-    const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
+    const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
         setIsLoading(true);
-        // setErrorMessage(null);
+        setErrorMessage(null);
         try {
-            console.log(data);
+            const info = await verifyProductKey(data.code);
+            setProductInfo(info);
             setIsSubmitted(true);
-            // callToast(response);
-            setIsLoading(false)
-        } catch (error:unknown) {
-            console.log(error);
+        } catch (error) {
+            const appError = errorHandler(error);
+            setErrorMessage(appError.friendlyMessage);
+            console.error(`[${appError.code}] ${appError.techMessage}`);
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
+    
+    const handleActivate = async () => {
+        setIsLoading(true);
+        setErrorMessage(null);
+        try {
+            await activateProductKey(watch("code"));
+            setProductInfo(prev => prev ? { ...prev, used: true } : null);
+            alert("Producto activado correctamente.");
+        } catch (error) {
+            const appError = errorHandler(error);
+            setErrorMessage(appError.friendlyMessage);
+            console.error(`[${appError.code}] ${appError.techMessage}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         reset();
         setIsLoading(false);
         setIsSubmitted(false);
-    }, [showModal, reset])
+        setProductInfo(null);
+        setErrorMessage(null);
+      }, [showModal, reset]);
     
 
     return (
@@ -130,30 +161,46 @@ export const ActivarProductoHome = () => {
                             </div>
                             <FormErrorMessage condition={errors?.code} message={errors?.code?.message}/>
                         </form>
-                        {
-                            isSubmitted &&
+                        { isSubmitted && productInfo && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 w-full">
+                                <p className="w-full max-w-xs">Este código de producto corresponde a:</p>
+                                <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
+                                    <AlertHexagonIcon className="size-8 lg:size-6" />
+                                    <div className="flex flex-col">
+                                        <p className="subtitle-1 text-white">Producto</p>
+                                        <h3 className="text-xl font-semibold uppercase tracking-widest">{productInfo.product}</h3>
+                                    </div>
+                                </div>
+                                <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
+                                    <AlertHexagonIcon className="size-6 hidden lg:block" />
+                                    <div className="flex flex-col">
+                                        <p className="subtitle-1 text-white">Equipo</p>
+                                        <h3 className="text-xl font-semibold uppercase tracking-widest">{productInfo.team}</h3>
+                                    </div>
+                                </div>
+                                { productInfo.used ?
+                                    <div className="mt-4 p-3 bg-red-500/10 text-red-500 border border-red-500 rounded">Este código ya fue utilizado.</div>
+                                :
+                                    <button
+                                        type="button"
+                                        onClick={handleActivate}
+                                        disabled={isLoading}
+                                        className="mt-6 w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-dark rounded tracking-tight transition-200 text-white"
+                                    >
+                                        {isLoading ? "Activando..." : "Activar producto"}
+                                    </button>
+                                }
+                            </motion.div>
+                        )}
+                        {errorMessage && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="mt-6 w-full"
+                                className="mt-4 text-sm text-red-500 text-center lg:text-start"
                             >
-                                <p className="w-full max-w-xs">Este código de producto corresponde a:</p>
-                                <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
-                                    <AlertHexagonIcon className="size-8 lg:size-6"/>
-                                    <div className="flex flex-col">
-                                        <p className="subtitle-1 text-white">Producto</p>
-                                        <h3 className="text-xl font-semibold uppercase tracking-widest">TRENNO Mark Digital</h3>
-                                    </div>
-                                </div>
-                                <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
-                                    <AlertHexagonIcon className="size-6 hidden lg:block"/>
-                                    <div className="flex flex-col">
-                                        <p className="subtitle-1 text-white">Equipo</p>
-                                        <h3 className="text-xl font-semibold uppercase tracking-widest">STANNUM</h3>
-                                    </div>
-                                </div>
+                                {errorMessage}
                             </motion.div>
-                        }
+                        )}
                         <div className="mt-6 lg:mt-4 w-full grow flex justify-end items-end gap-4">
                             <button
                                 type="button"

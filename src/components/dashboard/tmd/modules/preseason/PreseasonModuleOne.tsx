@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { ArrowBackIcon } from '@/icons';
 import { TMDInstructionCard, TMDInstructionDetails, TMDLessonCard } from '@/components';
+import { TMD_PROGRAM } from "@/config/programs";
 
 interface Props{
     restartModule: () => void;
@@ -9,51 +10,14 @@ interface Props{
     restartInstruction: () => void
 }
 
-interface Lesson{
-    index: number;
-    title: string;
-    completed?: boolean
-}
-
-interface Instruction{
-    index: number;
-    title: string;
-    inProcess?: boolean;
-    completed?: boolean;
-}
-
-const lessons:Array<Lesson> = [
-    {
-        index: 1,
-        title: 'Introducción a la organización digital en la nube',
-        completed: true
-    },
-    {
-        index: 2,
-        title: 'Áreas funcionales'
-    }
-]
-
-const instructions:Array<Instruction> = [
-    {
-        index: 1,
-        title: 'Introducción a la organización digital en la nube',
-        completed: true
-    },
-    {
-        index: 2,
-        title: 'Introducción a la organización digital en la nube',
-        inProcess: true
-    },
-    {
-        index: 3,
-        title: 'Áreas funcionales',
-    }
-]
-
 export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleInstructionChange, restartInstruction}:Props) => {
 
     const goBack = () => selectedInstruction ? restartInstruction() : restartModule();
+    const module = TMD_PROGRAM.modules.find((mod) => mod.id === "TMDM01");
+
+    if (!module) {
+      return <div className="text-red-500">Error: Módulo no encontrado</div>;
+    }
 
     return (
         <div className="w-full">
@@ -61,32 +25,37 @@ export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleIn
                 <ArrowBackIcon/>
                 <span className='font-semibold'>Atras</span>
             </button>
-            <div className='mt-4 w-full flex flex-col'>
-                <span className='subtitle-1'>Módulo 01</span>
-                <h2 className='title-2 text-lg lg:text-2xl'>Introducción a la organización digital en la nube</h2>
+            <div className="mt-4 w-full flex flex-col">
+                <span className="subtitle-1">{module.name}</span>
+                <h2 className="title-2 text-lg lg:text-2xl">{module.description}</h2>
             </div>
             <div className='mt-6 w-full'>
                 {
                     !selectedInstruction ?
                     <Fragment>
-                        <section className='mt-4 w-full'>
-                            <h3 className='subtitle-1'>Lecciones</h3>
-                            <div className='mt-4 w-full flex flex-col gap-4'>
-                                {
-                                    lessons.map((lesson, i) => (
-                                        <TMDLessonCard {...lesson} key={i}/>
-                                    ))
-                                }
+                        <section className="mt-4 w-full">
+                            <h3 className="subtitle-1">Lecciones</h3>
+                            <div className="mt-4 w-full flex flex-col gap-4">
+                                { module.lessons.map((lesson, index) => (
+                                <TMDLessonCard
+                                    key={lesson.id}
+                                    index={index + 1}
+                                    programName={"tmd"}
+                                    id={lesson.id}
+                                    title={lesson.title}
+                                    completed={false}
+                                />
+                                ))}
                             </div>
                         </section>
-                        <section className='mt-6 w-full'>
-                            <h3 className='subtitle-1'>Instrucciones</h3>
-                            <div className='mt-4 w-full flex flex-col gap-4'>
-                                {
-                                    instructions.map((instruction, i) => (
-                                        <TMDInstructionCard {...instruction} handleInstructionChange={handleInstructionChange} key={i}/>
-                                    ))
-                                }
+                        <section className="mt-6 w-full">
+                            <h3 className="subtitle-1">Instrucciones</h3>
+                            <div className="mt-4 w-full flex flex-col gap-4">
+                                <TMDInstructionCard
+                                index={1}
+                                title="Ejemplo de instrucción"
+                                handleInstructionChange={handleInstructionChange}
+                                />
                             </div>
                         </section>
                     </Fragment>

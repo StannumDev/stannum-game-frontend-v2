@@ -4,8 +4,15 @@ import { useState } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
 import { ChangeLessonsButtons } from "@/components";
+import { Lesson } from "@/interfaces";
 
-export const LessonDetails = () => {
+interface Props {
+  lesson: Lesson;
+}
+
+export const LessonDetails = ({ lesson }: Props) => {
+
+    const { longTitle, title, duration } = lesson
 
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -15,7 +22,7 @@ export const LessonDetails = () => {
             <p className="subtitle-1">Pretemporada | Módulo 01</p>
             <div className="w-full flex justify-between gap-4">
                 <div className="flex flex-col">
-                    <h1 className="title-2">Organización digital</h1>
+                    <h1 className="title-2">{title}</h1>
                 </div>
                 <AnimatePresence mode="wait" initial={false}>
                     { isSaved ?
