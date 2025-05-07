@@ -12,7 +12,7 @@ interface Props {
 
 export const LessonDetails = ({ lesson }: Props) => {
 
-    const { longTitle, title, duration } = lesson
+    const { title } = lesson
 
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [isSaved, setIsSaved] = useState<boolean>(false);

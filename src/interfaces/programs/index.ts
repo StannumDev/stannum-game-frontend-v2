@@ -1,3 +1,15 @@
+export interface Instruction {
+    id: string;
+    title: string;
+    description: string;
+    difficulty: 'LOW' | 'MEDIUM' | 'HIGH';
+    rewardXP: number;
+    acceptedFormats: string[];
+    maxFileSizeMB: number;
+    steps: string[];
+    deliverableHint: string;
+}
+  
 export interface Lesson {
     id: string;
     title: string;
@@ -11,6 +23,7 @@ export interface Module {
     name: string;
     description: string;
     lessons: Array<Lesson>;
+    instructions?: Array<Instruction>;
 }
 
 export interface Program {

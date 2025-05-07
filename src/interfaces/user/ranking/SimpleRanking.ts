@@ -1,10 +1,8 @@
-import { StaticImageData } from "next/image";
-
-export interface SimpleRanking{
+export interface SimpleRanking {
     position: number;
     name: string;
     username: string;
-    photo: StaticImageData;
+    photo: string;
     enterprise: string;
-    points: number
+    points: number;
 }

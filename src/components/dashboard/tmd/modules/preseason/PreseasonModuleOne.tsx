@@ -13,9 +13,9 @@ interface Props{
 export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleInstructionChange, restartInstruction}:Props) => {
 
     const goBack = () => selectedInstruction ? restartInstruction() : restartModule();
-    const module = TMD_PROGRAM.modules.find((mod) => mod.id === "TMDM01");
+    const moduleSection = TMD_PROGRAM.modules.find((mod) => mod.id === "TMDM01");
 
-    if (!module) {
+    if (!moduleSection) {
       return <div className="text-red-500">Error: Módulo no encontrado</div>;
     }
 
@@ -26,8 +26,8 @@ export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleIn
                 <span className='font-semibold'>Atras</span>
             </button>
             <div className="mt-4 w-full flex flex-col">
-                <span className="subtitle-1">{module.name}</span>
-                <h2 className="title-2 text-lg lg:text-2xl">{module.description}</h2>
+                <span className="subtitle-1">{moduleSection.name}</span>
+                <h2 className="title-2 text-lg lg:text-2xl">{moduleSection.description}</h2>
             </div>
             <div className='mt-6 w-full'>
                 {
@@ -36,7 +36,7 @@ export const PreseasonModuleOne = ({restartModule, selectedInstruction, handleIn
                         <section className="mt-4 w-full">
                             <h3 className="subtitle-1">Lecciones</h3>
                             <div className="mt-4 w-full flex flex-col gap-4">
-                                { module.lessons.map((lesson, index) => (
+                                { moduleSection.lessons.map((lesson, index) => (
                                 <TMDLessonCard
                                     key={lesson.id}
                                     index={index + 1}

@@ -20,8 +20,8 @@ export const verifyProductKey = async (code: string): Promise<{ product: string;
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError;
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product-key/${code}`, {
+        
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PRODUCT_KEY_URL}/${code}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -39,7 +39,7 @@ export const activateProductKey = async (code: string): Promise<boolean> => {
         const token = Cookies.get("token");
         if (!token) throw tokenError;
 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product-key/activate`, { code }, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PRODUCT_KEY_URL}/activate`, { code }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

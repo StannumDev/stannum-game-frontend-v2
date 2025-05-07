@@ -1,104 +1,34 @@
+'use client'
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getIndividualRanking  } from "@/services";
 import type { SimpleRanking } from "@/interfaces";
 import { InfoCircleIcon, RankingStarIcon } from "@/icons";
-import { MotionWrapperLayout, CardRankingHome } from "@/components";
-import foto from "@/assets/user/default_user.webp";
-import mateo from "@/assets/user/usuario_mateo.webp";
+import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
 
-const rankings:Array<SimpleRanking> = [
-    {
-        position: 1,
-        name:"Mateo Bernabé Lohezic",
-        username:"mateolohezic",
-        photo: mateo,
-        enterprise: "Desarrollador",
-        points: 100,
-    },
-    {
-        position: 2,
-        name:"Nicolas Darelli",
-        username:"nicodarelli",
-        photo: foto,
-        enterprise: "Diseñador UI/UX",
-        points: 93,
-    },
-    {
-        position: 3,
-        name:"Nani Ghiotto",
-        username:"nanighiotto",
-        photo: foto,
-        enterprise: "Director de Marketing",
-        points: 87,
-    },
-    {
-        position: 4,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 5,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 6,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 7,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 8,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 9,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 10,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-    {
-        position: 11,
-        name:"Martin Merlini",
-        username:"martinmerlini",
-        photo: foto,
-        enterprise: "Director Estratégico",
-        points: 86,
-    },
-]
 
 export const RankingHome = () => {
+
+    const [rankings, setRankings] = useState<Array<SimpleRanking>>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const fetchRanking = async () => {
+            try {
+                const data = await getIndividualRanking("TMD", 10);
+                setRankings(data);
+            } catch (err) {
+                console.error("Error loading ranking:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchRanking();
+    }, []);
+
     return (
-        <MotionWrapperLayout>
+        <MotionWrapperLayoutClient>
             <section id="top-leaders" className="w-full card">
                 <div className="w-full flex justify-between items-center">
                     <h2 className="w-fit title-2 flex items-center gap-2">
@@ -120,14 +50,14 @@ export const RankingHome = () => {
                         <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Puntos</h3>
                     </div>
                     <div className="mt-2 w-[calc(100%+11px)] lg:w-[calc(100%+13px)] pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start max-h-80 lg:max-h-64 overflow-y-scroll overflow-x-hidden">
-                        {
-                            rankings.map((player:SimpleRanking, i:number) => (
-                                <CardRankingHome {...player} key={`ranking_home_${i}`}/>
-                            ))
+                        { loading ?
+                            <p className="text-white/75 text-center w-full py-6">Cargando ranking...</p>
+                        :
+                            rankings.map((player, i) => <CardRankingHome {...player} key={`ranking_home_${i}`} />)
                         }
                     </div>
                 </div>
             </section>
-        </MotionWrapperLayout>
+        </MotionWrapperLayoutClient>
     )
 }

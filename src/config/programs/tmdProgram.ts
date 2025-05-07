@@ -35,15 +35,5 @@ export const TMD_PROGRAM: Program = {
         }
       ]
     },
-    {
-      id: "TMDM02",
-      name: "Estrategias de Marketing Digital",
-      description: "Domina el marketing digital con estrategias efectivas para potenciar tu negocio.",
-      lessons: [
-        { id: "TMDM02L01", title: "Fundamentos del marketing digital", longTitle: "Fundamentos del marketing digital - Estrategias de Marketing Digital | TRENNO Mark Digital", duration: "10 min", muxPlaybackId: muxPlaybackIds["TMDM02L01"] ?? "" },
-        { id: "TMDM02L02", title: "Publicidad en redes sociales", longTitle: "Publicidad en redes sociales - Estrategias de Marketing Digital | TRENNO Mark Digital", duration: "15 min", muxPlaybackId: muxPlaybackIds["TMDM02L02"] ?? "" },
-        { id: "TMDM02L03", title: "Email marketing y automatización", longTitle: "Email marketing y automatización - Estrategias de Marketing Digital | TRENNO Mark Digital", duration: "12 min", muxPlaybackId: muxPlaybackIds["TMDM02L03"] ?? "" }
-      ]
-    }
   ]
 };

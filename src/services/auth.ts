@@ -39,7 +39,7 @@ export const requestLogin = async (data: { username: string; password: string })
 
         return response.data.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 

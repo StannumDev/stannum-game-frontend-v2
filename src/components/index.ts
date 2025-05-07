@@ -132,6 +132,10 @@ export { StepThreeTutorial } from "./dashboard/tutorial/intro/StepThreeTutorial"
 export { StepFourTutorial } from "./dashboard/tutorial/intro/StepFourTutorial";
 export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
 
+// TOAST
+export { ToastCloseButton } from "./toast/ToastCloseButton";
+export { ToastLayout } from "./toast/ToastLayout";
+
 // SVGs
 export { FirstPlaceIcon } from "./svg/FirstPlaceIcon";
 export { SecondPlaceIcon } from "./svg/SecondPlaceIcon";

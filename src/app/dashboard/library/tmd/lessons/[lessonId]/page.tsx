@@ -11,17 +11,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { lessonId } = params;
-    const module: Module | undefined = TMD_PROGRAM.modules.find(mod => mod.lessons.some(l => l.id === lessonId));
-    const lesson: Lesson | undefined = module?.lessons.find(l => l.id === lessonId);
+    const moduleSection: Module | undefined = TMD_PROGRAM.modules.find(mod => mod.lessons.some(l => l.id === lessonId));
+    const lesson: Lesson | undefined = moduleSection?.lessons.find(l => l.id === lessonId);
     
-    if (!lesson || !module) {
+    if (!lesson || !moduleSection) {
         return {
             title: "Lección no encontrada",
             description: "La lección solicitada no existe en el programa.",
         };
     }
 
-    const longTitle = `${lesson.title} - ${module.name} | ${TMD_PROGRAM.name}`;
+    const longTitle = `${lesson.title} - ${moduleSection.name} | ${TMD_PROGRAM.name}`;
     
     return {
         title: longTitle,
@@ -48,10 +48,10 @@ export default function TMDLessonsPage({ params }: Props) {
 
     const { lessonId } = params;
 
-    const module: Module | undefined = TMD_PROGRAM.modules.find(mod => mod.lessons.some(l => l.id === lessonId));
-    const lesson: Lesson | undefined = module?.lessons.find(l => l.id === lessonId);
+    const moduleSection: Module | undefined = TMD_PROGRAM.modules.find(mod => mod.lessons.some(l => l.id === lessonId));
+    const lesson: Lesson | undefined = moduleSection?.lessons.find(l => l.id === lessonId);
 
-    if (!lesson || !module) {
+    if (!lesson || !moduleSection) {
         return <div className="text-center text-red-500">Lección no encontrada</div>;
     }
 

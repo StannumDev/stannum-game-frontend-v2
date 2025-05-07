@@ -12,6 +12,7 @@ import { activateProductKey, verifyProductKey } from "@/services";
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
 import redeem_code from "@/assets/background/stannum_game_trophy.webp";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
     code: z.string()
@@ -36,6 +37,8 @@ export const ActivarProductoHome = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+    
+    const router = useRouter();
 
     const { register, handleSubmit, setValue, watch, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
@@ -87,7 +90,7 @@ export const ActivarProductoHome = () => {
         try {
             await activateProductKey(watch("code"));
             setProductInfo(prev => prev ? { ...prev, used: true } : null);
-            alert("Producto activado correctamente.");
+            router.push("/dashboard/library/tmd");
         } catch (error) {
             const appError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);

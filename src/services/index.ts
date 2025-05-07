@@ -38,4 +38,9 @@ export {
 export {
     verifyProductKey,
     activateProductKey
-} from './productKey'
+} from './productKey';
+
+export {
+    getIndividualRanking,
+    getTeamRanking
+} from './ranking';

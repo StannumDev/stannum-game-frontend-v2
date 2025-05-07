@@ -1,11 +1,13 @@
 export type { AppError } from './AppError';
 export type { SidebarLink } from './SidebarLink';
+export type { ToastData } from './ToastData';
 
 export type { NavbarSection } from './NavbarSection';
 export type { SocialMedia } from './profile/SocialMedia';
 
 export type { RegisterState } from './user/RegisterState';
 export type { SimpleRanking } from './user/ranking/SimpleRanking';
+export type { TeamRanking } from './user/ranking/TeamRanking';
 export type { Achievement } from './user/Achievement';
 
 export type {
