@@ -3,7 +3,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
-import { errorHandler } from '@/helpers';
 import { RegisterState } from '@/interfaces';
 
 const tokenError = {
@@ -49,7 +48,7 @@ export const checkEmailExists = async (email: string): Promise<boolean> => {
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -59,7 +58,7 @@ export const checkUsernameExists = async (username: string): Promise<boolean> =>
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -69,7 +68,7 @@ export const validateReCAPTCHA = async (token: string | null): Promise<boolean> 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -87,7 +86,7 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
 
         return data.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -100,7 +99,7 @@ export const logout = (): void => {
         });
         window.location.href = '/';
     } catch (error) {
-        console.error("Error during logout:", error);
+        throw error;
     }
 };
 
@@ -109,7 +108,7 @@ export const sendPasswordRecoveryEmail = async (username: string): Promise<boole
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-recovery`, { username });
         return response.data.success;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -118,7 +117,7 @@ export const verifyPasswordRecoveryOTP = async (username: string, otp: string): 
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/verify-recovery-otp`, { username, otp });
         return response.data.success;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -127,7 +126,7 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { username, otp, password });
         return response.data.success;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -147,7 +146,7 @@ export const googleLogin = async (googleToken: string): Promise<string> => {
 
         return username;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -166,6 +165,6 @@ export const updateUsername = async (username: string): Promise<boolean> => {
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };

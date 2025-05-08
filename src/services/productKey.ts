@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { errorHandler } from "@/helpers";
 
 const tokenError = {
     response: {
@@ -30,7 +29,7 @@ export const verifyProductKey = async (code: string): Promise<{ product: string;
         if (!response?.data?.success || !response.data?.data) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -48,6 +47,6 @@ export const activateProductKey = async (code: string): Promise<boolean> => {
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
     } catch (error) {
-        throw errorHandler(error);
+        throw error;
     }
 };

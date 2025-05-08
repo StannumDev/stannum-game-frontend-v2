@@ -41,8 +41,9 @@ export const GoogleAuthButton = () => {
                 setIsLoading(false);
             }
         },
-        onError: () => {
-            setErrorMessage("Google login failed. Please try again.");
+        onError: (error:unknown) => {
+            const appError:AppError = errorHandler(error);
+            setErrorMessage(appError.friendlyMessage);
         },
         prompt: "consent",
     });

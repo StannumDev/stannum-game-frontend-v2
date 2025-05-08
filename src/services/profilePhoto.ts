@@ -1,7 +1,6 @@
 import axios from "axios";
 import AvatarEditor from "react-avatar-editor";
 import Cookies from "js-cookie";
-import { errorHandler } from "@/helpers";
 
 export const preprocessImage = (editorRef: AvatarEditor | null): Promise<Blob | null> => {
     return new Promise((resolve, reject) => {
@@ -39,7 +38,7 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<void> => {
             },
         });
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };
 
@@ -56,6 +55,6 @@ export const deleteProfilePhoto = async (): Promise<void> => {
             },
         });
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };

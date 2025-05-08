@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import type { SidebarLink, UserSidebarDetails } from "@/interfaces";
+import type { AppError, SidebarLink, UserSidebarDetails } from "@/interfaces";
 import { AppsIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { getUserSidebarDetails } from "@/services";
@@ -38,8 +38,8 @@ export const Sidebar = () => {
                 }
                 setUserData(userFetch);
             } catch (error) {
-                const appError = errorHandler(error);
-                console.error(`[${appError.code}] ${appError.techMessage}`);
+                const appError:AppError = errorHandler(error);
+                console.error(appError);
             } finally {
                 setIsLoading(false);
             }

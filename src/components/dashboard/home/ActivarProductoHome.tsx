@@ -2,17 +2,18 @@
 
 import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { KeyIcon, AlertHexagonIcon } from '@/icons';
-import { errorHandler } from "@/helpers";   
 import { activateProductKey, verifyProductKey } from "@/services";
+import { errorHandler } from "@/helpers";   
+import { KeyIcon, AlertHexagonIcon } from '@/icons';
+import { AppError } from "@/interfaces";
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
 import redeem_code from "@/assets/background/stannum_game_trophy.webp";
-import { useRouter } from "next/navigation";
 
 const schema = z.object({
     code: z.string()
@@ -76,9 +77,8 @@ export const ActivarProductoHome = () => {
             setProductInfo(info);
             setIsSubmitted(true);
         } catch (error) {
-            const appError = errorHandler(error);
+            const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);
-            console.error(`[${appError.code}] ${appError.techMessage}`);
         } finally {
             setIsLoading(false);
         }
@@ -92,9 +92,8 @@ export const ActivarProductoHome = () => {
             setProductInfo(prev => prev ? { ...prev, used: true } : null);
             router.push("/dashboard/library/tmd");
         } catch (error) {
-            const appError = errorHandler(error);
+            const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);
-            console.error(`[${appError.code}] ${appError.techMessage}`);
         } finally {
             setIsLoading(false);
         }

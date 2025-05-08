@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { getTeamRanking } from "@/services";
 import { RankingStarIcon } from "@/icons";
-import { TeamRanking } from "@/interfaces";
+import { AppError, TeamRanking } from "@/interfaces";
 import { TMDTeamRankingCard } from "@/components";
+import { errorHandler } from "@/helpers";
 
 export const TMDRankingLayout = () => {
     
@@ -17,7 +18,8 @@ export const TMDRankingLayout = () => {
                 const data = await getTeamRanking("TMD");
                 setTeams(data);
             } catch (error) {
-                console.error("Error loading team ranking:", error);
+                const appError:AppError = errorHandler(error);
+                console.error(appError);
             } finally {
                 setIsLoading(false);
             }

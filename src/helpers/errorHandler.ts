@@ -36,6 +36,6 @@ export const errorHandler = (error: unknown): AppError => {
         };
         callToast(toastData);
     }
-    console.log(appError)
+    console.error(appError)
     return appError;
 };

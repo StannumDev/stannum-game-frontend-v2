@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { logout  } from '@/services';
-import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
+import { errorHandler } from '@/helpers';
+import type { AppError, SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import mateo from "@/assets/user/usuario_mateo.webp";
@@ -21,6 +22,15 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
 
     const [isExpanded, setIsExpanded] = useState<boolean>(true);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
+
+    const onLogout = () => {
+        try {
+            logout();
+        } catch (error) {
+            const appError:AppError = errorHandler(error);
+            console.error(appError)
+        }
+    }
 
     return (
         <Fragment>
@@ -143,7 +153,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                         animate={{ y: 0, opacity: 1 }}
                                         exit={{ y: 150, opacity: 0 }}
                                         type="button"
-                                        onClick={logout}
+                                        onClick={onLogout}
                                         className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0"
                                     >
                                         <span className="sr-only">Cerrar sesión</span>

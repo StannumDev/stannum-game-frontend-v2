@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { errorHandler } from "@/helpers";
 import { SimpleRanking, TeamRanking } from "@/interfaces";
 
 const tokenError = {
@@ -31,7 +30,7 @@ export const getIndividualRanking = async (programName: string, limit: number = 
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
   } catch (error) {
-    throw errorHandler(error);
+    throw error;
   }
 };
 
@@ -49,6 +48,6 @@ export const getTeamRanking = async (programName: string): Promise<Array<TeamRan
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
   } catch (error) {
-    throw errorHandler(error);
+    throw error;
   }
 };

@@ -36,7 +36,8 @@ export const StepTwoTutorial = ({direction}:Props) => {
                         defaultShowRemainingTime
                         defaultHiddenCaptions={true}
                         primaryColor="rgba(255,255,255,1)"
-                        accentColor="#41cfc9"
+                        // accentColor="#41cfc9"
+                        accentColor="#00FFCC"
                         metadataVideoId="introduccion01"
                         metadata={{
                             username: 'mateolohezic',

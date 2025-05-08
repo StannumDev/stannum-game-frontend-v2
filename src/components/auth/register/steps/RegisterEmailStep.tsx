@@ -6,8 +6,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
-import { RegisterState } from "@/interfaces";
+import { AppError, RegisterState } from "@/interfaces";
 import { validateReCAPTCHA, checkEmailExists } from "@/services";
+import { errorHandler } from "@/helpers";
 
 interface Props {
     handleNextStep: (data: Partial<RegisterState>) => void
@@ -46,8 +47,8 @@ export const RegisterEmailStep = ({ handleNextStep }: Props) => {
             setReCAPTCHACompleted(true);
             setReCAPTCHAError(null);
         } catch (error) {
-            console.error("Error validando reCAPTCHA:", error);
-            setReCAPTCHAError("Ocurrió un error al validar el reCAPTCHA. Inténtalo de nuevo.");
+            const appError:AppError = errorHandler(error);
+            setReCAPTCHAError(appError.friendlyMessage);
             resetReCAPTCHA();
         }
     };
@@ -70,7 +71,8 @@ export const RegisterEmailStep = ({ handleNextStep }: Props) => {
 
             await handleNextStep({ email });
         } catch (error) {
-            console.error("Error en el registro:", error);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

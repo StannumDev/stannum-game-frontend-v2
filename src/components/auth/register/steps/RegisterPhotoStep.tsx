@@ -4,10 +4,11 @@ import { ChangeEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import AvatarEditor from "react-avatar-editor";
-import { AddPhotoIcon, SpinnerIcon } from "@/icons";
 import { preprocessImage, uploadProfilePhoto } from "@/services";
-import styles from "@/components/styles/photoEditor.module.css";
+import { AddPhotoIcon, SpinnerIcon } from "@/icons";
+import { AppError } from "@/interfaces";
 import { errorHandler } from "@/helpers";
+import styles from "@/components/styles/photoEditor.module.css";
 
 export const RegisterPhotoStep = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,9 +39,8 @@ export const RegisterPhotoStep = () => {
             await uploadProfilePhoto(formData);
             router.push('/dashboard');
         } catch (error) {
-            console.error("Error al subir la foto:", error);
-            const appError = errorHandler(error);
-            console.log(appError.friendlyMessage);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }
@@ -133,7 +133,8 @@ export const RegisterPhotoStep = () => {
                 </motion.button>
                 <motion.button
                     whileTap={{ scale: !isLoading ? 1.05 : 1 }}
-                    whileHover={{ backgroundColor: '#66eae5' }}
+                    whileHover={{ backgroundColor: '#4fffdc' }}
+                    // whileHover={{ backgroundColor: '#66eae5' }}
                     disabled={isLoading}
                     type="button"
                     className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center"

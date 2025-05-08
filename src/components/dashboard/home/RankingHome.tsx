@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getIndividualRanking  } from "@/services";
-import type { SimpleRanking } from "@/interfaces";
+import { errorHandler } from "@/helpers";
+import type { AppError, SimpleRanking } from "@/interfaces";
 import { InfoCircleIcon, RankingStarIcon } from "@/icons";
 import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
 
@@ -18,8 +19,9 @@ export const RankingHome = () => {
             try {
                 const data = await getIndividualRanking("TMD", 10);
                 setRankings(data);
-            } catch (err) {
-                console.error("Error loading ranking:", err);
+            } catch (error:unknown) {
+                const appError:AppError = errorHandler(error);
+                console.error(appError);
             } finally {
                 setLoading(false);
             }

@@ -6,7 +6,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { searchUsers } from "@/services";
 import { SearchIcon } from "@/icons";
-import { UserSearchResult } from "@/interfaces";
+import { errorHandler } from "@/helpers";
+import { AppError, UserSearchResult } from "@/interfaces";
 import mateo from "@/assets/user/usuario_mateo.webp";
 
 interface Props {
@@ -26,8 +27,9 @@ export const SearchResultsList = ({ query }: Props) => {
             try {
                 const data = await searchUsers(query);
                 setResults(data);
-            } catch (err) {
-                setError("No se encontraron resultados.");
+            } catch (error) {
+                const appError:AppError = errorHandler(error);
+                setError(appError.friendlyMessage);
             } finally {
                 setIsLoading(false);
             }

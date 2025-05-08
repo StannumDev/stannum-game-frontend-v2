@@ -6,7 +6,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { updateUserProfile } from "@/services";
-import { FullUserDetails } from "@/interfaces";
+import { errorHandler } from "@/helpers";
+import { AppError, FullUserDetails } from "@/interfaces";
 import { EditIcon, SelectorIcon } from "@/icons";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
 
@@ -55,7 +56,8 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                 setShowModal(false);
             }
         } catch (error) {
-            console.error("Error al actualizar el perfil:", error);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

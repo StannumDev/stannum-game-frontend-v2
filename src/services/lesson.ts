@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { errorHandler } from "@/helpers";
 
 const tokenError = {
     response: {
@@ -34,6 +33,6 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response?.data?.success;
     } catch (error: unknown) {
-        throw errorHandler(error);
+        throw error;
     }
 };

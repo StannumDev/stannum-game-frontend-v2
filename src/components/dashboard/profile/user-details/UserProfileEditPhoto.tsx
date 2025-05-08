@@ -1,11 +1,13 @@
 'use client'
 
 import { ChangeEvent, Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from "react";
-import { AddPhotoIcon, EditIcon, SpinnerIcon } from "@/icons";
-import { Modal } from "@/components";
 import AvatarEditor from 'react-avatar-editor';
-import styles from "@/components/styles/photoEditor.module.css";
 import { preprocessImage, uploadProfilePhoto } from "@/services";
+import { errorHandler } from "@/helpers";
+import { AddPhotoIcon, EditIcon, SpinnerIcon } from "@/icons";
+import { AppError } from "@/interfaces";
+import { Modal } from "@/components";
+import styles from "@/components/styles/photoEditor.module.css";
 
 interface Props{
     showModal: boolean,
@@ -44,7 +46,8 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Pr
             await fetchUserData();
             setShowModal(false);
         } catch (error) {
-            console.error("Error al subir la foto:", error);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

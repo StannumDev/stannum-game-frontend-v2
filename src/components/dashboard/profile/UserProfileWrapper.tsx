@@ -3,8 +3,8 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { getUserDetailsByUsername } from "@/services";
 import { errorHandler } from "@/helpers";
+import { AppError, FullUserDetails } from "@/interfaces";
 import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
-import { FullUserDetails } from "@/interfaces";
 
 interface Props{
     username: string;
@@ -20,8 +20,8 @@ export const UserProfileWrapper = ({username}:Props) => {
         try {
             setUserData(await getUserDetailsByUsername(username));
         } catch (error) {
-            const appError = errorHandler(error);
-            console.error(`[${appError.code}] ${appError.techMessage}`);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

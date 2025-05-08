@@ -14,11 +14,17 @@
     background-image: linear-gradient(
         135deg,
         #bbfffc,
+        #00FFCC 20%,
+        #4fffdc 40%,
+        #00FFCC 60%,
+        #bbfffc 80%,
+        #00FFCC
+        /* #bbfffc,
         #41cfc9 20%,
         #66eae5 40%,
         #41cfc9 60%,
         #bbfffc 80%,
-        #41cfc9
+        #41cfc9 */
     );
     background-size: 300% 300%;
     animation: moveBackground 5s ease-in-out infinite;

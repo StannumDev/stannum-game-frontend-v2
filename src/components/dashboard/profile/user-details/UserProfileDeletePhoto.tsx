@@ -2,6 +2,8 @@
 
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { deleteProfilePhoto } from "@/services";
+import { errorHandler } from "@/helpers";
+import { AppError } from "@/interfaces";
 import { SpinnerIcon, TrashIcon } from "@/icons";
 import { Modal } from "@/components";
 
@@ -22,7 +24,8 @@ export const UserProfileDeletePhoto = ({showModal, setShowModal, fetchUserData}:
             await fetchUserData();
             setShowModal(false);
         } catch (error) {
-            console.error("Error al eliminar la foto:", error);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

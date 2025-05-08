@@ -26,7 +26,8 @@
   }
   
   .completed__diagonal__lines::before{
-    background: #41cfc9;
+    /* background: #41cfc9; */
+    background: #00FFCC;
   }
   
   .completed__diagonal__lines::after{

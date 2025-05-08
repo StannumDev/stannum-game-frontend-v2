@@ -34,13 +34,15 @@ mux-player::part(button):hover {
 }
 
 mux-player::part(center play button) {
-    background-color: #41cfc9;
+    background-color: #00FFCC;
+    /* background-color: #41cfc9; */
     border-radius: 50%;
     stroke: rgba(255, 255, 255, 1);
 }
 
 mux-player::part(center play button):hover {
-    background-color: #66eae5;
+    background-color: #4fffdc;
+    /* background-color: #66eae5; */
 }
 
 @media(max-width:1024px){

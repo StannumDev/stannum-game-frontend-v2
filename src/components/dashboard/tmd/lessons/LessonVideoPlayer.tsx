@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import MuxPlayer from '@mux/mux-player-react/lazy';
 import { createBlurUp } from '@mux/blurup';
 import { markLessonAsCompleted } from "@/services";
-import { Lesson } from '@/interfaces';
+import { errorHandler } from "@/helpers";
+import { AppError, Lesson } from '@/interfaces';
 import '@/components/styles/lessonVideoPlayer.css';
 
 interface Props {
@@ -37,13 +38,11 @@ export const LessonVideoPlayer = ({ lesson }: Props) => {
     const handleVideoEnd = async () => {
         if (!isCompleted) {
             try {
-                const success = await markLessonAsCompleted("TMD", id);
-                if (success) {
-                    setIsCompleted(true);
-                    console.log("✅ Lección marcada como completada.");
-                }
+                await markLessonAsCompleted("TMD", id);
+                setIsCompleted(true);
             } catch (error) {
-                console.error("❌ Error al marcar la lección como completada:", error);
+                const appError:AppError = errorHandler(error);
+                console.error(appError)
             }
         }
     };
@@ -66,7 +65,8 @@ export const LessonVideoPlayer = ({ lesson }: Props) => {
                 defaultShowRemainingTime
                 defaultHiddenCaptions={true}
                 primaryColor="rgba(255,255,255,1)"
-                accentColor="#41cfc9"
+                // accentColor="#41cfc9"
+                accentColor="#00FFCC"
                 loading='viewport'
                 metadataVideoId={id}
                 metadataVideoTitle={longTitle}

@@ -6,6 +6,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { validateReCAPTCHA } from "@/services";
+import { errorHandler } from "@/helpers";
+import { AppError } from "@/interfaces";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 const schema = z.object({
@@ -45,8 +47,8 @@ export const PasswordRecoveryEmail = ({ onSubmit, isLoading }: Props) => {
             setReCAPTCHACompleted(true);
             setReCAPTCHAError(null);
         } catch (error) {
-            console.error("Error validando reCAPTCHA:", error);
-            setReCAPTCHAError("Ocurrió un error al validar el reCAPTCHA. Inténtalo de nuevo.");
+            const appError:AppError = errorHandler(error);
+            setReCAPTCHAError(appError.friendlyMessage);
             resetReCAPTCHA();
         }
     };

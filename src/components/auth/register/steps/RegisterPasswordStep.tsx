@@ -7,7 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkUsernameExists } from "@/services";
 import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
-import { RegisterState } from "@/interfaces";
+import { AppError, RegisterState } from "@/interfaces";
+import { errorHandler } from "@/helpers";
 
 interface Props{
     handleNextStep: (data: Partial<RegisterState>) => void
@@ -39,7 +40,8 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
             }
             await handleNextStep({ username, password });
         } catch (error) {
-            console.error("Error en el registro:", error);
+            const appError:AppError = errorHandler(error);
+            console.error(appError);
         } finally {
             setIsLoading(false);
         }

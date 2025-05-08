@@ -3,7 +3,8 @@
 import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createUser } from "@/services";
-import { RegisterState } from "@/interfaces";
+import { errorHandler } from "@/helpers";
+import { AppError, RegisterState } from "@/interfaces";
 import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 
 export const RegisterHandler = () => {
@@ -29,7 +30,8 @@ export const RegisterHandler = () => {
                 try {
                     await createUser(updatedState);
                 } catch (error) {
-                    console.error("Error creating user:", error);
+                    const appError:AppError = errorHandler(error);
+                    console.error(appError);
                     return;
                 }
             }
