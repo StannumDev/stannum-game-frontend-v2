@@ -4,7 +4,7 @@ const progress:number = 3500/5000*100;
 
 export const UserProfileLevel = () => {
     return (
-        <div className="mt-4 lg:mt-0 w-full md:w-auto h-20 lg:h-16 card p-0 flex items-stretch lg:rounded-xl overflow-hidden lg:absolute lg:bottom-6 lg:left-6">
+        <div className="mt-4 lg:mt-0 w-full md:w-auto h-20 lg:h-16 card p-0 flex items-stretch lg:rounded-xl overflow-hidden lg:absolute lg:bottom-3 lg:left-3">
             <div className={`bg-card lg:bg-card-light pl-6 pr-8 flex flex-col justify-center items-center ${styles.clip__diagonal}`}>
                 <span className="font-thin leading-none">Nivel</span>
                 <p className="text-stannum text-4xl lg:text-3xl font-semibold leading-none">25</p>

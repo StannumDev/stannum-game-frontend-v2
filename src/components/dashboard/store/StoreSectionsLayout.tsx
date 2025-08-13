@@ -8,28 +8,28 @@ import { StoreAllSection, MotionWrapperLayoutClient, NavbarSection, StoreTutoria
 
 const sections: Array<NavbarSectionType> = [
     {
-        label: "Todos",
-        value: "",
+        name: "Todos",
+        id: "",
         Icon: NewAppsIcon
     },
     {
-        label: "Principales",
-        value: "main",
+        name: "Principales",
+        id: "main",
         Icon: ChessKingicon
     },
     {
-        label: "Gratuitos",
-        value: "free",
+        name: "Gratuitos",
+        id: "free",
         Icon: ChessKnightIcon,
     },
     {
-        label: "Charlas",
-        value: "talks",
+        name: "Charlas",
+        id: "talks",
         Icon: ChessBishopIcon,
     },
     {
-        label: "Shorts",
-        value: "shorts",
+        name: "Shorts",
+        id: "shorts",
         Icon: ChessPawnIcon,
     },
 ];
@@ -74,7 +74,10 @@ export const StoreSectionsLayout = () => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 overflow-x-hidden">
-                    {selectedLayout === '' ? <StoreAllSection/> : <></>
+                    { selectedLayout === '' ?
+                        <StoreAllSection/>
+                    :
+                        <></>
                     }
                 </div>
             </section>

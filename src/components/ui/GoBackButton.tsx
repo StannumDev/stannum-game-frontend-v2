@@ -13,7 +13,7 @@ export const GoBackButton = ({className}:Props) => {
         <button
             type='button'
             onClick={router.back}
-            className={`px-2 py-1 rounded-lg hover:bg-white/10 flex items-center gap-1.5 transition-200 ${className}`}
+            className={`px-2 py-1 rounded-lg hover:bg-white/10 flex justify-center items-center gap-1 transition-200 ${className}`}
         >
             <ArrowBackIcon/>
             <span className="font-light">Atras</span>

@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Instruction {
     id: string;
     title: string;
@@ -13,8 +15,9 @@ export interface Instruction {
 export interface Lesson {
     id: string;
     title: string;
+    description: string;
     longTitle: string;
-    duration: string;
+    duration: number;
     muxPlaybackId: string;
 }
 
@@ -23,12 +26,19 @@ export interface Module {
     name: string;
     description: string;
     lessons: Array<Lesson>;
-    instructions?: Array<Instruction>;
+    instructions: Array<Instruction>;
+}
+
+export interface Section {
+    id: string;
+    name: string;
+    modules: Array<Module>;
 }
 
 export interface Program {
     id: string;
     name: string;
     description: string;
-    modules: Array<Module>;
+    logo: StaticImageData;
+    sections: Array<Section>;
 }

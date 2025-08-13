@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { cookies } from 'next/headers'
-// import { errorHandler } from "@/helpers";
 import type { FullUserDetails } from "@/interfaces";
 
 const tokenError = {
@@ -18,6 +17,27 @@ const tokenError = {
         },
     },
 }
+
+export const getUserByToken = async (): Promise<FullUserDetails | null> => {
+    try {
+        const token = await cookies().get('token')
+        if (!token) throw tokenError
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/`, {
+            headers: {
+                Authorization: `Bearer ${token.value}`,
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response?.data?.success || !response.data?.data) {
+            throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
+        }
+        return response.data.data as FullUserDetails;
+    } catch (error) {
+        // console.log(error)
+        return null;
+    }
+};
 
 export const getUserDetailsByUsernameServer = async (username: string): Promise<FullUserDetails | null> => {
     try {

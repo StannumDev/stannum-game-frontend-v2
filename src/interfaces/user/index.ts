@@ -1,3 +1,5 @@
+import { Instruction } from "../programs";
+
 export interface BaseUser {
     id: string;
     username: string;
@@ -39,7 +41,7 @@ export interface AchievementDetails {
 export interface ProgramDetails {
     isPurchased: boolean;
     acquiredAt?: string;
-    instructions: Array<InstructionDetails>;
+    instructions: Array<Instruction>;
     lessonsCompleted: Array<LessonDetails>;
     lastWatchedLesson?: Array<LessonDetails>;
     tests: Array<TestDetails>;
@@ -72,16 +74,88 @@ export interface RankingUserDetails extends Pick<BaseUser, "id" | "username" | "
     currentLevel: number;
 }
 
-export interface FullUserDetails extends BaseUser {
-    profile: UserProfile;
-    enterprise?: EnterpriseDetails;
-    teams?: Array<TeamDetails>;
-    level?: LevelDetails;
-    achievements?: Array<AchievementDetails>;
-}
-
 export interface UserSearchResult extends BaseUser {
     name: string;
     enterprise?: string;
     jobPosition?: string;
+}
+
+export interface UserProgram {
+    isPurchased: boolean;
+    acquiredAt?: string;
+    instructions: {
+        instructionId: string;
+        startDate: string;
+        submittedAt?: string;
+        reviewedAt?: string;
+        score?: number;
+        observations?: string;
+        status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
+    }[];
+    lessonsCompleted: {
+        lessonId: string;
+        viewedAt: string;
+    }[];
+    lastWatchedLesson?: {
+        lessonId: string;
+        viewedAt: string;
+        currentTime?: number;
+    };
+    tests: {
+        date: string;
+        // sections: any[];
+        totalScore: number;
+    }[];
+    productKey?: string;
+}
+
+export interface UserPreferences {
+    tutorials: {
+        name: string;
+        isCompleted: boolean;
+        completedAt?: string;
+    }[];
+    notificationsEnabled: boolean;
+    hasProfilePhoto: boolean;
+    isGoogleAccount: boolean;
+    allowPasswordLogin: boolean;
+}
+
+export interface FullUserDetails {
+    id: string;
+    username: string;
+    profilePhoto?: string;
+    profile: {
+        name: string;
+        birthdate?: string;
+        country?: string;
+        region?: string;
+        aboutMe?: string;
+    };
+    enterprise?: {
+        name: string;
+        jobPosition: string;
+    };
+    teams?: Array<{
+        programName: string;
+        teamName: string;
+        role: string;
+    }>;
+    level?: {
+        currentLevel: number;
+        experienceTotal: number;
+        experienceCurrentLevel: number;
+        experienceNextLevel: number;
+        progress: number;
+    };
+    achievements?: Array<{
+        achievementId: string;
+        progress: number;
+        isCompleted: boolean;
+    }>;
+    programs: {
+        tia: UserProgram;
+        tmd: UserProgram;
+    };
+    preferences: UserPreferences;
 }

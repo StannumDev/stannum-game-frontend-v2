@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { PresentacionHome, GoalsHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome, StanHelp } from "@/components"
+import { PresentacionHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome, StanHelp } from "@/components"
 
 export const metadata: Metadata = {
     title: 'Inicio',
@@ -29,7 +29,7 @@ export default function HomePage() {
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4">
                 <div className="lg:col-span-7 lg:min-h-svh flex flex-col items-start gap-4 lg:gap-4">
                     <PresentacionHome/>
-                    <GoalsHome/>
+                    {/* <GoalsHome/> */}
                     <ContinuarHome/>
                 </div>
                 <div className="lg:col-span-5 lg:min-h-svh flex flex-col items-start gap-4 lg:gap-4">

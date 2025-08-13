@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { driver, type Driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
-import { callToast, errorHandler } from '@/helpers';
+import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
-import type { AppError, ToastData } from '@/interfaces';
+import type { AppError } from '@/interfaces';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/background/the_game.webp";
 
@@ -28,16 +28,6 @@ export const PresentacionHome = () => {
 
     const [isTutorialCompleted, setIsTutorialCompleted] = useState<boolean>(false);
     const [canStartTutorial, setCanStartTutorial] = useState<boolean>(false);
-    
-    useEffect(() => {
-        const toastData = {
-          message: { title:"¡Bienvenido!", description: "Descubre cómo aprovechar al máximo la plataforma con este breve tutorial introductorio." },
-          type: "error",
-        };
-    
-        callToast(toastData as ToastData);
-      }, []);
-
     
     const completeTutorial = async () => {
         try {

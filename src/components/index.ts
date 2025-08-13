@@ -76,33 +76,26 @@ export { StoreSectionsLayout } from "./dashboard/store/StoreSectionsLayout";
 export { StoreAllSection } from "./dashboard/store/sections/StoreAllSection";
 export { StoreCard } from "./dashboard/store/StoreCard";
 
-// TMD
-export { TMDCover } from "./dashboard/tmd/TMDCover";
-export { TMDSectionsLayout } from "./dashboard/tmd/TMDSectionsLayout";
-export { TMDPendingModuleCard } from "./dashboard/tmd/modules/TMDPendingModuleCard";
-export { TMDCompletedModuleCard } from "./dashboard/tmd/modules/TMDCompletedModuleCard";
-export { TMDBlockedModuleCard } from "./dashboard/tmd/modules/TMDBlockedModuleCard";
-export { TMDLessonCard } from "./dashboard/tmd/lessons/TMDLessonCard";
-export { TMDInstructionCard } from "./dashboard/tmd/instructions/TMDInstructionCard";
-export { TMDInstructionDetails } from "./dashboard/tmd/instructions/TMDInstructionDetails";
-export { TMDTeamRankingCard } from "./dashboard/tmd/ranking/TMDTeamRankingCard";
-export { TMDPlayerRankingCard } from "./dashboard/tmd/ranking/TMDPlayerRankingCard";
+// PROGRAMS
+export { ProgramCover } from "./dashboard/program/ProgramCover";
+export { ProgramNavigationHandler } from "./dashboard/program/ProgramNavigationHandler";
+export { ProgramModuleHandler } from "./dashboard/program/modules/ProgramModuleHandler";
+export { ProgramPendingModuleCard } from "./dashboard/program/modules/ProgramPendingModuleCard";
+export { ProgramCompletedModuleCard } from "./dashboard/program/modules/ProgramCompletedModuleCard";
+export { ProgramBlockedModuleCard } from "./dashboard/program/modules/ProgramBlockedModuleCard";
+export { ProgramLessonCard } from "./dashboard/program/lessons/ProgramLessonCard";
+export { LessonDetails } from "./dashboard/program/lessons/LessonDetails";
+export { ChangeLessonsButtons } from "./dashboard/program/lessons/ChangeLessonsButtons";
 
-// TMD SECTIONS
-export { TMDWarmUpLayout } from "./dashboard/tmd/sections/TMDWarmUpLayout";
-export { TMDPreseasonLayout } from "./dashboard/tmd/sections/TMDPreseasonLayout";
-export { TMDSeasonLayout } from "./dashboard/tmd/sections/TMDSeasonLayout";
-export { TMDRankingLayout } from "./dashboard/tmd/sections/TMDRankingLayout";
+export { LessonVideoPlayer } from "./dashboard/program/lessons/LessonVideoPlayer";
+export { LessonMiniatureCard } from "./dashboard/program/lessons/LessonMiniatureCard";
 
-// TMD LESSONS
-export { LessonVideoPlayer } from "./dashboard/tmd/lessons/LessonVideoPlayer";
-export { LessonDetails } from "./dashboard/tmd/lessons/LessonDetails";
-export { ChangeLessonsButtons } from "./dashboard/tmd/lessons/ChangeLessonsButtons";
-export { LessonMiniatureCard } from "./dashboard/tmd/lessons/LessonMiniatureCard";
+export { ProgramInstructionCard } from "./dashboard/program/instructions/ProgramInstructionCard";
+export { ProgramInstructionDetails } from "./dashboard/program/instructions/ProgramInstructionDetails";
 
-// TMD PRESEASON
-export { PreseasonModulesGrid } from './dashboard/tmd/modules/preseason/PreseasonModulesGrid'
-export { PreseasonModuleOne } from './dashboard/tmd/modules/preseason/PreseasonModuleOne'
+export { ProgramRankingLayout } from "./dashboard/program/sections/ProgramRankingLayout";
+export { ProgramTeamRankingCard } from "./dashboard/program/ranking/ProgramTeamRankingCard";
+export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPlayerRankingCard";
 
 // LOGIN
 export { LoginForm } from "./auth/login/LoginForm";

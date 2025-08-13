@@ -8,21 +8,21 @@ import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/
 
 const sections: Array<NavbarSectionType> = [
     {
-        label: "Logros",
-        value: "achievements",
+        name: "Logros",
+        id: "achievements",
         Icon: MedalIcon
     },
     {
-        label: "TMD",
-        value: "tmd"
+        name: "TMD",
+        id: "tmd"
     },
     {
-        label: "PROEM",
-        value: "proem"
+        name: "TIA",
+        id: "tia"
     },
 ];
 
-type SectionOptions = 'achievements' | 'tmd' | 'proem'
+type SectionOptions = 'achievements' | 'tmd' | 'tia'
 
 export const ProfileSectionsLayout = () => {
     const router = useRouter();
@@ -33,7 +33,7 @@ export const ProfileSectionsLayout = () => {
     const [selectedLayout, setSelectedLayout] = useState<SectionOptions>('achievements');
 
     useEffect(() => {
-        if (layout && ['achievements', 'tmd', 'proem'].includes(layout)) {
+        if (layout && ['achievements', 'tmd', 'tia'].includes(layout)) {
             setSelectedLayout(layout as SectionOptions);
         } else {
             router.replace(`${pathname}?section=achievements`, { scroll: false });

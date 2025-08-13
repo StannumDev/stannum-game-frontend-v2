@@ -36,3 +36,25 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         throw error;
     }
 };
+
+export const saveLastWatchedLesson = async (programName: string, lessonId: string, currentTime: number): Promise<boolean> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) throw tokenError;
+
+        const response = await axios.patch(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_LESSON_URL}/lastwatched/${programName}/${lessonId}`,
+            { currentTime },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.success;
+    } catch (error: unknown) {
+        throw error;
+    }
+};

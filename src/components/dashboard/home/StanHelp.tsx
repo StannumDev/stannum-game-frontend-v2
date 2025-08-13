@@ -12,8 +12,8 @@ export const StanHelp = () => {
                         <Image src={stan_help} alt="Obtén ayuda de Stan" draggable={false} className="w-44 lg:w-full object-contain"/>
                     </div>
                     <div className="w-full lg:w-fit lg:pb-6 lg:pt-4">
-                        <h2 className="title-2">¿Necesitas ayuda?</h2>
-                        <p className="mt-2 w-full lg:max-w-sm">Habla con <b className="text-stannum">STAN, el entrenador de STANNUM</b> para recibir soporte y poder solucionar tus dudas e inconvenientes.</p>
+                        <h2 className="title-2">Tu entrenador <span className="block">inteligente</span></h2>
+                        <p className="mt-2 w-full lg:max-w-sm">Muy pronto vas a poder contar con <b className="text-stannum">STAN</b>, tu entrenador impulsado por IA, que te va a acompañar en tu entrenamiento para resolver dudas, darte recomendaciones y ayudarte a avanzar en cada paso.</p>
                         <HelpHexagonIcon className="text-2xl text-stannum absolute top-4 lg:top-6 right-4 lg:right-6"/>
                     </div>
                 </div>

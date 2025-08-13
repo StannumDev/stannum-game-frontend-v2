@@ -90,7 +90,7 @@ export const ActivarProductoHome = () => {
         try {
             await activateProductKey(watch("code"));
             setProductInfo(prev => prev ? { ...prev, used: true } : null);
-            router.push("/dashboard/library/tmd");
+            router.push("/dashboard/library");
         } catch (error) {
             const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);

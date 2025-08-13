@@ -28,11 +28,13 @@ export {
 } from './user';
 
 export {
+    getUserByToken,
     getUserDetailsByUsernameServer
 } from './userServer';
 
 export {
-    markLessonAsCompleted
+    markLessonAsCompleted,
+    saveLastWatchedLesson
 } from './lesson';
 
 export {

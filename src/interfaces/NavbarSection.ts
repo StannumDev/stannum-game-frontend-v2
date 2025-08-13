@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 
 export interface NavbarSection {
-    label: string;
-    value: string;
+    name: string;
+    id: string;
     Icon?: IconType
 }

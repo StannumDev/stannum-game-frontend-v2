@@ -7,7 +7,7 @@ import { ArrowRightIcon } from '@/icons';
 export const StoreCard = () => {
 
     return (
-        <Link href={'/dashboard/library/tmd'} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
+        <Link href={'/dashboard/library'} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>
                 <Image src={background} alt='Programa STANNUM Game' className='size-full object-cover absolute top-0 left-0 z-0'/>

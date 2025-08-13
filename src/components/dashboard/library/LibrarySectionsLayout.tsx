@@ -3,36 +3,40 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaChessPawn, FaChessKing, FaChessKnight } from 'react-icons/fa6';
-import type { NavbarSection as NavbarSectionType } from "@/interfaces";
+import type { FullUserDetails, NavbarSection as NavbarSectionType } from "@/interfaces";
 import { LibraryAllSection, MotionWrapperLayoutClient, NavbarSection } from "@/components";
 import { AppsIcon } from "@/icons";
 
+interface Props {
+    user: FullUserDetails;
+}
+
 const sections: Array<NavbarSectionType> = [
     {
-        label: "Todos",
-        value: "",
+        name: "Todos",
+        id: "",
         Icon: AppsIcon
     },
     {
-        label: "Principales",
-        value: "main",
+        name: "Principales",
+        id: "main",
         Icon: FaChessKing
     },
     {
-        label: "Gratuitos",
-        value: "free",
+        name: "Gratuitos",
+        id: "free",
         Icon: FaChessKnight,
     },
     {
-        label: "Shorts",
-        value: "shorts",
+        name: "Shorts",
+        id: "shorts",
         Icon: FaChessPawn,
     },
 ];
 
 type SectionOptions = '' | 'main' | 'free' | 'shorts';
 
-export const LibrarySectionsLayout = () => {
+export const LibrarySectionsLayout = ({ user }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -68,8 +72,7 @@ export const LibrarySectionsLayout = () => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 overflow-x-hidden">
-                    {selectedLayout === '' ? <LibraryAllSection/> : <></>
-                    }
+                    { selectedLayout === '' && <LibraryAllSection user={user}/> }
                 </div>
             </section>
         </MotionWrapperLayoutClient>

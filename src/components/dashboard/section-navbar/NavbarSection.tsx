@@ -15,14 +15,14 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
     const containerRef = useRef<HTMLDivElement>(null);
 
     const navigate = useCallback((direction: 'previous' | 'next') => {
-        const currentIndex = sections.findIndex(section => section.value === selectedLayout);
+        const currentIndex = sections.findIndex(section => section.id === selectedLayout);
 
         if (direction === 'previous' && currentIndex > 0) {
-            handleLayoutChange(sections[currentIndex - 1].value as T);
+            handleLayoutChange(sections[currentIndex - 1].id as T);
         }
 
         if (direction === 'next' && currentIndex < sections.length - 1) {
-            handleLayoutChange(sections[currentIndex + 1].value as T);
+            handleLayoutChange(sections[currentIndex + 1].id as T);
         }
     }, [sections, selectedLayout, handleLayoutChange]);
 
@@ -53,7 +53,7 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
                 navigate('next');
             } else if (!isNaN(Number(event.key)) && Number(event.key) >= 1 && Number(event.key) <= sections.length) {
                 const sectionIndex = Number(event.key) - 1;
-                handleLayoutChange(sections[sectionIndex].value as T);
+                handleLayoutChange(sections[sectionIndex].id as T);
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -67,7 +67,7 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
             <button
                 type="button"
                 onClick={() => navigate('previous')}
-                disabled={sections.findIndex(section => section.value === selectedLayout) === 0}
+                disabled={sections.findIndex(section => section.id === selectedLayout) === 0}
                 className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
                 <ArrowLeftIcon className="size-3" />
@@ -88,7 +88,7 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
             <button
                 type="button"
                 onClick={() => navigate('next')}
-                disabled={sections.findIndex(section => section.value === selectedLayout) === sections.length - 1}
+                disabled={sections.findIndex(section => section.id === selectedLayout) === sections.length - 1}
                 className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
             >
                 <ArrowRightIcon className="size-3" />
