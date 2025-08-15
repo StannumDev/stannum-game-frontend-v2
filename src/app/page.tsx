@@ -38,7 +38,7 @@ export default function LandingPage() {
         </div>
       </section>
       <section className="w-full max-w-3xl min-h-svh p-4 lg:p-12 lg:bg-gradient-to-r lg:from-background lg:to-card/40 text-center flex flex-col justify-center items-center relative z-50">
-        <STANNUMLogo className="w-60 lg:w-80 fill-white"/>
+        <STANNUMLogo className="w-60 lg:w-80" gameColor='fill-stannum' stannumColor='fill-white'/>
         <h2 className="mt-8 lg:mt-12 subtitle-1 text-base lg:text-lg text-stannum">Una nueva forma de aprender</h2>
         <p className="mt-2 w-full max-w-lg text-sm lg:text-base text-white/75">Desarrollamos una forma de enseñanza que combina, los objetivos desafiantes que tienen los grandes deportistas, con lo divertido de los videojuegos.</p>
         <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Si ya tienes una cuenta</p>

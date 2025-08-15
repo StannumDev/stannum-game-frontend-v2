@@ -1,4 +1,4 @@
-import type { FullUserDetails, Program, Lesson, ContinueEntry } from "@/interfaces";
+import type { FullUserDetails, Program, Lesson, ContinueEntry, ProgramId } from "@/interfaces";
 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
@@ -19,7 +19,7 @@ const pctFrom = (current: number, total: number) => {
 };
 
 export const buildContinueEntryForProgram = (program: Program, user: FullUserDetails): ContinueEntry | null => {
-    const programId = program.id as "tia" | "tmd";
+    const programId = program.id as ProgramId;
     const state = user.programs?.[programId];
 
     if (!state?.isPurchased) return null;

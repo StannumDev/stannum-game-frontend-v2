@@ -1,4 +1,4 @@
-import type { FullUserDetails, Program } from "@/interfaces";
+import type { FullUserDetails, Program, UserProgram } from "@/interfaces";
 
 type Totals = {
     lessonsTotal: number;
@@ -8,7 +8,7 @@ type Totals = {
 };
 
 export const calculateProgramTotals = (program: Program, user: FullUserDetails): Totals => {
-    const userProgram = user.programs?.[program.id as keyof FullUserDetails["programs"]];
+    const userProgram:UserProgram = user.programs?.[program.id as keyof FullUserDetails["programs"]];
     const userLessons = userProgram?.lessonsCompleted ?? [];
     const userInstructions = userProgram?.instructions ?? [];
     let lessonsTotal = 0;

@@ -1,6 +1,6 @@
 import { Program } from "@/interfaces";
-import tia_logo from '@/assets/products/trenno_ia_logo.webp';
-import tmd_logo from '@/assets/products/tmd/tmd_logo.webp';
+import tia_logo from '@/assets/programs/trenno_ia_logo.webp';
+import tmd_logo from '@/assets/programs/trenno_mark_digital_logo.webp';
 
 const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
 

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import logo from '@/assets/products/tmd/tmd_logo.webp';
+import logo from '@/assets/programs/trenno_mark_digital_logo.webp';
 import background from '@/assets/background/stannum_game_trophy.webp';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@/icons';

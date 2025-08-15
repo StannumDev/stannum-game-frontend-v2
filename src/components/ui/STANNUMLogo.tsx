@@ -1,5 +1,7 @@
 interface Props{
-    className: string
+    className: string,
+    stannumColor?: string,
+    gameColor?: string,
 }
 
 interface Path{
@@ -40,7 +42,7 @@ const paths:Array<Path> = [
 
 ]
 
-export const STANNUMLogo = ({ className } :Props) => {
+export const STANNUMLogo = ({ className, stannumColor, gameColor } :Props) => {
   return (
     <svg
       aria-describedby="Logo de STANNUM"
@@ -52,7 +54,7 @@ export const STANNUMLogo = ({ className } :Props) => {
     >
       {
         paths.map(({path}:Path, i:number) => (
-          <path key={`logo_${i}`} fillRule="nonzero" d={path} />
+          <path key={`logo_${i}`} fillRule="nonzero" d={path} className={`${i === 0 ? stannumColor : gameColor}`}/>
         ))
       }
     </svg>

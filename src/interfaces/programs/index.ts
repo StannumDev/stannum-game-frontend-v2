@@ -1,5 +1,7 @@
 import { StaticImageData } from "next/image";
 
+export type ProgramId = 'tmd' | 'tia';
+
 export interface Instruction {
     id: string;
     title: string;
@@ -36,7 +38,7 @@ export interface Section {
 }
 
 export interface Program {
-    id: string;
+    id: ProgramId;
     name: string;
     description: string;
     logo: StaticImageData;

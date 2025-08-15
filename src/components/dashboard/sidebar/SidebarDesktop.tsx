@@ -77,7 +77,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                         key='logoNavbar'
                                         className='block'
                                     >
-                                        <STANNUMLogo className="fill-white w-44"/>
+                                        <STANNUMLogo className="w-44" gameColor='fill-stannum' stannumColor='fill-white'/>
                                     </motion.span>
                                     :
                                     <motion.span

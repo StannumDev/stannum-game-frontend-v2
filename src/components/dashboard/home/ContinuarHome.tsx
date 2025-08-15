@@ -33,6 +33,20 @@ export const ContinuarHome = async ({ user }: Props) => {
                     ) : (
                         <p className="text-card-lightest max-w-xl">Desde aquí podrás acceder rápidamente a tus programas adquiridos y retomar tus entrenamientos justo donde los dejaste.</p>
                     )}
+                    {entries.length > 0 ? (
+                        entries.map(e => (
+                            <ContinuarCardHome
+                                key={`${e.programId}-${e.href}`}
+                                href={e.href}
+                                programName={e.programName}
+                                lessonTitle={e.lessonTitle}
+                                progressPct={e.progressPct}
+                                programLogo={e.programLogo as StaticImageData}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-card-lightest max-w-xl">Desde aquí podrás acceder rápidamente a tus programas adquiridos y retomar tus entrenamientos justo donde los dejaste.</p>
+                    )}
                 </div>
             </section>
         </MotionWrapperLayout>

@@ -25,10 +25,13 @@ export type {
     TeamDetails,
     TestDetails,
     UserProfile,
-    UserSearchResult
+    UserSearchResult,
+    UserPreferences,
+    UserProgram
 } from './user';
 
 export type {
+    ProgramId,
     Lesson,
     Instruction,
     Module,

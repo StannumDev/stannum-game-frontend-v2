@@ -24,7 +24,7 @@ export const StoreCover = () => {
                     />
                 </div>
                 <div className='py-8 lg:py-16 relative z-20'>
-                    <STANNUMLogo className='w-48 lg:w-80 fill-white drop-shadow-md'/>
+                    <STANNUMLogo className='w-48 lg:w-80 drop-shadow-md' gameColor='fill-stannum' stannumColor='fill-white'/>
                 </div>
                 <div className='w-full lg:w-1/2 py-4 lg:py-6 px-6 lg:px-10 relative top-[1px] z-30'>
                     <svg
