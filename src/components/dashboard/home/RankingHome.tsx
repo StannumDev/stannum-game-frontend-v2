@@ -17,7 +17,7 @@ export const RankingHome = () => {
     useEffect(() => {
         const fetchRanking = async () => {
             try {
-                const data = await getIndividualRanking("TMD", 10);
+                const data = await getIndividualRanking(10);
                 setRankings(data);
             } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
@@ -47,8 +47,9 @@ export const RankingHome = () => {
                 <div className="mt-4 lg:mt-8 w-full">
                     <div className="w-full grid grid-cols-12 lg:grid-cols-8 gap-1 lg:gap-2 px-1 lg:px-4">
                         <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Posición</h3>
-                        <h3 className="col-span-5 lg:col-span-4 lg:pl-2 text-xs lg:text-base">Jugador</h3>
+                        <h3 className="col-span-5 lg:col-span-3 lg:pl-2 text-xs lg:text-base">Jugador</h3>
                         <h3 className="col-span-3 lg:col-span-2 lg:pl-2 text-xs lg:text-base">Empresa</h3>
+                        <h3 className="col-span-3 lg:col-span-1 lg:pl-2 text-xs lg:text-base">Nivel</h3>
                         <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Puntos</h3>
                     </div>
                     <div className="mt-2 w-[calc(100%+11px)] lg:w-[calc(100%+13px)] pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start max-h-80 lg:max-h-64 overflow-y-scroll overflow-x-hidden">

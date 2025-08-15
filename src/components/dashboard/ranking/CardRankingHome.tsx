@@ -6,7 +6,7 @@ import type { SimpleRanking } from "@/interfaces"
 import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
 import foto from "@/assets/user/default_user.webp";
 
-export const CardRankingHome = ({ position, name, username, photo, enterprise, points }:SimpleRanking) => {
+export const CardRankingHome = ({ position, name, username, photo, enterprise, level, points }:SimpleRanking) => {
 
   const renderPositionIcon = () => {
     if (position === 1) return <FirstPlaceIcon />;
@@ -23,11 +23,12 @@ export const CardRankingHome = ({ position, name, username, photo, enterprise, p
               </span>
               {renderPositionIcon()}
           </h3>
-          <h3 className="col-span-5 lg:col-span-4 lg:pl-2 flex items-center gap-2 lg:gap-3">
+          <h3 className="col-span-5 lg:col-span-3 lg:pl-2 flex items-center gap-2 lg:gap-3">
             <Image src={photo || foto} alt={`Foto de ${name}`} width={36} height={36} className="size-7 lg:size-9 rounded-full" />
             <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </h3>
           <h3 className="col-span-3 lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>
+          <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{level}</h3>
           <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{points}</h3>
       </Link>
   )

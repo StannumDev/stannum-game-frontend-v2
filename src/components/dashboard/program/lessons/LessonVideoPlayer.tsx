@@ -187,7 +187,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 thumbnailTime={5}
                 forwardSeekOffset={5}
                 backwardSeekOffset={5}
-                defaultShowRemainingTime
+                // defaultShowRemainingTime
                 defaultHiddenCaptions
                 primaryColor="rgba(255,255,255,1)"
                 accentColor="#00FFCC"

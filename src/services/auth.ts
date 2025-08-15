@@ -90,13 +90,11 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
     }
 };
 
-export const logout = (): void => {
+export const logout = async (): Promise<void> => {
     try {
-        googleLogout();
+        await googleLogout();
         Cookies.remove('token', { path: '/' });
-        Object.keys(Cookies.get()).forEach((cookie) => {
-            cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
-        });
+        await Promise.all(Object.keys(Cookies.get()).map((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' })));
         window.location.href = '/';
     } catch (error) {
         throw error;

@@ -3,6 +3,7 @@ export interface SimpleRanking {
     name: string;
     username: string;
     photo: string;
-    enterprise: string;
+    enterprise?: string;
     points: number;
+    level: number;
 }

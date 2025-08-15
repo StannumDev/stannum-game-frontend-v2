@@ -1,7 +1,6 @@
 export {
     FaChevronLeft as ArrowLeftIcon,
     FaChevronRight as ArrowRightIcon,
-    FaChevronUp as ArrowUpIcon,
     FaChevronDown as ArrowDownIcon,
     FaRankingStar as RankingStarIcon,
     FaLinkedinIn as LinkedInIcon,
@@ -15,7 +14,10 @@ export {
     FaChessKnight as ChessKnightIcon,
     FaChessBishop as ChessBishopIcon,
     FaChessPawn as ChessPawnIcon,
-    FaTrashCan as TrashIcon
+    FaTrashCan as TrashIcon,
+    FaArrowTrendUp as ArrowTrendUp,
+    FaRegStar as StarIcon,
+    FaRegClock as ClockIcon,
 } from 'react-icons/fa6';
 
 export {
@@ -47,13 +49,8 @@ export {
     RiApps2Fill as AppsIcon,
     RiApps2AddFill as NewAppsIcon,
     RiFilePaper2Fill as PaperIcon,
-    RiFireLine as WarmupIcon,
-    RiFlagLine as PreseasonIcon,
-    RiMedal2Line as SeasonIcon,
-    RiCustomerService2Line as SupportIcon,
+    RiFireLine as FireIcon,
     RiToolsLine as ToolsIcon,
-    RiTrophyLine as TrophyIcon,
-    RiShieldStarLine as MissionsIcon,
     RiVipCrownLine as CrownIcon
 } from "react-icons/ri";
 
@@ -69,8 +66,7 @@ export {
 } from "react-icons/md";
 
 export {
-    GoHomeFill as HomeIcon,
-    GoDownload as DownloadIcon
+    GoHomeFill as HomeIcon
 } from "react-icons/go";
 
 export {

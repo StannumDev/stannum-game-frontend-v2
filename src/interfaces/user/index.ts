@@ -27,8 +27,10 @@ export interface TeamDetails {
 
 export interface LevelDetails {
     currentLevel: number;
-    experience: number;
-    nextLevelExp: number;
+    experienceTotal: number;
+    experienceCurrentLevel: number;
+    experienceNextLevel: number;
+    progress: number;
 }
 
 export interface AchievementDetails {
@@ -44,20 +46,25 @@ export interface ProgramDetails {
     instructions: Array<Instruction>;
     lessonsCompleted: Array<LessonDetails>;
     lastWatchedLesson?: Array<LessonDetails>;
-    tests: Array<TestDetails>;
+    // tests: Array<TestDetails>;
     productKey?: string;
 }
 
 export interface InstructionDetails {
-    id: string;
-    title: string;
-    isCompleted: boolean;
+    instructionId: string;
+    startDate: string;
+    submittedAt?: string;
+    reviewedAt?: string;
+    score?: number;
+    xpGrantedAt?: string;
+    estimatedTimeSec?: number;
+    observations?: string;
+    status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
 }
 
 export interface LessonDetails {
     id: string;
     title: string;
-    progress: number;
 }
 
 export interface TestDetails {
@@ -90,6 +97,8 @@ export interface UserProgram {
         reviewedAt?: string;
         score?: number;
         observations?: string;
+        xpGrantedAt?: string;
+        estimatedTimeSec?: number;
         status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
     }[];
     lessonsCompleted: {
@@ -101,11 +110,11 @@ export interface UserProgram {
         viewedAt: string;
         currentTime?: number;
     };
-    tests: {
-        date: string;
-        // sections: any[];
-        totalScore: number;
-    }[];
+    // tests: {
+    //     date: string;
+    //     sections?: any[];
+    //     totalScore: number;
+    // }[];
     productKey?: string;
 }
 
@@ -125,29 +134,14 @@ export interface FullUserDetails {
     id: string;
     username: string;
     profilePhoto?: string;
-    profile: {
-        name: string;
-        birthdate?: string;
-        country?: string;
-        region?: string;
-        aboutMe?: string;
-    };
-    enterprise?: {
-        name: string;
-        jobPosition: string;
-    };
+    profile: UserProfile;
+    enterprise?: EnterpriseDetails;
     teams?: Array<{
         programName: string;
         teamName: string;
         role: string;
     }>;
-    level?: {
-        currentLevel: number;
-        experienceTotal: number;
-        experienceCurrentLevel: number;
-        experienceNextLevel: number;
-        progress: number;
-    };
+    level: LevelDetails;
     achievements?: Array<{
         achievementId: string;
         progress: number;
@@ -158,4 +152,19 @@ export interface FullUserDetails {
         tmd: UserProgram;
     };
     preferences: UserPreferences;
+    dailyStreak: {
+        count: number;
+        lastActivityLocalDate?: string;
+        timezone: string;
+    };
+    xpHistory: Array<{
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS";
+        xp: number;
+        date: string;
+        // meta?: string;
+    }>;
+    unlockedCovers?: Array<{
+        coverId: string;
+        unlockedDate: string;
+    }>;
 }

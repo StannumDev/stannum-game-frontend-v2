@@ -1,5 +1,5 @@
-import { programs } from "@/config/programs";
 import { redirect } from "next/navigation";
+import { programs } from "@/config/programs";
 
 interface Props {
     params: {

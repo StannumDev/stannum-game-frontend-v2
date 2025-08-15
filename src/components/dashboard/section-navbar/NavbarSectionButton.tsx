@@ -1,3 +1,5 @@
+'use client'
+
 import type { NavbarSection } from "@/interfaces";
 import { NavbarSectionIndicator } from '@/components';
 

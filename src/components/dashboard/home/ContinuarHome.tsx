@@ -1,17 +1,16 @@
 import { StaticImageData } from "next/image";
-import { getUserByToken } from "@/services";
 import { PlayCircleIcon } from "@/icons";
 import { buildContinueEntryForProgram } from "@/utilities";
 import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
-import { ContinueEntry } from "@/interfaces";
+import { ContinueEntry, FullUserDetails } from "@/interfaces";
 import { programs } from "@/config/programs";
 
-export const ContinuarHome = async () => {
-    const user = await getUserByToken();
-    if (!user) return null;
+interface Props {
+    user: FullUserDetails
+}
 
+export const ContinuarHome = async ({ user }: Props) => {
     const entries: Array<ContinueEntry> = programs.map(p => buildContinueEntryForProgram(p, user)).filter(Boolean) as ContinueEntry[];
-
     return (
         <MotionWrapperLayout>
             <section id="continue-training" className="w-full">

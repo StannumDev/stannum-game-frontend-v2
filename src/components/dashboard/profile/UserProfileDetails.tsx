@@ -22,12 +22,12 @@ export const UserProfileDetails = ({user, fetchUserData}:Props) => {
                         </div>
                         <UserProfileSocialMedias/>
                         <div className="content-visibility-hidden lg:content-visibility-visible">
-                            <UserProfileLevel/>
+                            <UserProfileLevel user={user}/>
                         </div>
                     </div>
                 </section>
                 <div className="lg:content-visibility-hidden">
-                    <UserProfileLevel/>
+                    <UserProfileLevel user={user}/>
                 </div>
             </MotionWrapperLayout>
             <MotionWrapperLayout>

@@ -16,17 +16,18 @@ const tokenError = {
   },
 };
 
-export const getIndividualRanking = async (programName: string, limit: number = 10): Promise<SimpleRanking[]> => {
+export const getIndividualRanking = async (limit: number = 10): Promise<SimpleRanking[]> => {
   try {
     const token = Cookies.get("token");
     if (!token) throw tokenError;
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual/${programName}?limit=${limit}`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual?limit=${limit}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
+    console.log(response)
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
   } catch (error) {
@@ -51,3 +52,21 @@ export const getTeamRanking = async (programName: string): Promise<Array<TeamRan
     throw error;
   }
 };
+
+// export const getIndividualRanking = async (programName: string, limit: number = 10): Promise<SimpleRanking[]> => {
+//   try {
+//     const token = Cookies.get("token");
+//     if (!token) throw tokenError;
+
+//     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual/${programName}?limit=${limit}`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+
+//     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
+//     return response.data.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };

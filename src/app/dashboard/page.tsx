@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { PresentacionHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome, StanHelp } from "@/components"
+import { getUserByToken } from "@/services";
 
 export const metadata: Metadata = {
     title: 'Inicio',
@@ -22,7 +23,9 @@ export const metadata: Metadata = {
     },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+    const user = await getUserByToken();
+    if (!user) return null;
     return (
         <main className="main-container">
             <h1 className="sr-only">Pantalla principal STANNUM Game</h1>
@@ -30,10 +33,10 @@ export default function HomePage() {
                 <div className="lg:col-span-7 lg:min-h-svh flex flex-col items-start gap-4 lg:gap-4">
                     <PresentacionHome/>
                     {/* <GoalsHome/> */}
-                    <ContinuarHome/>
+                    <ContinuarHome user={user}/>
                 </div>
                 <div className="lg:col-span-5 lg:min-h-svh flex flex-col items-start gap-4 lg:gap-4">
-                    <RachaHome/>
+                    <RachaHome user={user}/>
                     <ActivarProductoHome/>
                     <RankingHome/>
                     <StanHelp/>
