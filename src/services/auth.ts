@@ -94,7 +94,7 @@ export const logout = async (): Promise<void> => {
     try {
         await googleLogout();
         Cookies.remove('token', { path: '/' });
-        await Promise.all(Object.keys(Cookies.get()).map((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' })));
+        Object.keys(Cookies.get()).map((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' }));
         window.location.href = '/';
     } catch (error) {
         throw error;

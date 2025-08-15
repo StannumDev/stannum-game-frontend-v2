@@ -51,11 +51,11 @@ export const ProgramCover = ({ program, user }: Props) => {
             <div className='py-8 lg:py-16 relative z-20'>
                 <Image priority src={program.logo} alt={`Logo ${program.name}`} className='w-64 lg:w-80 object-contain drop-shadow-md'/>
             </div>
-            <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-30'>
+            {/* <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-30'>
                 <h2 className='w-full px-2 text-stannum bg-stannum/40 rounded'>Top Leader</h2>
                 <p className='mt-1 w-full title-2 text-lg truncate'>STANNUM</p>
                 <p className='font-thin text-neutral-400'>3500 Pts</p>
-            </div>
+            </div> */}
             <div className='w-full lg:w-1/2 py-4 lg:py-6 px-6 lg:px-10 relative top-[1px] z-30'>
                 <svg
                     className="size-full absolute top-0 left-0 z-0"

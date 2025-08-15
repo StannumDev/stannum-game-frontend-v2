@@ -2,6 +2,8 @@ export {
     FaChevronLeft as ArrowLeftIcon,
     FaChevronRight as ArrowRightIcon,
     FaChevronDown as ArrowDownIcon,
+    FaArrowTrendUp as ArrowTrendUp,
+    FaArrowTrendDown as ArrowTrendDown,
     FaRankingStar as RankingStarIcon,
     FaLinkedinIn as LinkedInIcon,
     FaInstagram as InstagramIcon,
@@ -15,7 +17,6 @@ export {
     FaChessBishop as ChessBishopIcon,
     FaChessPawn as ChessPawnIcon,
     FaTrashCan as TrashIcon,
-    FaArrowTrendUp as ArrowTrendUp,
     FaRegStar as StarIcon,
     FaRegClock as ClockIcon,
 } from 'react-icons/fa6';

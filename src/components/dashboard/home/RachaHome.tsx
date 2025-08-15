@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { ArrowTrendUp, ClockIcon, CrossIcon, FireIcon, LockIcon, StarIcon } from "@/icons";
+import { ArrowTrendDown, ArrowTrendUp, ClockIcon, FireIcon, LockIcon, StarIcon } from "@/icons";
 import { MotionWrapperLayout } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 
@@ -18,7 +18,7 @@ const formatLocalDate = (tz: string, d: Date = new Date()) => {
 };
 
 export const RachaHome = ({ user }: Props) => {
-    const [streakStatus, setStreakStatus] = useState({missedToday: false, streakCount: 0});
+    const [streakStatus, setStreakStatus] = useState({missedToday: false, streakCount: 0, maxStreak: false});
 
     useEffect(() => {
         const { dailyStreak } = user;
@@ -26,13 +26,13 @@ export const RachaHome = ({ user }: Props) => {
         const today = formatLocalDate(timezone);
         const missedToday = !dailyStreak?.lastActivityLocalDate || dailyStreak.lastActivityLocalDate !== today;
         const streakCount = dailyStreak?.count || 0;
-        setStreakStatus({ missedToday, streakCount });
+        const maxStreak = dailyStreak?.count >= 7;
+        setStreakStatus({ missedToday, streakCount, maxStreak });
     }, [user]);
 
-    
     const days = Array.from({ length: 7 }, (_, i) => {
         if (i < streakStatus.streakCount) return "completed";
-        if (i === streakStatus.streakCount) return "today";
+        if (i === streakStatus.streakCount && streakStatus.missedToday) return "today";
         return "locked";
     });
 
@@ -42,22 +42,22 @@ export const RachaHome = ({ user }: Props) => {
         <MotionWrapperLayout>
             <section
                 id="streak-section"
-                className={`w-full card border ${ streakStatus.missedToday ? "border-invalid shadow-[rgba(244,80,80,0.25)]" : "border-stannum"} flex flex-col gap-4 relative`}
+                className={`w-full card border ${ streakStatus.missedToday ? "border-invalid shadow-[rgba(244,80,80,0.25)]" : "border-stannum"} ${ streakStatus.maxStreak && !streakStatus.missedToday && "from-stannum/50 to-stannum/25"} flex flex-col gap-4 relative`}
             >
                 <div className="flex items-center gap-4">
                     <h2 className="title-2">Racha diaria</h2>
-                    <div className={`px-2 bg-card rounded-full border border-card-light text-sm font-black ${streakStatus.missedToday ? "text-invalid" : streakStatus.streakCount === 7 ? "text-stannum" : "text-card-lightest"}`}>{streakStatus.streakCount} / 7</div>
+                    <div className={`px-2 bg-card rounded-full border border-card-light text-sm font-black ${streakStatus.missedToday ? "text-invalid" : streakStatus.maxStreak ? "text-stannum" : "text-card-lightest"}`}>{streakStatus.streakCount} / 7</div>
                 </div>
                 <div className="flex items-center gap-4 lg:gap-6">
                     <div className="w-fit shrink-0 flex flex-col items-center">
                         <div className={`mt-1 p-3 border-2 rounded-full relative ${streakStatus.missedToday ? "bg-invalid/25 border-invalid/75 text-invalid" : "bg-stannum/25 border-stannum/75 text-stannum"}`}>
-                            <FireIcon className="size-6"/>
-                            <div className="size-5 bg-card text-xs rounded-full flex justify-center items-center absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
+                            { streakStatus.missedToday ? <ClockIcon className="size-6"/> : <FireIcon className="size-6"/>}
+                            <div className="size-5 aspect-square bg-card text-xs rounded-full flex justify-center items-center absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
                                 {streakStatus.streakCount}
                             </div>
                         </div>
                         <p className={`mt-2 text-xs flex items-center gap-2 ${streakStatus.missedToday ? "text-invalid" : "text-stannum"}`}>
-                            {streakStatus.missedToday ? <CrossIcon/> : <ArrowTrendUp/>}
+                            {streakStatus.missedToday ? <ArrowTrendDown/> : <ArrowTrendUp/>}
                             <span>{streakStatus.missedToday ? "Aún no entrenaste" : "Manten tu racha"}</span>
                         </p>
                     </div>
