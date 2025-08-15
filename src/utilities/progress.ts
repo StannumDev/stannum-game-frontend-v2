@@ -33,7 +33,6 @@ export const calculateProgramTotals = (program: Program, user: FullUserDetails):
 
 export const calculateProgramProgress = (program: Program, user: FullUserDetails): number => {
     const { lessonsTotal, lessonsDone, instructionsTotal, instructionsDone } = calculateProgramTotals(program, user);
-    console.log(`Program: ${program.name}, Lessons Total: ${lessonsTotal}, Lessons Done: ${lessonsDone}, Instructions Total: ${instructionsTotal}, Instructions Done: ${instructionsDone}`);
     const totalItems = lessonsTotal + instructionsTotal;
     const doneItems = lessonsDone + instructionsDone;
 

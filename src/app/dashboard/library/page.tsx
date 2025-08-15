@@ -24,20 +24,8 @@ export const metadata: Metadata = {
 };
 
 export default async function LibraryPage() {
-
-    // const hola = {
-    //     TIAM01L01: 'IpKkIp1BCIVPkDVr02JmHRmmtISCrhAMNzhtP7EFifyY',
-    //     TIAM01L02: 'IpKkIp1BCIVPkDVr02JmHRmmtISCrhAMNzhtP7EFifyY',
-    //     TIAM01L03: 'IpKkIp1BCIVPkDVr02JmHRmmtISCrhAMNzhtP7EFifyY',
-    //     TIAM01L04: 'IpKkIp1BCIVPkDVr02JmHRmmtISCrhAMNzhtP7EFifyY',
-    // }
-    // console.log(JSON.stringify(hola));
-
     const user = await getUserByToken();
-    if (!user) {
-        return null;
-    }
-
+    if (!user) return null;
     return (
         <main className="main-container">
             <h1 className="sr-only">Biblioteca STANNUM Game</h1>
