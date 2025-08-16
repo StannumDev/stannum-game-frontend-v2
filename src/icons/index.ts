@@ -14,11 +14,10 @@ export {
     FaChessKing as ChessKingicon,
     FaChessQueen as ChessQueenIcon,
     FaChessKnight as ChessKnightIcon,
-    FaChessBishop as ChessBishopIcon,
     FaChessPawn as ChessPawnIcon,
     FaTrashCan as TrashIcon,
     FaRegStar as StarIcon,
-    FaRegClock as ClockIcon,
+    FaRegClock as ClockIcon
 } from 'react-icons/fa6';
 
 export {
@@ -31,6 +30,10 @@ export {
 export {
     CiSearch as SearchIcon,
 } from "react-icons/ci";
+
+export {
+    IoIosAt as AtIcon
+} from "react-icons/io";
 
 export {
     TbInfoHexagon as InfoHexagonIcon,
@@ -62,8 +65,7 @@ export {
 export {
     MdModeEdit as EditIcon,
     MdAddAPhoto as AddPhotoIcon,
-    MdOutlineVpnKey as KeyIcon,
-    MdAlternateEmail as AtIcon
+    MdOutlineVpnKey as KeyIcon
 } from "react-icons/md";
 
 export {

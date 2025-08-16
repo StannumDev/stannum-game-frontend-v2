@@ -7,6 +7,8 @@ const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLI
 export const TIA_PROGRAM: Program = {
     id: "tia",
     name: "TRENNO IA",
+    price: 500,
+    categories: ["main"],
     description: "Programa intensivo especializado en el entrenamiento en inteligencia artificial para líderes de empresas y sus equipos.",
     logo: tia_logo,
     sections: [
@@ -164,6 +166,8 @@ export const TIA_PROGRAM: Program = {
 export const TMD_PROGRAM: Program = {
     id: "tmd",
     name: "TRENNO Mark Digital",
+    price: 0,
+    categories: ["free"],
     description: "Programa especializado en organización digital y marketing para emprendedores.",
     logo: tmd_logo,
     sections: [

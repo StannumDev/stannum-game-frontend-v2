@@ -34,10 +34,8 @@ export interface LevelDetails {
 }
 
 export interface AchievementDetails {
-    id: string;
-    title: string;
-    description: string;
-    achievedAt: string;
+    achievementId: string;
+    unlockedAt: Date
 }
 
 export interface ProgramDetails {
@@ -142,11 +140,7 @@ export interface FullUserDetails {
         role: string;
     }>;
     level: LevelDetails;
-    achievements?: Array<{
-        achievementId: string;
-        progress: number;
-        isCompleted: boolean;
-    }>;
+    achievements: Array<AchievementDetails>;
     programs: {
         tia: UserProgram;
         tmd: UserProgram;

@@ -40,7 +40,7 @@ export const UserProfileWrapper = ({username}:Props) => {
     return (
         <Fragment>
             <UserProfileDetails user={userData} fetchUserData={fetchUserData}/>
-            <ProfileSectionsLayout />
+            <ProfileSectionsLayout user={userData} />
         </Fragment>
     )
 }

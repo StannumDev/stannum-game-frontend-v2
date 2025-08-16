@@ -2,39 +2,20 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FaChessPawn, FaChessKing, FaChessKnight } from 'react-icons/fa6';
-import type { FullUserDetails, NavbarSection as NavbarSectionType } from "@/interfaces";
-import { LibraryAllSection, MotionWrapperLayoutClient, NavbarSection } from "@/components";
-import { AppsIcon } from "@/icons";
+import type { FullUserDetails, NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
+import { MotionWrapperLayoutClient, NavbarSection, LibraryCard } from "@/components";
+import { AppsIcon, ChessKingicon, ChessKnightIcon, ChessPawnIcon } from "@/icons";
+import { calculateProgramProgress } from "@/utilities";
+import { programs } from "@/config/programs";
 
-interface Props {
-    user: FullUserDetails;
-}
+interface Props { user: FullUserDetails; }
 
 const sections: Array<NavbarSectionType> = [
-    {
-        name: "Todos",
-        id: "",
-        Icon: AppsIcon
-    },
-    {
-        name: "Principales",
-        id: "main",
-        Icon: FaChessKing
-    },
-    {
-        name: "Gratuitos",
-        id: "free",
-        Icon: FaChessKnight,
-    },
-    {
-        name: "Shorts",
-        id: "shorts",
-        Icon: FaChessPawn,
-    },
+    { name: "Todos", id: "", Icon: AppsIcon },
+    { name: "Principales", id: "main", Icon: ChessKingicon },
+    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon },
+    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon },
 ];
-
-type SectionOptions = '' | 'main' | 'free' | 'shorts';
 
 export const LibrarySectionsLayout = ({ user }: Props) => {
     const router = useRouter();
@@ -42,37 +23,58 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
     const searchParams = useSearchParams();
 
     const layoutParam = searchParams.get('section');
-    const [selectedLayout, setSelectedLayout] = useState<SectionOptions>('');
+    const [selectedLayout, setSelectedLayout] = useState<ProgramCategory>('');
 
     useEffect(() => {
-        const validLayout = layoutParam && ['', 'main', 'free', 'shorts'].includes(layoutParam);
-        setSelectedLayout(validLayout ? (layoutParam as SectionOptions) : '');
-
-        if (!validLayout) {
-            router.push(pathname, { scroll: false });
-        }
+        const validCategories: Array<ProgramCategory> = ['', 'main', 'free', 'shorts'];
+        const validLayout = layoutParam && validCategories.includes(layoutParam as ProgramCategory);
+        setSelectedLayout(validLayout ? (layoutParam as ProgramCategory) : '');
+        if (!validLayout) router.push(pathname, { scroll: false });
     }, [pathname, router, layoutParam]);
 
-    const handleLayoutChange = useCallback((layout: SectionOptions): void => {
+    const handleLayoutChange = useCallback((layout: ProgramCategory): void => {
         const params = new URLSearchParams(searchParams.toString());
         setSelectedLayout(layout);
         layout ? params.set('section', layout) : params.delete('section');
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
-    
+
+    const filteredPrograms = programs.filter(program => user.programs?.[program.id as keyof FullUserDetails['programs']]?.isPurchased).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
 
     return (
         <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
                 <h2 className="mb-4 title-2 px-4 lg:px-6">Tus programas</h2>
-                <NavbarSection<SectionOptions>
+                <NavbarSection<ProgramCategory>
                     sections={sections}
                     selectedLayout={selectedLayout}
                     handleLayoutChange={handleLayoutChange}
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
-                <div className="px-4 lg:px-6 overflow-x-hidden">
-                    { selectedLayout === '' && <LibraryAllSection user={user}/> }
+                <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+                    {filteredPrograms.length === 0 && (
+                        <div className="col-span-full text-center">
+                            <h2 className="text-2xl font-semibold text-stannum">
+                                ¡Aún no te has unido a ningún programa!
+                            </h2>
+                            <p className="mt-2 text-lg text-card-lightest">
+                                Cuando compres tu primer programa, aparecerá en esta sección.
+                            </p>
+                        </div>
+                    )}
+                    {filteredPrograms.map(program => {
+                        const progress = calculateProgramProgress(program, user);
+                        return (
+                            <LibraryCard
+                                key={program.id}
+                                id={program.id}
+                                name={program.name}
+                                description={program.description}
+                                logo={program.logo}
+                                progress={progress}
+                            />
+                        );
+                    })}
                 </div>
             </section>
         </MotionWrapperLayoutClient>

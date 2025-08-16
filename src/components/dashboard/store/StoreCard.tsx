@@ -1,29 +1,49 @@
-import Image from 'next/image';
-import logo from '@/assets/programs/trenno_mark_digital_logo.webp';
-import background from '@/assets/background/stannum_game_trophy.webp';
 import Link from 'next/link';
+import Image, { type StaticImageData } from 'next/image';
 import { ArrowRightIcon } from '@/icons';
+import background from '@/assets/background/stannum_game_trophy.webp';
 
-export const StoreCard = () => {
+interface Props {
+    id: string;
+    name: string;
+    description: string;
+    logo: StaticImageData;
+    price: number;
+    isPurchased?: boolean;
+}
 
+export const StoreCard = ({ id, name, description, logo, price, isPurchased }: Props) => {
     return (
-        <Link href={'/dashboard/library'} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
+        <Link href={ isPurchased ? `/dashboard/library/${id}` : `/dashboard/store/${id}` } className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
+            { isPurchased && <div className="bg-stannum/40 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-3 right-3 z-20">En tu biblioteca</div>  }
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>
-                <Image src={background} alt='Programa STANNUM Game' className='size-full object-cover absolute top-0 left-0 z-0'/>
+                <Image src={background} alt={name} className='size-full object-cover absolute top-0 left-0 z-0'/>
             </div>
             <div className='w-full grow flex flex-col p-6 pt-8 lg:bg-card lg:group-hover:bg-card-light z-20'>
                 <div className='w-full grow flex flex-col justify-center items-center'>
-                    <Image src={logo} alt='Programa STANNUM Game' className='w-52 lg:w-48'/>
-                    <p className='hidden lg:block mt-4 text-center line-clamp-2'>Aprende a profesionalizar tu equipo de venta y marketing.</p>
+                    <Image src={logo} alt={name} className='w-52 lg:w-48'/>
+                    <p className='hidden lg:block mt-4 text-center line-clamp-2'>{description}</p>
                 </div>
                 <div className='mt-6 w-full flex items-end gap-4'>
                     <div className='grow flex flex-col items-center lg:items-start gap-1'>
-                        <div className='flex justify-center items-end gap-1'><b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>500</b> <small className='text-sm font-thin text-white/75'>USD</small></div>
+                        {
+                            price === 0 ? (
+                                <div className='flex justify-center items-end gap-1'>
+                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter uppercase'>Gratis</b>
+                                </div>
+                            )
+                            : (
+                                <div className='flex justify-center items-end gap-1'>
+                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>{price}</b>
+                                    <small className='text-sm font-thin text-white/75'>USD</small>
+                                </div>
+                            )
+                        }
                         <small className='subtitle-1'>Oferta lanzamiento</small>
                     </div>
                     <div className='hidden w-fit lg:flex justify-center items-center'>
-                        <span className='text-sm text-white/75 group-hover:text-white'>Ver más</span>
+                        <span className='text-sm text-white/75 group-hover:text-white'>{ isPurchased ? 'Ir ahora' : 'Ver más'}</span>
                         <div className='group-hover:ml-3 w-0 group-hover:w-3 h-3 relative transition-200'>
                             <ArrowRightIcon className='size-3 absolute top-0 -left-1 opacity-0 group-hover:opacity-100 transition-200'/>
                         </div>
@@ -31,5 +51,5 @@ export const StoreCard = () => {
                 </div>
             </div>
         </Link>
-    )
-}
+    );
+};

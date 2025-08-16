@@ -4,7 +4,7 @@ export type { ToastData } from './ToastData';
 export type { NavbarSection } from './NavbarSection';
 export type { ContinueEntry } from './ContinueEntry';
 
-export type { SocialMedia } from './profile/SocialMedia';
+export type { SocialMedia } from './SocialMedia';
 
 export type { RegisterState } from './user/RegisterState';
 export type { SimpleRanking } from './user/ranking/SimpleRanking';
@@ -32,6 +32,7 @@ export type {
 
 export type {
     ProgramId,
+    ProgramCategory,
     Lesson,
     Instruction,
     Module,

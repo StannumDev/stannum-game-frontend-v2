@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NavbarSection as NavbarSectionType } from "@/interfaces";
 import { ArrowLeftIcon, ArrowRightIcon } from "@/icons";
 import { NavbarSectionButton } from "@/components";
@@ -11,19 +11,15 @@ interface Props<T> {
     handleLayoutChange: (layout: T) => void;
 }
 
-export const NavbarSection = <T extends string>({ sections, selectedLayout, handleLayoutChange }: Props<T>) => {
+export const NavbarSection = <T extends string>({sections, selectedLayout, handleLayoutChange}: Props<T>) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [isFocused, setIsFocused] = useState(false);
 
     const navigate = useCallback((direction: 'previous' | 'next') => {
         const currentIndex = sections.findIndex(section => section.id === selectedLayout);
-
-        if (direction === 'previous' && currentIndex > 0) {
-            handleLayoutChange(sections[currentIndex - 1].id as T);
-        }
-
-        if (direction === 'next' && currentIndex < sections.length - 1) {
-            handleLayoutChange(sections[currentIndex + 1].id as T);
-        }
+        if (direction === 'previous' && currentIndex > 0) handleLayoutChange(sections[currentIndex - 1].id as T);
+        if (direction === 'next' && currentIndex < sections.length - 1) handleLayoutChange(sections[currentIndex + 1].id as T);
     }, [sections, selectedLayout, handleLayoutChange]);
 
     useEffect(() => {
@@ -31,7 +27,6 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
         if(currentButton && containerRef.current){
             const container = containerRef.current;
             const button = currentButton as HTMLElement;
-
             const containerRect = container.getBoundingClientRect();
             const buttonRect = button.getBoundingClientRect();
 
@@ -46,53 +41,57 @@ export const NavbarSection = <T extends string>({ sections, selectedLayout, hand
     }, [selectedLayout]);
 
     useEffect(() => {
+        if (!isFocused) return;
+
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'ArrowLeft') {
-                navigate('previous');
-            } else if (event.key === 'ArrowRight') {
-                navigate('next');
-            } else if (!isNaN(Number(event.key)) && Number(event.key) >= 1 && Number(event.key) <= sections.length) {
+            if (event.key === 'ArrowLeft') navigate('previous');
+            else if (event.key === 'ArrowRight') navigate('next');
+            else if (!isNaN(Number(event.key)) && Number(event.key) >= 1 && Number(event.key) <= sections.length) {
                 const sectionIndex = Number(event.key) - 1;
                 handleLayoutChange(sections[sectionIndex].id as T);
             }
         };
+
         document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [selectedLayout, handleLayoutChange, navigate, sections, sections.length]);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [isFocused, navigate, handleLayoutChange, sections, sections.length]);
 
     return (
-        <nav className="w-full px-2 lg:px-6 flex justify-between items-center gap-2 lg:gap-4">
-            <button
-                type="button"
-                onClick={() => navigate('previous')}
-                disabled={sections.findIndex(section => section.id === selectedLayout) === 0}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
-            >
-                <ArrowLeftIcon className="size-3" />
-            </button>
-            <div
-                ref={containerRef}
-                className="w-full flex items-center gap-4 overflow-x-auto scrollbar-hide"
-            >
-                {sections.map((section: NavbarSectionType, i: number) => (
-                    <NavbarSectionButton
-                        key={`navbar_section_${i}`}
-                        section={section}
-                        selectedLayout={selectedLayout}
-                        handleLayoutChange={handleLayoutChange}
-                    />
-                ))}
-            </div>
-            <button
-                type="button"
-                onClick={() => navigate('next')}
-                disabled={sections.findIndex(section => section.id === selectedLayout) === sections.length - 1}
-                className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
-            >
-                <ArrowRightIcon className="size-3" />
-            </button>
-        </nav>
+        <div
+            ref={wrapperRef}
+            tabIndex={0}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className="focus:outline-none"
+        >
+            <nav className="w-full px-2 lg:px-6 flex justify-between items-center gap-2 lg:gap-4">
+                <button
+                    type="button"
+                    onClick={() => navigate('previous')}
+                    disabled={sections.findIndex(section => section.id === selectedLayout) === 0}
+                    className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
+                >
+                    <ArrowLeftIcon className="size-3" />
+                </button>
+                <div ref={containerRef} className="w-full flex items-center gap-4 overflow-x-auto scrollbar-hide">
+                    {sections.map((section: NavbarSectionType, i: number) => (
+                        <NavbarSectionButton
+                            key={`navbar_section_${i}`}
+                            section={section}
+                            selectedLayout={selectedLayout}
+                            handleLayoutChange={handleLayoutChange}
+                        />
+                    ))}
+                </div>
+                <button
+                    type="button"
+                    onClick={() => navigate('next')}
+                    disabled={sections.findIndex(section => section.id === selectedLayout) === sections.length - 1}
+                    className="py-1.5 px-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light lg:hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent flex justify-center items-center cursor-pointer disabled:cursor-default transition-200"
+                >
+                    <ArrowRightIcon className="size-3" />
+                </button>
+            </nav>
+        </div>
     );
 };

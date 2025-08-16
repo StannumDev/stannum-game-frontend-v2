@@ -66,14 +66,12 @@ export { CardRankingHome } from "./dashboard/ranking/CardRankingHome";
 // LIBRARY
 export { LibraryCover } from "./dashboard/library/LibraryCover";
 export { LibrarySectionsLayout } from "./dashboard/library/LibrarySectionsLayout";
-export { LibraryAllSection } from "./dashboard/library/sections/LibraryAllSection";
 export { LibraryCard } from "./dashboard/library/LibraryCard";
 
 // STORE
 export { StoreCover } from "./dashboard/store/StoreCover";
 export { StoreTutorial } from "./dashboard/store/StoreTutorial";
 export { StoreSectionsLayout } from "./dashboard/store/StoreSectionsLayout";
-export { StoreAllSection } from "./dashboard/store/sections/StoreAllSection";
 export { StoreCard } from "./dashboard/store/StoreCard";
 
 // PROGRAMS

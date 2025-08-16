@@ -46,7 +46,7 @@ export const GoogleAuthUsername = () => {
 
     return (
     <section className="w-full min-h-svh px-4 md:px-0 py-12 lg:py-24 flex justify-center items-center">
-        <div className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
+        <div className="w-full max-w-xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
             <div className="w-full flex flex-col justify-center items-center gap-4">
                 <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
                 <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
@@ -55,9 +55,6 @@ export const GoogleAuthUsername = () => {
                 <div className='w-full flex flex-col gap-1'>
                     <label htmlFor="username" className="md:text-lg">Elige tu nombre de usuario.</label>
                     <div className="w-full relative">
-                        <div className="pl-2 h-10 flex justify-center items-center absolute top-0 left-0">
-                            <AtIcon className="text-white/25 size-4 md:size-5"/>
-                        </div>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -66,13 +63,16 @@ export const GoogleAuthUsername = () => {
                             id="username"
                             autoComplete="username"
                             disabled={isLoading}
-                            className='w-full h-10 pl-8 pr-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 transition-200'
+                            className='w-full h-10 pl-7 pr-2 border-b border-card-lighter focus-visible:border-stannum placeholder:opacity-50 disabled:text-white/75 peer transition-200'
                             {...register("username",{
                                 required: true,
                                 minLength: 6,
                                 maxLength: 25
                             })}
                         />
+                        <div className="pl-1 h-10 flex justify-center items-center peer-focus-visible:text-stannum absolute top-0 left-0">
+                            <AtIcon className="size-4 md:size-5 relative top-0.5 left-1"/>
+                        </div>
                     </div>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>

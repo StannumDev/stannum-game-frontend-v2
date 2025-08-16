@@ -1,12 +1,14 @@
 import { StaticImageData } from "next/image";
+import { FullUserDetails } from "@/interfaces";
 
-export interface Achievement{
+export type AchievementId = "first_lesson_watched";
+
+export interface Achievement {
+    id: AchievementId;
     title: string;
     description: string;
     background: StaticImageData;
-    achieved: boolean;
-    getProgress: () => number;
-    // getProgress?: (user: any ) => number;
-    // checkAchievement?: (user: any) => void;
-    checkAchievement?: () => void;
+    categories: Array<"stannum"|"tmd"|"tia">;
+    getProgress: (user: FullUserDetails) => number;
+    xpReward: number;
 }

@@ -1,6 +1,7 @@
 import { StaticImageData } from "next/image";
 
 export type ProgramId = 'tmd' | 'tia';
+export type ProgramCategory = '' | 'main' | 'free' | 'shorts';
 
 export interface Instruction {
     id: string;
@@ -40,6 +41,8 @@ export interface Section {
 export interface Program {
     id: ProgramId;
     name: string;
+    price: number
+    categories: Array<ProgramCategory>;
     description: string;
     logo: StaticImageData;
     sections: Array<Section>;

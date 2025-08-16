@@ -2,9 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { NavbarSection as NavbarSectionType } from "@/interfaces";
+import type { FullUserDetails, NavbarSection as NavbarSectionType } from "@/interfaces";
 import { MedalIcon } from "@/icons";
 import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/components";
+
+interface Props {
+    user: FullUserDetails
+}
 
 const sections: Array<NavbarSectionType> = [
     {
@@ -24,7 +28,7 @@ const sections: Array<NavbarSectionType> = [
 
 type SectionOptions = 'achievements' | 'tmd' | 'tia'
 
-export const ProfileSectionsLayout = () => {
+export const ProfileSectionsLayout = ({user}:Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -55,7 +59,7 @@ export const ProfileSectionsLayout = () => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 content-visibility-auto">
-                    {selectedLayout === 'achievements' && <AchievementsLayout />}
+                    { selectedLayout === 'achievements' && <AchievementsLayout user={user}/>}
                 </div>
             </section>
         </MotionWrapperLayoutClient>

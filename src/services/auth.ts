@@ -54,7 +54,7 @@ export const checkEmailExists = async (email: string): Promise<boolean> => {
 
 export const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/check-username`,{ username });
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/validate-username`,{ username });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {

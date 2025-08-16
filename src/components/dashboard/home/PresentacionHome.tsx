@@ -123,15 +123,15 @@ export const PresentacionHome = () => {
                             showButtons: ["next"]
                         },
                     },
-                    {
-                        element: '#goals-section',
-                        popover: {
-                            title: "Tus Objetivos",
-                            description: "Establece metas personales para mantenerte motivado y seguir avanzando.",
-                            side: "right",
-                            align: "start",
-                        },
-                    },
+                    // {
+                    //     element: '#goals-section',
+                    //     popover: {
+                    //         title: "Tus Objetivos",
+                    //         description: "Establece metas personales para mantenerte motivado y seguir avanzando.",
+                    //         side: "right",
+                    //         align: "start",
+                    //     },
+                    // },
                     {
                         element: '#continue-training',
                         popover: {
@@ -159,15 +159,15 @@ export const PresentacionHome = () => {
                             align: "start",
                         },
                     },
-                    {
-                        element: '#stan-help',
-                        popover: {
-                            title: "Ayuda de STAN",
-                            description: "¿Necesitas ayuda? Haz clic aquí para hablar con nuestra inteligencia artificial y resolver tus dudas.",
-                            side: "top",
-                            align: "start",
-                        },
-                    },
+                    // {
+                    //     element: '#stan-help',
+                    //     popover: {
+                    //         title: "Ayuda de STAN",
+                    //         description: "¿Necesitas ayuda? Haz clic aquí para hablar con nuestra inteligencia artificial y resolver tus dudas.",
+                    //         side: "top",
+                    //         align: "start",
+                    //     },
+                    // },
                     {
                         element: '#sidebar-buttons',
                         popover: {

@@ -1,4 +1,5 @@
 import { StoreCover, StoreSectionsLayout } from "@/components";
+import { getUserByToken } from "@/services";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,12 +23,14 @@ export const metadata: Metadata = {
     },
 };
 
-export default function StorePage() {
+export default async function StorePage() {
+    const user = await getUserByToken();
+    if (!user) return null;
     return (
         <main className="main-container">
             <h1 className="sr-only">Tienda STANNUM Game</h1>
             <StoreCover/>
-            <StoreSectionsLayout/>
+            <StoreSectionsLayout user={user}/>
         </main>
     );
 }
