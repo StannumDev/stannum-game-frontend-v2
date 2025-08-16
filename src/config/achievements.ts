@@ -1,17 +1,236 @@
 import achievementBackground1 from '@/assets/profile/achievement_background_1.webp';
-import type { Achievement } from "@/interfaces";
+import achievementBackground2 from '@/assets/profile/achievement_background_2.webp';
+import achievementBackground3 from '@/assets/profile/achievement_background_3.webp';
+import { FullUserDetails, Achievement } from "@/interfaces";
+import { programs } from "@/config/programs";
 
 export const achievements: Array<Achievement> = [
     {
-        id: "first_lesson_watched",
-        title: "Primera lección",
-        description: "Has visto tu primera lección en cualquier programa.",
+        id: "first_program_acquired",
+        title: "Inicio del camino",
+        description: "Compra tu primer programa en la plataforma",
         background: achievementBackground1,
         categories: ["stannum"],
         xpReward: 50,
-        getProgress: (user) => {
+        getProgress: (user: FullUserDetails) => {
+            return Object.values(user.programs).some(p => p.isPurchased) ? 100 : 0;
+        }
+    },
+    {
+        id: "profile_completed",
+        title: "Identidad revelada",
+        description: "Completa todos los campos esenciales de tu perfil",
+        background: achievementBackground2,
+        categories: ["stannum"],
+        xpReward: 50,
+        getProgress: (user: FullUserDetails) => {
+            const { profile } = user;
+            return profile.name && profile.country && profile.region && profile.birthdate ? 100 : 0;
+        }
+    },
+    {
+        id: "first_module_completed",
+        title: "Primera conquista",
+        description: "Completa todas las lecciones de un módulo",
+        background: achievementBackground3,
+        categories: ["stannum"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => {
+            for (const program of programs) {
+                for (const section of program.sections) {
+                    for (const program_module of section.modules) {
+                        const allLessonsDone = program_module.lessons.every(l =>
+                            (user.programs[program.id].lessonsCompleted || []).some(lc => lc.lessonId === l.id)
+                        );
+                        if (allLessonsDone) return 100;
+                    }
+                }
+            }
+            return 0;
+        }
+    },
+    {
+        id: "first_lesson_completed",
+        title: "La chispa del aprendizaje",
+        description: "Ve y marca como completada tu primera lección",
+        background: achievementBackground1,
+        categories: ["stannum"],
+        xpReward: 50,
+        getProgress: (user: FullUserDetails) => {
             const total = Object.values(user.programs).flatMap(p => p.lessonsCompleted || []).length;
             return total >= 1 ? 100 : 0;
+        }
+    },
+    {
+        id: "first_instruction_completed",
+        title: "Primera instrucción",
+        description: "Primer movimiento estratégico",
+        background: achievementBackground2,
+        categories: ["stannum"],
+        xpReward: 50,
+        getProgress: (user: FullUserDetails) => {
+            return Object.values(user.programs).some(p => (p.instructions || []).some(i => i.status === "GRADED")) ? 100 : 0;
+        }
+    },
+    {
+        id: "module_instructions_completed",
+        title: "Módulo bajo control",
+        description: "Completa todas las instrucciones de un módulo",
+        background: achievementBackground3,
+        categories: ["stannum"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => {
+            for (const programCfg of programs) {
+                const userProgram = user.programs[programCfg.id];
+                if (!userProgram) continue;
+                for (const section of programCfg.sections) {
+                    for (const program_module of section.modules) {
+                        const allInstructionsDone = program_module.instructions.every(inst =>
+                            userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED")
+                        );
+                        if (allInstructionsDone) return 100;
+                    }
+                }
+            }
+            return 0;
+        }
+    },
+    {
+        id: "first_program_completed",
+        title: "Maestro del programa",
+        description: "Completa todos los módulos de un programa",
+        background: achievementBackground1,
+        categories: ["stannum"],
+        xpReward: 200,
+        getProgress: (user: FullUserDetails) => {
+            for (const programCfg of programs) {
+                const userProgram = user.programs[programCfg.id];
+                if (!userProgram) continue;
+                const allModulesDone = programCfg.sections.every(section =>
+                    section.modules.every(program_module => {
+                        const allLessonsDone = program_module.lessons.every(l => userProgram.lessonsCompleted.some(lc => lc.lessonId === l.id));
+                        const allInstructionsDone = program_module.instructions.every(inst => userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED"));
+                        return allLessonsDone && allInstructionsDone;
+                    })
+                );
+                if (allModulesDone) return 100;
+            }
+            return 0;
+        }
+    },
+    {
+        id: "level_5",
+        title: "Bronce",
+        description: "Alcanza el nivel 5 acumulando XP",
+        background: achievementBackground2,
+        categories: ["stannum"],
+        xpReward: 50,
+        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 5 ? 100 : 0
+    },
+    {
+        id: "level_10",
+        title: "Plata",
+        description: "Alcanza el nivel 10 acumulando XP",
+        background: achievementBackground3,
+        categories: ["stannum"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 10 ? 100 : 0
+    },
+    {
+        id: "level_20",
+        title: "Oro",
+        description: "Alcanza el nivel 20 acumulando XP",
+        background: achievementBackground1,
+        categories: ["stannum"],
+        xpReward: 200,
+        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 20 ? 100 : 0
+    },
+    {
+        id: "streak_3_days",
+        title: "Entrando en calor",
+        description: "Mantén tu streak 3 días consecutivos",
+        background: achievementBackground2,
+        categories: ["stannum"],
+        xpReward: 50,
+        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 3 ? 100 : 0
+    },
+    {
+        id: "streak_7_days",
+        title: "Ritmo de campeón",
+        description: "Mantén tu streak 7 días consecutivos",
+        background: achievementBackground3,
+        categories: ["stannum"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 7 ? 100 : 0
+    },
+    {
+        id: "streak_30_days",
+        title: "Mentalidad inquebrantable",
+        description: "Mantén tu streak un mes entero",
+        background: achievementBackground1,
+        categories: ["stannum"],
+        xpReward: 200,
+        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 30 ? 100 : 0
+    },
+    {
+        id: "trenno_ia_joined",
+        title: "Conexión Neural activada",
+        description: "Compra tu primer programa de Trenno IA",
+        background: achievementBackground1,
+        categories: ["tia"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => {
+            const tia = user.programs?.tia;
+            return tia?.isPurchased ? 100 : 0;
+        }
+    },
+    {
+        id: "trenno_ia_first_module_completed",
+        title: "Sistema Cognitivo activado",
+        description: "Completa todas las lecciones del primer módulo de TIA",
+        background: achievementBackground2,
+        categories: ["tia"],
+        xpReward: 150,
+        getProgress: (user: FullUserDetails) => {
+            const tiaProgram = user.programs?.tia;
+            if (!tiaProgram) return 0;
+
+            const tiaConfig = programs.find(p => p.id === "tia");
+            if (!tiaConfig) return 0;
+
+            const firstSection = tiaConfig.sections[0];
+            if (!firstSection || firstSection.modules.length === 0) return 0;
+
+            const firstModule = firstSection.modules[0];
+
+            const allLessonsDone = firstModule.lessons.every(l =>
+                tiaProgram.lessonsCompleted.some(lc => lc.lessonId === l.id)
+            );
+
+            return allLessonsDone ? 100 : 0;
+        }
+    },
+    {
+        id: "trenno_ia_completed",
+        title: "Maestro IA",
+        description: "Completa todos los módulos y lecciones de TIA",
+        background: achievementBackground3,
+        categories: ["tia"],
+        xpReward: 300,
+        getProgress: (user: FullUserDetails) => {
+            const tiaProgram = user.programs?.tia;
+            if (!tiaProgram) return 0;
+
+            const tiaConfig = programs.find(p => p.id === "tia");
+            if (!tiaConfig) return 0;
+
+            return tiaConfig.sections.every(section =>
+                section.modules.every(program_module =>
+                    program_module.lessons.every(lesson =>
+                        tiaProgram.lessonsCompleted.some(lc => lc.lessonId === lesson.id)
+                    )
+                )
+            ) ? 100 : 0;
         }
     }
 ];

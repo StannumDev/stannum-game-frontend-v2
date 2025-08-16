@@ -28,12 +28,13 @@ export const ProfileAchievementsCard = ({ achievement, user }: Props) => {
                 <Image src={background} alt="Logro STANNUM Game" className={`size-full object-cover ${achieved ? 'grayscale-0' : 'grayscale'}`}/>
                 <div className='size-full bg-gradient-to-br from-transparent to-black absolute top-0 left-0 opacity-50 lg:opacity-25 lg:group-hover:opacity-100 transition-200'></div>
             </div>
-            <div className='flex items-center gap-1 absolute top-4 left-6 z-10'>
+            <div className='text-stannum text-xs font-semibold flex items-center gap-1 absolute top-4 left-6 z-10'>
                 {categories.map((category, i) => (
-                    <span key={`achievement_category_${i}`} className='bg-stannum/40 text-stannum text-xs font-semibold py-1 px-2 rounded-lg'>{category.toUpperCase()}</span>
+                    <span key={`achievement_category_${i}`} className='bg-stannum/40 py-1 px-2 rounded-lg'>{category.toUpperCase()}</span>
                 ))}
+                { categories.length > 1 && <span>+{categories.length - 1}</span>}
             </div>
-            <div className="bg-white/10 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-4 right-6 z-10">{xpReward} XP</div>
+            { achieved && <div className="bg-white/10 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-4 right-6 z-10">{xpReward} XP</div>}
             <div className='w-full relative z-20 overflow-hidden'>
                 <div className='overflow-hidden'>
                     <h3 className='w-full title-3 text-balance'>{title}</h3>
