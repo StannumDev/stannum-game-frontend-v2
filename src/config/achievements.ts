@@ -1,6 +1,6 @@
-import achievementBackground1 from '@/assets/profile/achievement_background_1.webp';
-import achievementBackground2 from '@/assets/profile/achievement_background_2.webp';
-import achievementBackground3 from '@/assets/profile/achievement_background_3.webp';
+import stannum_achievement_background from '@/assets/achievements/stannum_achievement_background.webp';
+import tia_achievement_background from '@/assets/achievements/tia_achievement_background.webp';
+
 import { FullUserDetails, Achievement } from "@/interfaces";
 import { programs } from "@/config/programs";
 
@@ -9,7 +9,7 @@ export const achievements: Array<Achievement> = [
         id: "first_program_acquired",
         title: "Inicio del camino",
         description: "Compra tu primer programa en la plataforma",
-        background: achievementBackground1,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => {
@@ -20,7 +20,7 @@ export const achievements: Array<Achievement> = [
         id: "profile_completed",
         title: "Identidad revelada",
         description: "Completa todos los campos esenciales de tu perfil",
-        background: achievementBackground2,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => {
@@ -32,7 +32,7 @@ export const achievements: Array<Achievement> = [
         id: "first_module_completed",
         title: "Primera conquista",
         description: "Completa todas las lecciones de un módulo",
-        background: achievementBackground3,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
         getProgress: (user: FullUserDetails) => {
@@ -53,7 +53,7 @@ export const achievements: Array<Achievement> = [
         id: "first_lesson_completed",
         title: "La chispa del aprendizaje",
         description: "Ve y marca como completada tu primera lección",
-        background: achievementBackground1,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => {
@@ -65,7 +65,7 @@ export const achievements: Array<Achievement> = [
         id: "first_instruction_completed",
         title: "Primera instrucción",
         description: "Primer movimiento estratégico",
-        background: achievementBackground2,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => {
@@ -76,7 +76,7 @@ export const achievements: Array<Achievement> = [
         id: "module_instructions_completed",
         title: "Módulo bajo control",
         description: "Completa todas las instrucciones de un módulo",
-        background: achievementBackground3,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
         getProgress: (user: FullUserDetails) => {
@@ -99,7 +99,7 @@ export const achievements: Array<Achievement> = [
         id: "first_program_completed",
         title: "Maestro del programa",
         description: "Completa todos los módulos de un programa",
-        background: achievementBackground1,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
         getProgress: (user: FullUserDetails) => {
@@ -122,7 +122,7 @@ export const achievements: Array<Achievement> = [
         id: "level_5",
         title: "Bronce",
         description: "Alcanza el nivel 5 acumulando XP",
-        background: achievementBackground2,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => user.level.currentLevel >= 5 ? 100 : 0
@@ -131,7 +131,7 @@ export const achievements: Array<Achievement> = [
         id: "level_10",
         title: "Plata",
         description: "Alcanza el nivel 10 acumulando XP",
-        background: achievementBackground3,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
         getProgress: (user: FullUserDetails) => user.level.currentLevel >= 10 ? 100 : 0
@@ -140,7 +140,7 @@ export const achievements: Array<Achievement> = [
         id: "level_20",
         title: "Oro",
         description: "Alcanza el nivel 20 acumulando XP",
-        background: achievementBackground1,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
         getProgress: (user: FullUserDetails) => user.level.currentLevel >= 20 ? 100 : 0
@@ -149,7 +149,7 @@ export const achievements: Array<Achievement> = [
         id: "streak_3_days",
         title: "Entrando en calor",
         description: "Mantén tu streak 3 días consecutivos",
-        background: achievementBackground2,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 3 ? 100 : 0
@@ -158,7 +158,7 @@ export const achievements: Array<Achievement> = [
         id: "streak_7_days",
         title: "Ritmo de campeón",
         description: "Mantén tu streak 7 días consecutivos",
-        background: achievementBackground3,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
         getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 7 ? 100 : 0
@@ -167,7 +167,7 @@ export const achievements: Array<Achievement> = [
         id: "streak_30_days",
         title: "Mentalidad inquebrantable",
         description: "Mantén tu streak un mes entero",
-        background: achievementBackground1,
+        background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
         getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 30 ? 100 : 0
@@ -176,7 +176,7 @@ export const achievements: Array<Achievement> = [
         id: "trenno_ia_joined",
         title: "Conexión Neural activada",
         description: "Compra tu primer programa de Trenno IA",
-        background: achievementBackground1,
+        background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 100,
         getProgress: (user: FullUserDetails) => {
@@ -188,7 +188,7 @@ export const achievements: Array<Achievement> = [
         id: "trenno_ia_first_module_completed",
         title: "Sistema Cognitivo activado",
         description: "Completa todas las lecciones del primer módulo de TIA",
-        background: achievementBackground2,
+        background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 150,
         getProgress: (user: FullUserDetails) => {
@@ -214,7 +214,7 @@ export const achievements: Array<Achievement> = [
         id: "trenno_ia_completed",
         title: "Maestro IA",
         description: "Completa todos los módulos y lecciones de TIA",
-        background: achievementBackground3,
+        background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 300,
         getProgress: (user: FullUserDetails) => {

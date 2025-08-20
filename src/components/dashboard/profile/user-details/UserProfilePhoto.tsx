@@ -9,7 +9,7 @@ import default_user from "@/assets/user/default_user.webp";
 interface Props{
     owner: boolean;
     user: FullUserDetails;
-    fetchUserData: () => Promise<void>
+    fetchUserData: (force?: boolean) => Promise<void>
 }
 
 export const UserProfilePhoto = ({user, fetchUserData, owner}:Props) => {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { UserProfileEditCover } from "@/components";
-import profile_background from '@/assets/profile/achievement_background_3.webp';
+import profile_background from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props{
     owner: boolean;

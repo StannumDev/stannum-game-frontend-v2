@@ -29,7 +29,6 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
             }
         );
 
-        console.log(response)
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response?.data?.success;
     } catch (error:unknown) {

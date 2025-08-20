@@ -1,25 +1,33 @@
-// import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server'
+import { getUserByToken } from './services'
 
-// export function middleware(request:NextRequest) {
-export function middleware() {
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  const token = request.cookies.get('token')?.value
+  const isAuthPage = pathname === '/login' || pathname === '/register'
+  const isDashboard = pathname.startsWith('/dashboard')
+  const isRoot = pathname === '/'
 
-  // const token = request.cookies.get('token')?.value
+  if (!token && isDashboard) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
 
-  // if (token && request.nextUrl.pathname === '/login') {
-  //   return NextResponse.redirect(new URL('/dashboard', request.url))
-  // }
-  
-  // if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-  //   return NextResponse.redirect(new URL('/login', request.url))
-  // }
-  
-  // if (request.nextUrl.pathname === '/') {
-  //   return NextResponse.redirect(new URL('/dashboard', request.url))
-  // }
+  if (token && (isAuthPage || isRoot)) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
 
-  return
+  if (token && isDashboard) {
+    const user = await getUserByToken()
+    if (!user) {
+      const response = NextResponse.redirect(new URL('/login', request.url))
+      response.cookies.set('token', '', { maxAge: 0 })
+      return response
+    }
+  }
+
+  return NextResponse.next()
 }
- 
+
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)', '/dashboard/:path*'],
 }

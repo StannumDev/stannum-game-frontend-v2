@@ -33,7 +33,6 @@ export const PresentacionHome = () => {
         try {
             await markTutorialAsCompleted("initial_tutorial");
             setIsTutorialCompleted(true);
-            console.log("completado")
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError)

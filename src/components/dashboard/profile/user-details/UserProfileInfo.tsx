@@ -4,7 +4,7 @@ import { FullUserDetails } from "@/interfaces";
 interface Props{
     owner: boolean;
     user: FullUserDetails,
-    fetchUserData: () => Promise<void>
+    fetchUserData: (force?: boolean) => Promise<void>
 }
 
 export const UserProfileInfo = ({user, fetchUserData, owner}:Props) => {

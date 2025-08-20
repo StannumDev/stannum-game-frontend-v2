@@ -130,7 +130,6 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
 export const googleLogin = async (googleToken: string): Promise<string> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken });
-        console.log(response)
         const { token, success, username } = response.data;
         if (!success || !token || !username) throw new Error("Unexpected response structure");
 

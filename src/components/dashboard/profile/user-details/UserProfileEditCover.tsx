@@ -4,9 +4,8 @@ import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { EditIcon, SpinnerIcon } from "@/icons";
 import { Modal } from "@/components";
-import profile_background_1 from '@/assets/profile/achievement_background_1.webp';
-import profile_background_2 from '@/assets/profile/achievement_background_2.webp';
-import profile_background_3 from '@/assets/profile/achievement_background_3.webp';
+import profile_background_1 from '@/assets/achievements/stannum_achievement_background.webp';
+import profile_background_2 from '@/assets/achievements/tia_achievement_background.webp';
 
 const backgrounds:Array<{label:string, img:StaticImageData}> = [
     {
@@ -16,47 +15,7 @@ const backgrounds:Array<{label:string, img:StaticImageData}> = [
     {
         img: profile_background_2,
         label: 'Profile 2'
-    },
-    {
-        img: profile_background_3,
-        label: 'Profile 3'
-    },
-    {
-        img: profile_background_1,
-        label: 'Profile 12'
-    },
-    {
-        img: profile_background_2,
-        label: 'Profile 22'
-    },
-    {
-        img: profile_background_3,
-        label: 'Profile 32'
-    },
-    {
-        img: profile_background_1,
-        label: 'Profile 13'
-    },
-    {
-        img: profile_background_2,
-        label: 'Profile 23'
-    },
-    {
-        img: profile_background_3,
-        label: 'Profile 33'
-    },
-    {
-        img: profile_background_1,
-        label: 'Profile 14'
-    },
-    {
-        img: profile_background_2,
-        label: 'Profile 24'
-    },
-    {
-        img: profile_background_3,
-        label: 'Profile 34'
-    },
+    }
 ]
 
 interface Props{

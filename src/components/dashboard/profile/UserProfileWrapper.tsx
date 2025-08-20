@@ -16,10 +16,10 @@ export const UserProfileWrapper = ({username, owner}:Props) => {
     const [userData, setUserData] = useState<FullUserDetails|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const fetchUserData = useCallback( async () => {
+    const fetchUserData = useCallback( async (force: boolean = false) => {
         setIsLoading(true);
         try {
-            setUserData(await getUserDetailsByUsername(username));
+            setUserData(await getUserDetailsByUsername(username, { force }));
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
@@ -29,7 +29,7 @@ export const UserProfileWrapper = ({username, owner}:Props) => {
     }, [username]);
 
     useEffect(() => {
-        fetchUserData();
+        fetchUserData(true);
     }, [username, fetchUserData]);
 
     if(!userData || isLoading){

@@ -10,7 +10,7 @@ import { Modal } from "@/components";
 interface Props{
     showModal: boolean,
     setShowModal: Dispatch<SetStateAction<boolean>>,
-    fetchUserData: () => Promise<void>
+    fetchUserData: (force?: boolean) => Promise<void>
 }
 
 export const UserProfileDeletePhoto = ({showModal, setShowModal, fetchUserData}:Props) => {
@@ -21,7 +21,7 @@ export const UserProfileDeletePhoto = ({showModal, setShowModal, fetchUserData}:
         setIsLoading(true);
         try {
             await deleteProfilePhoto();
-            await fetchUserData();
+            await fetchUserData(true);
             setShowModal(false);
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);

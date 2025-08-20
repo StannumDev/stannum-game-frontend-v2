@@ -13,7 +13,7 @@ import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 interface Props{
     user: FullUserDetails,
-    fetchUserData: () => Promise<void>
+    fetchUserData: (force?: boolean) => Promise<void>
 }
 
 const schema = z.object({
@@ -48,10 +48,9 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
         setIsLoading(true);
         try {
-            console.log(data)
             const { achievementsUnlocked } = await updateUserProfile(data);
             achievementsUnlocked && achievementHandler(achievementsUnlocked);
-            await fetchUserData();
+            await fetchUserData(true);
             setShowModal(false);
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);

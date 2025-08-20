@@ -12,7 +12,7 @@ import styles from "@/components/styles/photoEditor.module.css";
 interface Props{
     showModal: boolean,
     setShowModal: Dispatch<SetStateAction<boolean>>,
-    fetchUserData: () => Promise<void>
+    fetchUserData: (force?: boolean) => Promise<void>
 }
 
 export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Props) => {
@@ -43,7 +43,7 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Pr
             const formData = new FormData();
             formData.append("photo", imageBlob!);
             await uploadProfilePhoto(formData);
-            await fetchUserData();
+            await fetchUserData(true);
             setShowModal(false);
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);

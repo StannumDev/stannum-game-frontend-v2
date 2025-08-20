@@ -34,7 +34,6 @@ export const getUserByToken = async (): Promise<FullUserDetails | null> => {
         }
         return response.data.data as FullUserDetails;
     } catch (error:unknown) {
-        // console.log(error)
         return null;
     }
 };
@@ -55,7 +54,6 @@ export const getUserDetailsByUsernameServer = async (username: string): Promise<
         }
         return response.data.data as FullUserDetails;
     } catch (error:unknown) {
-        // console.log(error)
         return null;
     }
 };

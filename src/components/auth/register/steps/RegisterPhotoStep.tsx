@@ -23,7 +23,6 @@ export const RegisterPhotoStep = () => {
         if (!selectedFile) return;
         const fileSizeInMB = selectedFile.size / (1024 * 1024);
         if (fileSizeInMB > 20) {
-            console.log("El archivo no puede superar los 20 MB.");
             return;
         }
         setFile(selectedFile);

@@ -2,6 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import type { AchievementDetails, FullUserDetails, UserSearchResult, UserSidebarDetails } from "@/interfaces";
 
+type GetUserOpts = { force?: boolean };
+
 const tokenError = {
     response: {
         data: {
@@ -49,17 +51,22 @@ export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
     }
 };
 
-export const getUserDetailsByUsername = async (username: string): Promise<FullUserDetails | null> => {
+export const getUserDetailsByUsername = async (username: string, opts: GetUserOpts = {}): Promise<FullUserDetails | null> => {
     try {
+        const { force = false } = opts;
         const token = Cookies.get("token");
         if (!token) throw tokenError
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
+            params: force ? { _: Date.now() } : undefined,
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                Pragma: "no-cache",
             },
         });
+
         if (!response?.data?.success || !response.data?.data) {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
