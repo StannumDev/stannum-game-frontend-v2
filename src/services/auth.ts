@@ -22,7 +22,6 @@ const tokenError = {
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data);
-
         Object.keys(Cookies.get()).forEach((cookie) => {
             cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
         });
@@ -37,7 +36,7 @@ export const requestLogin = async (data: { username: string; password: string })
         if (!response?.data?.success) throw new Error("Unexpected response structure");
 
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -47,7 +46,7 @@ export const checkEmailExists = async (email: string): Promise<boolean> => {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/check-email`, { email });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -57,7 +56,7 @@ export const checkUsernameExists = async (username: string): Promise<boolean> =>
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/validate-username`,{ username });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -67,7 +66,7 @@ export const validateReCAPTCHA = async (token: string | null): Promise<boolean> 
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/validate-recaptcha`, { token });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -85,7 +84,7 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
         });
 
         return data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -96,7 +95,7 @@ export const logout = async (): Promise<void> => {
         Cookies.remove('token', { path: '/' });
         Object.keys(Cookies.get()).map((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' }));
         window.location.href = '/';
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -105,7 +104,7 @@ export const sendPasswordRecoveryEmail = async (username: string): Promise<boole
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-recovery`, { username });
         return response.data.success;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -114,7 +113,7 @@ export const verifyPasswordRecoveryOTP = async (username: string, otp: string): 
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/verify-recovery-otp`, { username, otp });
         return response.data.success;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -123,7 +122,7 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/password-reset`, { username, otp, password });
         return response.data.success;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -131,7 +130,7 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
 export const googleLogin = async (googleToken: string): Promise<string> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken });
-        
+        console.log(response)
         const { token, success, username } = response.data;
         if (!success || !token || !username) throw new Error("Unexpected response structure");
 
@@ -143,7 +142,7 @@ export const googleLogin = async (googleToken: string): Promise<string> => {
         });
 
         return username;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -162,7 +161,7 @@ export const updateUsername = async (username: string): Promise<boolean> => {
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };

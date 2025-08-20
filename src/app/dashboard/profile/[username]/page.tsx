@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 description: `Perfil de ${user.username} en STANNUM Game.`,
             },
         };
-    } catch (error) {
+    } catch (error:unknown) {
         return {
             title: "Usuario no encontrado | STANNUM Game",
             description: "Hubo un problema al cargar el perfil solicitado.",

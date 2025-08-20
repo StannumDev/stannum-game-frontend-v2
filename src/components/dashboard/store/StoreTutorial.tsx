@@ -30,21 +30,21 @@ export const StoreTutorial = () => {
                     <div className="mt-6 lg:mt-8 w-full grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                         <div className="w-full lg:aspect-square p-4 lg:p-6 lg:pb-4 pt-0 border border-card-light rounded-2xl flex flex-col justify-start items-center">
                             <div className="w-full py-6 lg:py-12 flex justify-center items-center">
-                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-2xl flex justify-center items-center relative overflow-hidden'>1</div>
+                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-card text-2xl font-semibold flex justify-center items-center relative overflow-hidden'>1</div>
                             </div>
                             <h3 className="text-lg font-semibold uppercase tracking-widest">Compra el programa</h3>
                             <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Ingresa a la tienda de STANNUM Game, selecciona el producto de tu interés desde el catálogo de entrenamientos.</p>
                         </div>    
                         <div className="w-full lg:aspect-square p-4 lg:p-6 lg:pb-4 pt-0 border border-card-light rounded-2xl flex flex-col justify-start items-center">
                             <div className="w-full py-6 lg:py-12 flex justify-center items-center">
-                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-2xl flex justify-center items-center relative overflow-hidden'>2</div>
+                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-card text-2xl font-semibold flex justify-center items-center relative overflow-hidden'>2</div>
                             </div>
                             <h3 className="text-lg font-semibold uppercase tracking-widest">Recibe las claves</h3>
                             <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Una vez confirmada la compra, recibirás en tu correo electrónico los códigos necesarios para activar el producto.</p>
                         </div>    
                         <div className="w-full lg:aspect-square p-4 lg:p-6 lg:pb-4 pt-0 border border-card-light rounded-2xl flex flex-col justify-start items-center">
                             <div className="w-full py-6 lg:py-12 flex justify-center items-center">
-                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-2xl flex justify-center items-center relative overflow-hidden'>3</div>
+                                <div className='size-16 rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 text-card text-2xl font-semibold flex justify-center items-center relative overflow-hidden'>3</div>
                             </div>
                             <h3 className="text-lg font-semibold uppercase tracking-widest">Activa las claves</h3>
                             <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Por último, dirigite a la sección de &ldquo;Activar producto&rdquo;, donde cada miembro ingresara su código de producto para comenzar a entrenar.</p>
@@ -52,7 +52,7 @@ export const StoreTutorial = () => {
                     </div>
                     <div className="mt-8 w-full p-4 lg:p-6 border border-card-light rounded-2xl flex flex-col items-center">
                         <h3 className="text-lg font-semibold uppercase tracking-widest">Importante</h3>
-                        <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Al realizar la compra de un producto, se incluye una cantidad de códigos que depende de cada producto, destinada a los miembros del equipo. El entrenamiento en STANNUM Game es colectivo, y cada participante puede avanzar de forma individual y contribuir al fortalecimiento del equipo. Esta modalidad es ideal para fomentar la profesionalización y cohesión del equipo de ventas y marketing.</p>
+                        <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Al realizar la compra de un producto, se incluye una cantidad de códigos que depende de cada producto, destinada a los miembros del equipo. El entrenamiento en STANNUM Game es colectivo, y cada participante puede avanzar de forma individual y contribuir al fortalecimiento del equipo. Esta modalidad es ideal para fomentar la profesionalización y cohesión del equipo.</p>
                     </div>
                 </div>
             </Modal>

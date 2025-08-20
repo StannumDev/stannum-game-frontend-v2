@@ -20,7 +20,7 @@ export const ChangeLessonsButtons = ({setIsCompleted}:Props) => {
             <button
                 type="button"
                 onClick={() => setIsCompleted(true)}
-                className='px-4 h-9 bg-stannum hover:bg-stannum-light rounded-lg tracking-tighter flex justify-center items-center gap-1 transition-200'
+                className='px-4 h-9 bg-stannum hover:bg-stannum-light text-card rounded-lg tracking-tighter flex justify-center items-center gap-1 transition-200'
             >
                 Siguiente
                 <ArrowRightIcon className='text-sm'/>

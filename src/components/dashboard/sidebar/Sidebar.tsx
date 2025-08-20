@@ -37,7 +37,7 @@ export const Sidebar = () => {
                     return;
                 }
                 setUserData(userFetch);
-            } catch (error) {
+            } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
                 console.error(appError);
             } finally {

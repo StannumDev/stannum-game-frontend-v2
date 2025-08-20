@@ -88,7 +88,7 @@ export const PresentacionHome = () => {
                 const completed = await getTutorialStatus("initial_tutorial");
                 setIsTutorialCompleted(completed);
                 setCanStartTutorial(true);
-            } catch (error) {
+            } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
                 console.error(appError);
             }
@@ -259,7 +259,7 @@ export const PresentacionHome = () => {
                                                 ></motion.div>
                                             }
                                         </AnimatePresence>
-                                        <span className="relative z-10">{step}</span>
+                                        <span className={`relative z-10 ${ step <= selectedStep && 'text-card' }`}>{step}</span>
                                     </div>
                                 ))
                             }
@@ -282,13 +282,13 @@ export const PresentacionHome = () => {
                             className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter flex justify-center items-center transition-200"
                         >
                             {
-                                selectedStep === 1 ? 'Omitir' : 'Anterior'
+                                selectedStep === 1 ? 'Cancelar' : 'Anterior'
                             }
                         </button>
                         <button
                             type="button"
                             onClick={ selectedStep === steps.length ? () => { setShowModal(false) } : nextStep}
-                            className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
+                            className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center transition-200"
                         >
                             {
                                     selectedStep === steps.length ? 'Finalizar' : 'Siguiente'

@@ -60,7 +60,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 country: location.country,
                 region: location.region,
             });
-        } catch (error: unknown) {
+        } catch (error:unknown) {
             console.error("Error durante el envío:", error);
         } finally {
             setIsLoading(false);

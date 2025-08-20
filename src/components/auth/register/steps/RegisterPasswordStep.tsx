@@ -39,7 +39,7 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
                 return;
             }
             await handleNextStep({ username, password });
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {

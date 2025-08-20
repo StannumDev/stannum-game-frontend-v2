@@ -90,7 +90,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             try {
                 setMarkedAsCompleted(true);
                 await markLessonAsCompleted(program.toLowerCase(), lesson.id);
-            } catch (error) {
+            } catch (error:unknown) {
                 const appError: AppError = errorHandler(error);
                 console.error(appError);
             }
@@ -142,7 +142,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             videoRef.current.currentTime = safeTarget;
             lastTimeRef.current = Math.floor(safeTarget);
             initialSeekApplied.current = true;
-        } catch (error: unknown) {
+        } catch (error:unknown) {
             console.error("Error seeking video:", error);
         }
     };

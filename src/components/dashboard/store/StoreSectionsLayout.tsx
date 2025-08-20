@@ -13,9 +13,9 @@ interface Props {
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: NewAppsIcon },
-    { name: "Principales", id: "main", Icon: ChessKingicon },
-    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon },
-    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon },
+    { name: "Principales", id: "main", Icon: ChessKingicon, disabled: true },
+    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon, disabled: true },
+    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon, disabled: true },
 ];
 
 export const StoreSectionsLayout = ({ user }: Props) => {
@@ -28,7 +28,7 @@ export const StoreSectionsLayout = ({ user }: Props) => {
 
     useEffect(() => {
         const validCategories: Array<ProgramCategory> = ['', 'main', 'free', 'shorts'];
-        const validLayout = layoutParam && validCategories.includes(layoutParam as ProgramCategory);
+        const validLayout = layoutParam && validCategories.includes(layoutParam as ProgramCategory) && !sections.find(section => section.id === layoutParam && section.disabled);
         setSelectedLayout(validLayout ? (layoutParam as ProgramCategory) : '');
         if (!validLayout) router.push(pathname, { scroll: false });
     }, [pathname, router, layoutParam]);

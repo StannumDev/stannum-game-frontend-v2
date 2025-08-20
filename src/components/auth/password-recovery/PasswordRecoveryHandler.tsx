@@ -23,7 +23,7 @@ export const PasswordRecoveryHandler = () => {
                 setEmail(username);
                 setStep('otp');
             }
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {
@@ -42,7 +42,7 @@ export const PasswordRecoveryHandler = () => {
                     router.prefetch('/login');
                 }
             }
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {
@@ -57,7 +57,7 @@ export const PasswordRecoveryHandler = () => {
                 const success = await changePasswordWithOTP(email, otp, password);
                 if (success) router.push('/login');
             }
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {

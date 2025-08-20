@@ -45,7 +45,7 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Pr
             await uploadProfilePhoto(formData);
             await fetchUserData();
             setShowModal(false);
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {
@@ -155,7 +155,7 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, fetchUserData}:Pr
                                 type="button"
                                 onClick={handleUpload}
                                 disabled={isLoading}
-                                className="w-full h-10 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
+                                className="w-full h-10 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center transition-200"
                             >
                                 {
                                     isLoading ?

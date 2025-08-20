@@ -17,7 +17,7 @@ export const ProgramRankingLayout = () => {
             try {
                 const data = await getTeamRanking("TMD");
                 setTeams(data);
-            } catch (error) {
+            } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
                 console.error(appError);
             } finally {

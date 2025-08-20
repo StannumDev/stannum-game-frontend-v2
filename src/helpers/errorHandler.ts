@@ -4,8 +4,7 @@ import axios, { AxiosError } from 'axios';
 import type { AppError, ToastData } from '@/interfaces';
 import { callToast } from './callToast';
 
-export const errorHandler = (error: unknown): AppError => {
-    console.log(error)
+export const errorHandler = (error:unknown): AppError => {
     let appError: AppError = {
         success: false,
         code: "UNKNOWN_ERROR",

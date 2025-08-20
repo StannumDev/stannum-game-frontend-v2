@@ -38,7 +38,7 @@ export const RegisterPhotoStep = () => {
             formData.append("photo", imageBlob!);
             await uploadProfilePhoto(formData);
             router.push('/dashboard');
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {
@@ -137,7 +137,7 @@ export const RegisterPhotoStep = () => {
                     // whileHover={{ backgroundColor: '#66eae5' }}
                     disabled={isLoading}
                     type="button"
-                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center"
+                    className="w-full md:w-32 h-10 text-sm font-semibold bg-stannum disabled:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center"
                     onClick={handleUpload}
                 >
                     {isLoading ? <SpinnerIcon className="animate-spin size-6" /> : "Continuar"}

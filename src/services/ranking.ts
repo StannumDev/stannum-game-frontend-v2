@@ -30,7 +30,7 @@ export const getIndividualRanking = async (limit: number = 10): Promise<SimpleRa
     console.log(response)
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
-  } catch (error) {
+  } catch (error:unknown) {
     throw error;
   }
 };
@@ -48,7 +48,7 @@ export const getTeamRanking = async (programName: string): Promise<Array<TeamRan
 
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
-  } catch (error) {
+  } catch (error:unknown) {
     throw error;
   }
 };

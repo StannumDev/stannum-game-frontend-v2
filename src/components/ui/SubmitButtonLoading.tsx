@@ -15,7 +15,7 @@ export const SubmitButtonLoading = ({isLoading, text, form, className}:Props) =>
             type="submit"
             form={form}
             disabled={isLoading}
-            className={`bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200 ${className}`}
+            className={`bg-stannum hover:bg-stannum-light disabled:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center transition-200 ${className}`}
         >
             {
                 isLoading ?

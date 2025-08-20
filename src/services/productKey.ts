@@ -1,3 +1,4 @@
+import { AchievementDetails } from "@/interfaces";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -28,12 +29,12 @@ export const verifyProductKey = async (code: string): Promise<{ product: string;
 
         if (!response?.data?.success || !response.data?.data) throw new Error("Unexpected response structure");
         return response.data.data;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
 
-export const activateProductKey = async (code: string): Promise<boolean> => {
+export const activateProductKey = async (code: string): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[]; }> => {
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError;
@@ -43,10 +44,10 @@ export const activateProductKey = async (code: string): Promise<boolean> => {
                 Authorization: `Bearer ${token}`,
             },
         });
-
+        
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-        return true;
-    } catch (error) {
+        return response?.data;
+    } catch (error:unknown) {
         throw error;
     }
 };

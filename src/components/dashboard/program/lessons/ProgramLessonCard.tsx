@@ -13,7 +13,7 @@ interface Props{
 export const ProgramLessonCard = ({ id, programName, index, title, completed }: Props) => {
     return (
         <Link href={`/dashboard/library/${programName}/lessons/${id}`} className="w-full h-16 lg:h-20 flex items-center bg-card lg:bg-card/25 lg:hover:bg-card-light/40 rounded-lg relative overflow-hidden group cursor-pointer transition-200">
-            <div className={`h-full aspect-square ${ completed ? 'lg:bg-stannum' : 'lg:bg-card' } flex justify-center items-center shrink-0 ${styles.index__clip__diagonal}`}>
+            <div className={`h-full aspect-square ${ completed ? 'lg:bg-stannum text-card' : 'lg:bg-card' } flex justify-center items-center shrink-0 ${styles.index__clip__diagonal}`}>
                 <span className='text-2xl lg:text-4xl font-semibold lg:relative lg:-left-1'>{ index < 10 ? `0${index}` : index }</span>
             </div>
             <div className='lg:ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-4 lg:pr-8 relative z-10'>
@@ -21,7 +21,7 @@ export const ProgramLessonCard = ({ id, programName, index, title, completed }: 
                 <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
             </div>
             { completed ?
-                <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 bg-stannum rounded-full flex justify-center items-center lg:gap-2 shrink-0 relative z-10'>
+                <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 bg-stannum text-card rounded-full flex justify-center items-center lg:gap-2 shrink-0 relative z-10'>
                     <span className='sr-only lg:not-sr-only text-lg tracking-widest font-semibold uppercase'>Completado</span>
                     <CheckIcon className='size-6 lg:size-5'/>
                 </div>

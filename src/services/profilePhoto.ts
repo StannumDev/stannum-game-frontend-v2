@@ -37,7 +37,7 @@ export const uploadProfilePhoto = async (formData: FormData): Promise<void> => {
                 Authorization: `Bearer ${token}`,
             },
         });
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -54,7 +54,7 @@ export const deleteProfilePhoto = async (): Promise<void> => {
                 Authorization: `Bearer ${token}`,
             },
         });
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };

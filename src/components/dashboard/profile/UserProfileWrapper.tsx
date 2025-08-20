@@ -19,7 +19,7 @@ export const UserProfileWrapper = ({username}:Props) => {
         setIsLoading(true);
         try {
             setUserData(await getUserDetailsByUsername(username));
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {

@@ -12,9 +12,9 @@ interface Props { user: FullUserDetails; }
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: AppsIcon },
-    { name: "Principales", id: "main", Icon: ChessKingicon },
-    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon },
-    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon },
+    { name: "Principales", id: "main", Icon: ChessKingicon, disabled: true },
+    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon, disabled: true },
+    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon, disabled: true },
 ];
 
 export const LibrarySectionsLayout = ({ user }: Props) => {
@@ -27,7 +27,7 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
 
     useEffect(() => {
         const validCategories: Array<ProgramCategory> = ['', 'main', 'free', 'shorts'];
-        const validLayout = layoutParam && validCategories.includes(layoutParam as ProgramCategory);
+        const validLayout = layoutParam && validCategories.includes(layoutParam as ProgramCategory) && !sections.find(section => section.id === layoutParam && section.disabled);
         setSelectedLayout(validLayout ? (layoutParam as ProgramCategory) : '');
         if (!validLayout) router.push(pathname, { scroll: false });
     }, [pathname, router, layoutParam]);
@@ -42,8 +42,8 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
     const filteredPrograms = programs.filter(program => user.programs?.[program.id as keyof FullUserDetails['programs']]?.isPurchased).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
 
     return (
-        <MotionWrapperLayoutClient>
-            <section className="w-full card px-0">
+        <MotionWrapperLayoutClient grow>
+            <section className="size-full card px-0 flex flex-col">
                 <h2 className="mb-4 title-2 px-4 lg:px-6">Tus programas</h2>
                 <NavbarSection<ProgramCategory>
                     sections={sections}
@@ -51,17 +51,13 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
                     handleLayoutChange={handleLayoutChange}
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
+                {filteredPrograms.length === 0 ? (
+                    <div className="w-full grow flex flex-col justify-center items-center text-center">
+                        <h2 className="text-2xl font-semibold text-stannum tracking-widest uppercase">¡Aún no te has unido a ningún programa!</h2>
+                        <p className="mt-2 text-lg text-card-lightest">Cuando compres tu primer programa, aparecerá en esta sección.</p>
+                    </div>
+                ) : 
                 <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
-                    {filteredPrograms.length === 0 && (
-                        <div className="col-span-full text-center">
-                            <h2 className="text-2xl font-semibold text-stannum">
-                                ¡Aún no te has unido a ningún programa!
-                            </h2>
-                            <p className="mt-2 text-lg text-card-lightest">
-                                Cuando compres tu primer programa, aparecerá en esta sección.
-                            </p>
-                        </div>
-                    )}
                     {filteredPrograms.map(program => {
                         const progress = calculateProgramProgress(program, user);
                         return (
@@ -75,7 +71,8 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
                             />
                         );
                     })}
-                </div>
+                </div>  
+                }
             </section>
         </MotionWrapperLayoutClient>
     );

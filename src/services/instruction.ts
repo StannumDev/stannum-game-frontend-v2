@@ -29,7 +29,7 @@ export const startInstruction = async (programName: string, instructionId: strin
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -48,7 +48,7 @@ export const submitInstruction = async (programName: string, instructionId: stri
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -71,7 +71,7 @@ export const gradeInstruction = async (userId: string, programName: string, inst
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };

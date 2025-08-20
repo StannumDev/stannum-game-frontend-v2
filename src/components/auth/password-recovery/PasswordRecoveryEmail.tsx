@@ -46,7 +46,7 @@ export const PasswordRecoveryEmail = ({ onSubmit, isLoading }: Props) => {
             }
             setReCAPTCHACompleted(true);
             setReCAPTCHAError(null);
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setReCAPTCHAError(appError.friendlyMessage);
             resetReCAPTCHA();

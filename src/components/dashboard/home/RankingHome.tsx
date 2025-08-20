@@ -1,21 +1,21 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { getIndividualRanking  } from "@/services";
 import { errorHandler } from "@/helpers";
 import type { AppError, SimpleRanking } from "@/interfaces";
-import { InfoCircleIcon, RankingStarIcon } from "@/icons";
+import { RankingStarIcon, SpinnerIcon } from "@/icons";
 import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
 
 
 export const RankingHome = () => {
 
     const [rankings, setRankings] = useState<Array<SimpleRanking>>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchRanking = async () => {
+            setIsLoading(true);
             try {
                 const data = await getIndividualRanking(10);
                 setRankings(data);
@@ -23,7 +23,7 @@ export const RankingHome = () => {
                 const appError:AppError = errorHandler(error);
                 console.error(appError);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
         fetchRanking();
@@ -37,12 +37,12 @@ export const RankingHome = () => {
                         <div>
                             <RankingStarIcon className="text-2xl lg:text-3xl relative -top-px"/>
                         </div>
-                        Top Leaders
+                        Top Líderes
                     </h2>
-                    <Link href={'/dashboard/library'} className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative group hover:bg-card-hover transition-200">
-                        <InfoCircleIcon className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/>
+                    <div className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative transition-200">
+                        {/* <InfoCircleIcon className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/> */}
                         Temporada 1
-                    </Link>
+                    </div>
                 </div>
                 <div className="mt-4 lg:mt-8 w-full grow flex flex-col">
                     <div className="w-full grid grid-cols-12 lg:grid-cols-8 gap-1 lg:gap-2 px-1 lg:px-4">
@@ -52,15 +52,18 @@ export const RankingHome = () => {
                         <h3 className="col-span-3 lg:col-span-1 lg:pl-2 text-xs lg:text-base">Nivel</h3>
                         <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Puntos</h3>
                     </div>
-                    <div className="mt-2 w-full grow min-h-12 lg:min-h-24 overflow-y-scroll overflow-x-hidden relative">
-                        {/* <div className="mt-2 w-[calc(100%+11px)] lg:w-[calc(100%+13px)] pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start max-h-80 lg:max-h-64 overflow-y-scroll overflow-x-hidden"> */}
-                        <div className="w-[calc(100%+11px)] lg:w-[calc(100%+13px)] grow pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
-                            { loading ?
-                                <p className="text-white/75 text-center w-full py-6">Cargando ranking...</p>
-                            :
-                                rankings.map((player, i) => <CardRankingHome {...player} key={`ranking_home_${i}`} />)
-                            }
-                        </div>
+                    <div className="mt-2 w-full grow min-h-12 lg:min-h-24 overflow-y-auto overflow-x-hidden relative">
+                        { isLoading ?
+                            <div className="w-full grow flex justify-center items-center">
+                                <SpinnerIcon className="animate-spin size-6"/>
+                            </div>
+                        : rankings.length === 0 ? (
+                            <div className="size-full bg-card flex justify-center items-center"><p className="max-w-sm text-center text-card-lightest">En breve veras reflejado tu puntaje y del resto de jugadores aquí.</p></div>
+                        ) : (
+                            <div className="w-[calc(100%+11px)] bg-green-500 lg:w-[calc(100%+13px)] grow pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
+                                {rankings.map((player, i) => <CardRankingHome {...player} key={`ranking_home_${i}`} />)}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

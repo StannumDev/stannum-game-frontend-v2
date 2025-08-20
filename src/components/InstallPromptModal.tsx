@@ -89,7 +89,7 @@ export const InstallPromptModal = () => {
             <button
               type="button"
               onClick={handleInstallClick}
-              className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200"
+              className="w-full h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center transition-200"
             >
               Instalar
             </button>

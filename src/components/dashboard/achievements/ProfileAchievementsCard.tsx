@@ -13,8 +13,6 @@ interface Props{
 export const ProfileAchievementsCard = ({ achievement, user }: Props) => {
     const { title, description, background, categories, getProgress, id, xpReward } = achievement
     const achieved = user.achievements.some(a => a.achievementId === id);
-    console.log(user.achievements)
-    console.log(id)
     const progress = getProgress(user)
     const [isHovered, setIsHovered] = useState<boolean>(false);
 

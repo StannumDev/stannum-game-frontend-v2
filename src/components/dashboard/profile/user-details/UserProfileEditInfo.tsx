@@ -55,7 +55,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                 await fetchUserData();
                 setShowModal(false);
             }
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {

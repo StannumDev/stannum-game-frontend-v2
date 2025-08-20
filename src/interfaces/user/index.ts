@@ -35,7 +35,8 @@ export interface LevelDetails {
 
 export interface AchievementDetails {
     achievementId: string;
-    unlockedAt: Date
+    unlockedAt: Date;
+    xpReward: number
 }
 
 export interface ProgramDetails {

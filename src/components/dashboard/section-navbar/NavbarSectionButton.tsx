@@ -11,14 +11,15 @@ interface Props<T>{
 
 export const NavbarSectionButton = <T extends string>({section, selectedLayout, handleLayoutChange}:Props<T>) => {
 
-    const {name, id, Icon} = section;
+    const {name, id, Icon, disabled} = section;
 
     return (
         <button
             data-layout={id}
             type="button"
-            onClick={() => handleLayoutChange(id as T)}
-            className={`${ selectedLayout !== id ? 'hover:bg-white/10' : 'text-stannum'} text-sm lg:text-base px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200`}
+            disabled={disabled}
+            onClick={() => !disabled && handleLayoutChange(id as T)}
+            className={`${ disabled ? "opacity-10" : selectedLayout !== id ? 'hover:bg-white/10' : 'text-stannum'} text-sm lg:text-base px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200`}
         >
             {
                 selectedLayout === id &&

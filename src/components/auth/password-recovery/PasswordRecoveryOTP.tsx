@@ -52,7 +52,7 @@ export const PasswordRecoveryOTP = ({ onSubmit, isLoading }: Props) => {
                     type="button"
                     onClick={handleVerify}
                     disabled={otp.length !== 6 || isLoading}
-                    className={`w-40 h-10 bg-stannum hover:bg-stannum-light disabled:hover:bg-stannum disabled:opacity-50 rounded text-sm font-semibold tracking-tighter flex justify-center items-center transition-200`}
+                    className={`w-40 h-10 bg-stannum hover:bg-stannum-light disabled:hover:bg-stannum text-card disabled:opacity-50 rounded text-sm font-semibold tracking-tighter flex justify-center items-center transition-200`}
                 >
                     { isLoading ?
                         <SpinnerIcon className="animate-spin size-6"/>

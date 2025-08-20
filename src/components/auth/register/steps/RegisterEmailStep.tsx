@@ -46,7 +46,7 @@ export const RegisterEmailStep = ({ handleNextStep }: Props) => {
             }
             setReCAPTCHACompleted(true);
             setReCAPTCHAError(null);
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setReCAPTCHAError(appError.friendlyMessage);
             resetReCAPTCHA();
@@ -70,7 +70,7 @@ export const RegisterEmailStep = ({ handleNextStep }: Props) => {
             }
 
             await handleNextStep({ email });
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
         } finally {

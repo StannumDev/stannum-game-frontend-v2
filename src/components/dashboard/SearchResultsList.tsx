@@ -27,7 +27,7 @@ export const SearchResultsList = ({ query }: Props) => {
             try {
                 const data = await searchUsers(query);
                 setResults(data);
-            } catch (error) {
+            } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
                 setError(appError.friendlyMessage);
             } finally {

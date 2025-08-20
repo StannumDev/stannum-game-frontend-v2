@@ -26,7 +26,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
     const onLogout = () => {
         try {
             logout();
-        } catch (error) {
+        } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError)
         }

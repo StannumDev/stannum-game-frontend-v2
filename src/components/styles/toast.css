@@ -7,7 +7,7 @@
 }
 
 .bodyToast h2{
-    @apply !font-bold uppercase !leading-[1]
+    @apply !font-semibold uppercase !leading-[1] pr-2
 }
 
 .bodyToast p{

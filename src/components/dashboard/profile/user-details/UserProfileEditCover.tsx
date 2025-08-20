@@ -127,7 +127,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
                         type="button"
                         disabled={isLoading}
                         onClick={changeBackground}
-                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light rounded tracking-tighter flex justify-center items-center transition-200'
+                        className='w-full lg:w-32 h-9 text-sm font-semibold bg-stannum hover:bg-stannum-light disabled:bg-stannum-light text-card rounded tracking-tighter flex justify-center items-center transition-200'
                     >
                         {
                             isLoading ?

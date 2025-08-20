@@ -44,7 +44,7 @@ export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
         }
 
         return response.data.data as UserSidebarDetails;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -64,7 +64,7 @@ export const getUserDetailsByUsername = async (username: string): Promise<FullUs
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
         return response.data.data as FullUserDetails;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -84,7 +84,7 @@ export const getTutorialStatus = async (tutorialName: string): Promise<boolean> 
         const isCompleted = response.data?.tutorial?.isCompleted || false;
         Cookies.set(cookieKey, String(isCompleted), { expires: 365 });
         return isCompleted;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -100,7 +100,7 @@ export const markTutorialAsCompleted = async (tutorialName: string): Promise<voi
             },
         });
         Cookies.set(cookieKey, "true", { expires: 365 });
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -116,7 +116,7 @@ export const updateUserProfile = async (data:{name:string, birthdate:string, cou
         });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -134,7 +134,7 @@ export const searchUsers = async (query: string): Promise<Array<UserSearchResult
         });
         if (!response?.data?.success || !response.data?.data) throw new Error("Unexpected response structure");
         return response.data.data as Array<UserSearchResult>;
-    } catch (error) {
+    } catch (error:unknown) {
         throw error;
     }
 };

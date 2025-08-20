@@ -11,19 +11,9 @@ interface Props {
 }
 
 const sections: Array<NavbarSectionType> = [
-    {
-        name: "Logros",
-        id: "achievements",
-        Icon: MedalIcon
-    },
-    {
-        name: "TMD",
-        id: "tmd"
-    },
-    {
-        name: "TIA",
-        id: "tia"
-    },
+    { name: "Logros", id: "achievements", Icon: MedalIcon },
+    { name: "TMD", id: "tmd", disabled: true },
+    { name: "TIA", id: "tia", disabled: true },
 ];
 
 type SectionOptions = 'achievements' | 'tmd' | 'tia'
@@ -33,21 +23,22 @@ export const ProfileSectionsLayout = ({user}:Props) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const layout = searchParams.get('section');
+    const layoutParam = searchParams.get('section');
     const [selectedLayout, setSelectedLayout] = useState<SectionOptions>('achievements');
 
     useEffect(() => {
-        if (layout && ['achievements', 'tmd', 'tia'].includes(layout)) {
-            setSelectedLayout(layout as SectionOptions);
-        } else {
-            router.replace(`${pathname}?section=achievements`, { scroll: false });
-        }
-    }, [layout, pathname, router]);
+        const validCategories: Array<SectionOptions> = ['achievements', 'tmd', 'tia'];
+        const validLayout = layoutParam && validCategories.includes(layoutParam as SectionOptions) && !sections.find(section => section.id === layoutParam && section.disabled);
+        setSelectedLayout(validLayout ? (layoutParam as SectionOptions) : 'achievements');
+        if (!validLayout) router.push(pathname, { scroll: false });
+    }, [pathname, router, layoutParam]);
 
-    const handleLayoutChange = useCallback((layout: string): void => {
-        setSelectedLayout(layout as SectionOptions);
-        router.replace(`${pathname}?section=${layout}`, { scroll: false });
-    }, [pathname, router, setSelectedLayout])
+    const handleLayoutChange = useCallback((layout: SectionOptions): void => {
+        const params = new URLSearchParams(searchParams.toString());
+        setSelectedLayout(layout);
+        layout ? params.set('section', layout) : params.delete('section');
+        router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
+    }, [pathname, router, searchParams]);
 
     return (
         <MotionWrapperLayoutClient>

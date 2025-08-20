@@ -29,7 +29,7 @@ export const RegisterHandler = () => {
             if (step === 'details') {
                 try {
                     await createUser(updatedState);
-                } catch (error) {
+                } catch (error:unknown) {
                     const appError:AppError = errorHandler(error);
                     console.error(appError);
                     return;

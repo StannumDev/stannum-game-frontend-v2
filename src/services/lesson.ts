@@ -32,7 +32,7 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         console.log(response)
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response?.data?.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
@@ -54,7 +54,7 @@ export const saveLastWatchedLesson = async (programName: string, lessonId: strin
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
-    } catch (error: unknown) {
+    } catch (error:unknown) {
         throw error;
     }
 };
