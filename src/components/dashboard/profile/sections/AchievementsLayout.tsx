@@ -3,10 +3,11 @@ import { ProfileAchievementsCard } from "@/components";
 import { achievements } from "@/config/achievements";
 
 interface Props {
+    owner: boolean;
     user: FullUserDetails
 }
 
-export const AchievementsLayout = ({user}:Props) => {
+export const AchievementsLayout = ({user, owner}:Props) => {
     return (
         <section className="w-full flex flex-col items-start gap-8">
             <header>
@@ -19,7 +20,7 @@ export const AchievementsLayout = ({user}:Props) => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 {
                     achievements.map((achievement:Achievement, i:number)=> (
-                        <ProfileAchievementsCard achievement={achievement} user={user} key={`achievement_profile_${i}`}/>
+                        <ProfileAchievementsCard owner={owner} achievement={achievement} user={user} key={`achievement_profile_${i}`}/>
                     ))
                 }
             </div>

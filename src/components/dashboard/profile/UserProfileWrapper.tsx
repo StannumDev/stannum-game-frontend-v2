@@ -8,10 +8,11 @@ import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/comp
 
 interface Props{
     username: string;
+    owner: boolean;
 }
 
-export const UserProfileWrapper = ({username}:Props) => {
-    
+export const UserProfileWrapper = ({username, owner}:Props) => {
+
     const [userData, setUserData] = useState<FullUserDetails|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -39,8 +40,8 @@ export const UserProfileWrapper = ({username}:Props) => {
 
     return (
         <Fragment>
-            <UserProfileDetails user={userData} fetchUserData={fetchUserData}/>
-            <ProfileSectionsLayout user={userData} />
+            <UserProfileDetails owner={owner} user={userData} fetchUserData={fetchUserData}/>
+            <ProfileSectionsLayout owner={owner} user={userData} />
         </Fragment>
     )
 }

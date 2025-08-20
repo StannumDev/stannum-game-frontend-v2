@@ -111,7 +111,6 @@ export const ActivarProductoHome = () => {
         setError(null);
       }, [showModal, reset]);
     
-
     return (
         <Fragment>
             <MotionWrapperLayoutClient>

@@ -6,15 +6,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { Achievement, FullUserDetails } from '@/interfaces';
 
 interface Props{
-    achievement: Achievement,
+    owner: boolean;
+    achievement: Achievement;
     user:FullUserDetails
 }
 
-export const ProfileAchievementsCard = ({ achievement, user }: Props) => {
+export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => {
     const { title, description, background, categories, getProgress, id, xpReward } = achievement
     const achieved = user.achievements.some(a => a.achievementId === id);
     const progress = getProgress(user)
     const [isHovered, setIsHovered] = useState<boolean>(false);
+
+    if(!achieved && !owner) return null;
 
     return (
         <motion.article

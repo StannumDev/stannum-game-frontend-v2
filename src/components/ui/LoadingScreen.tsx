@@ -1,6 +1,10 @@
-export const LoadingScreen = () => {
+interface Props{
+    fullScreen?: boolean;
+}
+
+export const LoadingScreen = ({ fullScreen = false }: Props) => {
     return (
-        <main className="main-container justify-center items-center">
+        <main className={`main-container size-full justify-center items-center ${fullScreen ? 'min-h-dvh' : 'min-h-0'}`}>
             <span className="sr-only">Cargando...</span>
             <div role="status" className="size-24 flex justify-center items-center">
                 <svg className='size-24 aspect-square animate-pulse fill-stannum' viewBox="0 0 2237 2236" xmlns="http://www.w3.org/2000/svg">

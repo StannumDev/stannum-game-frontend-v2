@@ -1,20 +1,18 @@
 'use client';
 
-import { useState } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
-import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
-import { ChangeLessonsButtons } from "@/components";
+// import { useState } from "react";
+// import { AnimatePresence, motion } from 'framer-motion';
+// import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
+// import { ChangeLessonsButtons } from "@/components";
 import type { Lesson } from "@/interfaces";
 
 interface Props {
     lesson: Lesson;
     completed?: boolean;
-    rewardXP?: number;
 }
 
-export const LessonDetails = ({ lesson, completed = false, rewardXP = 250 }: Props) => {
-    const [isSaved, setIsSaved] = useState<boolean>(false);
-    const [isCompleted, setIsCompleted] = useState<boolean>(completed);
+export const LessonDetails = ({ lesson }: Props) => {
+    // const [isSaved, setIsSaved] = useState<boolean>(false);
 
     return (
         <div className="mt-6 w-full flex flex-col">
@@ -23,7 +21,7 @@ export const LessonDetails = ({ lesson, completed = false, rewardXP = 250 }: Pro
                 <div className="flex flex-col">
                     <h1 className="title-2">{lesson.title}</h1>
                 </div>
-                <AnimatePresence mode="wait" initial={false}>
+                {/* <AnimatePresence mode="wait" initial={false}>
                     {isSaved ? (
                         <motion.button
                             key="isSaved"
@@ -51,7 +49,7 @@ export const LessonDetails = ({ lesson, completed = false, rewardXP = 250 }: Pro
                             <BookmarkIcon className="size-5 text-white/75 group-hover:text-white transition-200" />
                         </motion.button>
                     )}
-                </AnimatePresence>
+                </AnimatePresence> */}
             </div>
             <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
             <div className="mb-4 grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0">
@@ -63,7 +61,7 @@ export const LessonDetails = ({ lesson, completed = false, rewardXP = 250 }: Pro
                     )}
                 </div>
 
-                <div className="hidden lg:block"></div>
+                {/* <div className="hidden lg:block"></div>
 
                 <div className="flex flex-col gap-4 lg:pl-8">
                 <h2 className="title-3">Detalles</h2>
@@ -88,10 +86,10 @@ export const LessonDetails = ({ lesson, completed = false, rewardXP = 250 }: Pro
                     <p className="title-3 font-thin text-stannum/75">{rewardXP} XP</p>
                     </div>
                 </div>
-                </div>
+                </div> */}
             </div>
 
-            <ChangeLessonsButtons setIsCompleted={setIsCompleted} />
+            {/* <ChangeLessonsButtons setIsCompleted={setIsCompleted} /> */}
         </div>
     );
 };

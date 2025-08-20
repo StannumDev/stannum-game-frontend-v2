@@ -38,6 +38,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const [markedAsCompleted, setMarkedAsCompleted] = useState(isCompleted);
     const [countdown, setCountdown] = useState(NEXT_COUNTDOWN);
     const [showNextOverlay, setShowNextOverlay] = useState(false);
+    const [cancelNext, setCancelNext] = useState(false);
 
     const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
     const hasStartedRedirect = useRef(false);
@@ -96,7 +97,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             }
         }
 
-        if (remaining <= END_THRESHOLD && !hasStartedRedirect.current) {
+        if (remaining <= END_THRESHOLD && !hasStartedRedirect.current && !cancelNext) {
             hasStartedRedirect.current = true;
             setShowNextOverlay(true);
             let counter = NEXT_COUNTDOWN;
@@ -126,6 +127,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         hasStartedRedirect.current = false;
         setShowNextOverlay(false);
         setCountdown(NEXT_COUNTDOWN);
+        setCancelNext(true);
     };
 
     const startAt = useMemo(() => {

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getUserByToken } from "@/services";
 import { programs } from "@/config/programs";
-import { LessonVideoPlayer, LessonMiniatureCard, LessonDetails, GoBackButton } from "@/components";
+import { LessonVideoPlayer, LessonMiniatureCard, GoBackButton } from "@/components";
 import { Lesson, Module, Program } from "@/interfaces";
 
 interface Props {
@@ -101,7 +101,20 @@ export default async function LessonPage({ params }: Props) {
                     </div>
                 </div>
             </div>
-            <LessonDetails lesson={lesson} completed={isCompleted} />
+            <div className="mt-6 w-full flex flex-col">
+                <p className="subtitle-1">Pretemporada | Módulo 01</p>
+                <div className="w-full flex justify-between gap-4">
+                    <div className="flex flex-col">
+                        <h1 className="title-2">{lesson.title}</h1>
+                    </div>
+                </div>
+                <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
+                <div className="w-[calc(100%+13px)] max-w-3xl max-h-64 lg:max-h-none pr-4 lg:pr-0 text-sm overflow-y-auto">
+                    <div className="size-full pr-4 absolute lg:static top-0 left-0 whitespace-pre-line">
+                        { lesson.description }
+                    </div>
+                </div>
+            </div>
             <div className="lg:hidden lg:content-visibility-hidden col-span-1 w-full max-h-96 relative overflow-y-auto">
                 <div className="size-full flex flex-col gap-2">
                     {program_module.lessons.map((miniLesson, index) => {

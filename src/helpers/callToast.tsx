@@ -1,7 +1,6 @@
 'use client'
 
 import { toast, ToastOptions } from 'react-toastify';
-import * as motion from 'framer-motion/m';
 import { CheckIcon, MedalIcon, WarningOctagonIcon } from '@/icons';
 import type { ToastData } from '@/interfaces';
 
@@ -20,7 +19,7 @@ export const callToast = ({ message, type = "success" }: ToastData): null => {
     return (
       <div className="bodyToast">
         <h2>{message.title}</h2>
-        <motion.p layout className='line-clamp-2 hover:line-clamp-none'>{message.description}</motion.p>
+        <p>{message.description}</p>
       </div>
     );
   }, params);

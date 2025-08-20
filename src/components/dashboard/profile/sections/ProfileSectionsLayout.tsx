@@ -7,6 +7,7 @@ import { MedalIcon } from "@/icons";
 import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/components";
 
 interface Props {
+    owner: boolean;
     user: FullUserDetails
 }
 
@@ -18,7 +19,7 @@ const sections: Array<NavbarSectionType> = [
 
 type SectionOptions = 'achievements' | 'tmd' | 'tia'
 
-export const ProfileSectionsLayout = ({user}:Props) => {
+export const ProfileSectionsLayout = ({owner, user}:Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -50,7 +51,7 @@ export const ProfileSectionsLayout = ({user}:Props) => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 <div className="px-4 lg:px-6 content-visibility-auto">
-                    { selectedLayout === 'achievements' && <AchievementsLayout user={user}/>}
+                    { selectedLayout === 'achievements' && <AchievementsLayout owner={owner} user={user}/>}
                 </div>
             </section>
         </MotionWrapperLayoutClient>

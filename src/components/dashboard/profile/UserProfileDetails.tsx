@@ -1,26 +1,27 @@
 import { Fragment } from "react";
-import { UserProfileCover, UserProfilePhoto, UserProfileSocialMedias, UserProfileLevel, MotionWrapperLayout, UserProfileInfo } from "@/components";
+import { UserProfileCover, UserProfilePhoto, UserProfileLevel, MotionWrapperLayout, UserProfileInfo } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 
 interface Props{
+    owner: boolean;
     user: FullUserDetails,
     fetchUserData: () => Promise<void>
 }
 
-export const UserProfileDetails = ({user, fetchUserData}:Props) => {
+export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
 
     return (
         <Fragment>
             <MotionWrapperLayout>
                 <section className="w-full flex flex-col relative lg:static">
-                    <UserProfileCover/>
+                    <UserProfileCover owner={owner}/>
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
-                            <UserProfilePhoto user={user} fetchUserData={fetchUserData}/>
+                            <UserProfilePhoto owner={owner} user={user} fetchUserData={fetchUserData}/>
                             <p className="mt-4 title-2">{user?.username}</p>
-                            <p className="font-semibold text-stannum">{user?.enterprise?.name}</p>
+                            <p className="font-semibold text-stannum">{user?.enterprise?.name || ''}</p>
                         </div>
-                        <UserProfileSocialMedias/>
+                        {/* <UserProfileSocialMedias/> */}
                         <div className="content-visibility-hidden lg:content-visibility-visible">
                             <UserProfileLevel user={user}/>
                         </div>
@@ -31,7 +32,7 @@ export const UserProfileDetails = ({user, fetchUserData}:Props) => {
                 </div>
             </MotionWrapperLayout>
             <MotionWrapperLayout>
-                <UserProfileInfo user={user} fetchUserData={fetchUserData}/>
+                <UserProfileInfo owner={owner} user={user} fetchUserData={fetchUserData}/>
             </MotionWrapperLayout>
         </Fragment>
     )

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowDownIcon } from "@/icons";
 import { SimpleRanking, TeamRanking } from "@/interfaces";
 import { FirstPlaceIcon, ProgramPlayerRankingCard } from "@/components";
-import photo from '@/assets/user/default_user.webp';
+import default_user from '@/assets/user/default_user.webp';
 
 interface Props {
     team: TeamRanking;
@@ -28,7 +28,7 @@ export const ProgramTeamRankingCard = ({ team }: Props) => {
                     {position === 1 ? <FirstPlaceIcon /> : <span className="text-sm lg:text-base font-black">{position}</span>}
                 </h3>
                 <h3 className="col-span-4 flex items-center gap-2 lg:gap-4">
-                    <Image src={photo} alt={`Equipo ${teamName}`} className="size-7 lg:size-9 rounded-full drop-shadow-sm" />
+                    <Image src={default_user} alt={`Equipo ${teamName}`} className="size-7 lg:size-9 rounded-full drop-shadow-sm" />
                     <span className="whitespace-nowrap truncate text-sm lg:text-base">{teamName}</span>
                 </h3>
                 <h3 className="hidden lg:block col-span-4">

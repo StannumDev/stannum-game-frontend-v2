@@ -7,7 +7,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
 import styles from '@/components/styles/sidebar.module.css';
-import mateo from "@/assets/user/usuario_mateo.webp";
+import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
     user: UserSidebarDetails|null;
@@ -54,7 +54,7 @@ export const SidebarMobile = ({user, links, pathname}:Props) => {
                                     priority
                                     width={32}
                                     height={32}
-                                    src={ profilePhotoError || !user?.profilePhoto ? mateo : user?.profilePhoto}
+                                    src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
                                     alt='Foto de perfil Usuario STANNUM Game'
                                     className="size-full object-cover absolute top-0 left-0 z-10"
                                     onError={() => setProfilePhotoError(true)}

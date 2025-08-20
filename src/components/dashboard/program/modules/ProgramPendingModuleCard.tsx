@@ -1,4 +1,4 @@
-import { ArrowRightIcon, CompassIcon, PaperIcon, VideosIcon } from "@/icons";
+import { ArrowRightIcon, CompassIcon, VideosIcon } from "@/icons";
 import styles from '@/components/styles/ProgramModuleCard.module.css';
 
 interface Props {
@@ -26,25 +26,29 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
             <div className="w-fit flex items-center lg:gap-4 shrink-0">
                 <div className='sr-only lg:not-sr-only subtitle-1 text-white/25'>En proceso</div>
                 <div className='lg:p-2 flex gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full relative z-10'>
-                    <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
+                    <div className={`size-9 ${ lessonsOffset > 0 ? 'lg:bg-card-light' : 'bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Lecciones</span>
-                        <VideosIcon className="size-4 text-white/50"/>
-                        <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
-                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: lessonsOffset }}/>
-                        </svg>
+                        <VideosIcon className={`size-4 ${ lessonsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
+                        { lessonsOffset > 0 &&
+                            <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
+                                <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: lessonsOffset }}/>
+                            </svg>
+                        }
                     </div>
-                    <div className='size-9 bg-stannum/40 rounded-full flex justify-center items-center relative'>
+                    {/* <div className='size-9 bg-stannum/40 rounded-full flex justify-center items-center relative'>
                         <span className="sr-only">Misiones</span>
                         <PaperIcon className="size-4 text-stannum"/>
-                    </div>
-                    <div className='size-9 lg:bg-card-light rounded-full flex justify-center items-center relative'>
+                    </div> */}
+                    <div className={`size-9 ${ instructionsOffset > 0 ? 'lg:bg-card-light' : 'bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Instrucciones</span>
-                        <CompassIcon className="size-4 text-white/50"/>
-                        <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
-                            <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: instructionsOffset }}/>
-                        </svg>
+                        <CompassIcon className={`size-4 ${ instructionsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
+                        { instructionsOffset > 0 &&
+                            <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
+                                <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: instructionsOffset }}/>
+                            </svg>
+                        }
                     </div>
                 </div>
             </div>

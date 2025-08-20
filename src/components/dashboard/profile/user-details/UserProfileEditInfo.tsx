@@ -6,9 +6,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { updateUserProfile } from "@/services";
-import { errorHandler } from "@/helpers";
-import { AppError, FullUserDetails } from "@/interfaces";
+import { achievementHandler, errorHandler } from "@/helpers";
 import { EditIcon, SelectorIcon } from "@/icons";
+import { AppError, FullUserDetails } from "@/interfaces";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 interface Props{
@@ -49,12 +49,10 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
         setIsLoading(true);
         try {
             console.log(data)
-            const success = await updateUserProfile(data);
-            if (success) {
-                console.log("Perfil actualizado con éxito.");
-                await fetchUserData();
-                setShowModal(false);
-            }
+            const { achievementsUnlocked } = await updateUserProfile(data);
+            achievementsUnlocked && achievementHandler(achievementsUnlocked);
+            await fetchUserData();
+            setShowModal(false);
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);

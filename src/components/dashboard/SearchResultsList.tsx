@@ -8,7 +8,8 @@ import { searchUsers } from "@/services";
 import { SearchIcon } from "@/icons";
 import { errorHandler } from "@/helpers";
 import { AppError, UserSearchResult } from "@/interfaces";
-import mateo from "@/assets/user/usuario_mateo.webp";
+import default_user from "@/assets/user/default_user.webp";
+import { LoadingScreen } from "@/components";
 
 interface Props {
     query: string;
@@ -18,7 +19,7 @@ export const SearchResultsList = ({ query }: Props) => {
 
     const [results, setResults] = useState<Array<UserSearchResult>>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<AppError | null>(null);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -29,7 +30,7 @@ export const SearchResultsList = ({ query }: Props) => {
                 setResults(data);
             } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
-                setError(appError.friendlyMessage);
+                setError(appError);
             } finally {
                 setIsLoading(false);
             }
@@ -39,10 +40,10 @@ export const SearchResultsList = ({ query }: Props) => {
     }, [query]);
 
     return (
-        <section className="w-full">
-            { isLoading ? <p className="text-center text-neutral-600">Buscando resultados...</p> :
-              error ? <p className="text-center text-red-500">{error}</p> :
-              results.length === 0 ? <p className="text-center text-neutral-600">No se encontraron resultados.</p> :
+        <section className="w-full grow">
+            { isLoading ? <div className="size-full"><LoadingScreen/></div> :
+              error ? <p className="text-center lg:text-left text-invalid">{error.friendlyMessage}</p> :
+              results.length === 0 ? <p className="text-center lg:text-left">No se encontraron resultados.</p> :
                 <motion.ul 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
@@ -56,7 +57,7 @@ export const SearchResultsList = ({ query }: Props) => {
                                         priority
                                         width={112}
                                         height={112}
-                                        src={ !user?.profilePhoto ? mateo : user?.profilePhoto}
+                                        src={ !user?.profilePhoto ? default_user : user?.profilePhoto}
                                         alt="Perfil de usuario STANNUM Game"
                                         className="size-full object-cover absolute top-0 left-0"
                                         />

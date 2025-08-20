@@ -54,13 +54,13 @@ export const RankingHome = () => {
                     </div>
                     <div className="mt-2 w-full grow min-h-12 lg:min-h-24 overflow-y-auto overflow-x-hidden relative">
                         { isLoading ?
-                            <div className="w-full grow flex justify-center items-center">
-                                <SpinnerIcon className="animate-spin size-6"/>
+                            <div className="size-full flex justify-center items-center">
+                                <SpinnerIcon className="animate-spin size-8"/>
                             </div>
                         : rankings.length === 0 ? (
                             <div className="size-full bg-card flex justify-center items-center"><p className="max-w-sm text-center text-card-lightest">En breve veras reflejado tu puntaje y del resto de jugadores aquí.</p></div>
                         ) : (
-                            <div className="w-[calc(100%+11px)] bg-green-500 lg:w-[calc(100%+13px)] grow pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
+                            <div className="w-[calc(100%+11px)] lg:w-[calc(100%+13px)] grow pr-1.5 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
                                 {rankings.map((player, i) => <CardRankingHome {...player} key={`ranking_home_${i}`} />)}
                             </div>
                         )}
