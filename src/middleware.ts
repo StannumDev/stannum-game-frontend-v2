@@ -9,16 +9,20 @@ export async function middleware(request: NextRequest) {
   const isRoot = pathname === '/'
 
   if (!token && isDashboard) {
+    console.log("1")
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
   if (token && (isAuthPage || isRoot)) {
+    console.log("2")
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   if (token && isDashboard) {
+    console.log("3")
     const user = await getUserByToken()
     if (!user) {
+      console.log("4")
       const response = NextResponse.redirect(new URL('/login', request.url))
       response.cookies.set('token', '', { maxAge: 0 })
       return response
