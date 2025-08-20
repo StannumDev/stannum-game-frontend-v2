@@ -1,7 +1,12 @@
 import { Fragment } from "react";
+import { redirect } from "next/navigation";
+import { getUserByToken } from "@/services";
 import { InstallPromptModal, Sidebar } from "@/components";
 
-export default function DashboardLayout({children}:{children: React.ReactNode}) {
+export default async function DashboardLayout({children}:{children: React.ReactNode}) {
+    const user = await getUserByToken()
+    if (!user) redirect("/login");
+
     return (
         <Fragment>
             <InstallPromptModal/>
