@@ -1,7 +1,8 @@
+import { notFound, redirect } from 'next/navigation';
 import { GoBackButton, ProgramLessonCard, ProgramInstructionCard } from '@/components';
 import { programs } from "@/config/programs";
 import { getUserByToken } from '@/services';
-import type { FullUserDetails, Module, Program, Section, Instruction } from '@/interfaces';
+import type { Module, Program, Section, Instruction } from '@/interfaces';
 
 interface Props {
   params: {
@@ -18,11 +19,10 @@ export default async function ProgramModulePage({ params }: Props) {
     const foundSection: Section | undefined = foundProgram?.sections.find(sec => sec.id === section);
     const foundModule: Module | undefined = foundSection?.modules.find(mod => mod.id === program_module);
 
-    const user: FullUserDetails | null = await getUserByToken();
+    const user = await getUserByToken();
+    if (!user) redirect("/login");
 
-    if (!foundModule || !user) {
-        return <div className="text-red-500">Error: Módulo no encontrado</div>;
-    }
+    if (!foundModule) return notFound()
 
     const userLessons = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted || [];
     const userInstructions = user.programs?.[program_id as keyof typeof user.programs]?.instructions || [];

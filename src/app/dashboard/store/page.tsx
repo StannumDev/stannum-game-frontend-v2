@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { StoreCover, StoreSectionsLayout } from "@/components";
 import { getUserByToken } from "@/services";
 import { Metadata } from "next";
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
 
 export default async function StorePage() {
     const user = await getUserByToken();
-    if (!user) return null;
+    if (!user) redirect("/login");
+    
     return (
         <main className="main-container">
             <h1 className="sr-only">Tienda STANNUM Game</h1>

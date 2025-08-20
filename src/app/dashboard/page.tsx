@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { PresentacionHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome } from "@/components"
 import { getUserByToken } from "@/services";
 
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
     const user = await getUserByToken();
-    if (!user) return null;
+    if (!user) redirect("/login");
+
     return (
         <main className="main-container">
             <h1 className="sr-only">Pantalla principal STANNUM Game</h1>

@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
-import { programs } from '@/config/programs';
-import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
-import { Program } from "@/interfaces";
+import { notFound, redirect } from "next/navigation";
 import { getUserByToken } from "@/services";
+import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
+import { programs } from '@/config/programs';
+import { Program } from "@/interfaces";
 
 interface Props {
     children: ReactNode;
@@ -45,17 +46,9 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
 
     const user = await getUserByToken();
-    
-    if (!user) return null;
+    if (!user) redirect("/login");
 
-    if (!foundProgram) {
-        return (
-            <main className="main-container">
-                <h1 className="title-1">Programa no encontrado</h1>
-                <p>El programa solicitado no existe en nuestra base de datos.</p>
-            </main>
-        );
-    }
+    if (!foundProgram) return notFound();
 
     return (
         <main className="main-container">

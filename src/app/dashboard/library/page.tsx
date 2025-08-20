@@ -1,6 +1,7 @@
-import { LibraryCover, LibrarySectionsLayout } from "@/components";
-import { getUserByToken } from "@/services";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { getUserByToken } from "@/services";
+import { LibraryCover, LibrarySectionsLayout } from "@/components";
 
 export const metadata: Metadata = {
     title: 'Biblioteca',
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
 
 export default async function LibraryPage() {
     const user = await getUserByToken();
-    if (!user) return null;
+    if (!user) redirect("/login");
+    
     return (
         <main className="main-container">
             <h1 className="sr-only">Biblioteca STANNUM Game</h1>

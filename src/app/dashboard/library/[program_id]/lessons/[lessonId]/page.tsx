@@ -1,8 +1,9 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { getUserByToken } from "@/services";
-import { programs } from "@/config/programs";
 import { LessonVideoPlayer, LessonMiniatureCard, GoBackButton } from "@/components";
 import { Lesson, Module, Program } from "@/interfaces";
+import { programs } from "@/config/programs";
 
 interface Props {
     params: {
@@ -54,8 +55,7 @@ export default async function LessonPage({ params }: Props) {
     const { program_id, lessonId } = params;
     
     const user = await getUserByToken();
-
-    if(!user) return null;
+    if (!user) redirect("/login");
 
     const program: Program | undefined = programs.find(p => p.id === program_id.toLowerCase());
     const modules: Module[] = program?.sections.flatMap(section => section.modules) ?? [];

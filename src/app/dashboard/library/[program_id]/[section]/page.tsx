@@ -1,7 +1,8 @@
+import { notFound, redirect } from "next/navigation";
 import { getUserByToken } from "@/services";
 import { ProgramModuleHandler } from "@/components";
-import { programs } from "@/config/programs";
 import { Module, Program } from "@/interfaces";
+import { programs } from "@/config/programs";
 
 interface Props {
     params: {
@@ -18,15 +19,9 @@ export default async function ProgramSectionPage({ params }: Props) {
     const foundSection = foundProgram?.sections.find(sec => sec.id === section);
 
     const user = await getUserByToken();
+    if (!user) redirect("/login");
 
-    if (!foundProgram || !user ) {
-        return (
-            <main className="main-container">
-                <h1 className="title-1">Programa no encontrado</h1>
-                <p>El programa solicitado no existe en nuestra base de datos.</p>
-            </main>
-        );
-    }
+    if (!foundProgram ) return notFound();
 
     return (
         <section className="w-full flex flex-col gap-4">
