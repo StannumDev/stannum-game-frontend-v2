@@ -8,6 +8,7 @@ import default_user from "@/assets/user/default_user.webp";
 
 export const CardRankingHome = ({ position, name, username, photo, enterprise, level, points }:SimpleRanking) => {
 
+  console.log(enterprise)
   const renderPositionIcon = () => {
     if (position === 1) return <FirstPlaceIcon />;
     if (position === 2) return <SecondPlaceIcon />;
@@ -23,11 +24,11 @@ export const CardRankingHome = ({ position, name, username, photo, enterprise, l
               </span>
               {renderPositionIcon()}
           </h3>
-          <h3 className="col-span-5 lg:col-span-3 lg:pl-2 flex items-center gap-2 lg:gap-3">
+          <h3 className="col-span-6 lg:col-span-3 lg:pl-2 flex items-center gap-2 lg:gap-3">
             <Image src={photo || default_user} alt={`Foto de ${name}`} width={36} height={36} className="size-7 lg:size-9 rounded-full" />
             <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </h3>
-          <h3 className="col-span-3 lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>
+          <h3 className="hidden lg:block lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise||"-"}</h3>
           <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{level}</h3>
           <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{points}</h3>
       </Link>

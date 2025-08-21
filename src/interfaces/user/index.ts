@@ -134,7 +134,7 @@ export interface FullUserDetails {
     username: string;
     profilePhoto?: string;
     profile: UserProfile;
-    enterprise?: EnterpriseDetails;
+    enterprise: EnterpriseDetails;
     teams?: Array<{
         programName: string;
         teamName: string;

@@ -3,8 +3,8 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { getUserDetailsByUsername } from "@/services";
 import { errorHandler } from "@/helpers";
-import { AppError, FullUserDetails } from "@/interfaces";
 import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
+import { AppError, FullUserDetails } from "@/interfaces";
 
 interface Props{
     username: string;

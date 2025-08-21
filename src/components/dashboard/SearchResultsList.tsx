@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { searchUsers } from "@/services";
-import { SearchIcon } from "@/icons";
+import { ArrowRightIcon } from "@/icons";
 import { errorHandler } from "@/helpers";
 import { AppError, UserSearchResult } from "@/interfaces";
 import default_user from "@/assets/user/default_user.webp";
@@ -68,7 +68,7 @@ export const SearchResultsList = ({ query }: Props) => {
                                         <p className="w-full subtitle-1 truncate">@{user.username}</p>
                                         { user.enterprise && <p className="mt-2 w-full text-sm text-stannum truncate">{user.jobPosition} - {user.enterprise}</p> }
                                     </div>
-                                    <SearchIcon className="size-6 text-card-lightest shrink-0"/>
+                                    <ArrowRightIcon className="size-4 text-card-lightest shrink-0"/>
                                 </div>
                             </Link>
                         </li>

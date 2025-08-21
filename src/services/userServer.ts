@@ -32,7 +32,6 @@ export const getUserByToken = async (): Promise<FullUserDetails | null> => {
         if (!response?.data?.success || !response.data?.data) {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
-        
         return response.data.data as FullUserDetails;
     } catch (error:unknown) {
         return null;

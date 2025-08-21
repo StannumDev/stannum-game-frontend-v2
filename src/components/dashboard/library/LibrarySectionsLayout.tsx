@@ -42,7 +42,7 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
     const filteredPrograms = programs.filter(program => user.programs?.[program.id as keyof FullUserDetails['programs']]?.isPurchased).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
 
     return (
-        <MotionWrapperLayoutClient grow>
+        <MotionWrapperLayoutClient className="grow">
             <section className="size-full card px-0 flex flex-col">
                 <h2 className="mb-4 title-2 px-4 lg:px-6">Tus programas</h2>
                 <NavbarSection<ProgramCategory>

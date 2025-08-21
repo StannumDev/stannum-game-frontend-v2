@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
@@ -16,7 +16,8 @@ interface Props{
     isLoading: boolean;
 }
 
-export const SidebarMobile = ({user, links, pathname}:Props) => {
+export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
+    
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
 
@@ -34,6 +35,11 @@ export const SidebarMobile = ({user, links, pathname}:Props) => {
         setLastScroll(scrollYPosition);
     });
 
+    useEffect(() => {
+      isSearching && setIsSearching(false);
+    }, [pathname])
+    
+
     return (
         <>
             <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
@@ -47,18 +53,22 @@ export const SidebarMobile = ({user, links, pathname}:Props) => {
                             className={`w-full bg-background flex justify-between items-center pointer-events-auto absolute top-0 left-0 right-0 mx-auto ${styles.sidebar}`}
                         >
                             <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
-                                <STANNUMIcon className="fill-white w-8"/>
+                                <STANNUMIcon className="fill-white h-8"/>
                             </Link>
                             <Link href={`/dashboard/profile/${user?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden">
-                                <Image
-                                    priority
-                                    width={32}
-                                    height={32}
-                                    src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
-                                    alt='Foto de perfil Usuario STANNUM Game'
-                                    className="size-full object-cover absolute top-0 left-0 z-10"
-                                    onError={() => setProfilePhotoError(true)}
-                                />
+                                { isLoading ?
+                                    <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
+                                :
+                                    <Image
+                                        priority
+                                        width={32}
+                                        height={32}
+                                        src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
+                                        alt='Foto de perfil Usuario STANNUM Game'
+                                        className="size-full object-cover absolute top-0 left-0 z-10"
+                                        onError={() => setProfilePhotoError(true)}
+                                    />
+                                }
                             </Link>
                         </motion.div>
                     }
@@ -74,7 +84,7 @@ export const SidebarMobile = ({user, links, pathname}:Props) => {
                             links.map((link:SidebarLink, i:number) => (
                                 <Fragment key={`sidebar_mobile_link_${i}`}>
                                     {i === 1 && (
-                                        <BuscadorSidebarMobile isSearching={isSearching} setIsSearching={setIsSearching}/>
+                                        <BuscadorSidebarMobile pathname={pathname} isSearching={isSearching} setIsSearching={setIsSearching}/>
                                     )}
                                     <motion.li
                                         key={i}

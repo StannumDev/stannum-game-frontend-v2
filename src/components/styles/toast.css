@@ -1,5 +1,9 @@
+.Toastify{
+    @apply !z-[99999999]
+}
+
 .contenedorToast{
-    @apply !m-0 !mb-4 p-4 !rounded !bg-gradient-to-br !from-background-sidebar !to-card relative
+    @apply !m-0 first:!mt-0 !mb-1 p-4 !rounded !bg-gradient-to-br !from-background-sidebar !to-card relative !z-[99999999]
 }
 
 .bodyToast{
@@ -14,13 +18,13 @@
     @apply !mt-1 !text-xs !font-light !line-clamp-3
 }
 
-@media (max-width: 576px) {
+@media (max-width: 1024px) {
     .Toastify__toast-container{
         width: 100% !important;
     }
 
     .contenedorToast{
         width: calc(100% - 2rem) !important;
-        @apply !mt-4 !mx-auto !max-w-md !left-0 !right-0
+        @apply first:!mt-4 !mt-0.5 !mb-0.5 !mx-auto !max-w-md !left-0 !right-0
     }
 }

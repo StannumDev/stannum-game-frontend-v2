@@ -5,7 +5,10 @@ import { InstallPromptModal, Sidebar } from "@/components";
 
 export default async function DashboardLayout({children}:{children: React.ReactNode}) {
     const user = await getUserByToken()
-    if (!user) redirect("/login");
+    if (!user) {
+        console.log("User not found")
+        redirect("/login");
+    }
 
     return (
         <Fragment>

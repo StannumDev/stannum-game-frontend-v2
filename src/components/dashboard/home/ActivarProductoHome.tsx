@@ -113,7 +113,7 @@ export const ActivarProductoHome = () => {
     
     return (
         <Fragment>
-            <MotionWrapperLayoutClient>
+            <MotionWrapperLayoutClient className="order-3 lg:order-none">
                 <button
                     onClick={ () => setShowModal(true) }
                     type="button"
@@ -168,8 +168,8 @@ export const ActivarProductoHome = () => {
                         </form>
                         { isSubmitted && productInfo && !productInfo.used && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 w-full">
-                                <p className="w-full max-w-xs">Esta clave de producto corresponde a:</p>
-                                <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
+                                <p className="hidden lg:block w-full max-w-xs">Esta clave de producto corresponde a:</p>
+                                <div className="mt-0 lg:mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
                                     <AlertHexagonIcon className="size-8 lg:size-6" />
                                     <div className="flex flex-col">
                                         <p className="subtitle-1 text-white">Programa</p>

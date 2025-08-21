@@ -8,17 +8,20 @@ import { SidebarMobileIndicator } from "@/components";
 import styles from "@/components/styles/sidebar.module.css";
 
 interface Props{
+    pathname: string;
     isSearching: boolean;
     setIsSearching: Dispatch<SetStateAction<boolean>>
 }
 
-export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
+export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Props) => {
 
     const { register, handleSubmit, onSubmit, reset, setFocus } = useSearchHandler();
 
     useEffect(() => {
+        console.log(pathname)
         isSearching && setFocus("search");
     }, [isSearching, setFocus]);
+    
 
     return (
     <Fragment>
@@ -33,7 +36,7 @@ export const BuscadorSidebarMobile = ({isSearching, setIsSearching}:Props) => {
                 type="button"
                 onClick={() => { setIsSearching(!isSearching) }}
                 aria-label={`Buscar en STANNUM Game`}
-                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative ${isSearching ? 'text-stannum' : 'text-card-lightest'}`}
+                className={`w-full py-3 flex flex-col justify-center items-center gap-0.5 transition-200 relative ${pathname.startsWith('/dashboard/search') || isSearching ? 'text-stannum' : 'text-card-lightest'}`}
             >
                 <SearchIcon className="size-8"/>
                 <span className="sr-only">Buscar</span>

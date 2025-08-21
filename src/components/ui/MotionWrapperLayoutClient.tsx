@@ -1,19 +1,20 @@
 'use client'
 
+import { ReactNode } from "react";
 import { motion } from "framer-motion";
 
 interface Props{
-  grow?: boolean;
-  children: React.ReactNode
+  children: ReactNode;
+  className?: string;
 }
 
-export const MotionWrapperLayoutClient = ({children, grow}: Props) => {
+export const MotionWrapperLayoutClient = ({children, className}: Props) => {
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ type: 'spring', bounce: 0 }}
-      className={`w-full ${grow && 'grow'}`}
+      className={`w-full ${className}`}
     >
       {children}
     </motion.div>
