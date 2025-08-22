@@ -42,7 +42,7 @@ export const VideoIntro = () => {
     };
 
     return (
-        <div className="size-full absolute top-0 left-0 z-[99999999]">
+        <div className={`size-full absolute top-0 left-0 z-[99999999] ${ isEnded && "pointer-events-none" }`}>
             { !isEnded && <div className="size-full bg-black absolute top-0 left-0"></div>}
             <AnimatePresence mode="wait">
                 { !start ?
