@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import AvatarEditor from "react-avatar-editor";
 import { preprocessImage, uploadProfilePhoto } from "@/services";
@@ -16,7 +15,6 @@ export const RegisterPhotoStep = () => {
     const [rotate, setRotate] = useState<number>(0);
     const [file, setFile] = useState<File | null>(null);
     const editorRef = useRef<AvatarEditor | null>(null);
-    const router = useRouter();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const selectedFile = event.target.files?.[0];
@@ -36,7 +34,7 @@ export const RegisterPhotoStep = () => {
             const formData = new FormData();
             formData.append("photo", imageBlob!);
             await uploadProfilePhoto(formData);
-            router.push('/dashboard');
+            window.location.replace('/dashboard');
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error(appError);
@@ -46,7 +44,7 @@ export const RegisterPhotoStep = () => {
     };
     
     const navigateToDashboard = () => {
-        router.push('/dashboard');
+        window.location.replace('/dashboard');
     }
 
     return (

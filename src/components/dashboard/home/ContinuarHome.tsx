@@ -19,7 +19,7 @@ export const ContinuarHome = async ({ user }: Props) => {
                     Continuar entrenando
                 </h2>
                 <div className="mt-2 w-full pb-2 flex gap-4 overflow-x-auto">
-                    {entries.length === 0 ? (
+                    {entries.length > 0 ? (
                         entries.map(e => (
                             <ContinuarCardHome
                                 key={`${e.programId}-${e.href}`}

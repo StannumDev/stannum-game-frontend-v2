@@ -35,7 +35,7 @@ export const GoogleAuthUsername = () => {
             }
 
             const success = await updateUsername(username);
-            if (success) router.push('/dashboard');
+            if (success) window.location.replace('/dashboard');
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error("Error en el registro:", appError);

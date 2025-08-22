@@ -3,7 +3,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
-import { RegisterState } from '@/interfaces';
+import { AchievementDetails, RegisterState } from '@/interfaces';
 
 const tokenError = {
     response: {
@@ -19,7 +19,7 @@ const tokenError = {
     },
 }
 
-export const authUserByToken = async (token: string | undefined): Promise<boolean> => {
+export const authUserByToken = async (token: string | undefined): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[]; }> => {
     try {
         if (!token) throw tokenError;
 
@@ -33,10 +33,10 @@ export const authUserByToken = async (token: string | undefined): Promise<boolea
             logout();
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
-        return response.data.success;
+        return { success: response.data.success, achievementsUnlocked: response.data.achievementsUnlocked || [] };
     } catch (error:unknown) {
         logout();
-        return false;
+        return { success: false, achievementsUnlocked: [] };
     }
 };
 

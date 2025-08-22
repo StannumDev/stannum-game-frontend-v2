@@ -33,7 +33,7 @@ export const LoginForm = () => {
         try {
             router.prefetch('/dashboard');
             const success = await requestLogin(data);
-            if (success) router.push('/dashboard');
+            if (success) window.location.replace('/dashboard');
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);

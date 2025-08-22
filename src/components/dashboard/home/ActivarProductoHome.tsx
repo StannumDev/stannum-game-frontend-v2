@@ -2,7 +2,6 @@
 
 import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,8 +38,6 @@ export const ActivarProductoHome = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-    
-    const router = useRouter();
 
     const { register, handleSubmit, setValue, watch, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
 
@@ -94,7 +91,7 @@ export const ActivarProductoHome = () => {
             const { achievementsUnlocked } = await activateProductKey(watch("code"));
             achievementsUnlocked && achievementHandler(achievementsUnlocked);
             callToast({ message: { title: "Producto activado", description: `Ya puedes acceder a ${productInfo?.product} desde tu biblioteca.`}})
-            router.push("/dashboard/library");
+            window.location.replace("/dashboard/library");
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setError(appError);
