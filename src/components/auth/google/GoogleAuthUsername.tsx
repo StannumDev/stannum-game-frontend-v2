@@ -74,6 +74,7 @@ export const GoogleAuthUsername = () => {
                             <AtIcon className="size-4 md:size-5 relative top-0.5 left-1"/>
                         </div>
                     </div>
+                    <p className={`mt-3 text-xs ${errors?.username ? 'text-invalid' : 'text-neutral-400'}`}>Debe contener entre 6 y 25 caracteres, solo minúsculas y sin espacios.</p>
                 </div>
                 <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>
                 <div className="mt-8 w-full flex justify-center">
