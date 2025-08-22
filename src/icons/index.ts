@@ -42,7 +42,8 @@ export {
 
 export {
     PiWarningOctagonThin as WarningOctagonIcon,
-    PiUserCircleFill as UserCircleIcon
+    PiUserCircleFill as UserCircleIcon,
+    PiUsersThreeFill as CommunityIcon
 } from "react-icons/pi";
 
 export {

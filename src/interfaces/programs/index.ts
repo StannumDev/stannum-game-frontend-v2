@@ -41,7 +41,8 @@ export interface Section {
 export interface Program {
     id: ProgramId;
     name: string;
-    price: number
+    price: number;
+    href: string;
     categories: Array<ProgramCategory>;
     description: string;
     logo: StaticImageData;

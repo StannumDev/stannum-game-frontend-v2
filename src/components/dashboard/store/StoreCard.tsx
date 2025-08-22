@@ -1,18 +1,17 @@
 import Link from 'next/link';
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { ArrowRightIcon } from '@/icons';
+import { Program } from '@/interfaces';
 import background from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props {
-    id: string;
-    name: string;
-    description: string;
-    logo: StaticImageData;
-    price: number;
+    program:Program;
     isPurchased?: boolean;
 }
 
-export const StoreCard = ({ id, name, description, logo, price, isPurchased }: Props) => {
+export const StoreCard = ({ program, isPurchased }: Props) => {
+
+    const { id, name, description, href, logo, price } = program;
 
     if(price < 0){
         return (
@@ -37,7 +36,7 @@ export const StoreCard = ({ id, name, description, logo, price, isPurchased }: P
     }
 
     return (
-        <Link href={ isPurchased ? `/dashboard/library/${id}` : `/dashboard/store/${id}` } className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
+        <Link href={ isPurchased ? `/dashboard/library/${id}` : href } target={ isPurchased ? "_self" : "_blank"} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
             { isPurchased && <div className="bg-stannum/40 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-3 right-3 z-20">En tu biblioteca</div>  }
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>

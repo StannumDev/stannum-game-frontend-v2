@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import type { AppError, SidebarLink, UserSidebarDetails } from "@/interfaces";
-import { AppsIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
+import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { getUserSidebarDetails } from "@/services";
 import { errorHandler } from "@/helpers";
@@ -63,6 +63,11 @@ export const Sidebar = () => {
             label: 'Tienda',
             href: '/dashboard/store',
             Icon: StoreIcon,
+        },
+        {
+            label: 'Comunidad',
+            href: '/dashboard/community',
+            Icon: CommunityIcon,
         },
         {
             label: 'Mi perfil',

@@ -67,11 +67,7 @@ export const StoreSectionsLayout = ({ user }: Props) => {
                         return (
                             <StoreCard
                                 key={program.id}
-                                id={program.id}
-                                name={program.name}
-                                description={program.description}
-                                logo={program.logo}
-                                price={program.price}
+                                program={program}
                                 isPurchased={isPurchased}
                             />
                         );
