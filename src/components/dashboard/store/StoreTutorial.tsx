@@ -50,7 +50,7 @@ export const StoreTutorial = () => {
                             <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Por último, dirigite a la sección de &ldquo;Activar producto&rdquo;, donde cada miembro ingresara su código de producto para comenzar a entrenar.</p>
                         </div>
                     </div>
-                    <div className="mt-8 w-full p-4 lg:p-6 border border-card-light rounded-2xl flex flex-col items-center">
+                    <div className="mt-4 lg:mt-6 w-full p-4 lg:p-6 border border-card-light rounded-2xl flex flex-col items-center">
                         <h3 className="text-lg font-semibold uppercase tracking-widest">Importante</h3>
                         <p className="mt-2 lg:mt-4 lg:text-lg text-white/75">Al realizar la compra de un producto, se incluye una cantidad de códigos que depende de cada producto, destinada a los miembros del equipo. El entrenamiento en STANNUM Game es colectivo, y cada participante puede avanzar de forma individual y contribuir al fortalecimiento del equipo. Esta modalidad es ideal para fomentar la profesionalización y cohesión del equipo.</p>
                     </div>

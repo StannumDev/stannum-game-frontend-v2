@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { FullUserDetails, NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { MotionWrapperLayoutClient, NavbarSection, LibraryCard } from "@/components";
-import { AppsIcon, ChessKingicon, ChessKnightIcon, ChessPawnIcon } from "@/icons";
+import { AppsIcon } from "@/icons";
 import { calculateProgramProgress } from "@/utilities";
 import { programs } from "@/config/programs";
 
@@ -12,9 +12,9 @@ interface Props { user: FullUserDetails; }
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: AppsIcon },
-    { name: "Principales", id: "main", Icon: ChessKingicon, disabled: true },
-    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon, disabled: true },
-    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon, disabled: true },
+    { name: "Principales", id: "main", disabled: true },
+    { name: "Gratuitos", id: "free", disabled: true },
+    { name: "Shorts", id: "shorts", disabled: true },
 ];
 
 export const LibrarySectionsLayout = ({ user }: Props) => {

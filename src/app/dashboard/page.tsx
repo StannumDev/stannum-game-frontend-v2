@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { PresentacionHome, ContinuarHome, ActivarProductoHome, RankingHome, RachaHome } from "@/components"
 import { getUserByToken } from "@/services";
 
@@ -26,14 +25,14 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
 
     return (
         <main className="main-container">
             <h1 className="sr-only">Pantalla principal STANNUM Game</h1>
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-7 flex flex-col items-start gap-4">
-                    <PresentacionHome/>
+                    <PresentacionHome user={user}/>
                     {/* <GoalsHome/> */}
                     <ContinuarHome user={user}/>
                 </div>

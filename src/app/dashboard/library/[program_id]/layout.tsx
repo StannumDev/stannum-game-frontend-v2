@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getUserByToken } from "@/services";
 import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
 import { programs } from '@/config/programs';
@@ -46,7 +46,7 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
 
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
 
     if (!foundProgram) return notFound();
 

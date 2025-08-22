@@ -10,7 +10,7 @@ import styles from '@/components/styles/sidebar.module.css';
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
-    user: UserSidebarDetails|null;
+    user: UserSidebarDetails;
     links: Array<SidebarLink>;
     pathname: string;
     isLoading: boolean;
@@ -36,7 +36,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
     });
 
     useEffect(() => {
-      isSearching && setIsSearching(false);
+      setIsSearching(false);
     }, [pathname])
     
 
@@ -63,7 +63,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         priority
                                         width={32}
                                         height={32}
-                                        src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
+                                        src={ profilePhotoError || !user.profilePhoto ? default_user : user.profilePhoto}
                                         alt='Foto de perfil Usuario STANNUM Game'
                                         className="size-full object-cover absolute top-0 left-0 z-10"
                                         onError={() => setProfilePhotoError(true)}

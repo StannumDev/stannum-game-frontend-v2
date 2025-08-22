@@ -11,10 +11,6 @@ export {
     FaRegBookmark as BookmarkIcon,
     FaEye as ShowPassowrdIcon,
     FaEyeSlash as HidePasswordIcon,
-    FaChessKing as ChessKingicon,
-    FaChessQueen as ChessQueenIcon,
-    FaChessKnight as ChessKnightIcon,
-    FaChessPawn as ChessPawnIcon,
     FaTrashCan as TrashIcon,
     FaRegStar as StarIcon,
     FaRegClock as ClockIcon
@@ -23,6 +19,7 @@ export {
 export {
     IoPlay as PlayIcon,
     IoPlayCircle as PlayCircleIcon,
+    IoPause as PauseIcon,
     IoBagHandle as StoreIcon,
     IoHourglassSharp as HourglassIcon
 } from 'react-icons/io5';
@@ -109,3 +106,8 @@ export {
 export {
     FcGoogle as GoogleColourIcon
 } from "react-icons/fc";
+
+export {
+    SlVolume2 as SoundOnIcon,
+    SlVolumeOff as SoundOffIcon
+} from "react-icons/sl";

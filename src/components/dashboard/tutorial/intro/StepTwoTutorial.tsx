@@ -1,17 +1,23 @@
 import { motion } from 'framer-motion';
 import MuxPlayer from '@mux/mux-player-react';
+import { FullUserDetails } from '@/interfaces';
+
+const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+const playbackId = muxPlaybackIds["WELCOME"] || "";
 
 interface Props{
-    direction: 'prev'|'next'
+    direction: 'prev'|'next';
+    user: FullUserDetails;
 }
 
-export const StepTwoTutorial = ({direction}:Props) => {
+export const StepTwoTutorial = ({direction, user}:Props) => {
 
     const variants = {
         enter: { x: direction === "next" ? "50%" : "-50%", opacity: 0 },
         center: { x: 0, opacity: 1, transition: { duration: 0.1 } },
         exit: { x: direction === "next" ? "-50%" : "50%", opacity: 0, transition: { duration: 0.1 } }
     };
+
 
     return (
         <motion.main
@@ -26,26 +32,27 @@ export const StepTwoTutorial = ({direction}:Props) => {
                 <div className='w-full lg:w-auto lg:h-full aspect-video relative rounded-lg border border-card overflow-hidden'>
                     <MuxPlayer
                         className="size-full absolute top-0 left-0"
-                        playbackId={process.env.NEXT_PUBLIC_MUX_PLAYBACK_ID}
+                        playbackId={playbackId}
                         envKey={process.env.NEXT_PUBLIC_MUX_TOKEN_DATA}
                         preload="auto"
+                        autoPlay
                         playsInline
                         streamType="on-demand"
+                        thumbnailTime={5}
                         forwardSeekOffset={5}
                         backwardSeekOffset={5}
                         defaultShowRemainingTime
-                        defaultHiddenCaptions={true}
+                        defaultHiddenCaptions
                         primaryColor="rgba(255,255,255,1)"
-                        // accentColor="#41cfc9"
                         accentColor="#00FFCC"
-                        metadataVideoId="introduccion01"
+                        metadataVideoId="WELCOME"
+                        metadataVideoTitle={"Bienvenido a STANNUM Game"}
+                        metadataViewerUserId={user.username}
                         metadata={{
-                            username: 'mateolohezic',
-                            title: 'Introducción a STANNUM Game',
+                            username: user.username,
+                            title: 'Bienvenido a STANNUM Game',
                         }}
-                        metadataVideoTitle="introduccion01"
-                        metadataViewerUserId="Introducción a STANNUM Game"
-                        title="Introducción a STANNUM Game"
+                        title="Bienvenido a STANNUM Game"
                     />
                 </div>
             </div>

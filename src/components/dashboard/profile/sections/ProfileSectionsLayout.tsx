@@ -13,8 +13,8 @@ interface Props {
 
 const sections: Array<NavbarSectionType> = [
     { name: "Logros", id: "achievements", Icon: MedalIcon },
-    { name: "TMD", id: "tmd", disabled: true },
-    { name: "TIA", id: "tia", disabled: true },
+    { name: "Proximamente", id: "tmd", disabled: true },
+    { name: "Proximamente", id: "tia", disabled: true },
 ];
 
 type SectionOptions = 'achievements' | 'tmd' | 'tia'

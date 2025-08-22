@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { getUserByToken } from "@/services";
 import { LibraryCover, LibrarySectionsLayout } from "@/components";
 
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
 
 export default async function LibraryPage() {
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
     
     return (
         <main className="main-container">

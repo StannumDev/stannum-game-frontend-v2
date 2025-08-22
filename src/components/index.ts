@@ -1,7 +1,7 @@
 // COMPONENTS
 export { ButtonShowPassword } from "./ButtonShowPassword";
 export { InstallPromptModal } from "./InstallPromptModal";
-export { SearchResultsList } from "./dashboard/SearchResultsList";
+export { VideoIntro } from "./VideoIntro";
 
 // UI
 export { STANNUMLogo } from "./ui/STANNUMLogo";
@@ -23,6 +23,7 @@ export { SidebarMobileLink } from "./dashboard/sidebar/SidebarMobileLink";
 export { SidebarMobileIndicator } from "./dashboard/sidebar/SidebarMobileIndicator";
 export { BuscadorSidebar } from "./dashboard/sidebar/BuscadorSidebar";
 export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile";
+export { SearchResultsList } from "./dashboard/SearchResultsList";
 
 // HOME
 export { PresentacionHome } from "./dashboard/home/PresentacionHome";
@@ -94,6 +95,10 @@ export { ProgramInstructionDetails } from "./dashboard/program/instructions/Prog
 export { ProgramRankingLayout } from "./dashboard/program/sections/ProgramRankingLayout";
 export { ProgramTeamRankingCard } from "./dashboard/program/ranking/ProgramTeamRankingCard";
 export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPlayerRankingCard";
+
+// AUTH
+export { AuthUser } from "./auth/AuthUser";
+
 
 // LOGIN
 export { LoginForm } from "./auth/login/LoginForm";

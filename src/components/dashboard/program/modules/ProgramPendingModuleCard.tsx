@@ -26,7 +26,7 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
             <div className="w-fit flex items-center lg:gap-4 shrink-0">
                 <div className='sr-only lg:not-sr-only subtitle-1 text-white/25'>En proceso</div>
                 <div className='lg:p-2 flex gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full relative z-10'>
-                    <div className={`size-9 ${ lessonsOffset > 0 ? 'lg:bg-card-light' : 'bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
+                    <div className={`size-9 ${ lessonsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Lecciones</span>
                         <VideosIcon className={`size-4 ${ lessonsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
                         { lessonsOffset > 0 &&
@@ -40,7 +40,7 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
                         <span className="sr-only">Misiones</span>
                         <PaperIcon className="size-4 text-stannum"/>
                     </div> */}
-                    <div className={`size-9 ${ instructionsOffset > 0 ? 'lg:bg-card-light' : 'bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
+                    <div className={`size-9 ${ instructionsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Instrucciones</span>
                         <CompassIcon className={`size-4 ${ instructionsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
                         { instructionsOffset > 0 &&
@@ -52,8 +52,8 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
                     </div>
                 </div>
             </div>
-            <div className='w-4 group-hover:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
-                <ArrowRightIcon className='size-4 opacity-0 group-hover:opacity-100 relative right-1 transition-200'/>
+            <div className='w-4 group-hover:lg:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
+                <ArrowRightIcon className='size-4 opacity-0 group-hover:lg:opacity-100 relative right-1 transition-200'/>
             </div>
             <div className={`hidden lg:block w-32 h-full absolute top-0 right-0 ${styles.end__pattern}`}></div>
         </div>

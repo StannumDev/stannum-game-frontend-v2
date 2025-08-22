@@ -24,15 +24,15 @@ export const UserProfilePhoto = ({user, fetchUserData, owner}:Props) => {
                 priority
                 width={192}
                 height={192}
-                src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
+                src={ profilePhotoError || !user.profilePhoto ? default_user : user.profilePhoto}
                 alt="Perfil de usuario STANNUM Game"
                 className="size-full object-cover absolute top-0 left-0 z-10"
                 onError={() => setProfilePhotoError(true)}
             />
             { owner &&
                 <Fragment>
-                    <UserProfileDeletePhoto showModal={showEditModal} setShowModal={setShowEditModal} fetchUserData={fetchUserData}/>
-                    <UserProfileEditPhoto showModal={showDeleteModal} setShowModal={setShowDeleteModal} fetchUserData={fetchUserData}/>
+                    <UserProfileEditPhoto showModal={showEditModal} setShowModal={setShowEditModal} fetchUserData={fetchUserData}/>
+                    <UserProfileDeletePhoto showModal={showDeleteModal} setShowModal={setShowDeleteModal} fetchUserData={fetchUserData}/>
                 </Fragment>
             }
         </div>

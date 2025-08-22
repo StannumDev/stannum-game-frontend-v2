@@ -18,7 +18,6 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
     const { register, handleSubmit, onSubmit, reset, setFocus } = useSearchHandler();
 
     useEffect(() => {
-        console.log(pathname)
         isSearching && setFocus("search");
     }, [isSearching, setFocus]);
     

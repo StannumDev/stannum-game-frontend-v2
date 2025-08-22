@@ -1,4 +1,5 @@
 export {
+    authUserByToken,
     requestLogin,
     checkEmailExists,
     checkUsernameExists,
@@ -24,7 +25,7 @@ export {
     getTutorialStatus,
     markTutorialAsCompleted,
     updateUserProfile,
-    searchUsers
+    searchUsers,
 } from './user';
 
 export {

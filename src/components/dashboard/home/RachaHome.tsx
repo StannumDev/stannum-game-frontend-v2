@@ -44,9 +44,9 @@ export const RachaHome = ({ user }: Props) => {
                 id="streak-section"
                 className={`w-full card border ${ streakStatus.missedToday ? "border-invalid shadow-[rgba(244,80,80,0.25)]" : "border-stannum"} ${ streakStatus.maxStreak && !streakStatus.missedToday && "from-stannum/50 to-stannum/25"} flex flex-col gap-4 relative`}
             >
-                <div className="flex items-center gap-4">
+                <div className="flex justify-between lg:justify-start items-stretch lg:items-center gap-4">
                     <h2 className="title-2">Racha diaria</h2>
-                    <div className={`px-2 bg-card rounded-full border border-card-light text-xs lg:text-sm font-black ${streakStatus.missedToday ? "text-invalid" : streakStatus.maxStreak ? "text-stannum" : "text-card-lightest"}`}>
+                    <div className={`px-2 bg-card rounded-full border border-card-light text-base lg:text-sm font-black flex items-center ${streakStatus.missedToday ? "text-invalid" : streakStatus.maxStreak ? "text-stannum" : "text-card-lightest"}`}>
                         {streakStatus.streakCount} / 7
                     </div>
                 </div>

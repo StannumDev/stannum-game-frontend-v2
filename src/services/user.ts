@@ -1,3 +1,5 @@
+'use client';
+
 import axios from "axios";
 import Cookies from "js-cookie";
 import type { AchievementDetails, FullUserDetails, UserSearchResult, UserSidebarDetails } from "@/interfaces";

@@ -26,22 +26,22 @@ export const useModuleProgress = ({ program_module, moduleIndex, modules, user, 
     const completedLessons = lessons.filter((lesson) => userLessons.some((ul) => ul.lessonId === lesson.id)).length;
     const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && ui.status === "GRADED")).length;
 
-    const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 0;
-    const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 0;
-
+    const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 100;
+    const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 100;
     const previousModuleStatus = moduleIndex > 0 ? calculateModuleStatus(modules[moduleIndex - 1], user, programId) : "COMPLETED";
 
+    let status: ModuleStatus;
     if (previousModuleStatus !== "COMPLETED") {
-        return {
-            status: "BLOCKED",
-            lessonsProgress,
-            instructionsProgress,
-        };
+        status = "BLOCKED";
+    } else if (lessonsProgress === 100 && instructionsProgress === 100) {
+        status = "COMPLETED";
+    } else if (lessonsProgress >= 0 || instructionsProgress >= 0) {
+        status = "IN_PROGRESS";
+    } else {
+        status = moduleIndex === 0 ? "IN_PROGRESS" : "BLOCKED";
     }
 
-    if (lessonsProgress === 100 && instructionsProgress === 100) return { status: "COMPLETED", lessonsProgress, instructionsProgress };
-    if (lessonsProgress > 0 || instructionsProgress > 0) return { status: "IN_PROGRESS", lessonsProgress, instructionsProgress };
-    return { status: moduleIndex === 0 ? "IN_PROGRESS" : "BLOCKED", lessonsProgress, instructionsProgress };
+    return { status, lessonsProgress, instructionsProgress };
 };
 
 const calculateModuleStatus = (module: Module, user: FullUserDetails, programId: string): ModuleStatus => {
@@ -54,8 +54,8 @@ const calculateModuleStatus = (module: Module, user: FullUserDetails, programId:
     const completedLessons = lessons.filter((lesson) => userLessons.some((ul) => ul.lessonId === lesson.id)).length;
     const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && ui.status === "GRADED")).length;
 
-    const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 0;
-    const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 0;
+    const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 100;
+    const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 100;
 
     if (lessonsProgress === 100 && instructionsProgress === 100) return "COMPLETED";
     if (lessonsProgress > 0 || instructionsProgress > 0) return "IN_PROGRESS";

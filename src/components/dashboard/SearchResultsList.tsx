@@ -57,7 +57,7 @@ export const SearchResultsList = ({ query }: Props) => {
                                         priority
                                         width={112}
                                         height={112}
-                                        src={ !user?.profilePhoto ? default_user : user?.profilePhoto}
+                                        src={ !user.profilePhoto ? default_user : user.profilePhoto}
                                         alt="Perfil de usuario STANNUM Game"
                                         className="size-full object-cover absolute top-0 left-0"
                                         />

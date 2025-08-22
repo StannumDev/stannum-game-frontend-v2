@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getUserByToken, getUserDetailsByUsernameServer } from "@/services";
 import { UserProfileWrapper } from "@/components";
 
@@ -45,7 +45,7 @@ export default async function ProfilePage({ params }: Props) {
     const { username } = params;
 
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
     
     const userDetails = await getUserDetailsByUsernameServer(username);
     if (!userDetails) return notFound();

@@ -19,8 +19,8 @@ export const ProgramCompletedModuleCard = ({index, title}:Props) => {
                     <span className="sr-only">Completado</span>
                     <CheckIcon className="size-6"/>
                 </div>
-            <div className='w-4 group-hover:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
-                <ArrowRightIcon className='size-4 text-white opacity-0 group-hover:opacity-100 relative right-1 transition-200'/>
+            <div className='w-4 group-hover:lg:w-12 flex justify-center items-center relative z-10 transition-200 shrink-0'>
+                <ArrowRightIcon className='size-4 text-white opacity-0 group-hover:lg:opacity-100 relative right-1 transition-200'/>
             </div>
             <div className='w-32 h-full absolute top-0 right-0'></div>
         </div>

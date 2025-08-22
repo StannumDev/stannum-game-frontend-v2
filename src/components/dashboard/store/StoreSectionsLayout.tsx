@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType, ProgramCategory, FullUserDetails } from "@/interfaces";
-import { ChessKingicon, ChessKnightIcon, ChessPawnIcon, NewAppsIcon } from "@/icons";
+import { NewAppsIcon } from "@/icons";
 import { MotionWrapperLayoutClient, NavbarSection, StoreCard, StoreTutorial } from "@/components";
 import { programs } from "@/config/programs";
 
@@ -13,9 +13,9 @@ interface Props {
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: NewAppsIcon },
-    { name: "Principales", id: "main", Icon: ChessKingicon, disabled: true },
-    { name: "Gratuitos", id: "free", Icon: ChessKnightIcon, disabled: true },
-    { name: "Shorts", id: "shorts", Icon: ChessPawnIcon, disabled: true },
+    { name: "Principales", id: "main", disabled: true },
+    { name: "Gratuitos", id: "free", disabled: true },
+    { name: "Shorts", id: "shorts", disabled: true },
 ];
 
 export const StoreSectionsLayout = ({ user }: Props) => {
@@ -46,7 +46,7 @@ export const StoreSectionsLayout = ({ user }: Props) => {
         <MotionWrapperLayoutClient>
             <section className="w-full card px-0">
                 <div className="mb-4 w-full px-4 lg:px-6 flex justify-between lg:justify-start items-start lg:items-center gap-2">
-                    <h2 className="title-2">Conoce nuestros programas</h2>
+                    <h2 className="title-2">Nuestros programas</h2>
                     <StoreTutorial/>
                 </div>
                 <NavbarSection<ProgramCategory>

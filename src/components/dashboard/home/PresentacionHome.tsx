@@ -9,13 +9,17 @@ import "driver.js/dist/driver.css";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
-import type { AppError } from '@/interfaces';
+import type { AppError, FullUserDetails } from '@/interfaces';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/background/the_game.webp";
 
 const steps:Array<number> = [1,2,3,4,5];
 
-export const PresentacionHome = () => {
+interface Props{
+    user: FullUserDetails;
+}
+
+export const PresentacionHome = ({ user }: Props) => {
 
     const introRef = useRef<HTMLDivElement | null>(null);
     const driverRef = useRef<Driver | null>(null);
@@ -267,7 +271,7 @@ export const PresentacionHome = () => {
                     <AnimatePresence mode='wait' initial={false}>
                         {
                             selectedStep === 1 ? <StepOneTutorial direction={direction} key='step_one_tutorial' /> :
-                            selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' /> :
+                            selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' user={user} /> :
                             selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
                             selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
                             selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :

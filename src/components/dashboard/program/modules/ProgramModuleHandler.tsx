@@ -14,7 +14,7 @@ interface Props {
 export const ProgramModuleHandler = ({ program_module, index, section, user, programId }: Props) => {
   const { modules } = section;
   const { status, lessonsProgress, instructionsProgress } = useModuleProgress({ program_module, moduleIndex: index, modules, user, programId });
-
+  // console.log({ status, lessonsProgress, instructionsProgress });
   if (status === "COMPLETED") {
     return (
       <Link href={`/dashboard/library/${programId}/${section.id}/${program_module.id}`} className="w-full">

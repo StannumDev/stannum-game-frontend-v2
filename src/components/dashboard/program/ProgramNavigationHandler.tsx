@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { NavbarSection } from "@/components"
 import type { Program } from "@/interfaces";
 
-type SectionOptions = 'session_1' | 'session_2' | 'session_3';
+type SectionOptions = 'preseason';
 
 interface Props {
     program: Program

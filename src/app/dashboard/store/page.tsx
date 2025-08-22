@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { StoreCover, StoreSectionsLayout } from "@/components";
 import { getUserByToken } from "@/services";
 import { Metadata } from "next";
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
 
 export default async function StorePage() {
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
     
     return (
         <main className="main-container">

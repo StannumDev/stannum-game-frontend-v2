@@ -12,7 +12,7 @@ import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
-    user: UserSidebarDetails|null;
+    user: UserSidebarDetails;
     links: Array<SidebarLink>;
     pathname: string;
     isLoading: boolean;
@@ -123,7 +123,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                         priority
                                         width={56}
                                         height={56}
-                                        src={ profilePhotoError || !user?.profilePhoto ? default_user : user?.profilePhoto}
+                                        src={ profilePhotoError || !user.profilePhoto ? default_user : user.profilePhoto}
                                         alt="Usuario STANNUM Game"
                                         className="size-full object-cover absolute top-0 left-0 z-10"
                                         onError={() => setProfilePhotoError(true)}

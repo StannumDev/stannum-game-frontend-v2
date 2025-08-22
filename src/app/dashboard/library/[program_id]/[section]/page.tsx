@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getUserByToken } from "@/services";
 import { ProgramModuleHandler } from "@/components";
 import { Module, Program } from "@/interfaces";
@@ -19,14 +19,14 @@ export default async function ProgramSectionPage({ params }: Props) {
     const foundSection = foundProgram?.sections.find(sec => sec.id === section);
 
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
 
-    if (!foundProgram ) return notFound();
+    if (!foundProgram || !foundSection) return notFound();
 
     return (
         <section className="w-full flex flex-col gap-4">
             {
-                foundSection?.modules.map( (program_module:Module, i:number) => 
+                foundSection.modules.map( (program_module:Module, i:number) => 
                     <ProgramModuleHandler key={i} program_module={program_module} index={i} section={foundSection} user={user} programId={program_id} />
                 )
             }

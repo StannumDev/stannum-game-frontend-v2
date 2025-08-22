@@ -19,6 +19,27 @@ const tokenError = {
     },
 }
 
+export const authUserByToken = async (token: string | undefined): Promise<boolean> => {
+    try {
+        if (!token) throw tokenError;
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/auth-user`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response?.data?.success) {
+            logout();
+            throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
+        }
+        return response.data.success;
+    } catch (error:unknown) {
+        logout();
+        return false;
+    }
+};
+
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data);
@@ -32,11 +53,10 @@ export const requestLogin = async (data: { username: string; password: string })
             path: '/',
             expires: 365,
         });
-
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-
         return response.data.success;
     } catch (error:unknown) {
+        console.error(error)
         throw error;
     }
 };

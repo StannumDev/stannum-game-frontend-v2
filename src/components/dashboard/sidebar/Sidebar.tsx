@@ -71,6 +71,8 @@ export const Sidebar = () => {
         },
     ];
 
+    if(!userData) return;
+
     return ( 
     isLargeScreen ?
         <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={isLoading} />

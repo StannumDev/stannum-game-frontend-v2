@@ -8,7 +8,6 @@ import default_user from "@/assets/user/default_user.webp";
 
 export const CardRankingHome = ({ position, name, username, photo, enterprise, level, points }:SimpleRanking) => {
 
-  console.log(enterprise)
   const renderPositionIcon = () => {
     if (position === 1) return <FirstPlaceIcon />;
     if (position === 2) return <SecondPlaceIcon />;

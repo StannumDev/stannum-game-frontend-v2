@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import background from '@/assets/background/stannum_game_trophy.webp';
-import { GoogleAuthButton, STANNUMLogo } from "@/components";
+import { GoogleAuthButton, STANNUMLogo, VideoIntro } from "@/components";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -27,7 +27,8 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <main className="w-full flex justify-center relative">
+    <main className="w-full flex justify-center">
+      <VideoIntro/>
       <h1 className="sr-only">Bienvenido a STANNUM Game</h1>
       <section className="w-full lg:w-auto lg:grow h-full lg:h-auto min-h-svh flex justify-center items-center fixed lg:relative top-0 left-0 overflow-y-hidden">
         <div className="lg:size-full lg:relative min-h-lvh">

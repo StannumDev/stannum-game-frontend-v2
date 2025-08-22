@@ -1,8 +1,9 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { GoBackButton, ProgramLessonCard, ProgramInstructionCard } from '@/components';
 import { programs } from "@/config/programs";
 import { getUserByToken } from '@/services';
 import type { Module, Program, Section, Instruction } from '@/interfaces';
+import { isLessonAvailable } from '@/utilities';
 
 interface Props {
   params: {
@@ -20,7 +21,7 @@ export default async function ProgramModulePage({ params }: Props) {
     const foundModule: Module | undefined = foundSection?.modules.find(mod => mod.id === program_module);
 
     const user = await getUserByToken();
-    if (!user) redirect("/login");
+    if (!user) return null;
 
     if (!foundModule) return notFound()
 
@@ -35,44 +36,50 @@ export default async function ProgramModulePage({ params }: Props) {
                 <h2 className="title-2 text-lg lg:text-2xl">{foundModule.description}</h2>
             </div>
             <div className='mt-6 w-full'>
-                <section className="mt-4 w-full">
-                    <h3 className="subtitle-1">Lecciones</h3>
-                    <div className="mt-4 w-full flex flex-col gap-4">
-                        {foundModule.lessons.map((lesson, index) => {
-                        const isCompleted = userLessons.some((ul) => ul.lessonId === lesson.id);
-                        return (
-                            <ProgramLessonCard
-                                key={lesson.id}
-                                index={index + 1}
-                                programName={program_id}
-                                id={lesson.id}
-                                title={lesson.title}
-                                completed={isCompleted}
-                            />
-                        );
-                        })}
-                    </div>
-                </section>
-                <section className="mt-6 w-full">
-                    <h3 className="subtitle-1">Instrucciones</h3>
-                    <div className="mt-4 w-full flex flex-col gap-4">
-                        {foundModule.instructions.map((instruction: Instruction, index: number) => {
-                        const userInstruction = userInstructions.find((ui) => ui.instructionId === instruction.id);
-                        const completed = userInstruction?.status === "GRADED";
-                        const inProcess = userInstruction?.status === "IN_PROCESS" || userInstruction?.status === "SUBMITTED";
-
-                        return (
-                            <ProgramInstructionCard
-                            key={instruction.id}
-                            index={index + 1}
-                            title={instruction.title}
-                            completed={completed}
-                            inProcess={inProcess}
-                            />
-                        );
-                        })}
-                    </div>
-                </section>
+                { foundModule.lessons.length > 0 && 
+                    <section className="mt-4 w-full">
+                        <h3 className="subtitle-1">Lecciones</h3>
+                        <div className="mt-4 w-full flex flex-col gap-4">
+                            {foundModule.lessons.map((lesson, index) => {
+                            const isCompleted = userLessons.some((ul) => ul.lessonId === lesson.id);
+                            const isAvailable = isLessonAvailable(user, foundModule, lesson.id);
+                            return (
+                                <ProgramLessonCard
+                                    key={lesson.id}
+                                    index={index + 1}
+                                    programName={program_id}
+                                    id={lesson.id}
+                                    title={lesson.title}
+                                    isCompleted={isCompleted}
+                                    isAvailable={isAvailable}
+                                />
+                            );
+                            })}
+                        </div>
+                    </section>
+                }
+                { foundModule.instructions.length > 0 &&
+                    <section className="mt-6 w-full">
+                        <h3 className="subtitle-1">Instrucciones</h3>
+                        <div className="mt-4 w-full flex flex-col gap-4">
+                            {foundModule.instructions.map((instruction: Instruction, index: number) => {
+                                const userInstruction = userInstructions.find((ui) => ui.instructionId === instruction.id);
+                                const completed = userInstruction?.status === "GRADED";
+                                const inProcess = userInstruction?.status === "IN_PROCESS" || userInstruction?.status === "SUBMITTED";
+                                
+                                return (
+                                    <ProgramInstructionCard
+                                    key={instruction.id}
+                                    index={index + 1}
+                                    title={instruction.title}
+                                    completed={completed}
+                                    inProcess={inProcess}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </section>
+                }
             </div>
         </section>
     );
