@@ -81,6 +81,10 @@
     clip-rule: evenodd;
   }
 
+  .saltar_video_intro{
+      margin-top: calc(0.5rem + env(safe-area-inset-top));
+  }
+
   @media (width >= 1024px){
     .main-container{
       padding-block: 1rem;

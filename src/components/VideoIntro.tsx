@@ -95,7 +95,7 @@ export const VideoIntro = () => {
                                 <button
                                     type="button"
                                     onClick={() => setIsEnded(true)}
-                                    className="px-4 py-1 text-white lg:text-2xl rounded-lg bg-transparent hover:bg-white/10 border border-white/25 flex items-center gap-2 opacity-75 hover:opacity-100 pointer-events-auto cursor-pointer transition-150"
+                                    className="px-4 saltar_video_intro text-white lg:text-2xl rounded-lg bg-transparent hover:bg-white/10 border border-white/25 flex items-center gap-2 opacity-75 hover:opacity-100 pointer-events-auto cursor-pointer transition-150"
                                 >
                                     Saltar
                                 </button>
