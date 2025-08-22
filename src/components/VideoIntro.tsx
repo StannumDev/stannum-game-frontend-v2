@@ -42,7 +42,7 @@ export const VideoIntro = () => {
     };
 
     return (
-        <div className="size-full absolute top-0 left-0 z-[99999999] pointer-events-none">
+        <div className="size-full absolute top-0 left-0 z-[99999999]">
             { !isEnded && <div className="size-full bg-black absolute top-0 left-0"></div>}
             <AnimatePresence mode="wait">
                 { !start ?
@@ -50,7 +50,7 @@ export const VideoIntro = () => {
                         key="video-intro"
                         exit={{ opacity: 0 }}
                         transition={{ duration: 2 }}
-                        className="size-full p-4 flex flex-col justify-center items-center relative pointer-events-auto"
+                        className="size-full p-4 flex flex-col justify-center items-center relative"
                     >
                         <Image priority src={background} alt="Introducción STANNUM Game" className="size-full object-cover absolute top-0 left-0 z-0"/>
                         <div className="size-full bg-black/50 flex flex-col justify-center items-center gap-8 absolute top-0 left-0 z-10">
@@ -73,11 +73,11 @@ export const VideoIntro = () => {
                         className="size-full absolute top-0 left-0 z-[99999999]"
                     >
                         <div className="size-full relative">
-                            <div className="flex justify-center items-center gap-4 absolute bottom-4 lg:bottom-12 right-4 lg:right-12 z-50 pointer-events-auto">
+                            <div className="flex justify-center items-center gap-4 absolute bottom-4 lg:bottom-12 right-4 lg:right-12 z-50">
                                 <button
                                     type="button"
                                     onClick={togglePlayPause}
-                                    className="text-white opacity-75 hover:opacity-100 lg:text-2xl pointer-events-auto cursor-pointer transition-150"
+                                    className="text-white opacity-75 hover:opacity-100 lg:text-2xl cursor-pointer transition-150"
                                 >
                                     { isPlaying ? <PauseIcon/> : <PlayIcon/> }
                                 </button>
