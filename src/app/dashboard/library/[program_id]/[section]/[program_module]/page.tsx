@@ -32,8 +32,8 @@ export default async function ProgramModulePage({ params }: Props) {
         <section className="w-full">
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
             <div className="mt-4 w-full flex flex-col">
-                <span className="subtitle-1">{foundModule.name}</span>
-                <h2 className="title-2 text-lg lg:text-2xl">{foundModule.description}</h2>
+                <span className="title-2">{foundModule.name}</span>
+                <h2 className="subtitle-1 overflow-auto text-ellipsis whitespace-normal">{foundModule.description}</h2>
             </div>
             <div className='mt-6 w-full'>
                 { foundModule.lessons.length > 0 && 

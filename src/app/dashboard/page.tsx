@@ -31,12 +31,12 @@ export default async function HomePage() {
         <main className="main-container">
             <h1 className="sr-only">Pantalla principal STANNUM Game</h1>
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-4">
-                <div className="lg:col-span-7 flex flex-col items-start gap-4">
+                <div className="lg:col-span-7 lg:min-h-[calc(100vh-32px)] flex flex-col items-start gap-4">
                     <PresentacionHome user={user}/>
                     {/* <GoalsHome/> */}
                     <ContinuarHome user={user}/>
                 </div>
-                <div className="lg:col-span-5 flex flex-col items-start gap-4">
+                <div className="lg:col-span-5 lg:min-h-[calc(100vh-32px)] flex flex-col items-start gap-4">
                     <RachaHome user={user}/>
                     <ActivarProductoHome/>
                     <RankingHome/>

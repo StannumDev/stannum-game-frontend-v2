@@ -7,7 +7,7 @@ const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLI
 export const TIA_PROGRAM: Program = {
     id: "tia",
     name: "TRENNO IA",
-    price: 500,
+    price: 10,
     categories: ["main"],
     description: "Programa intensivo especializado en el entrenamiento en inteligencia artificial para líderes de empresas y sus equipos.",
     logo: tia_logo,
@@ -70,23 +70,23 @@ export const TIA_PROGRAM: Program = {
                         { id: "TIAM02L14", title: "Profundizar sobre las FORMAS de RESPUESTAS al diseñar PROMPTs", longTitle: "Profundizar sobre las FORMAS de RESPUESTAS al diseñar PROMPTs - Personalización de ChatGPT | TRENNO IA", description: "Aprende", duration: 580, muxPlaybackId: muxPlaybackIds["TIAM02L14"] ?? "" },
                     ],
                     instructions: [
-                        {
-                        id: "TMDM02I01",
-                        title: "Organiza tu carpeta principal",
-                        description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        difficulty: "LOW",
-                        rewardXP: 200,
-                        acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        maxFileSizeMB: 15,
-                        steps: [
-                            "Crea una cuenta en Google Drive si aún no tienes una.",
-                            "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                            "Organiza las subcarpetas como se indica en la guía.",
-                            "Toma una captura de pantalla de tu estructura.",
-                            "Súbela en esta instrucción."
-                        ],
-                        deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-                        }
+                        // {
+                        // id: "TMDM02I01",
+                        // title: "Organiza tu carpeta principal",
+                        // description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
+                        // difficulty: "LOW",
+                        // rewardXP: 200,
+                        // acceptedFormats: [".jpg", ".jpeg", ".png"],
+                        // maxFileSizeMB: 15,
+                        // steps: [
+                        //     "Crea una cuenta en Google Drive si aún no tienes una.",
+                        //     "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
+                        //     "Organiza las subcarpetas como se indica en la guía.",
+                        //     "Toma una captura de pantalla de tu estructura.",
+                        //     "Súbela en esta instrucción."
+                        // ],
+                        // deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
+                        // }
                     ]
                 },
             ],
@@ -163,7 +163,7 @@ export const TIA_PROGRAM: Program = {
 export const TMD_PROGRAM: Program = {
     id: "tmd",
     name: "TRENNO Mark Digital",
-    price: 0,
+    price: -1,
     categories: ["free"],
     description: "Programa especializado en organización digital y marketing para emprendedores.",
     logo: tmd_logo,

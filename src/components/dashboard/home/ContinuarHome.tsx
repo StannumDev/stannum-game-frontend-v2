@@ -12,14 +12,14 @@ interface Props {
 export const ContinuarHome = async ({ user }: Props) => {
     const entries: Array<ContinueEntry> = programs.map(p => buildContinueEntryForProgram(p, user)).filter(Boolean) as ContinueEntry[];
     return (
-        <MotionWrapperLayout>
-            <section id="continue-training" className="w-full">
+        <MotionWrapperLayout className="grow">
+            <section id="continue-training" className="size-full">
                 <h2 className="w-full font-black text-2xl text-center flex items-center gap-1">
                     <PlayCircleIcon />
                     Continuar entrenando
                 </h2>
                 <div className="mt-2 w-full pb-2 flex gap-4 overflow-x-auto">
-                    {entries.length > 0 ? (
+                    {entries.length === 0 ? (
                         entries.map(e => (
                             <ContinuarCardHome
                                 key={`${e.programId}-${e.href}`}

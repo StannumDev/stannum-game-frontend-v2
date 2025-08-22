@@ -1,4 +1,4 @@
-import { ArrowRightIcon, CompassIcon, VideosIcon } from "@/icons";
+import { ArrowRightIcon, CompassIcon, PaperIcon, VideosIcon } from "@/icons";
 import styles from '@/components/styles/ProgramModuleCard.module.css';
 
 interface Props {
@@ -8,11 +8,11 @@ interface Props {
     instructionsProgress: number;
 }
 
-export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instructionsProgress }:Props) => {
+export const ProgramPendingModuleCard = ({ index, title, lessonsProgress }:Props) => {
 
     const getOffset = (progress: number) => 50 + (100 - 50) * (1 - progress / 100);
     const lessonsOffset = getOffset(lessonsProgress);
-    const instructionsOffset = getOffset(instructionsProgress);
+    // const instructionsOffset = getOffset(instructionsProgress);
 
     return (
         <div className='w-full h-16 lg:h-20 bg-card lg:bg-card/25 hover:bg-card-light/40 flex items-center rounded-lg relative overflow-hidden group cursor-pointer transition-200'>
@@ -36,11 +36,11 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
                             </svg>
                         }
                     </div>
-                    {/* <div className='size-9 bg-stannum/40 rounded-full flex justify-center items-center relative'>
+                    <div className={`size-9 bg-card-light rounded-full opacity-25 flex justify-center items-center relative`}>
                         <span className="sr-only">Misiones</span>
-                        <PaperIcon className="size-4 text-stannum"/>
-                    </div> */}
-                    <div className={`size-9 ${ instructionsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
+                        <PaperIcon className="size-4 text-white/50"/>
+                    </div>
+                    {/* <div className={`size-9 ${ instructionsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Instrucciones</span>
                         <CompassIcon className={`size-4 ${ instructionsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
                         { instructionsOffset > 0 &&
@@ -49,6 +49,10 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instru
                                 <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: instructionsOffset }}/>
                             </svg>
                         }
+                    </div> */}
+                    <div className={`size-9 bg-card-light rounded-full opacity-25 flex justify-center items-center relative`}>
+                        <span className="sr-only">Instrucciones</span>
+                        <CompassIcon className="size-4 text-white/50"/>
                     </div>
                 </div>
             </div>
