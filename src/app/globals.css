@@ -193,9 +193,13 @@
 
 .driver-popover-next-btn {
   text-shadow: none !important;
-  @apply !px-2 !py-1 !rounded-md !bg-transparent hover:!bg-white/10 !text-white !font-satoshi !border-none transition-200 !filter-none
+  @apply !px-2 !py-1 !rounded-md !bg-stannum hover:!bg-stannum-light !text-card !font-satoshi !border-none transition-200 !filter-none
 }
 
 .driver-overlay{
   z-index: 100000000 !important;
+}
+
+.driver-overlay path{
+  opacity: 0.9 !important;
 }

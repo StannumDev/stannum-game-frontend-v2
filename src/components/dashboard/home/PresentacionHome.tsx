@@ -5,13 +5,13 @@ import Image from "next/image";
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { driver, type Driver } from "driver.js";
-import "driver.js/dist/driver.css";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
 import type { AppError, FullUserDetails } from '@/interfaces';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import background from "@/assets/background/the_game.webp";
+import "driver.js/dist/driver.css";
 
 const steps:Array<number> = [1,2,3,4,5];
 

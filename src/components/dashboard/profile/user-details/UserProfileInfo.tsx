@@ -37,7 +37,7 @@ export const UserProfileInfo = ({user, fetchUserData, owner}:Props) => {
             <section className="w-full lg:w-1/3 min-h-32 max-h-96 lg:h-auto card flex flex-col gap-4">
                 <h2 className="title-2">Sobre mí</h2>
                 <div className="w-[calc(100%+13px)] lg:grow relative overflow-y-auto">
-                    <div className="size-full pr-4 lg:absolute lg:top-0 lg:left-0 whitespace-pre-line">
+                    <div className="size-full pr-2 lg:absolute lg:top-0 lg:left-0 whitespace-pre-line">
                         {user.profile.aboutMe||<span className="text-card-lightest">Sin información.</span>}
                     </div>
                 </div>
