@@ -1,10 +1,11 @@
 'use client'
 
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { getUserDetailsByUsername } from "@/services";
+import { getUserDetailsByUsername, logout } from "@/services";
 import { errorHandler } from "@/helpers";
 import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
 import { AppError, FullUserDetails } from "@/interfaces";
+import { PowerIcon } from "@/icons";
 
 interface Props{
     username: string;
@@ -32,6 +33,16 @@ export const UserProfileWrapper = ({username, owner}:Props) => {
         fetchUserData(true);
     }, [username, fetchUserData]);
 
+    
+    const onLogout = () => {
+        try {
+            logout();
+        } catch (error:unknown) {
+            const appError:AppError = errorHandler(error);
+            console.error(appError)
+        }
+    }
+
     if(!userData || isLoading){
         return (
             <LoadingScreen/>
@@ -42,6 +53,11 @@ export const UserProfileWrapper = ({username, owner}:Props) => {
         <Fragment>
             <UserProfileDetails owner={owner} user={userData} fetchUserData={fetchUserData}/>
             <ProfileSectionsLayout owner={owner} user={userData} />
+            <div className="w-full lg:hidden">
+                <button onClick={onLogout} className="w-full card py-2 flex justify-between items-center text-invalid">
+                    Cerrar sesión <PowerIcon/>
+                </button>
+            </div>
         </Fragment>
     )
 }
