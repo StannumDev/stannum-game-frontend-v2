@@ -9,7 +9,7 @@ export const callToast = ({ message, type = "success" }: ToastData): null => {
     icon:
       type === 'success' ? <CheckIcon className='size-full text-stannum' /> :
       type === 'error' ? <WarningOctagonIcon className='size-full text-invalid' /> :
-      type === 'warning' ? <WarningOctagonIcon className='size-full text-amber-500' /> :
+      type === 'warning' ? <WarningOctagonIcon className='size-full text-invalid' /> :
       type === 'achievement' && <MedalIcon className='size-full text-stannum' />,
     type: 'default',
     className: "contenedorToast",

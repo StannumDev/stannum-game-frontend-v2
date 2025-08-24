@@ -29,7 +29,8 @@ export const InstallPromptModal = () => {
     };
 
     const HIDE_INSTALLATION = Cookies.get('HIDE_INSTALLATION') === 'true';
-    if(!HIDE_INSTALLATION){
+    const TUTORIAL_FINISHED = Cookies.get('initial_tutorial') === 'true';
+    if(!HIDE_INSTALLATION && TUTORIAL_FINISHED){
       checkInstallationStatus();
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.addEventListener('appinstalled', () => {
@@ -73,7 +74,7 @@ export const InstallPromptModal = () => {
             <button
               type="button"
               onClick={handleDontShowAgain}
-              className="text-sm font-semibold text-white/50 hover:text-white tracking-tighter flex justify-center items-center transition-200"
+              className="text-sm font-semibold text-white tracking-tighter flex justify-center items-center transition-200"
             >
               No mostrar más
             </button>
