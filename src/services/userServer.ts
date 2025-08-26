@@ -18,7 +18,7 @@ const tokenError = {
     },
 }
 
-export const getUserByToken = async (): Promise<FullUserDetails | null> => {
+export const getUserByToken = async (): Promise<FullUserDetails> => {
     try {
         const token = await cookies().get('token')
         if (!token) throw tokenError
@@ -34,7 +34,7 @@ export const getUserByToken = async (): Promise<FullUserDetails | null> => {
         }
         return response.data.data as FullUserDetails;
     } catch (error:unknown) {
-        return null;
+        throw error;
     }
 };
 
@@ -54,6 +54,6 @@ export const getUserDetailsByUsernameServer = async (username: string): Promise<
         }
         return response.data.data as FullUserDetails;
     } catch (error:unknown) {
-        return null;
+        throw error;
     }
 };

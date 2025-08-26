@@ -17,12 +17,9 @@ export default async function ProgramSectionPage({ params }: Props) {
 
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     const foundSection = foundProgram?.sections.find(sec => sec.id === section);
-
-    const user = await getUserByToken();
-    if (!user) return null;
-
     if (!foundProgram || !foundSection) return notFound();
 
+    const user = await getUserByToken();
     return (
         <section className="w-full flex flex-col gap-4">
             {

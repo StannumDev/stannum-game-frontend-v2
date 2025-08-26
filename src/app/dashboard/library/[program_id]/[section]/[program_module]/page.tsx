@@ -19,15 +19,11 @@ export default async function ProgramModulePage({ params }: Props) {
     const foundProgram: Program | undefined = programs.find(program => program.id === program_id.toLowerCase());
     const foundSection: Section | undefined = foundProgram?.sections.find(sec => sec.id === section);
     const foundModule: Module | undefined = foundSection?.modules.find(mod => mod.id === program_module);
-
-    const user = await getUserByToken();
-    if (!user) return null;
-
     if (!foundModule) return notFound()
 
+    const user = await getUserByToken();
     const userLessons = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted || [];
     const userInstructions = user.programs?.[program_id as keyof typeof user.programs]?.instructions || [];
-
     return (
         <section className="w-full">
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />

@@ -25,8 +25,6 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
     const user = await getUserByToken();
-    if (!user) return null;
-
     return (
         <main className="main-container">
             <h1 className="sr-only">Pantalla principal STANNUM Game</h1>

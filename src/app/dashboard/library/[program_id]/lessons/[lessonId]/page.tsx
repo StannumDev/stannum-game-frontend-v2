@@ -54,16 +54,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LessonPage({ params }: Props) {
     const { program_id, lessonId } = params;
-    
-    const user = await getUserByToken();
-    if (!user) return null;
-
     const program = programs.find(p => p.id === program_id.toLowerCase());
     if (!program) return notFound();
-
     let section: Section | undefined;
     let program_module: Module | undefined;
-
     for (const sec of program.sections) {
         const foundModule = sec.modules.find(m => m.lessons.some(l => l.id === lessonId));
         if (foundModule) {
@@ -73,15 +67,13 @@ export default async function LessonPage({ params }: Props) {
         }
     }
     if (!section || !program_module) return notFound();
-
     const lesson = program_module.lessons.find(l => l.id === lessonId);
     if (!lesson) return notFound();
-
+    
+    const user = await getUserByToken();
     const isAvailable = isLessonAvailable(user, program_module, lesson.id);
     if (!isAvailable) return notFound();
-
     const isCompleted = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted.some((ul) => ul.lessonId === lesson.id);
-
     return (
         <main className="main-container p-0 flex flex-col items-start">
             <h1 className="sr-only">{lesson.longTitle}</h1>

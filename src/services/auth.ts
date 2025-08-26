@@ -56,7 +56,6 @@ export const requestLogin = async (data: { username: string; password: string })
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error:unknown) {
-        console.error(error)
         throw error;
     }
 };

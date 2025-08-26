@@ -44,12 +44,9 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
 
     const { program_id } = params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
-
-    const user = await getUserByToken();
-    if (!user) return null;
-
     if (!foundProgram) return notFound();
-
+    
+    const user = await getUserByToken();
     return (
         <main className="main-container">
             <h1 className="sr-only">Panel de control {foundProgram.name} STANNUM Game</h1>

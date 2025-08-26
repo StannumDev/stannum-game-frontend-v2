@@ -85,6 +85,7 @@ export const achievements: Array<Achievement> = [
                 if (!userProgram) continue;
                 for (const section of programCfg.sections) {
                     for (const program_module of section.modules) {
+                        if (program_module.instructions.length <= 0) continue;
                         const allInstructionsDone = program_module.instructions.every(inst =>
                             userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED")
                         );
