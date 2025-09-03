@@ -18,7 +18,7 @@ export default function Error({error, reset}: Props) {
         <main className='main-container size-full px-4 text-center justify-center items-center gap-0'>
             <WarningOctagonIcon className='size-32 text-invalid' />
             <h2 className='title-2'>¡Algo salió mal!</h2>
-            <p className='mt-2 subtitle-1 max-w-xl overflow-auto text-ellipsis whitespace-normal'>{error.message}</p>
+            <p className='mt-2 subtitle-1 max-w-xl no-truncate'>{error.message}</p>
             <div className='mt-8 flex flex-col lg:flex-row justify-center items-center gap-4'>
                 <a
                     href={'/'}

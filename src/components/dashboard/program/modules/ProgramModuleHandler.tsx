@@ -13,7 +13,11 @@ interface Props {
 
 export const ProgramModuleHandler = ({ program_module, index, section, user, programId }: Props) => {
   const { modules } = section;
-  const { status, lessonsProgress, instructionsProgress } = useModuleProgress({ program_module, moduleIndex: index, modules, user, programId });
+
+  const moduleProgress = useModuleProgress({ program_module, moduleIndex: index, modules, user, programId });
+  if(!moduleProgress) return null;
+
+  const { status, lessonsProgress, instructionsProgress } = moduleProgress;
   // console.log({ status, lessonsProgress, instructionsProgress });
   if (status === "COMPLETED") {
     return (

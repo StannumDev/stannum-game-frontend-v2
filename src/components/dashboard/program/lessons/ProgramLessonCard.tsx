@@ -4,7 +4,7 @@ import styles from '@/components/styles/ProgramLessonCard.module.css';
 
 interface Props{
     id: string;
-    programName: string; 
+    programName: string;
     index: number;
     title: string;
     isCompleted: boolean;

@@ -2,14 +2,19 @@
 
 import { useState, useRef } from "react";
 import { CheckIcon, CrossIcon, CrownIcon, HourglassIcon, ToolsIcon, UploadIcon } from "@/icons";
+import { Instruction } from "@/interfaces";
 
-export const ProgramInstructionDetails = () => {
-    
+interface Props{
+    instruction: Instruction;
+    isCompleted: boolean;
+}
+
+export const ProgramInstructionDetails = ({}: Props) => {
     const fileInputRef = useRef(null);
     const [status, setStatus] = useState<'PENDING'|'IN_PROCESS'|'IN_REVIEW'|'COMPLETED'>('PENDING')
 
     return (
-        <div className="w-full lg:py-6 lg:bg-card lg:rounded-lg">
+        <div className="w-full grow lg:py-6 lg:bg-card lg:rounded-lg">
             <div className='w-full lg:px-6 flex flex-col'>
                 <span className='subtitle-1'>Instrucción 01</span>
                 <h2 className='w-full title-2 text-xl'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, dolor? In modi natus debitis suscipit aliquid molestiae deserunt.</h2>

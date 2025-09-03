@@ -87,7 +87,7 @@ export const LoginForm = () => {
                 </div>
                 <div className="mt-4 w-full flex justify-end">
                     <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="w-fit"/>
-                    <Link href={"/password-recovery"} className="text-xs font-semibold uppercase tracking-widest text-card-lightest hover:text-stannum whitespace-nowrap transition-200">¿Olvidaste tu contraseña?</Link>
+                    <Link href={"/password-recovery"} className="subtitle-1 hover:text-stannum transition-200">¿Olvidaste tu contraseña?</Link>
                 </div>
             </div>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||''} className="mt-4 w-fit"/>

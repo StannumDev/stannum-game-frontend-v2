@@ -17,6 +17,7 @@ export const calculateProgramTotals = (program: Program, user: FullUserDetails):
     let instructionsDone = 0;
 
     for (const section of program.sections) {
+        if(!section.modules) continue;
         for (const mod of section.modules) {
             lessonsTotal += mod.lessons.length;
             for (const lesson of mod.lessons) {

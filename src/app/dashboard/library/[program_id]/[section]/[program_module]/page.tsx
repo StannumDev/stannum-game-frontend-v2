@@ -17,9 +17,13 @@ export default async function ProgramModulePage({ params }: Props) {
     const { program_id, section, program_module } = params;
 
     const foundProgram: Program | undefined = programs.find(program => program.id === program_id.toLowerCase());
+    if (!foundProgram) return notFound();
+
     const foundSection: Section | undefined = foundProgram?.sections.find(sec => sec.id === section);
-    const foundModule: Module | undefined = foundSection?.modules.find(mod => mod.id === program_module);
-    if (!foundModule) return notFound()
+    if (!foundSection || !foundSection.modules) return notFound();
+
+    const foundModule: Module | undefined = foundSection.modules.find(mod => mod.id === program_module);
+    if (!foundModule) return notFound();
 
     const user = await getUserByToken();
     const userLessons = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted || [];
@@ -29,7 +33,7 @@ export default async function ProgramModulePage({ params }: Props) {
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
             <div className="mt-4 w-full flex flex-col">
                 <span className="title-2">{foundModule.name}</span>
-                <h2 className="subtitle-1 overflow-auto text-ellipsis whitespace-normal">{foundModule.description}</h2>
+                <h2 className="subtitle-1 no-truncate">{foundModule.description}</h2>
             </div>
             <div className='mt-6 w-full'>
                 { foundModule.lessons.length > 0 && 
@@ -62,14 +66,14 @@ export default async function ProgramModulePage({ params }: Props) {
                                 const userInstruction = userInstructions.find((ui) => ui.instructionId === instruction.id);
                                 const completed = userInstruction?.status === "GRADED";
                                 const inProcess = userInstruction?.status === "IN_PROCESS" || userInstruction?.status === "SUBMITTED";
-                                
                                 return (
                                     <ProgramInstructionCard
-                                    key={instruction.id}
-                                    index={index + 1}
-                                    title={instruction.title}
-                                    completed={completed}
-                                    inProcess={inProcess}
+                                        key={instruction.id}
+                                        index={index + 1}
+                                        programName={program_id}
+                                        instruction={instruction}
+                                        completed={completed}
+                                        inProcess={inProcess}
                                     />
                                 );
                             })}

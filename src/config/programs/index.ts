@@ -32,21 +32,16 @@ export const TIA_PROGRAM: Program = {
                     ],
                     instructions: [
                         // {
-                        // id: "TMDM01I01",
-                        // title: "Organiza tu carpeta principal",
-                        // description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        // difficulty: "LOW",
-                        // rewardXP: 200,
-                        // acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        // maxFileSizeMB: 15,
-                        // steps: [
-                        //     "Crea una cuenta en Google Drive si aún no tienes una.",
-                        //     "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                        //     "Organiza las subcarpetas como se indica en la guía.",
-                        //     "Toma una captura de pantalla de tu estructura.",
-                        //     "Súbela en esta instrucción."
-                        // ],
-                        // deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
+                        //     id: "TIAM01I01",
+                        //     title: "Organiza tu carpeta principal",
+                        //     shortDescription: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
+                        //     description: "Hola",
+                        //     difficulty: "LOW",
+                        //     rewardXP: 200,
+                        //     acceptedFormats: [".jpg", ".jpeg", ".png"],
+                        //     maxFileSizeMB: 15,
+                        //     deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive.",
+                        //     resources: [],
                         // }
                     ]
                 },
@@ -70,94 +65,70 @@ export const TIA_PROGRAM: Program = {
                         { id: "TIAM02L13", title: "Cómo DELEGAR: Fórmula RODOIR", longTitle: "Cómo DELEGAR: Fórmula RODOIR - Personalización de ChatGPT | TRENNO IA", description: "Sin descripción.", duration: 572, muxPlaybackId: muxPlaybackIds["TIAM02L13"] ?? "" },
                         { id: "TIAM02L14", title: "Profundizar sobre las FORMAS de RESPUESTAS al diseñar PROMPTs", longTitle: "Profundizar sobre las FORMAS de RESPUESTAS al diseñar PROMPTs - Personalización de ChatGPT | TRENNO IA", description: "Sin descripción.", duration: 580, muxPlaybackId: muxPlaybackIds["TIAM02L14"] ?? "" },
                     ],
-                    instructions: [
-                        // {
-                        // id: "TMDM02I01",
-                        // title: "Organiza tu carpeta principal",
-                        // description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        // difficulty: "LOW",
-                        // rewardXP: 200,
-                        // acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        // maxFileSizeMB: 15,
-                        // steps: [
-                        //     "Crea una cuenta en Google Drive si aún no tienes una.",
-                        //     "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                        //     "Organiza las subcarpetas como se indica en la guía.",
-                        //     "Toma una captura de pantalla de tu estructura.",
-                        //     "Súbela en esta instrucción."
-                        // ],
-                        // deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-                        // }
-                    ]
+                    instructions: []
                 },
             ],
         },
-        // {
-        //     id: "part_2",
-        //     name: "Desarrollo",
-        //     modules: [
-        //         {
-        //             id: "TIAM02",
-        //             name: "Dominio de PROMPTS",
-        //             description: "Aprende a organizar tu empresa digitalmente con herramientas y estrategias avanzadas.",
-        //             lessons: [
-        //                 { id: "TIAM02L01", title: "Introducción a la Serie TRENNO iA", longTitle: "Introducción a la Serie TRENNO iA - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TIAM02L01"] ?? "" },
-        //             ],
-        //             instructions: [
-        //                 {
-        //                 id: "TMDM02I01",
-        //                 title: "Organiza tu carpeta principal",
-        //                 description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-        //                 difficulty: "LOW",
-        //                 rewardXP: 200,
-        //                 acceptedFormats: [".jpg", ".jpeg", ".png"],
-        //                 maxFileSizeMB: 15,
-        //                 steps: [
-        //                     "Crea una cuenta en Google Drive si aún no tienes una.",
-        //                     "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-        //                     "Organiza las subcarpetas como se indica en la guía.",
-        //                     "Toma una captura de pantalla de tu estructura.",
-        //                     "Súbela en esta instrucción."
-        //                 ],
-        //                 deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-        //                 }
-        //             ]
-        //         },
-        //     ],
-        // },
-        // {
-        //     id: "part_3",
-        //     name: "Cierre",
-        //     modules: [
-        //         {
-        //             id: "TIAM03",
-        //             name: "Dominio de PROMPTS",
-        //             description: "Aprende a organizar tu empresa digitalmente con herramientas y estrategias avanzadas.",
-        //             lessons: [
-        //                 { id: "TIAM03L01", title: "Introducción a la Serie TRENNO iA", longTitle: "Introducción a la Serie TRENNO iA - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TIAM03L01"] ?? "" },
-        //             ],
-        //             instructions: [
-        //                 {
-        //                 id: "TMDM03I01",
-        //                 title: "Organiza tu carpeta principal",
-        //                 description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-        //                 difficulty: "LOW",
-        //                 rewardXP: 200,
-        //                 acceptedFormats: [".jpg", ".jpeg", ".png"],
-        //                 maxFileSizeMB: 15,
-        //                 steps: [
-        //                     "Crea una cuenta en Google Drive si aún no tienes una.",
-        //                     "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-        //                     "Organiza las subcarpetas como se indica en la guía.",
-        //                     "Toma una captura de pantalla de tu estructura.",
-        //                     "Súbela en esta instrucción."
-        //                 ],
-        //                 deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-        //                 }
-        //             ]
-        //         },
-        //     ],
-        // }
+        {
+            id: "resources",
+            name: "Recursos",
+            resources: [
+                {
+                    title: "La esencia del negocio",
+                    description: "Presentación",
+                    link: "https://docs.google.com/presentation/d/1dxt94sAG4Xmu3lHXseigHr2okfjP0SEeUvrq1cC78LE/edit?usp=sharing",
+                    type: "presentation",
+                },
+                {
+                    title: "La esencia del negocio",
+                    description: "Carpeta de documentos claves",
+                    link: "https://drive.google.com/drive/folders/1xYUmjLEuIbIq_mq2uqRtSD13diRumokt?usp=sharing",
+                    type: "folder",
+                },
+                {
+                    title: "Proceso de contratación: ChatGPT Plus",
+                    description: "Documento de soporte",
+                    link: "https://docs.google.com/document/d/1iIxxIFbnV_pk3faDHrsGFZ72MpLSWQj6F2j0h0tzw28/edit?usp=sharing",
+                    type: "document",
+                },
+                {
+                    title: "Plantilla para el desarrollo del ROL",
+                    description: "Documento",
+                    link: "https://docs.google.com/document/d/1bvQQL7b76_FBS90zh-Usww1nGjgJ5U3dNevEyNMwkxw/edit?usp=sharing",
+                    type: "document",
+                },
+                {
+                    title: "Tu Asistente Estratégico",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://docs.google.com/document/d/1ZKM2XKAa9pJDyWVJLVA6xlRgFYAVUeUTUJmi8Vyv2Zg/edit?usp=sharing",
+                    type: "activity",
+                },
+                {
+                    title: "Copiloto de Ventas",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://docs.google.com/document/d/1phUM86e8z5_ysDYw4NXBSY5yp4VfyIzLsncXZ3MSKaM/edit?usp=sharing",
+                    type: "activity",
+                },
+                {
+                    title: "Diversificación de Mensajes",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://docs.google.com/document/d/1sYsaTKLTXeAaLkP9h8HNqm9-S0bm1ME5jKw52ctuUww/edit?usp=sharing",
+                    type: "activity",
+                },
+                {
+                    title: "Desafío de Contenido Multimedia",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://docs.google.com/document/d/1Qy-F93URmiGAZjgJm0nvUvGiOgudCE12WPcMQyMANr0/edit?usp=sharing",
+                    type: "activity",
+                },
+                {
+                    title: "Inteligencia Documental",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://docs.google.com/document/d/1CV-Vxh_E1mMnzf_o4uR6rBhpkDF28s15eQ_-WVAqY9w/edit?usp=sharing",
+                    type: "activity",
+                },
+            ],
+        },
     ],
 };
 
@@ -184,25 +155,7 @@ export const TMD_PROGRAM: Program = {
                         { id: "TMDM01L03", title: "Introducción al DISEÑO de PROMPTS - Parte 1", longTitle: "Introducción al DISEÑO de PROMPTS - Parte 1 - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TIAM01L03"] ?? "" },
                         { id: "TMDM01L04", title: "Introducción al DISEÑO de PROMPTS - Parte 2", longTitle: "Introducción al DISEÑO de PROMPTS - Parte 2 - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TIAM01L04"] ?? "" },
                     ],
-                    instructions: [
-                        {
-                        id: "TMDM01I01",
-                        title: "Organiza tu carpeta principal",
-                        description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        difficulty: "LOW",
-                        rewardXP: 200,
-                        acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        maxFileSizeMB: 15,
-                        steps: [
-                            "Crea una cuenta en Google Drive si aún no tienes una.",
-                            "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                            "Organiza las subcarpetas como se indica en la guía.",
-                            "Toma una captura de pantalla de tu estructura.",
-                            "Súbela en esta instrucción."
-                        ],
-                        deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-                        }
-                    ]
+                    instructions: []
                 },
             ],
         },
@@ -217,25 +170,7 @@ export const TMD_PROGRAM: Program = {
                     lessons: [
                         { id: "TMDM01L01", title: "Introducción a la Serie TRENNO iA", longTitle: "Introducción a la Serie TRENNO iA - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TMDM01L01"] ?? "" },
                     ],
-                    instructions: [
-                        {
-                        id: "TMDM01I01",
-                        title: "Organiza tu carpeta principal",
-                        description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        difficulty: "LOW",
-                        rewardXP: 200,
-                        acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        maxFileSizeMB: 15,
-                        steps: [
-                            "Crea una cuenta en Google Drive si aún no tienes una.",
-                            "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                            "Organiza las subcarpetas como se indica en la guía.",
-                            "Toma una captura de pantalla de tu estructura.",
-                            "Súbela en esta instrucción."
-                        ],
-                        deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-                        }
-                    ]
+                    instructions: []
                 },
             ],
         },
@@ -250,25 +185,7 @@ export const TMD_PROGRAM: Program = {
                     lessons: [
                         { id: "TMDM01L01", title: "Introducción a la Serie TRENNO iA", longTitle: "Introducción a la Serie TRENNO iA - Dominio de PROMPTS | TRENNO IA", description: "Aprende los conceptos básicos de la inteligencia artificial y su aplicación en el mundo empresarial.", duration: 360, muxPlaybackId: muxPlaybackIds["TMDM01L01"] ?? "" },
                     ],
-                    instructions: [
-                        {
-                        id: "TMDM01I01",
-                        title: "Organiza tu carpeta principal",
-                        description: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        difficulty: "LOW",
-                        rewardXP: 200,
-                        acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        maxFileSizeMB: 15,
-                        steps: [
-                            "Crea una cuenta en Google Drive si aún no tienes una.",
-                            "Descarga la carpeta 'Tu Negocio' y súbela a tu Drive.",
-                            "Organiza las subcarpetas como se indica en la guía.",
-                            "Toma una captura de pantalla de tu estructura.",
-                            "Súbela en esta instrucción."
-                        ],
-                        deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive."
-                        }
-                    ]
+                    instructions: []
                 },
             ],
         }

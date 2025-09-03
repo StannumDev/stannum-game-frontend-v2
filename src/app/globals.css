@@ -21,6 +21,10 @@
     @apply text-xs font-semibold uppercase tracking-widest text-card-lightest truncate
   }
 
+  .no-truncate{
+    @apply overflow-auto text-clip whitespace-normal
+  }
+
   .main-container{
     padding-top: calc(3.5rem + env(safe-area-inset-top));
     padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));

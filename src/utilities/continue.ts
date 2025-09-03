@@ -3,7 +3,7 @@ import type { FullUserDetails, Program, Lesson, ContinueEntry, ProgramId } from 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
 
-const flattenLessons = (program: Program): Lesson[] => program.sections.flatMap(s => s.modules.flatMap(m => m.lessons));
+const flattenLessons = (program: Program): Lesson[] => program.sections.flatMap(s => s.modules?.flatMap(m => m.lessons)||[]);
 
 const isLessonCompleted = (user: FullUserDetails, programId: string, lessonId: string) => !!user.programs?.[programId as keyof FullUserDetails["programs"]]?.lessonsCompleted?.some(l => l.lessonId === lessonId);
 

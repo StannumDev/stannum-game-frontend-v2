@@ -17,7 +17,7 @@ export default async function ProgramSectionPage({ params }: Props) {
 
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     const foundSection = foundProgram?.sections.find(sec => sec.id === section);
-    if (!foundProgram || !foundSection) return notFound();
+    if (!foundProgram || !foundSection || !foundSection.modules) return notFound();
 
     const user = await getUserByToken();
     return (

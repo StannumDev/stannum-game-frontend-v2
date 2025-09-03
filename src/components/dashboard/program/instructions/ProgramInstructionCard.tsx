@@ -3,18 +3,22 @@ import Image from 'next/image';
 import { ArrowRightIcon, CheckIcon, CrossIcon, CrownIcon, ToolsIcon } from '@/icons';
 import styles from '@/components/styles/ProgramInstructionCard.module.css';
 import instruction_logo from '@/assets/background/stannum_game_trophy.webp';
+import { Instruction } from '@/interfaces';
+import Link from 'next/link';
 
 interface Props{
     index: number;
-    title: string;
+    programName: string;
+    instruction: Instruction;
     inProcess?: boolean;
     completed?: boolean;
 }
 
-export const ProgramInstructionCard = ({index, title, inProcess, completed }:Props) => {
+export const ProgramInstructionCard = ({index, programName, instruction, inProcess, completed }:Props) => {
+    const { id, title, shortDescription, rewardXP, difficulty } = instruction;
     return (
-        <button
-            type='button'
+        <Link
+            href={`/dashboard/library/${programName}/instructions/${id}`}
             className={`w-full lg:h-52 p-4 lg:p-0 bg-card/25 hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : 'border-card hover:border-card-light' } text-start flex flex-col lg:flex-row items-center relative overflow-hidden group cursor-pointer transition-200 `}
         >
             <div className='hidden lg:block h-full aspect-square relative shrink-0'>
@@ -23,9 +27,7 @@ export const ProgramInstructionCard = ({index, title, inProcess, completed }:Pro
             <div className='lg:pl-6 w-full lg:w-auto grow lg:min-w-0 lg:h-full lg:pr-8 flex flex-col justify-center gap-2 lg:gap-0'>
                 <span className='subtitle-1'>Instrucción {index < 10 ? `0${index}` : index}</span>
                 <h2 className='w-full title-2 lg:text-xl lg:truncate'>{title}</h2>
-                <p className='hidden mt-2 w-full max-w-xl lg:line-clamp-3'>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi facilis sit saepe vero vel at hic veritatis minima aspernatur animi? Corporis officiis placeat porro eum veniam perferendis cupiditate, nostrum reiciendis.
-                </p>
+                <p className='hidden mt-2 w-full max-w-xl lg:line-clamp-3'>{shortDescription}</p>
             </div>
             <div className={`w-full lg:w-fit h-full flex flex-col lg:flex-row items-center ${ completed ? 'lg:bg-gradient-to-r lg:from-transparent lg:from-25% lg:via-stannum lg:via-25% lg:to-stannum-light/75 lg:to-100%' : inProcess && 'lg:bg-gradient-to-r lg:from-transparent lg:from-25% lg:via-card lg:via-25% lg:to-card-lighter/40 lg:to-100%' }`}>
                 <div className={`mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `lg:bg-card lg:group-hover:bg-card-light ${styles.completed__diagonal__lines}` : inProcess ? 'lg:bg-card lg:group-hover:bg-card-light' : 'lg:bg-card lg:group-hover:bg-card-light' }`}>
@@ -35,7 +37,7 @@ export const ProgramInstructionCard = ({index, title, inProcess, completed }:Pro
                                 <span className={`text-xl ${ completed || inProcess ? 'text-stannum' : 'text-invalid' }`}>D</span>
                             </div>
                             <div className='flex flex-col'>
-                                <span>Baja</span>
+                                <span>{difficulty}</span>
                                 <span className='subtitle-1'>Dificultad</span>
                             </div>
                         </div>
@@ -46,7 +48,7 @@ export const ProgramInstructionCard = ({index, title, inProcess, completed }:Pro
                                 </span>
                             </div>
                             <div className='flex flex-col'>
-                                <span>200 XP</span>
+                                <span>{rewardXP} XP</span>
                                 <span className='subtitle-1'>Recompensa</span>
                             </div>
                         </div>
@@ -101,6 +103,6 @@ export const ProgramInstructionCard = ({index, title, inProcess, completed }:Pro
                     <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 relative right-1 transition-200" />
                 </div>
             </div>
-        </button>
+        </Link>
     )
 }

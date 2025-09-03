@@ -105,10 +105,16 @@ export {
 } from 'react-icons/tfi';
 
 export {
-    FcGoogle as GoogleColourIcon
+    FcGoogle as GoogleColourIcon,
+    FcFolder as FolderColourIcon
 } from "react-icons/fc";
 
 export {
     SlVolume2 as SoundOnIcon,
     SlVolumeOff as SoundOffIcon
 } from "react-icons/sl";
+
+export {
+    SiGoogledocs as DocumentIcon,
+    SiGoogleslides as SlidesIcon
+} from "react-icons/si";
