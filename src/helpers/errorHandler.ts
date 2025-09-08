@@ -5,6 +5,7 @@ import type { AppError, ToastData } from '@/interfaces';
 import { callToast } from './callToast';
 
 export const errorHandler = (error:unknown): AppError => {
+    if(process.env.NEXT_PUBLIC_ENV === 'development') console.log("Error:", error);
     let appError: AppError = {
         success: false,
         code: "UNKNOWN_ERROR",
