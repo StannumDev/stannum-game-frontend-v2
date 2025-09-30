@@ -13,7 +13,8 @@ export {
     FaEyeSlash as HidePasswordIcon,
     FaTrashCan as TrashIcon,
     FaRegStar as StarIcon,
-    FaRegClock as ClockIcon
+    FaRegClock as ClockIcon,
+    FaPlus as PlusIcon
 } from 'react-icons/fa6';
 
 export {

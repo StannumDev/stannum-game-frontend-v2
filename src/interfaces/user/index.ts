@@ -29,7 +29,7 @@ export interface LevelDetails {
     currentLevel: number;
     experienceTotal: number;
     experienceCurrentLevel: number;
-    experienceNextLevel: number;
+    experienceNextLevel: number;    
     progress: number;
 }
 
@@ -84,6 +84,11 @@ export interface UserSearchResult extends BaseUser {
     name: string;
     enterprise?: string;
     jobPosition?: string;
+}
+
+export interface UserFavorites {
+    prompts: string[];
+    assistants: string[];
 }
 
 export interface UserProgram {
@@ -142,6 +147,7 @@ export interface FullUserDetails {
     }>;
     level: LevelDetails;
     achievements: Array<AchievementDetails>;
+    favorites: UserFavorites;
     programs: {
         tia: UserProgram;
         tmd: UserProgram;

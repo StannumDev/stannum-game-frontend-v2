@@ -1,49 +1,9 @@
-export {
-    authUserByToken,
-    requestLogin,
-    checkEmailExists,
-    checkUsernameExists,
-    validateReCAPTCHA,
-    createUser,
-    logout,
-    sendPasswordRecoveryEmail,
-    verifyPasswordRecoveryOTP,
-    changePasswordWithOTP,
-    googleLogin,
-    updateUsername
-} from './auth';
-
-export {
-    preprocessImage,
-    uploadProfilePhoto,
-    deleteProfilePhoto
-} from './profilePhoto';
-
-export {
-    getUserSidebarDetails,
-    getUserDetailsByUsername,
-    getTutorialStatus,
-    markTutorialAsCompleted,
-    updateUserProfile,
-    searchUsers,
-} from './user';
-
-export {
-    getUserByToken,
-    getUserDetailsByUsernameServer
-} from './userServer';
-
-export {
-    markLessonAsCompleted,
-    saveLastWatchedLesson
-} from './lesson';
-
-export {
-    verifyProductKey,
-    activateProductKey
-} from './productKey';
-
-export {
-    getIndividualRanking,
-    getTeamRanking
-} from './ranking';
+export * from './auth';
+export * from './profilePhoto';
+export * from './user';
+export * from './userServer';
+export * from './lesson';
+export * from './productKey';
+export * from './ranking';
+export * from './assistant';
+export * from './prompt';

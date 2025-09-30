@@ -66,7 +66,7 @@ export const Sidebar = () => {
         },
         {
             label: 'Comunidad',
-            href: '/dashboard/community',
+            href: '/dashboard/community/prompt-bank',
             Icon: CommunityIcon,
         },
         {
