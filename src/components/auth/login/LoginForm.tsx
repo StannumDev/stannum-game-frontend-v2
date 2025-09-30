@@ -13,8 +13,8 @@ import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
-    password: z.string().nonempty("Campo requerido."),
+    username: z.string().min(1, { message: "Campo requerido." }).trim().toLowerCase(),
+    password: z.string().min(1, { message: "Campo requerido." }),
 })
 
 type Schema = z.infer<typeof schema>

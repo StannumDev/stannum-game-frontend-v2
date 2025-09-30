@@ -12,7 +12,7 @@ import { AppError } from "@/interfaces";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo } from "@/components";
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido.").regex(/^[a-zA-Z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
+    username: z.string().min(1, { message: "Campo requerido." }).regex(/^[a-zA-Z0-9._]+$/, "Nombre de usuario inválido.").min(6, "Debe contener más de 6 caracteres.").max(25, "Debe contener menos de 25 caracteres.").trim().toLowerCase(),
 })
 
 type Schema = z.infer<typeof schema>

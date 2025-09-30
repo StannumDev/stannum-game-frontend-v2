@@ -7,8 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
 
 const schema = z.object({
-    password: z.string().nonempty("Campo requerido.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/, "Debe contener al menos una minúscula, una mayúscula y un número, y tener entre 8 y 50 caracteres.").min(8, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
-    passwordRepeat: z.string().nonempty("Campo requerido."),
+    password: z.string().min(1, { message: "Campo requerido." }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/, "Debe contener al menos una minúscula, una mayúscula y un número, y tener entre 8 y 50 caracteres.").min(8, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
+    passwordRepeat: z.string().min(1, { message: "Campo requerido." }),
 }).refine((data) => data.password === data.passwordRepeat, { message: "Las contraseñas no coinciden.", path: ["passwordRepeat"] });
 
 type Schema = z.infer<typeof schema>

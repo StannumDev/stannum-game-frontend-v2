@@ -14,20 +14,20 @@ interface Props{
 }
 
 const schema = z.object({
-    name: z.string().nonempty("Campo requerido.").min(2, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres."),
-    birthdate: z.string().nonempty("Campo requerido.")
+    name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
+    birthdate: z.string().min(1, { message: "Campo requerido." })
         .refine(date => {
             const today = new Date();
             const birthDate = new Date(date);
             const age = today.getFullYear() - birthDate.getFullYear();
             return age >= 18 && birthDate <= today;
         }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
-    country: z.string().nonempty("Campo requerido."),
-    region: z.string().nonempty("Campo requerido."),
-    enterprise: z.string().nonempty("Campo requerido.").max(100, "Debe contener menos de 100 caracteres."),
-    enterpriseRole: z.string().nonempty("Campo requerido.").max(50, "Debe contener menos de 50 caracteres."),
+    country: z.string().min(1, { message: "Campo requerido." }),
+    region: z.string().min(1, { message: "Campo requerido." }),
+    enterprise: z.string().min(1, { message: "Campo requerido." }).max(100, "Debe contener menos de 100 caracteres."),
+    enterpriseRole: z.string().min(1, { message: "Campo requerido." }).max(50, "Debe contener menos de 50 caracteres."),
     // website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
-    aboutme: z.string().nonempty("Campo requerido.").max(2600, "Debe contener menos de 2600 caracteres.")
+    aboutme: z.string().min(1, { message: "Campo requerido." }).max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
 type Schema = z.infer<typeof schema>
@@ -84,11 +84,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             autoCapitalize="words"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
-                            {...register("name",{
-                                required: true,
-                                minLength: 2,
-                                maxLength: 50
-                            })}
+                            {...register("name")}
                             />
                     </div>
                     <FormErrorMessage condition={errors?.name} message={errors?.name?.message} className="mt-2"/>
@@ -103,9 +99,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             autoComplete="bday"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
-                            {...register("birthdate",{
-                                required: true
-                            })}
+                            {...register("birthdate")}
                             />
                     </div>
                     <FormErrorMessage condition={errors?.birthdate} message={errors?.birthdate?.message} className="mt-2"/>
@@ -156,10 +150,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             autoCapitalize="true"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
-                            {...register("enterprise",{
-                                required: true,
-                                maxLength: 50
-                            })}
+                            {...register("enterprise")}
                             />
                     </div>
                     <FormErrorMessage condition={errors?.enterprise} message={errors?.enterprise?.message} className="mt-2"/>
@@ -176,10 +167,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             autoCapitalize="true"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
-                            {...register("enterpriseRole",{
-                                required: true,
-                                maxLength: 50
-                            })}
+                            {...register("enterpriseRole")}
                             />
                     </div>
                     <FormErrorMessage condition={errors?.enterpriseRole} message={errors?.enterpriseRole?.message} className="mt-2"/>
@@ -196,10 +184,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                         placeholder='Cuéntanos un poco sobre ti...'
                         disabled={isLoading}
                         className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 disabled:text-white/75 transition-200"
-                        {...register("aboutme",{
-                            required: true,
-                            maxLength: 2600
-                        })}
+                        {...register("aboutme")}
                     />
                 </div>
                 <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
