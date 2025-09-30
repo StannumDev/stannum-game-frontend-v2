@@ -11,7 +11,7 @@ import { AppError } from "@/interfaces";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 
 const schema = z.object({
-    username: z.string().nonempty("Campo requerido.").trim().toLowerCase(),
+    username: z.string().min(1, { message: "Campo requerido." }).trim().toLowerCase(),
 })
 
 type Schema = z.infer<typeof schema>

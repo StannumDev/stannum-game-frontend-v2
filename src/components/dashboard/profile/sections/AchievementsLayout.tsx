@@ -17,7 +17,7 @@ export const AchievementsLayout = ({user, owner}:Props) => {
                 </div>
                 <p className="mt-2">Da un vistazo a todos los <b className="text-stannum">objetivos alcanzados</b> durante el entrenamiento.</p>
             </header>
-            <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
                 {
                     achievements.map((achievement:Achievement, i:number)=> (
                         <ProfileAchievementsCard owner={owner} achievement={achievement} user={user} key={`achievement_profile_${i}`}/>

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const schema = z.object({
-    email: z.string().nonempty("Campo requerido.").email("Correo electrónico inválido.").trim().toLowerCase(),
+    email: z.string().min(1, { message: "Campo requerido." }).email("Correo electrónico inválido.").trim().toLowerCase(),
 });
 
 type Schema = z.infer<typeof schema>;

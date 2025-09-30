@@ -17,7 +17,7 @@ import { programs } from "@/config/programs";
 
 const schema = z.object({
     code: z.string()
-      .nonempty("Campo requerido.")
+      .min(1, { message: "Campo requerido." })
       .regex(/^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$/, "Formato incorrecto. Debe ser XXXX-XXXX-XXXX-XXXX con letras y números.")
       .transform((val) => val.toUpperCase()),
   });

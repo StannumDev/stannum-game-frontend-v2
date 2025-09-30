@@ -15,7 +15,7 @@ export const ContinuarCardHome = ({ href, programName, lessonTitle, progressPct,
         <Link
             href={href}
             aria-label={`Continuar entrenando en ${programName} — ${lessonTitle}`}
-            className="w-64 lg:w-[calc((100%-2rem)/3)] shrink-0 lg:aspect-square rounded-lg"
+            className="w-64 xl:w-[calc((100%-1rem)/2)] 2xl:w-[calc((100%-2rem)/3)] shrink-0 lg:aspect-square rounded-lg"
         >
             <article className="size-full card rounded-lg flex flex-col items-start hover:border-card-lightest transition-200 group">
                 <h3 className="sr-only">{programName}</h3>

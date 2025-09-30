@@ -20,6 +20,26 @@ const tokenError = {
     },
 }
 
+export const getUserByTokenClient = async (): Promise<FullUserDetails> => {
+    try {
+        const token = Cookies.get("token");
+        if (!token) throw tokenError
+
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response?.data?.success || !response.data?.data) {
+            throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
+        }
+        return response.data.data as FullUserDetails;
+    } catch (error:unknown) {
+        throw error;
+    }
+};
+
 export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
     try {
         const token = Cookies.get("token");

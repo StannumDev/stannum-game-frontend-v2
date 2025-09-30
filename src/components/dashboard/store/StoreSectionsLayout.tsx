@@ -55,7 +55,7 @@ export const StoreSectionsLayout = ({ user }: Props) => {
                     handleLayoutChange={handleLayoutChange}
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
-                <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+                <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">
                     {filteredPrograms.length === 0 && (
                         <div className="col-span-full text-center">
                             <h2 className="text-2xl font-semibold text-stannum">No hay programas disponibles</h2>
