@@ -219,7 +219,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         >
                             Cancelar
                         </button>
-                        <SubmitButtonLoading isLoading={isLoading} text="Editar" form="formEditProfile" className="w-full h-9 text-sm font-semibold"/>
+                        <SubmitButtonLoading isLoading={isLoading} text="Confirmar" form="formEditProfile" className="w-full h-9 text-sm font-semibold"/>
                     </div>
                 </form>
                 </div>

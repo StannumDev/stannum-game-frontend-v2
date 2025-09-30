@@ -70,7 +70,7 @@ export const RachaHome = ({ user }: Props) => {
                                 day === "completed" || (day === "today" && !streakStatus.missedToday) ? (
                                     <div key={index} className={`w-full flex flex-col items-center gap-1 relative ${streakStatus.missedToday ? "text-invalid" : "text-stannum"}`}>
                                         <div className={`w-full aspect-square rounded-lg lg:rounded-xl border-2 flex justify-center items-center ${streakStatus.missedToday ? "bg-invalid/25 border-invalid/75" : "bg-stannum/25 border-stannum/75"}`}>
-                                            <StarIcon className="size-5 lg:size-6"/>
+                                            <StarIcon className="size-5 2xl:size-6"/>
                                         </div>
                                         <p className="text-xs">Día {index + 1}</p>
                                         { !streakStatus.missedToday && <div className="size-2 lg:size-3 rounded-full bg-stannum animate-ping absolute -top-0.5 -right-0.5"/>}
@@ -78,14 +78,14 @@ export const RachaHome = ({ user }: Props) => {
                                 ) : day === "today" && streakStatus.missedToday ? (
                                     <div key={index} className="w-full flex flex-col items-center gap-1 animate-pulse text-invalid">
                                         <div className="w-full aspect-square rounded-lg lg:rounded-xl bg-card border-2 border-invalid/75 border-dashed flex justify-center items-center">
-                                            <ClockIcon className="size-5 lg:size-6"/>
+                                            <ClockIcon className="size-5 2xl:size-6"/>
                                         </div>
                                         <p className="text-xs">Día {index + 1}</p>
                                     </div>
                                 ) : day === "locked" && (
                                     <div key={index} className="w-full flex flex-col items-center gap-1 text-card-lighter">
                                         <div className="w-full aspect-square rounded-lg lg:rounded-xl bg-card border border-card-lighter flex justify-center items-center">
-                                            <LockIcon className="size-5 lg:size-6"/>
+                                            <LockIcon className="size-5 2xl:size-6"/>
                                         </div>
                                         <p className="text-xs">Día {index + 1}</p>
                                     </div>

@@ -22,12 +22,12 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
                             <p className="font-semibold text-stannum">{user?.enterprise?.name || ''}</p>
                         </div>
                         {/* <UserProfileSocialMedias/> */}
-                        <div className="content-visibility-hidden lg:content-visibility-visible">
+                        <div className="content-visibility-hidden xl:content-visibility-visible">
                             <UserProfileLevel user={user}/>
                         </div>
                     </div>
                 </section>
-                <div className="lg:content-visibility-hidden">
+                <div className="xl:content-visibility-hidden">
                     <UserProfileLevel user={user}/>
                 </div>
             </MotionWrapperLayout>

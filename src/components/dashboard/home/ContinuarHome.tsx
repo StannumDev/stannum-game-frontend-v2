@@ -9,7 +9,7 @@ interface Props {
     user: FullUserDetails
 }
 
-export const ContinuarHome = async ({ user }: Props) => {
+export const ContinuarHome = ({ user }: Props) => {
     const entries: Array<ContinueEntry> = programs.map(p => buildContinueEntryForProgram(p, user)).filter(Boolean) as ContinueEntry[];
     return (
         <MotionWrapperLayout className="grow">

@@ -57,7 +57,7 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
                         <p className="mt-2 text-lg text-card-lightest">Cuando compres tu primer programa, aparecerá en esta sección.</p>
                     </div>
                 ) : 
-                <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
+                <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">
                     {filteredPrograms.map(program => {
                         const progress = calculateProgramProgress(program, user);
                         return (
