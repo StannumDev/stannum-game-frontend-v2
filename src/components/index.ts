@@ -26,6 +26,7 @@ export { BuscadorSidebarMobile } from "./dashboard/sidebar/BuscadorSidebarMobile
 export { SearchResultsList } from "./dashboard/SearchResultsList";
 
 // HOME
+export { HomeContainer } from "./dashboard/home/HomeContainer";
 export { PresentacionHome } from "./dashboard/home/PresentacionHome";
 export { GoalsHome } from "./dashboard/home/GoalsHome";
 export { ContinuarHome } from "./dashboard/home/ContinuarHome";

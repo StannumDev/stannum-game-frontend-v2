@@ -20,6 +20,7 @@ export {
 } from './profilePhoto';
 
 export {
+    getUserByTokenClient,
     getUserSidebarDetails,
     getUserDetailsByUsername,
     getTutorialStatus,
