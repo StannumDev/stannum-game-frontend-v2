@@ -22,7 +22,7 @@ export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
     return (
         <motion.div
             onClick={ () => { !isExpanded && openSearchSidebar() }}
-            className={`w-full ${ isExpanded ? 'px-4' : 'hover:bg-card-hover group cursor-pointer'}`}
+            className={`w-full ${ isExpanded ? 'px-4 mt-8' : 'mt-0 hover:bg-card-hover group cursor-pointer'}`}
             initial={{ x: '-100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}

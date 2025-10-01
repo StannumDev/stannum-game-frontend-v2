@@ -6,7 +6,7 @@ export interface AssistantAuthor {
     id: string;
     username: string;
     name?: string;
-    hasProfilePhoto?: boolean;
+    profilePhotoUrl?: boolean;
 }
 
 export interface AssistantMetrics {
@@ -56,7 +56,7 @@ export interface AssistantCard {
     };
     author: {
         username: string;
-        hasProfilePhoto?: boolean;
+        profilePhotoUrl?: boolean;
     };
     createdAt: Date;
     userActions?: AssistantUserActions;

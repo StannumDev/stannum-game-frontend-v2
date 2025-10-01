@@ -6,7 +6,7 @@ export interface PromptAuthor {
     id: string;
     username: string;
     name?: string;
-    hasProfilePhoto?: boolean;
+    profilePhotoUrl?: boolean;
 }
 
 export interface PromptMetrics {
@@ -57,7 +57,7 @@ export interface PromptCard {
     };
     author: {
         username: string;
-        hasProfilePhoto?: boolean;
+        profilePhotoUrl?: boolean;
     };
     createdAt: Date;
     hasCustomGpt: boolean;
