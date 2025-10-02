@@ -129,6 +129,9 @@ export { StepThreeTutorial } from "./dashboard/tutorial/intro/StepThreeTutorial"
 export { StepFourTutorial } from "./dashboard/tutorial/intro/StepFourTutorial";
 export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
 
+// ASSISTANTS BANK
+export { AssistantsGrid } from "./dashboard/assistants/AssistantsGrid";
+
 // PROMPT BANK
 export { PromptBankArsenal } from "./dashboard/prompt-bank/PromptBankArsenal";
 
