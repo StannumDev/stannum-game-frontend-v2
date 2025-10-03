@@ -131,6 +131,10 @@ export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
 
 // ASSISTANTS BANK
 export { AssistantsGrid } from "./dashboard/assistants/AssistantsGrid";
+export { AssistantCard } from './dashboard/assistants/AssistantCard';
+export { AssistantsGridFilter } from './dashboard/assistants/AssistantGridFilter';
+export { CreateAssistantModal } from './dashboard/assistants/CreateAssistantModal';
+export { AssistantFilterDropdown } from './dashboard/assistants/AssistantFilterDropdown';
 
 // PROMPT BANK
 export { PromptBankArsenal } from "./dashboard/prompt-bank/PromptBankArsenal";

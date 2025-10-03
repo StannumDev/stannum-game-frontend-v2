@@ -73,7 +73,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
             <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="md:text-lg">Nombre completo</label>
+                        <label htmlFor="name" className="md:text-lg required">Nombre completo</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -91,7 +91,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="md:text-lg">Fecha de nacimiento</label>
+                        <label htmlFor="name" className="md:text-lg required">Fecha de nacimiento</label>
                         <input
                             type='date'
                             enterKeyHint="next"
@@ -106,7 +106,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="md:text-lg">País</label>
+                        <label htmlFor="name" className="md:text-lg required">País</label>
                         <CountryDropdown
                             value={location.country}
                             onChange={handleCountryChange}
@@ -122,7 +122,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="md:text-lg">Región</label>
+                        <label htmlFor="name" className="md:text-lg required">Región</label>
                         <RegionDropdown
                             country={location.country}
                             value={location.region}
@@ -140,7 +140,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="enterprise" className="md:text-lg">Empresa</label>
+                        <label htmlFor="enterprise" className="md:text-lg required">Empresa</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -157,7 +157,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="enterpriseRole" className="md:text-lg">Tu rol en la empresa</label>
+                        <label htmlFor="enterpriseRole" className="md:text-lg required">Tu rol en la empresa</label>
                         <input
                             type='text'
                             enterKeyHint="next"
@@ -175,7 +175,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
             </div>
             <div className="mt-4 w-full">
                 <div className='w-full flex flex-col gap-1'>
-                    <label htmlFor="aboutme" className="md:text-lg">Sobre mí</label>
+                    <label htmlFor="aboutme" className="md:text-lg required">Sobre mí</label>
                     <textarea
                         maxLength={2600}
                         id="aboutme"

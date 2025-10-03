@@ -57,7 +57,7 @@ export interface PromptCard {
     };
     author: {
         username: string;
-        profilePhotoUrl?: boolean;
+        profilePhotoUrl?: string;
     };
     createdAt: Date;
     hasCustomGpt: boolean;

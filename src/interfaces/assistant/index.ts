@@ -6,7 +6,7 @@ export interface AssistantAuthor {
     id: string;
     username: string;
     name?: string;
-    profilePhotoUrl?: boolean;
+    profilePhotoUrl?: string;
 }
 
 export interface AssistantMetrics {
@@ -56,7 +56,7 @@ export interface AssistantCard {
     };
     author: {
         username: string;
-        profilePhotoUrl?: boolean;
+        profilePhotoUrl?: string;
     };
     createdAt: Date;
     userActions?: AssistantUserActions;
@@ -69,6 +69,7 @@ export interface AssistantFilters {
     tags?: string;
     platforms?: string;
     sortBy?: 'popular' | 'newest' | 'mostUsed' | 'mostLiked' | 'mostViewed';
+    favoritesOnly?: boolean;
     page?: number;
     limit?: number;
 }

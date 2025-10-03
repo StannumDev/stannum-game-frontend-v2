@@ -88,6 +88,11 @@
   .saltar_video_intro{
       margin-top: calc(0.5rem + env(safe-area-inset-top));
   }
+  
+  .required::after {
+    content: " *";
+    @apply text-invalid text-xs relative bottom-0.5;
+  }
 
   @media (width >= 1024px){
     .main-container{

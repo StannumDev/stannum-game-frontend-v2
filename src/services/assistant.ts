@@ -18,9 +18,17 @@ const tokenError = {
     },
 };
 
+const getAuthHeaders = () => {
+    const token = Cookies.get("token");
+    if (!token) throw tokenError;
+    return {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+};
+
 export const getAllAssistants = async (filters?: AssistantFilters): Promise<AssistantsResponse> => {
     try {
-        const token = Cookies.get("token");
         const params = new URLSearchParams();
         
         if (filters?.search) params.append('search', filters.search);
@@ -29,16 +37,13 @@ export const getAllAssistants = async (filters?: AssistantFilters): Promise<Assi
         if (filters?.tags) params.append('tags', filters.tags);
         if (filters?.platforms) params.append('platforms', filters.platforms);
         if (filters?.sortBy) params.append('sortBy', filters.sortBy);
+        if (filters?.favoritesOnly) params.append('favoritesOnly', 'true'); // ✅ Agregar
         if (filters?.page) params.append('page', filters.page.toString());
         if (filters?.limit) params.append('limit', filters.limit.toString());
 
-        const response = await axios.get<AssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}?${params.toString()}`,
-            token ? {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            } : {}
+        const response = await axios.get<AssistantsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}?${params.toString()}`,
+            { headers: getAuthHeaders() }
         );
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
@@ -50,14 +55,9 @@ export const getAllAssistants = async (filters?: AssistantFilters): Promise<Assi
 
 export const getAssistantById = async (id: string): Promise<AssistantResponse> => {
     try {
-        const token = Cookies.get("token");
-        const response = await axios.get<AssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
-            token ? {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            } : {}
+        const response = await axios.get<AssistantResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
@@ -68,15 +68,10 @@ export const getAssistantById = async (id: string): Promise<AssistantResponse> =
 
 export const createAssistant = async (assistantData: CreateAssistantData): Promise<boolean> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}`, assistantData,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}`, 
+            assistantData,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
@@ -87,15 +82,9 @@ export const createAssistant = async (assistantData: CreateAssistantData): Promi
 
 export const deleteAssistant = async (id: string): Promise<boolean> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.delete(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
@@ -106,7 +95,11 @@ export const deleteAssistant = async (id: string): Promise<boolean> => {
 
 export const clickAssistant = async (id: string): Promise<ClickAssistantResponse['data']> => {
     try {
-        const response = await axios.post<ClickAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/click`);
+        const response = await axios.post<ClickAssistantResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/click`,
+            {},
+            { headers: getAuthHeaders() } // ✅ Agregar headers
+        );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {
@@ -116,15 +109,10 @@ export const clickAssistant = async (id: string): Promise<ClickAssistantResponse
 
 export const likeAssistant = async (id: string): Promise<LikeAssistantResponse['data']> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.post<LikeAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`, {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.post<LikeAssistantResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`, 
+            {},
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
@@ -135,15 +123,9 @@ export const likeAssistant = async (id: string): Promise<LikeAssistantResponse['
 
 export const unlikeAssistant = async (id: string): Promise<LikeAssistantResponse['data']> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.delete<LikeAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.delete<LikeAssistantResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
@@ -154,15 +136,10 @@ export const unlikeAssistant = async (id: string): Promise<LikeAssistantResponse
 
 export const toggleFavoriteAssistant = async (id: string): Promise<ToggleFavoriteAssistantResponse['data']> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.post<ToggleFavoriteAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/favorite`, {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.post<ToggleFavoriteAssistantResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/favorite`, 
+            {},
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
@@ -173,15 +150,9 @@ export const toggleFavoriteAssistant = async (id: string): Promise<ToggleFavorit
 
 export const getMyAssistants = async (page: number = 1, limit: number = 20): Promise<AssistantsResponse> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.get<AssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/assistants?page=${page}&limit=${limit}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.get<AssistantsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/assistants?page=${page}&limit=${limit}`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
@@ -192,15 +163,9 @@ export const getMyAssistants = async (page: number = 1, limit: number = 20): Pro
 
 export const getMyFavoriteAssistants = async (): Promise<FavoriteAssistantsResponse> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.get<FavoriteAssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/favorites`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
+        const response = await axios.get<FavoriteAssistantsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/favorites`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
@@ -211,14 +176,9 @@ export const getMyFavoriteAssistants = async (): Promise<FavoriteAssistantsRespo
 
 export const getUserAssistants = async (userId: string, page: number = 1, limit: number = 20): Promise<AssistantsResponse> => {
     try {
-        const token = Cookies.get("token");
-        const response = await axios.get<AssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/user/${userId}?page=${page}&limit=${limit}`,
-            token ? {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            } : {}
+        const response = await axios.get<AssistantsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/user/${userId}?page=${page}&limit=${limit}`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
@@ -229,7 +189,10 @@ export const getUserAssistants = async (userId: string, page: number = 1, limit:
 
 export const getAssistantsStats = async (): Promise<AssistantsStatsResponse> => {
     try {
-        const response = await axios.get<AssistantsStatsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/stats`);
+        const response = await axios.get<AssistantsStatsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/stats`,
+            { headers: getAuthHeaders() } // ✅ Agregar headers
+        );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -239,14 +202,9 @@ export const getAssistantsStats = async (): Promise<AssistantsStatsResponse> => 
 
 export const getTopAssistants = async (limit: number = 10): Promise<TopAssistantsResponse> => {
     try {
-        const token = Cookies.get("token");
-        const response = await axios.get<TopAssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/top?limit=${limit}`,
-            token ? {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            } : {}
+        const response = await axios.get<TopAssistantsResponse>(
+            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/top?limit=${limit}`,
+            { headers: getAuthHeaders() }
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
