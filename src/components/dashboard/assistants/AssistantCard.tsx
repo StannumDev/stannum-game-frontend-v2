@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { BiLike, BiSolidLike } from 'react-icons/bi';
@@ -8,35 +8,62 @@ import { TbExternalLink } from 'react-icons/tb';
 import { BookmarkIcon, BookmarkedIcon } from '@/icons';
 import { clickAssistant, likeAssistant, unlikeAssistant, toggleFavoriteAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
-import { categoryIcons, difficultyIcons, difficultyColors, platformIcons, categoryOptions } from '@/helpers/assistantsConst';
+import { categoryIcons, difficultyIcons, platformOptions, categoryOptions } from '@/helpers/assistants';
 import type { AssistantCard as IAssistantCard } from '@/interfaces';
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props {
     assistant: IAssistantCard;
-    onUpdate?: () => void;
 }
 
-export const AssistantCard = ({ assistant, onUpdate }: Props) => {
+export const AssistantCard = ({ assistant }: Props) => {
     const [isLiked, setIsLiked] = useState(assistant.userActions?.hasLiked || false);
     const [isFavorited, setIsFavorited] = useState(assistant.userActions?.hasFavorited || false);
     const [likesCount, setLikesCount] = useState(assistant.metrics.likes);
     const [clicksCount, setClicksCount] = useState(assistant.metrics.clicks);
     const [isProcessing, setIsProcessing] = useState(false);
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [shouldShowButton, setShouldShowButton] = useState(false);
+    const [collapsedHeight, setCollapsedHeight] = useState<number | null>(null);
+    const [expandedHeight, setExpandedHeight] = useState<number | null>(null);
+
+    const visibleRef = useRef<HTMLDivElement>(null);
+    const measureRef = useRef<HTMLDivElement>(null);
 
     const CategoryIcon = categoryIcons[assistant.category];
     const DifficultyIcon = difficultyIcons[assistant.difficulty];
     const categoryLabel = categoryOptions.find(c => c.value === assistant.category)?.label || assistant.category;
 
     useEffect(() => {
-        const checkTextOverflow = () => {
-            const estimatedLines = assistant.description.length / 50;
-            setShouldShowButton(estimatedLines > 3);
+        const el = visibleRef.current;
+        const shadow = measureRef.current;
+        if (!el || !shadow) return;
+
+        const computeHeights = () => {
+            const cs = window.getComputedStyle(el);
+            const lineHeight = parseFloat(cs.lineHeight || "20");
+            const lines = 4;
+            const collapsed = Math.round(lineHeight * lines);
+            shadow.style.width = `${el.clientWidth}px`;
+            const expanded = Math.ceil(shadow.scrollHeight);
+            setCollapsedHeight(collapsed);
+            setExpandedHeight(expanded);
+            setShouldShowButton(expanded > collapsed + 2);
         };
-        checkTextOverflow();
+        computeHeights();
+
+        const ro = new ResizeObserver(() => computeHeights());
+        ro.observe(el);
+        document.fonts?.ready?.then(() => computeHeights());
+
+        return () => ro.disconnect();
     }, [assistant.description]);
+
+    const toggleDescription = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setIsExpanded((v) => !v);
+    };
 
     const handleClick = async () => {
         if (isProcessing) return;
@@ -66,7 +93,6 @@ export const AssistantCard = ({ assistant, onUpdate }: Props) => {
                 setLikesCount(response.likesCount);
                 setIsLiked(true);
             }
-            onUpdate?.();
         } catch (error) {
             errorHandler(error);
         } finally {
@@ -81,17 +107,11 @@ export const AssistantCard = ({ assistant, onUpdate }: Props) => {
         try {
             const response = await toggleFavoriteAssistant(assistant.id);
             setIsFavorited(response.isFavorited);
-            onUpdate?.();
         } catch (error) {
             errorHandler(error);
         } finally {
             setIsProcessing(false);
         }
-    };
-
-    const toggleDescription = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setIsExpanded(!isExpanded);
     };
 
     return (
@@ -121,16 +141,27 @@ export const AssistantCard = ({ assistant, onUpdate }: Props) => {
             </div>
             <h3 className="text-lg font-bold mb-2 line-clamp-2 group-hover:text-stannum transition-colors">{assistant.title}</h3>
             <div className="mb-3">
-                <motion.p 
-                    className={`text-sm text-card-lightest ${!isExpanded && 'line-clamp-3'}`}
-                    animate={{ height: isExpanded ? 'auto' : undefined }}
-                    transition={{ duration: 0.3 }}
+                <motion.div
+                    ref={visibleRef}
+                    animate={{ 
+                        height: isExpanded ? (expandedHeight ?? "auto") : "auto",
+                        maxHeight: isExpanded ? (expandedHeight ?? "none") : (collapsedHeight ?? "none")
+                    }}
+                    transition={{ duration: 0.28 }}
+                    className="overflow-hidden"
                 >
-                    {assistant.description}
-                </motion.p>
-                {shouldShowButton &&
-                    <button onClick={toggleDescription} className="mt-1.5 text-xs text-stannum hover:text-stannum/80 font-semibold transition-colors">
-                        {isExpanded ? 'Mostrar menos' : 'Mostrar más'}
+                    <p className="text-sm text-card-lightest">{assistant.description}</p>
+                </motion.div>
+                <div
+                    ref={measureRef}
+                    aria-hidden="true"
+                    className="invisible absolute -z-10 w-full pointer-events-none"
+                >
+                    <p className="text-sm text-card-lightest">{assistant.description}</p>
+                </div>
+                { shouldShowButton &&
+                    <button onClick={toggleDescription} className="mt-1.5 text-xs text-stannum hover:text-stannum/80 font-semibold transition-colors" >
+                        {isExpanded ? "Mostrar menos" : "Mostrar más"}
                     </button>
                 }
             </div>
@@ -142,11 +173,12 @@ export const AssistantCard = ({ assistant, onUpdate }: Props) => {
             }
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-card-light">
                 {assistant.platforms.slice(0, 4).map((platform, idx) => {
-                    const PlatformIcon = platformIcons[platform];
+                    const platformData = platformOptions.find(p => p.value === platform);
+                    const Icon = platformData?.icon;
                     return (
                         <div key={idx} className="px-2 py-1 text-xs bg-card border border-card-lighter rounded flex items-center gap-1.5">
-                            {PlatformIcon && <PlatformIcon className="text-sm" />}
-                            <span className="capitalize">{platform}</span>
+                            {Icon && <Icon className="text-sm" />}
+                            <span className="capitalize">{platformData?.label || platform}</span>
                         </div>
                     );
                 })}
@@ -154,7 +186,7 @@ export const AssistantCard = ({ assistant, onUpdate }: Props) => {
             </div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 text-xs font-semibold rounded border capitalize flex items-center gap-1 ${difficultyColors[assistant.difficulty]}`}>
+                    <span className="px-2 py-1 text-xs font-semibold rounded border capitalize flex items-center gap-1 text-stannum border-stannum/50 bg-stannum/10">
                         <DifficultyIcon className="text-sm" />
                         {assistant.difficulty}
                     </span>

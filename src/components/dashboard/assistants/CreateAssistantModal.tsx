@@ -5,15 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
 import { CrossIcon, SpinnerIcon, CheckIcon } from '@/icons';
 import { createAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
-import { categoryOptions, difficultyOptions, platformOptions, ASSISTANT_PLATFORMS, ASSISTANT_CATEGORIES, ASSISTANT_DIFFICULTIES } from '@/helpers/assistantsConst';
+import { categoryOptions, difficultyOptions, platformOptions, ASSISTANT_PLATFORMS, ASSISTANT_CATEGORIES, ASSISTANT_DIFFICULTIES } from '@/helpers/assistants';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: () => void;
+    onSuccess: () => Promise<void>;
 }
 
 const schema = z.object({
@@ -46,7 +47,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
         onClose();
     };
 
-    const onSubmit: SubmitHandler<Schema> = async (data) => {
+    const submitAssistant = async (data: Schema, visibility: 'published' | 'draft') => {
         setIsLoading(true);
         try {
             await createAssistant({
@@ -58,8 +59,9 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                 platforms: data.platforms,
                 tags: data.tags,
                 useCases: data.useCases,
+                visibility,
             });
-            onSuccess();
+            await onSuccess();
             handleClose();
         } catch (error: unknown) {
             errorHandler(error);
@@ -67,6 +69,9 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
             setIsLoading(false);
         }
     };
+
+    const onPublish: SubmitHandler<Schema> = (data) => submitAssistant(data, 'published');
+    const onSaveDraft: SubmitHandler<Schema> = (data) => submitAssistant(data, 'draft');
 
     const togglePlatform = (platform: typeof ASSISTANT_PLATFORMS[number]) => {
         const current = watchedPlatforms;
@@ -78,7 +83,14 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
 
     const addTag = () => {
         const trimmed = tagInput.trim().toLowerCase();
-        if (trimmed && !watchedTags.includes(trimmed) && watchedTags.length < 10) {
+        if (trimmed.includes(',')) {
+            const newTags = trimmed.split(',').map(tag => tag.trim()).filter(tag => tag.length >= 2 && !watchedTags.includes(tag));
+            const tagsToAdd = newTags.slice(0, 10 - watchedTags.length);
+            if (tagsToAdd.length > 0) {
+                setValue('tags', [...watchedTags, ...tagsToAdd], { shouldValidate: true });
+                setTagInput('');
+            }
+        } else if (trimmed && !watchedTags.includes(trimmed) && watchedTags.length < 10) {
             setValue('tags', [...watchedTags, trimmed], { shouldValidate: true });
             setTagInput('');
         }
@@ -113,11 +125,11 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                         className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-card border-l border-card-light z-50 overflow-y-auto"
                     >
-                        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+                        <form className="p-6 space-y-6">
                             <div className="flex items-center justify-between pb-4 border-b border-card-light">
                                 <div>
                                     <h2 className="text-2xl font-bold">Cargar un Asistente</h2>
-                                    <p className="subtitle-1 mt-1">Comparte tu asistente de iA con la comunidad STANNUM</p>
+                                    <p className="subtitle-1 mt-1">Comparte tu asistente de IA con la comunidad STANNUM</p>
                                 </div>
                                 <motion.button
                                     type="button"
@@ -129,7 +141,6 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                     <CrossIcon className="text-xl" />
                                 </motion.button>
                             </div>
-
                             <div className="w-full grid grid-cols-1 gap-4">
                                 <div className="w-full">
                                     <div className="w-full flex flex-col gap-1">
@@ -235,19 +246,17 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                     <div className="grid grid-cols-2 gap-2">
                                         {platformOptions.map((platform) => {
                                             const isSelected = watchedPlatforms.includes(platform.value as any);
+                                            const Icon = platform.icon;
                                             return (
                                                 <motion.button
                                                     key={platform.value}
                                                     type="button"
                                                     onClick={() => togglePlatform(platform.value as any)}
                                                     disabled={isLoading}
-                                                    className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all disabled:opacity-50 ${
-                                                        isSelected
-                                                            ? 'bg-stannum/20 border-stannum text-stannum'
-                                                            : 'bg-card border-card-light hover:border-card-lighter'
-                                                    }`}
+                                                    className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all disabled:opacity-50 flex items-center gap-2 ${isSelected ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                                                     whileTap={{ scale: 0.95 }}
                                                 >
+                                                    {Icon && <Icon className="text-base" />}
                                                     {platform.label}
                                                     {isSelected && <CheckIcon className="inline ml-1 text-xs" />}
                                                 </motion.button>
@@ -319,20 +328,26 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                             <div className="flex gap-3 pt-4 border-t border-card-light">
                                 <motion.button
                                     type="button"
-                                    onClick={handleClose}
+                                    onClick={handleSubmit(onSaveDraft)}
                                     disabled={isLoading}
-                                    className="flex-1 px-6 py-3 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-colors disabled:opacity-50"
+                                    className="flex-1 px-6 py-3 bg-card border border-stannum text-stannum rounded-lg font-semibold hover:bg-stannum/10 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    Cancelar
+                                    {isLoading ? <SpinnerIcon className="animate-spin" /> : (
+                                        <>
+                                            <HiOutlineDocumentDuplicate className="text-base" />
+                                            Guardar Borrador
+                                        </>
+                                    )}
                                 </motion.button>
                                 <motion.button
-                                    type="submit"
+                                    type="button"
+                                    onClick={handleSubmit(onPublish)}
                                     disabled={isLoading}
                                     className="flex-1 px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    {isLoading ? <SpinnerIcon className="animate-spin" /> : 'Crear Asistente'}
+                                    {isLoading ? <SpinnerIcon className="animate-spin" /> : 'Publicar Asistente'}
                                 </motion.button>
                             </div>
                         </form>

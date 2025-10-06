@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { MyAssistantsGrid } from '@/components';
 
 export const metadata: Metadata = {
     title: 'Mis Asistentes',
@@ -7,14 +8,14 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Mis Asistentes | STANNUM Game',
         description: 'Explora asistentes de IA personalizados creados por la comunidad STANNUM. Potencia tu trabajo con herramientas especializadas.',
-        url: 'https://stannumgame.com/community/assistants/my-assistants',
+        url: 'https://stannumgame.com/dashboard/community/assistants/my-assistants',
         siteName: 'STANNUM',
         locale: 'es_AR',
         type: 'website',
     },
     twitter: {
         card: 'summary_large_image',
-        site: 'https://stannumgame.com/community/assistants/my-assistants',
+        site: 'https://stannumgame.com/dashboard/community/assistants/my-assistants',
         creator: 'STANNUM',
         title: 'Mis Asistentes | STANNUM Game',
         description: 'Explora asistentes de IA personalizados creados por la comunidad STANNUM.',
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
 export default function MyAssistantsPage() {
     return (
         <main className="main-container">
+            <MyAssistantsGrid/>
         </main>
     );
 }

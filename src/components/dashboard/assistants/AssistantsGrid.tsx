@@ -25,6 +25,7 @@ export const AssistantsGrid = () => {
         setIsLoading(true);
         try {
             const response: AssistantsResponse = await getAllAssistants(filters);
+            console.log(response.data.assistants)
             setAssistants(response.data.assistants);
             setHasMore(response.data.pagination.hasNextPage);
         } catch (error) {
@@ -40,9 +41,16 @@ export const AssistantsGrid = () => {
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            if (searchTerm !== filters.search) {
-                handleFilterChange('search', searchTerm);
-            }
+            setFilters((prev) => {
+                const newFilters = { ...prev, page: 1 };
+                if (searchTerm.trim().length >= 2) {
+                    newFilters.search = searchTerm.trim();
+                } else {
+                    delete newFilters.search;
+                }
+                
+                return newFilters;
+            });
         }, 500);
         return () => clearTimeout(timeoutId);
     }, [searchTerm]);
@@ -71,13 +79,9 @@ export const AssistantsGrid = () => {
         }));
     };
 
-    const handleCreateSuccess = () => {
-        fetchAssistants();
-    };
-
     return (
         <>
-            <div className="w-full grow flex flex-col gap-6">
+            <div className="w-full grow flex flex-col gap-4">
                 <section className="card">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex flex-col gap-2">
@@ -85,7 +89,7 @@ export const AssistantsGrid = () => {
                             <p className="subtitle-1">Descubre y utiliza asistentes personalizados creados por la comunidad STANNUM</p>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Link href="/community/assistants/my-assistants">
+                            <Link href="/dashboard/community/assistants/my-assistants">
                                 <button className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light text-card-lightest transition-200 flex items-center gap-2">
                                     <HiOutlineFolder className="text-lg"/>
                                     <span className="hidden sm:inline">Mis Asistentes</span>
@@ -122,7 +126,7 @@ export const AssistantsGrid = () => {
                             whileTap={{ scale: 0.95 }}
                         >
                             <HiPlus className="text-lg" />
-                            Crear mi primer asistente
+                            Cargar asistente
                         </motion.button>
                     </motion.div>
                 }
@@ -139,7 +143,6 @@ export const AssistantsGrid = () => {
                                 <AssistantCard
                                     key={assistant.id}
                                     assistant={assistant}
-                                    onUpdate={fetchAssistants}
                                 />
                             ))}
                         </motion.div>
@@ -161,7 +164,7 @@ export const AssistantsGrid = () => {
             <CreateAssistantModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
-                onSuccess={handleCreateSuccess}
+                onSuccess={fetchAssistants}
             />
         </>
     );

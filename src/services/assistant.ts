@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { AssistantFilters, CreateAssistantData, AssistantsResponse, AssistantResponse, ClickAssistantResponse, LikeAssistantResponse, ToggleFavoriteAssistantResponse, AssistantsStatsResponse, TopAssistantsResponse, FavoriteAssistantsResponse } from '@/interfaces';
+import { AssistantFilters, CreateAssistantData, AssistantsResponse, AssistantResponse, ClickAssistantResponse, LikeAssistantResponse, ToggleFavoriteAssistantResponse, AssistantsStatsResponse, TopAssistantsResponse, FavoriteAssistantsResponse, AssistantVisibility, ToggleVisibilityResponse, MyAssistantsResponse } from '@/interfaces';
 
 const tokenError = {
     response: {
@@ -37,15 +37,11 @@ export const getAllAssistants = async (filters?: AssistantFilters): Promise<Assi
         if (filters?.tags) params.append('tags', filters.tags);
         if (filters?.platforms) params.append('platforms', filters.platforms);
         if (filters?.sortBy) params.append('sortBy', filters.sortBy);
-        if (filters?.favoritesOnly) params.append('favoritesOnly', 'true'); // ✅ Agregar
+        if (filters?.favoritesOnly) params.append('favoritesOnly', 'true');
         if (filters?.page) params.append('page', filters.page.toString());
         if (filters?.limit) params.append('limit', filters.limit.toString());
 
-        const response = await axios.get<AssistantsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}?${params.toString()}`,
-            { headers: getAuthHeaders() }
-        );
-
+        const response = await axios.get<AssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}?${params.toString()}`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -55,10 +51,7 @@ export const getAllAssistants = async (filters?: AssistantFilters): Promise<Assi
 
 export const getAssistantById = async (id: string): Promise<AssistantResponse> => {
     try {
-        const response = await axios.get<AssistantResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.get<AssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -68,11 +61,7 @@ export const getAssistantById = async (id: string): Promise<AssistantResponse> =
 
 export const createAssistant = async (assistantData: CreateAssistantData): Promise<boolean> => {
     try {
-        const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}`, 
-            assistantData,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}`, assistantData, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
@@ -82,10 +71,7 @@ export const createAssistant = async (assistantData: CreateAssistantData): Promi
 
 export const deleteAssistant = async (id: string): Promise<boolean> => {
     try {
-        const response = await axios.delete(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error: unknown) {
@@ -93,13 +79,19 @@ export const deleteAssistant = async (id: string): Promise<boolean> => {
     }
 };
 
+export const toggleVisibility = async (id: string, visibility: AssistantVisibility): Promise<ToggleVisibilityResponse['data']> => {
+    try {
+        const response = await axios.put<ToggleVisibilityResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/visibility`, { visibility }, { headers: getAuthHeaders() });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data.data;
+    } catch (error: unknown) {
+        throw error;
+    }
+};
+
 export const clickAssistant = async (id: string): Promise<ClickAssistantResponse['data']> => {
     try {
-        const response = await axios.post<ClickAssistantResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/click`,
-            {},
-            { headers: getAuthHeaders() } // ✅ Agregar headers
-        );
+        const response = await axios.post<ClickAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/click`, {}, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {
@@ -109,11 +101,7 @@ export const clickAssistant = async (id: string): Promise<ClickAssistantResponse
 
 export const likeAssistant = async (id: string): Promise<LikeAssistantResponse['data']> => {
     try {
-        const response = await axios.post<LikeAssistantResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`, 
-            {},
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.post<LikeAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`, {}, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {
@@ -123,10 +111,7 @@ export const likeAssistant = async (id: string): Promise<LikeAssistantResponse['
 
 export const unlikeAssistant = async (id: string): Promise<LikeAssistantResponse['data']> => {
     try {
-        const response = await axios.delete<LikeAssistantResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.delete<LikeAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/like`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {
@@ -136,11 +121,7 @@ export const unlikeAssistant = async (id: string): Promise<LikeAssistantResponse
 
 export const toggleFavoriteAssistant = async (id: string): Promise<ToggleFavoriteAssistantResponse['data']> => {
     try {
-        const response = await axios.post<ToggleFavoriteAssistantResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/favorite`, 
-            {},
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.post<ToggleFavoriteAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/favorite`, {}, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {
@@ -148,12 +129,9 @@ export const toggleFavoriteAssistant = async (id: string): Promise<ToggleFavorit
     }
 };
 
-export const getMyAssistants = async (page: number = 1, limit: number = 20): Promise<AssistantsResponse> => {
+export const getMyAssistants = async (page: number = 1, limit: number = 20): Promise<MyAssistantsResponse> => {
     try {
-        const response = await axios.get<AssistantsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/assistants?page=${page}&limit=${limit}`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.get<MyAssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/assistants?page=${page}&limit=${limit}`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -163,10 +141,7 @@ export const getMyAssistants = async (page: number = 1, limit: number = 20): Pro
 
 export const getMyFavoriteAssistants = async (): Promise<FavoriteAssistantsResponse> => {
     try {
-        const response = await axios.get<FavoriteAssistantsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/favorites`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.get<FavoriteAssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/me/favorites`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -176,10 +151,7 @@ export const getMyFavoriteAssistants = async (): Promise<FavoriteAssistantsRespo
 
 export const getUserAssistants = async (userId: string, page: number = 1, limit: number = 20): Promise<AssistantsResponse> => {
     try {
-        const response = await axios.get<AssistantsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/user/${userId}?page=${page}&limit=${limit}`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.get<AssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/user/${userId}?page=${page}&limit=${limit}`,{ headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -189,10 +161,7 @@ export const getUserAssistants = async (userId: string, page: number = 1, limit:
 
 export const getAssistantsStats = async (): Promise<AssistantsStatsResponse> => {
     try {
-        const response = await axios.get<AssistantsStatsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/stats`,
-            { headers: getAuthHeaders() } // ✅ Agregar headers
-        );
+        const response = await axios.get<AssistantsStatsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/stats`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -202,10 +171,7 @@ export const getAssistantsStats = async (): Promise<AssistantsStatsResponse> => 
 
 export const getTopAssistants = async (limit: number = 10): Promise<TopAssistantsResponse> => {
     try {
-        const response = await axios.get<TopAssistantsResponse>(
-            `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/top?limit=${limit}`,
-            { headers: getAuthHeaders() }
-        );
+        const response = await axios.get<TopAssistantsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/top?limit=${limit}`, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {

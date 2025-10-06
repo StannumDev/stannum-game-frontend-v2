@@ -64,8 +64,7 @@ export const AssistantFilterDropdown = ({ label, placeholder, options, value, on
             <motion.button
                 onClick={() => setOpen(!open)}
                 type="button"
-                className={`px-3 py-1 rounded-md border text-xs font-medium transition-all flex items-center gap-2 ${selectedCount > 0 ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
-                whileTap={{ scale: 0.95 }}
+                className={`px-3 h-10 rounded-md border text-sm font-medium transition-200 flex items-center gap-2 hover:opacity-75 ${selectedCount > 0 ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                 aria-haspopup="listbox"
                 aria-expanded={open}
             >
@@ -76,7 +75,7 @@ export const AssistantFilterDropdown = ({ label, placeholder, options, value, on
                     {label}
                     {selectedCount > 0 && <span className="px-1.5 py-0.5 bg-stannum text-card rounded-full text-xs font-bold">{selectedCount}</span>}
                 </>}
-                <ArrowDownIcon className={`text-xs transition-transform ${open ? 'rotate-180' : ''}`} />
+                <ArrowDownIcon className={`text-xs transition-transform ${open && 'rotate-180'}`} />
             </motion.button>
             <AnimatePresence>
                 { open &&

@@ -1,12 +1,15 @@
+// src/interfaces/assistant.ts
+
 export type AssistantCategory = 'sales' | 'productivity' | 'marketing' | 'innovation' | 'leadership' | 'strategy' | 'automation' | 'content' | 'analysis' | 'growth';
 export type AssistantDifficulty = 'basic' | 'intermediate' | 'advanced';
 export type AssistantPlatform = 'chatgpt' | 'claude' | 'gemini' | 'poe' | 'perplexity' | 'other';
+export type AssistantVisibility = 'published' | 'draft' | 'hidden';
 
 export interface AssistantAuthor {
     id: string;
     username: string;
     name?: string;
-    profilePhotoUrl?: string;
+    profilePhotoUrl?: string | null;
 }
 
 export interface AssistantMetrics {
@@ -21,6 +24,11 @@ export interface AssistantUserActions {
     hasFavorited: boolean;
 }
 
+export interface StannumVerification {
+    isVerified: boolean;
+    verifiedAt: Date | null;
+}
+
 export interface Assistant {
     id: string;
     title: string;
@@ -33,6 +41,8 @@ export interface Assistant {
     useCases?: string;
     metrics: AssistantMetrics;
     author: AssistantAuthor;
+    visibility: AssistantVisibility;
+    stannumVerified: StannumVerification;
     createdAt: Date;
     updatedAt: Date;
     popularityScore: number;
@@ -49,17 +59,18 @@ export interface AssistantCard {
     difficulty: AssistantDifficulty;
     platforms: AssistantPlatform[];
     tags: string[];
-    metrics: {
-        clicks: number;
-        likes: number;
-        favorites: number;
-    };
+    metrics: AssistantMetrics;
     author: {
         username: string;
-        profilePhotoUrl?: string;
+        profilePhotoUrl?: string | null;
     };
+    stannumVerified: boolean;
     createdAt: Date;
     userActions?: AssistantUserActions;
+}
+
+export interface MyAssistantCard extends AssistantCard {
+    visibility: AssistantVisibility;
 }
 
 export interface AssistantFilters {
@@ -68,8 +79,9 @@ export interface AssistantFilters {
     difficulty?: string;
     tags?: string;
     platforms?: string;
-    sortBy?: 'popular' | 'newest' | 'mostUsed' | 'mostLiked' | 'mostViewed';
+    sortBy?: 'popular' | 'newest' | 'mostUsed' | 'mostLiked' | 'mostViewed' | 'verified';
     favoritesOnly?: boolean;
+    stannumVerifiedOnly?: boolean;
     page?: number;
     limit?: number;
 }
@@ -83,6 +95,11 @@ export interface CreateAssistantData {
     platforms: string[];
     tags?: string[];
     useCases?: string;
+    visibility?: 'published' | 'draft';
+}
+
+export interface ToggleVisibilityData {
+    visibility: AssistantVisibility;
 }
 
 export interface AssistantPagination {
@@ -97,6 +114,14 @@ export interface AssistantsResponse {
     success: boolean;
     data: {
         assistants: AssistantCard[];
+        pagination: AssistantPagination;
+    };
+}
+
+export interface MyAssistantsResponse {
+    success: boolean;
+    data: {
+        assistants: MyAssistantCard[];
         pagination: AssistantPagination;
     };
 }
@@ -129,6 +154,14 @@ export interface ToggleFavoriteAssistantResponse {
     data: {
         isFavorited: boolean;
         favoritesCount: number;
+    };
+}
+
+export interface ToggleVisibilityResponse {
+    success: boolean;
+    message: string;
+    data: {
+        visibility: AssistantVisibility;
     };
 }
 

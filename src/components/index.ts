@@ -135,6 +135,11 @@ export { AssistantCard } from './dashboard/assistants/AssistantCard';
 export { AssistantsGridFilter } from './dashboard/assistants/AssistantGridFilter';
 export { CreateAssistantModal } from './dashboard/assistants/CreateAssistantModal';
 export { AssistantFilterDropdown } from './dashboard/assistants/AssistantFilterDropdown';
+// MY ASSISTANTS
+export { MyAssistantsGrid } from './dashboard/assistants/my-assistants/MyAssistantsGrid';
+export { MyAssistantCard } from './dashboard/assistants/my-assistants/MyAssistantCard';
+export { DeleteAssistantModal } from './dashboard/assistants/my-assistants/DeleteAssistantModal';
+export { VisibilityToggleMenu } from './dashboard/assistants/my-assistants/VisibilityToggleMenu';
 
 // PROMPT BANK
 export { PromptBankArsenal } from "./dashboard/prompt-bank/PromptBankArsenal";

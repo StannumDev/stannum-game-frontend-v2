@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CrossIcon, BookmarkedIcon, SearchIcon } from '@/icons';
 import { AssistantFilterDropdown } from '@/components';
-import { categoryOptions, difficultyOptions, platformOptions, sortByOptions } from '@/helpers/assistantsConst';
+import { categoryOptions, difficultyOptions, platformOptions, sortByOptions } from '@/helpers/assistants';
 import type { AssistantFilters } from '@/interfaces';
 
 interface Props {
@@ -44,13 +44,13 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
         <section className="card space-y-4">
             <div className="flex flex-col md:flex-row gap-3">
                 <div className="flex-1 relative">
-                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-card-lighter text-lg" />
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-card-lighter size-4" />
                     <input
                         type="text"
                         placeholder="Buscar asistentes..."
                         value={searchTerm}
                         onChange={(e) => onSearchChange(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-card border border-card-light rounded-lg text-sm focus:outline-none focus:border-stannum transition-colors"
+                        className="w-full pl-9 pr-3 h-10 bg-card border border-card-light rounded-lg text-sm focus:outline-none focus:border-stannum transition-200"
                     />
                 </div>
                 <div className="shrink-0">
@@ -89,24 +89,20 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                     onChange={(v) => onFilterChange('platforms', v)}
                     multi
                 />
-                <motion.button
-                    onClick={handleToggleFavorites}
-                    className={`px-3 py-1 rounded-md border text-xs font-medium transition-all flex items-center gap-1.5 ${showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
-                    whileTap={{ scale: 0.95 }}
-                >
+                <button onClick={handleToggleFavorites} className={`px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center gap-1.5 ${showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}>
                     <BookmarkedIcon />
                     Favoritos
-                </motion.button>
-                {activeFiltersCount > 0 && (
+                </button>
+                {activeFiltersCount > 0 &&
                     <motion.button
                         onClick={handleClearAll}
-                        className="ml-auto px-3 py-1 rounded-md border border-card-light text-xs font-medium hover:border-invalid hover:text-invalid transition-colors flex items-center gap-1.5"
+                        className="ml-auto px-3 h-10 rounded-md border border-card-light text-sm font-medium hover:border-invalid hover:text-invalid transition-colors flex items-center gap-1.5"
                         whileTap={{ scale: 0.95 }}
                     >
                         <CrossIcon />
                         Limpiar ({activeFiltersCount})
                     </motion.button>
-                )}
+                }
             </div>
         </section>
     );
