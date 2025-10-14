@@ -142,7 +142,12 @@ export { DeleteAssistantModal } from './dashboard/assistants/my-assistants/Delet
 export { VisibilityToggleMenu } from './dashboard/assistants/my-assistants/VisibilityToggleMenu';
 
 // PROMPT BANK
-export { PromptBankArsenal } from "./dashboard/prompt-bank/PromptBankArsenal";
+export { PromptsGrid } from './dashboard/prompts/PromptsGrid';
+export { PromptCard } from './dashboard/prompts/PromptCard';
+export { PromptsGridFilter } from './dashboard/prompts/PromptsGridFilter';
+export { PromptFilterDropdown } from './dashboard/prompts/PromptFilterDropdown';
+export { CreatePromptModal } from './dashboard/prompts/CreatePromptModal';
+export { PromptDetailModal } from './dashboard/prompts/PromptDetailModal';
 
 // TOAST
 export { ToastCloseButton } from "./toast/ToastCloseButton";

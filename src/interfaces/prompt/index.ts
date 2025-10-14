@@ -1,12 +1,16 @@
+import { StannumVerification } from "@/interfaces";
+
 export type PromptCategory = 'sales' | 'productivity' | 'marketing' | 'innovation' | 'leadership' | 'strategy' | 'automation' | 'content' | 'analysis' | 'growth';
 export type PromptDifficulty = 'basic' | 'intermediate' | 'advanced';
-export type PromptPlatform = 'chatgpt' | 'claude' | 'gemini' | 'notion-ai' | 'midjourney' | 'gpt-4' | 'custom-gpt' | 'other';
+export type PromptPlatform = 'chatgpt' | 'claude' | 'gemini' | 'poe' | 'perplexity' | 'other';
+export type PromptVisibility = 'published' | 'draft' | 'hidden';
+export type PromptSortBy = 'popular' | 'newest' | 'mostCopied' | 'mostLiked' | 'mostViewed' | 'verified';
 
 export interface PromptAuthor {
     id: string;
     username: string;
     name?: string;
-    profilePhotoUrl?: boolean;
+    profilePhotoUrl?: string;
 }
 
 export interface PromptMetrics {
@@ -34,6 +38,8 @@ export interface Prompt {
     exampleOutput?: string;
     metrics: PromptMetrics;
     author: PromptAuthor;
+    visibility: PromptVisibility;
+    stannumVerified: StannumVerification;
     createdAt: Date;
     updatedAt: Date;
     popularityScore: number;
@@ -59,6 +65,7 @@ export interface PromptCard {
         username: string;
         profilePhotoUrl?: string;
     };
+    stannumVerified: boolean;
     createdAt: Date;
     hasCustomGpt: boolean;
     userActions?: PromptUserActions;
@@ -66,25 +73,15 @@ export interface PromptCard {
 
 export interface PromptFilters {
     search?: string;
-    category?: string;
-    difficulty?: string;
+    category?: PromptCategory;
+    difficulty?: PromptDifficulty;
     tags?: string;
     platforms?: string;
-    sortBy?: 'popular' | 'newest' | 'mostCopied' | 'mostLiked' | 'mostViewed';
+    sortBy?: PromptSortBy;
+    favoritesOnly?: boolean;
+    stannumVerifiedOnly?: boolean;
     page?: number;
     limit?: number;
-}
-
-export interface CreatePromptData {
-    title: string;
-    description: string;
-    content: string;
-    category: string;
-    difficulty?: string;
-    platforms: string[];
-    customGptUrl?: string;
-    tags?: string[];
-    exampleOutput?: string;
 }
 
 export interface PromptPagination {
@@ -93,6 +90,31 @@ export interface PromptPagination {
     totalPrompts: number;
     hasNextPage: boolean;
     hasPrevPage: boolean;
+}
+
+export interface CreatePromptData {
+    title: string;
+    description: string;
+    content: string;
+    category: PromptCategory;
+    difficulty?: PromptDifficulty;
+    platforms: PromptPlatform[];
+    customGptUrl?: string;
+    tags?: string[];
+    exampleOutput?: string;
+    visibility?: PromptVisibility;
+}
+
+export interface UpdatePromptData {
+    title: string;
+    description: string;
+    content: string;
+    category: PromptCategory;
+    difficulty?: PromptDifficulty;
+    platforms: PromptPlatform[];
+    customGptUrl?: string;
+    tags?: string[];
+    exampleOutput?: string;
 }
 
 export interface PromptsResponse {
@@ -134,6 +156,30 @@ export interface ToggleFavoritePromptResponse {
     };
 }
 
+export interface ToggleVisibilityPromptResponse {
+    success: boolean;
+    message: string;
+    data: {
+        visibility: PromptVisibility;
+    };
+}
+
+export interface MyPromptsResponse {
+    success: boolean;
+    data: {
+        prompts: Prompt[];
+        pagination: PromptPagination;
+    };
+}
+
+export interface FavoritePromptsResponse {
+    success: boolean;
+    data: {
+        prompts: PromptCard[];
+        totalFavorites: number;
+    };
+}
+
 export interface PromptCategoryStats {
     _id: PromptCategory;
     count: number;
@@ -158,13 +204,5 @@ export interface TopPromptsResponse {
     success: boolean;
     data: {
         prompts: PromptCard[];
-    };
-}
-
-export interface FavoritePromptsResponse {
-    success: boolean;
-    data: {
-        prompts: PromptCard[];
-        totalFavorites: number;
     };
 }

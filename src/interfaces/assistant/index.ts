@@ -1,4 +1,4 @@
-// src/interfaces/assistant.ts
+import { StannumVerification } from "@/interfaces";
 
 export type AssistantCategory = 'sales' | 'productivity' | 'marketing' | 'innovation' | 'leadership' | 'strategy' | 'automation' | 'content' | 'analysis' | 'growth';
 export type AssistantDifficulty = 'basic' | 'intermediate' | 'advanced';
@@ -22,11 +22,6 @@ export interface AssistantMetrics {
 export interface AssistantUserActions {
     hasLiked: boolean;
     hasFavorited: boolean;
-}
-
-export interface StannumVerification {
-    isVerified: boolean;
-    verifiedAt: Date | null;
 }
 
 export interface Assistant {
@@ -157,7 +152,7 @@ export interface ToggleFavoriteAssistantResponse {
     };
 }
 
-export interface ToggleVisibilityResponse {
+export interface ToggleVisibilityAssistantResponse {
     success: boolean;
     message: string;
     data: {

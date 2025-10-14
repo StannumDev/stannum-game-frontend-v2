@@ -10,6 +10,7 @@ import { CrossIcon, SpinnerIcon, CheckIcon } from '@/icons';
 import { createAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryOptions, difficultyOptions, platformOptions, ASSISTANT_PLATFORMS, ASSISTANT_CATEGORIES, ASSISTANT_DIFFICULTIES } from '@/helpers/assistants';
+import { AssistantDifficulty, AssistantPlatform } from '@/interfaces';
 
 interface Props {
     isOpen: boolean;
@@ -198,7 +199,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                                 <motion.button
                                                     key={cat.value}
                                                     type="button"
-                                                    onClick={() => setValue('category', cat.value as any, { shouldValidate: true })}
+                                                    onClick={() => setValue('category', cat.value as "sales" | "productivity" | "marketing" | "innovation" | "leadership" | "strategy" | "automation" | "content" | "analysis" | "growth", { shouldValidate: true })}
                                                     disabled={isLoading}
                                                     className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all flex items-center gap-2 disabled:opacity-50 ${
                                                         isSelected
@@ -225,7 +226,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                                 <motion.button
                                                     key={diff.value}
                                                     type="button"
-                                                    onClick={() => setValue('difficulty', diff.value as any)}
+                                                    onClick={() => setValue('difficulty', diff.value as AssistantDifficulty)}
                                                     disabled={isLoading}
                                                     className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all flex items-center gap-2 justify-center disabled:opacity-50 ${
                                                         isSelected
@@ -245,13 +246,13 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                     <label className="block text-sm font-semibold mb-2 required">Plataformas</label>
                                     <div className="grid grid-cols-2 gap-2">
                                         {platformOptions.map((platform) => {
-                                            const isSelected = watchedPlatforms.includes(platform.value as any);
+                                            const isSelected = watchedPlatforms.includes(platform.value as AssistantPlatform);
                                             const Icon = platform.icon;
                                             return (
                                                 <motion.button
                                                     key={platform.value}
                                                     type="button"
-                                                    onClick={() => togglePlatform(platform.value as any)}
+                                                    onClick={() => togglePlatform(platform.value as AssistantPlatform)}
                                                     disabled={isLoading}
                                                     className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all disabled:opacity-50 flex items-center gap-2 ${isSelected ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                                                     whileTap={{ scale: 0.95 }}

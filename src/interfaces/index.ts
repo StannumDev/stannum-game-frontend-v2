@@ -8,6 +8,7 @@ export type { RegisterState } from './user/RegisterState';
 export type { SimpleRanking } from './user/ranking/SimpleRanking';
 export type { TeamRanking } from './user/ranking/TeamRanking';
 export type { Achievement } from './user/Achievement';
+export type * from './bank';
 export type * from './user';
 export type * from './programs'
 export type * from './prompt'

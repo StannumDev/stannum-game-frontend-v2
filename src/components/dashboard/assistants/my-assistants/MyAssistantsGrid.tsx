@@ -6,7 +6,7 @@ import { HiOutlineSparkles } from 'react-icons/hi2';
 import { getMyAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
 import { MyAssistantCard, CreateAssistantModal, LoadingScreen } from '@/components';
-import type { MyAssistantCard as MyAssistantCardType, MyAssistantsResponse } from '@/interfaces';
+import type { AssistantVisibility, MyAssistantCard as MyAssistantCardType, MyAssistantsResponse } from '@/interfaces';
 import { PlusIcon } from '@/icons';
 
 export const MyAssistantsGrid = () => {
@@ -45,7 +45,7 @@ export const MyAssistantsGrid = () => {
     const handleVisibilityChanged = (assistantId: string, newVisibility: string) => {
         setAssistants((prev) =>
             prev.map((a) =>
-                a.id === assistantId ? { ...a, visibility: newVisibility as any } : a
+                a.id === assistantId ? { ...a, visibility: newVisibility as AssistantVisibility } : a
             )
         );
     };

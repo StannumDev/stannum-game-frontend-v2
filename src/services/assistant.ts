@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { AssistantFilters, CreateAssistantData, AssistantsResponse, AssistantResponse, ClickAssistantResponse, LikeAssistantResponse, ToggleFavoriteAssistantResponse, AssistantsStatsResponse, TopAssistantsResponse, FavoriteAssistantsResponse, AssistantVisibility, ToggleVisibilityResponse, MyAssistantsResponse } from '@/interfaces';
+import { AssistantFilters, CreateAssistantData, AssistantsResponse, AssistantResponse, ClickAssistantResponse, LikeAssistantResponse, ToggleFavoriteAssistantResponse, AssistantsStatsResponse, TopAssistantsResponse, FavoriteAssistantsResponse, AssistantVisibility, ToggleVisibilityAssistantResponse, MyAssistantsResponse } from '@/interfaces';
 
 const tokenError = {
     response: {
@@ -79,9 +79,9 @@ export const deleteAssistant = async (id: string): Promise<boolean> => {
     }
 };
 
-export const toggleVisibility = async (id: string, visibility: AssistantVisibility): Promise<ToggleVisibilityResponse['data']> => {
+export const toggleVisibility = async (id: string, visibility: AssistantVisibility): Promise<ToggleVisibilityAssistantResponse['data']> => {
     try {
-        const response = await axios.put<ToggleVisibilityResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/visibility`, { visibility }, { headers: getAuthHeaders() });
+        const response = await axios.put<ToggleVisibilityAssistantResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${id}/visibility`, { visibility }, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.data;
     } catch (error: unknown) {

@@ -15,21 +15,6 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: 'any',
     prefer_related_applications: false,
     scope: "/",
-    // shortcuts: [
-    //   {
-    //     name: "Entrenar en TRENNO Mark Digital",
-    //     short_name: "Ir a TMD",
-    //     description: "Entrena ahora mismo en TRENNO Mark Digital",
-    //     url: "/dashboard/library/tmd",
-    //     icons: [
-    //       {
-    //         src: "/assets/favicon.ico",
-    //         sizes: "any",
-    //         type: 'image/x-icon'
-    //       }
-    //     ]
-    //   }
-    // ],
     icons: [
         {
             src: '/assets/favicon/favicon.ico',

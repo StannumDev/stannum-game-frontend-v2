@@ -67,7 +67,7 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
                             </motion.button>
                         </div>
                         <div className="mb-6">
-                            <p className="text-sm text-card-lightest mb-2">¿Estás seguro que querés eliminar el asistente <span className="font-bold text-card-lightest">"{assistantTitle}"</span>?</p>
+                            <p className="text-sm text-card-lightest mb-2">¿Estás seguro que querés eliminar el asistente <span className="font-bold text-card-lightest">&ldquo;{assistantTitle}&rdquo;</span>?</p>
                             <p className="text-sm text-card-lighter">Se eliminará de forma permanente y no podrás recuperarlo.</p>
                         </div>
                         <div className="flex gap-3">
