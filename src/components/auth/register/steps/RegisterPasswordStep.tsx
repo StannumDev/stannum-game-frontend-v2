@@ -11,7 +11,7 @@ import { AppError, RegisterState } from "@/interfaces";
 import { errorHandler } from "@/helpers";
 
 interface Props{
-    handleNextStep: (data: Partial<RegisterState>) => void
+    handleNextStep: (newData?: Partial<RegisterState>) => Promise<void>
 }
 
 const schema = z.object({

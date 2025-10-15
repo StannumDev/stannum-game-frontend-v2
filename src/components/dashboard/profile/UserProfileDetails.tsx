@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { UserProfileCover, UserProfilePhoto, UserProfileLevel, MotionWrapperLayout, UserProfileInfo } from "@/components";
+import { UserProfileCover, UserProfilePhoto, UserProfileLevel, MotionWrapperLayout, UserProfileInfo, UserProfileSocialMedias } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 
 interface Props{
@@ -21,7 +21,7 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
                             <p className="mt-4 title-2">{user?.username}</p>
                             <p className="font-semibold text-stannum">{user?.enterprise?.name || ''}</p>
                         </div>
-                        {/* <UserProfileSocialMedias/> */}
+                        <UserProfileSocialMedias user={user} />
                         <div className="content-visibility-hidden xl:content-visibility-visible">
                             <UserProfileLevel user={user}/>
                         </div>

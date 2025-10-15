@@ -12,6 +12,10 @@ export interface UserProfile {
     country?: string;
     region?: string;
     aboutMe?: string;
+    socialLinks?: {
+        platform: "LinkedIn" | "Instagram" | "Twitter" | "TikTok" | "Facebook" | "YouTube" | "GitHub" | "Website" | "Otra";
+        url: string;
+    }[];
 }
 
 export interface EnterpriseDetails {

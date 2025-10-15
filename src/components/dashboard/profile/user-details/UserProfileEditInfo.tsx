@@ -1,35 +1,41 @@
 'use client'
 
 import { Fragment, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { EditIcon, PlusIcon, SelectorIcon, TrashIcon } from "@/icons";
 import { updateUserProfile } from "@/services";
-import { achievementHandler, errorHandler } from "@/helpers";
-import { EditIcon, SelectorIcon } from "@/icons";
-import { AppError, FullUserDetails } from "@/interfaces";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
+import { achievementHandler, errorHandler } from "@/helpers";
+import { AppError, FullUserDetails } from "@/interfaces";
 
 interface Props{
     user: FullUserDetails,
     fetchUserData: (force?: boolean) => Promise<void>
 }
 
+const socialEnum = z.enum(["LinkedIn", "Instagram", "Twitter", "TikTok", "Facebook", "YouTube", "GitHub", "Website", "Otra"]);
 const schema = z.object({
-    name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
-    birthdate: z.string().min(1, { message: "Campo requerido." })
-    .refine(date => {
+    name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
+    birthdate: z.string().min(1, { message: "Campo requerido." }).refine(date => {
         const today = new Date();
         const birthDate = new Date(date);
         const age = today.getFullYear() - birthDate.getFullYear();
-        return age >= 18;
-    }, { message: "Debes tener al menos 18 años." }),
+        return age >= 18 && birthDate <= today;
+    }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
     country: z.string().min(1, { message: "Campo requerido." }),
     region: z.string().min(1, { message: "Campo requerido." }),
     enterprise: z.string().min(1, { message: "Campo requerido." }).max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().min(1, { message: "Campo requerido." }).max(50, "Debe contener menos de 50 caracteres."),
-    // website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
+    socialLinks: z.array(z.object({
+        platform: socialEnum, 
+        url: z.string().url("Debe ser una URL válida.").refine((url) => { 
+            return url.startsWith('http://') || url.startsWith('https://')
+        }, { message: "La URL debe comenzar con http:// o https://" })
+    })).max(5, "No puedes agregar más de 5 redes sociales.").optional(),
     aboutme: z.string().min(1, { message: "Campo requerido." }).max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
@@ -40,7 +46,8 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const { register, handleSubmit, setValue, reset, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, setValue, reset, control, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) });
+    const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
 
     const [country, setCountry] = useState<string|undefined>('');
     const [region, setRegion] = useState<string|undefined>('');
@@ -71,6 +78,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
             setRegion(user.profile.region);
             setValue('enterprise', user.enterprise?.name || "");
             setValue('enterpriseRole', user.enterprise?.jobPosition || "");
+            setValue('socialLinks', user.profile.socialLinks || []);
             setValue('aboutme', user.profile.aboutMe || "");
         }
         handleFormValues();
@@ -100,6 +108,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                 <input
                                     type='text'
                                     enterKeyHint="next"
+                                    minLength={2}
                                     maxLength={50}
                                     id="name"
                                     autoComplete="name"
@@ -113,7 +122,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         </div>
                         <div className="w-full">
                             <div className='w-full flex flex-col gap-1'>
-                                <label htmlFor="name" className="md:text-lg">Fecha de nacimiento</label>
+                                <label htmlFor="birthdate" className="md:text-lg">Fecha de nacimiento</label>
                                 <input
                                     type='date'
                                     enterKeyHint="next"
@@ -128,7 +137,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         </div>
                         <div className="w-full">
                             <div className='w-full flex flex-col gap-1 relative'>
-                                <label htmlFor="name" className="md:text-lg">País</label>
+                                <label htmlFor="country" className="md:text-lg">País</label>
                                 <CountryDropdown
                                     value={country||""}
                                     onChange={(val) => { setCountry(val); setValue("country", val) }}
@@ -144,7 +153,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         </div>
                         <div className="w-full">
                             <div className='w-full flex flex-col gap-1 relative'>
-                                <label htmlFor="name" className="md:text-lg">Región</label>
+                                <label htmlFor="region" className="md:text-lg">Región</label>
                                 <RegionDropdown
                                     country={country||""}
                                     value={region||""}
@@ -211,15 +220,76 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         </div>
                         <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
                     </div>
+                    <div className="mt-6 w-full">
+                        <label className="md:text-lg mb-3 block font-semibold">Redes Sociales</label>
+                        {fields.length === 0 && <p className="text-sm text-neutral-400 mb-3">Conecta tus redes para que otros jugadores puedan conocerte mejor.</p>}
+                        <div className="space-y-3">
+                            <AnimatePresence mode="popLayout">
+                                {fields.map((field, index) => (
+                                    <motion.div 
+                                        key={field.id}
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0 }}
+                                        layout
+                                        className="w-full"
+                                    >
+                                        <div className="flex gap-2 items-center relative">
+                                            <select
+                                                {...register(`socialLinks.${index}.platform`)}
+                                                className="w-36 h-10 px-3 border border-card-lighter bg-card rounded focus-visible:border-stannum outline-none transition-200 appearance-none"
+                                                defaultValue={field.platform}
+                                                disabled={isLoading}
+                                            >
+                                                {socialEnum.options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                                            </select>
+                                            <span className="text-sm absolute bottom-3 left-[120px] pointer-events-none"><SelectorIcon/></span>
+                                            <input
+                                                {...register(`socialLinks.${index}.url`)}
+                                                placeholder="https://tu-enlace.com"
+                                                className="flex-1 h-10 px-3 border border-card-lighter bg-card rounded focus-visible:border-stannum outline-none transition-200"
+                                                defaultValue={field.url}
+                                                disabled={isLoading}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => remove(index)}
+                                                className="size-10 flex-shrink-0 hover:bg-invalid/20 text-invalid rounded-lg flex items-center justify-center transition-200 group"
+                                                disabled={isLoading}
+                                            >
+                                                <TrashIcon className="size-5"/>
+                                            </button>
+                                        </div>
+                                        {errors.socialLinks?.[index]?.url && <FormErrorMessage condition={true} message={errors.socialLinks[index]?.url?.message} className="mt-1"/>}
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                        {fields.length < 5 &&
+                            <button
+                                type="button"
+                                onClick={() => append({ platform: "Website", url: "" })}
+                                className="mt-3 px-4 py-2 text-sm text-stannum font-semibold border border-stannum/30 hover:bg-stannum hover:text-black rounded-lg flex items-center gap-1 transition-200"
+                                disabled={isLoading}
+                            >
+                                <PlusIcon/>
+                                Agregar red social ({fields.length}/5)
+                            </button>
+                        }
+                        {errors.socialLinks?.root && <FormErrorMessage condition={true} message={errors.socialLinks.root.message} className="mt-2"/>}
+                    </div>
                     <div className="mt-6 lg:mt-4 w-full grow flex justify-end items-end gap-4">
                         <button
                             type="button"
-                            onClick={ () => { setShowModal(false); reset() } }
-                            className="w-full h-9 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter flex justify-center items-center transition-200"
+                            onClick={() => {
+                                setShowModal(false);
+                                reset();
+                            }}
+                            className="w-full h-10 text-sm font-semibold bg-card-light hover:bg-card-lighter rounded tracking-tighter flex justify-center items-center transition-200"
                         >
                             Cancelar
                         </button>
-                        <SubmitButtonLoading isLoading={isLoading} text="Confirmar" form="formEditProfile" className="w-full h-9 text-sm font-semibold"/>
+                        <SubmitButtonLoading isLoading={isLoading} text="Confirmar" form="formEditProfile" className="w-full h-10 text-sm font-semibold"/>
                     </div>
                 </form>
                 </div>
