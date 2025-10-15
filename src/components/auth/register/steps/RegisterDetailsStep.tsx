@@ -1,32 +1,38 @@
 'use client'
 
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { AnimatePresence, motion } from 'framer-motion';
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { SelectorIcon } from "@/icons";
+import { PlusIcon, SelectorIcon, TrashIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
 import { RegisterState } from "@/interfaces";
 
 interface Props{
-    handleNextStep: (data: Partial<RegisterState>) => void
+    handleNextStep: (newData?: Partial<RegisterState>) => Promise<void>
 }
 
+const socialEnum = z.enum(["LinkedIn", "Instagram", "Twitter", "TikTok", "Facebook", "YouTube", "GitHub", "Website", "Otra"]);
 const schema = z.object({
-    name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 8 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
-    birthdate: z.string().min(1, { message: "Campo requerido." })
-        .refine(date => {
-            const today = new Date();
-            const birthDate = new Date(date);
-            const age = today.getFullYear() - birthDate.getFullYear();
-            return age >= 18 && birthDate <= today;
-        }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
+    name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
+    birthdate: z.string().min(1, { message: "Campo requerido." }).refine(date => {
+        const today = new Date();
+        const birthDate = new Date(date);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        return age >= 18 && birthDate <= today;
+    }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
     country: z.string().min(1, { message: "Campo requerido." }),
     region: z.string().min(1, { message: "Campo requerido." }),
     enterprise: z.string().min(1, { message: "Campo requerido." }).max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().min(1, { message: "Campo requerido." }).max(50, "Debe contener menos de 50 caracteres."),
-    // website: z.string().url("Debe ser una URL válida.").max(100, "Debe contener menos de 100 caracteres.").optional(),
+    socialLinks: z.array(z.object({
+        platform: socialEnum, 
+        url: z.string().url("Debe ser una URL válida.").refine((url) => { 
+            return url.startsWith('http://') || url.startsWith('https://')
+        }, { message: "La URL debe comenzar con http:// o https://" })
+    })).max(5, "No puedes agregar más de 5 redes sociales.").optional(),
     aboutme: z.string().min(1, { message: "Campo requerido." }).max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
@@ -35,31 +41,17 @@ type Schema = z.infer<typeof schema>
 export const RegisterDetailsStep = ({handleNextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { register, handleSubmit, setValue, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
-    const [location, setLocation] = useState({ country: "", region: "" });
 
-    const handleCountryChange = (val: string) => {
-        setLocation({ ...location, country: val });
-        setValue("country", val);
-    };
-
-    const handleRegionChange = (val: string) => {
-        setLocation({ ...location, region: val });
-        setValue("region", val);
-    };
+    const { register, handleSubmit, setValue, control, formState: { errors }} = useForm<Schema>({resolver: zodResolver(schema)});
+    const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
+    
+    const [country, setCountry] = useState<string|undefined>('');
+    const [region, setRegion] = useState<string|undefined>('');
 
     const onSubmit: SubmitHandler<Schema> = async (data) => {
         setIsLoading(true);
         try {
-            if (!location.country || !location.region) {
-                console.error("Country and region must be selected.");
-                return;
-            }
-            await handleNextStep({
-                ...data,
-                country: location.country,
-                region: location.region,
-            });
+            await handleNextStep(data);
         } catch (error:unknown) {
             console.error("Error durante el envío:", error);
         } finally {
@@ -108,8 +100,8 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                     <div className='w-full flex flex-col gap-1 relative'>
                         <label htmlFor="name" className="md:text-lg required">País</label>
                         <CountryDropdown
-                            value={location.country}
-                            onChange={handleCountryChange}
+                            value={country||""}
+                            onChange={(val) => { setCountry(val); setValue("country", val) }}
                             name="country"
                             id="country"
                             defaultOptionLabel="Seleccionar"
@@ -124,9 +116,9 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                     <div className='w-full flex flex-col gap-1 relative'>
                         <label htmlFor="name" className="md:text-lg required">Región</label>
                         <RegionDropdown
-                            country={location.country}
-                            value={location.region}
-                            onChange={handleRegionChange}
+                            country={country||""}
+                            value={region||""}
+                            onChange={(val) => { setRegion(val); setValue("region", val) }}
                             name="region"
                             id="region"
                             disableWhenEmpty={true}
@@ -188,6 +180,78 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                     />
                 </div>
                 <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
+            </div>
+            <div className="mt-6 w-full">
+                <label className="md:text-lg mb-3 block font-semibold">Redes Sociales</label>
+                {fields.length === 0 && <p className="text-sm text-neutral-400 mb-3">Conecta tus redes para que otros jugadores puedan conocerte mejor.</p>}
+                <div className="space-y-3">
+                    <AnimatePresence mode="popLayout">
+                        {fields.map((field, index) => (
+                            <motion.div 
+                                key={field.id}
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0 }}
+                                layout
+                                className="w-full"
+                            >
+                                <div className="flex gap-2 items-center relative">
+                                    <select
+                                        {...register(`socialLinks.${index}.platform`)}
+                                        className="w-36 h-10 px-3 border border-card-lighter bg-card rounded focus-visible:border-stannum outline-none transition-200 appearance-none"
+                                        defaultValue={field.platform}
+                                        disabled={isLoading}
+                                    >
+                                        {socialEnum.options.map((opt) => (
+                                            <option key={opt} value={opt}>{opt}</option>
+                                        ))}
+                                    </select>
+                                    <span className="text-sm absolute bottom-3 left-[120px] pointer-events-none"><SelectorIcon/></span>
+                                    <input
+                                        {...register(`socialLinks.${index}.url`)}
+                                        placeholder="https://tu-enlace.com"
+                                        className="flex-1 h-10 px-3 border border-card-lighter bg-card rounded focus-visible:border-stannum outline-none transition-200"
+                                        defaultValue={field.url}
+                                        disabled={isLoading}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                        className="size-10 flex-shrink-0 hover:bg-invalid/20 text-invalid rounded-lg flex items-center justify-center transition-200 group"
+                                        disabled={isLoading}
+                                    >
+                                        <TrashIcon className="size-5"/>
+                                    </button>
+                                </div>
+                                {errors.socialLinks?.[index]?.url && (
+                                    <FormErrorMessage 
+                                        condition={true} 
+                                        message={errors.socialLinks[index]?.url?.message} 
+                                        className="mt-1"
+                                    />
+                                )}
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </div>
+                {fields.length < 5 && (
+                    <button
+                        type="button"
+                        onClick={() => append({ platform: "Website", url: "" })}
+                        className="mt-3 px-4 py-2 text-sm text-stannum font-semibold border border-stannum/30 hover:bg-stannum hover:text-black rounded-lg flex items-center gap-1 transition-200"
+                        disabled={isLoading}
+                    >
+                        <PlusIcon/>
+                        Agregar red social ({fields.length}/5)
+                    </button>
+                )}
+                {errors.socialLinks?.root && (
+                    <FormErrorMessage 
+                        condition={true} 
+                        message={errors.socialLinks.root.message} 
+                        className="mt-2"
+                    />
+                )}
             </div>
             <div className="mt-8 w-full flex justify-center">
                 <SubmitButtonLoading isLoading={isLoading} text="Continuar" className="w-full md:w-32 h-10 text-sm font-semibold"/>

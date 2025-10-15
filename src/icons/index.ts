@@ -14,6 +14,11 @@ export {
     FaTrashCan as TrashIcon,
     FaRegStar as StarIcon,
     FaRegClock as ClockIcon,
+    FaTiktok as TikTokIcon,
+    FaFacebookF as FacebookIcon,
+    FaYoutube as YouTubeIcon,
+    FaGithub as GitHubIcon,
+    FaLink as LinkIcon,
     FaPlus as PlusIcon
 } from 'react-icons/fa6';
 
@@ -82,7 +87,8 @@ export {
 
 export {
     BsFillCollectionPlayFill as VideosIcon,
-    BsCompassFill as CompassIcon
+    BsCompassFill as CompassIcon,
+    BsTwitterX as TwitterIcon
 } from "react-icons/bs";
 
 export {
