@@ -178,3 +178,13 @@ export const getTopAssistants = async (limit: number = 10): Promise<TopAssistant
         throw error;
     }
 };
+
+export const updateAssistant = async (assistantId: string, data: CreateAssistantData): Promise<boolean> => {
+    try {
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_ASSISTANT_URL}/${assistantId}`, data, { headers: getAuthHeaders() });
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
+        return response.data;
+    } catch (error: unknown) {
+        throw error;
+    }
+};

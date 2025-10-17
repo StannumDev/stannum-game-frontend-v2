@@ -9,7 +9,7 @@ export {
     FaInstagram as InstagramIcon,
     FaBookmark as BookmarkedIcon,
     FaRegBookmark as BookmarkIcon,
-    FaEye as ShowPassowrdIcon,
+    FaEye as ShowPasswordIcon,
     FaEyeSlash as HidePasswordIcon,
     FaTrashCan as TrashIcon,
     FaRegStar as StarIcon,

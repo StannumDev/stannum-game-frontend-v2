@@ -5,10 +5,12 @@ import { IoShieldCheckmark, IoShieldHalfSharp, IoShield } from 'react-icons/io5'
 import { TbFlame, TbClock, TbThumbUp, TbExternalLink } from 'react-icons/tb';
 import { SiOpenai, SiClaude, SiPerplexity, SiPoe } from 'react-icons/si';
 import { FcGoogle } from 'react-icons/fc';
+
 export interface FilterOption {
     value: string;
     label: string;
     icon?: IconType;
+    disabled?: boolean;
 }
 
 export const ASSISTANT_CATEGORIES = ['sales', 'productivity', 'marketing', 'innovation', 'leadership', 'strategy', 'automation', 'content', 'analysis', 'growth'] as const;
@@ -64,10 +66,10 @@ export const ASSISTANT_PLATFORMS = [
 
 export const platformOptions: FilterOption[] = [
     { value: 'chatgpt', label: 'ChatGPT', icon: SiOpenai },
-    { value: 'claude', label: 'Claude', icon: SiClaude },
-    { value: 'gemini', label: 'Gemini', icon: FcGoogle },
-    { value: 'perplexity', label: 'Perplexity', icon: SiPerplexity },
     { value: 'poe', label: 'Poe', icon: SiPoe },
+    { value: 'claude', label: 'Claude', icon: SiClaude, disabled: true },
+    { value: 'gemini', label: 'Gemini', icon: FcGoogle, disabled: true },
+    { value: 'perplexity', label: 'Perplexity', icon: SiPerplexity, disabled: true },
     { value: 'other', label: 'Otro', icon: HiOutlineSparkles },
 ];
 
@@ -79,6 +81,3 @@ export const sortByOptions: Array<FilterOption> = [
     { value: 'mostUsed', label: 'Más usados', icon: TbExternalLink },
     { value: 'mostLiked', label: 'Más valorados', icon: TbThumbUp },
 ];
-
-export const getCategoryIcon = (category: string): IconType | undefined => categoryIcons[category];
-export const getDifficultyIcon = (difficulty: string): IconType | undefined => difficultyIcons[difficulty];

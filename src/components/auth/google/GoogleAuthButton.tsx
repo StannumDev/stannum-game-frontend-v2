@@ -49,22 +49,16 @@ export const GoogleAuthButton = () => {
     });
     
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="w-full flex flex-col items-center gap-2">
             <button
                 onClick={() => login()}
                 disabled={isLoading}
-                className="h-12 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card hover:border-card-lightest disabled:hover:border-card disabled:opacity-50 flex justify-center items-center overflow-hidden transition-150"
+                className="w-full h-12 rounded-lg bg-gradient-to-br from-background-sidebar to-card border border-card hover:border-card-lightest disabled:hover:border-card disabled:opacity-50 flex items-center overflow-hidden transition-150 relative"
             >
-                <div className='h-full aspect-square bg-card flex justify-center items-center'>
-                    { !isLoading ?
-                        <GoogleColourIcon className='size-8'/>
-                    :
-                        <SpinnerIcon className="animate-spin size-8"/>
-                    }
+                <div className='h-full aspect-square flex justify-center items-center absolute top-0 left-0'>
+                    { !isLoading ? <GoogleColourIcon className='size-6'/> : <SpinnerIcon className="animate-spin size-6"/> }
                 </div>
-                <div className='p-2 flex justify-center items-center'>
-                    <span className='text-sm font-semibold'>Continuar con Google</span>
-                </div>
+                <span className='grow p-2 lg:text-lg uppercase font-semibold tracking-widest'>Iniciar sesión con Google</span>
                 <span className='sr-only'>Iniciar sesión con Google</span>
             </button>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||"Ocurrio un error inesperado."} className="mt-2"/>

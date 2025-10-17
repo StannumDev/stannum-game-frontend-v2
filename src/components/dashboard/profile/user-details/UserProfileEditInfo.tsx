@@ -35,7 +35,7 @@ const schema = z.object({
         url: z.string().url("Debe ser una URL válida.").refine((url) => { 
             return url.startsWith('http://') || url.startsWith('https://')
         }, { message: "La URL debe comenzar con http:// o https://" })
-    })).max(5, "No puedes agregar más de 5 redes sociales.").optional(),
+    })).max(5, "No puedes añadir más de 5 redes sociales.").optional(),
     aboutme: z.string().min(1, { message: "Campo requerido." }).max(2600, "Debe contener menos de 2600 caracteres.")
 });
 
@@ -273,7 +273,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                 disabled={isLoading}
                             >
                                 <PlusIcon/>
-                                Agregar red social ({fields.length}/5)
+                                Añadir red social ({fields.length}/5)
                             </button>
                         }
                         {errors.socialLinks?.root && <FormErrorMessage condition={true} message={errors.socialLinks.root.message} className="mt-2"/>}

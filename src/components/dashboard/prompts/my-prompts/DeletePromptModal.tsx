@@ -3,23 +3,24 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CrossIcon, SpinnerIcon, TrashIcon } from '@/icons';
-import { deleteAssistant } from '@/services';
+import { deletePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    assistantId: string;
-    assistantTitle: string;
+    promptId: string;
+    promptTitle: string;
     onDeleted: () => void;
 }
 
-export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTitle, onDeleted }: Props) => {
+export const DeletePromptModal = ({ isOpen, onClose, promptId, promptTitle, onDeleted }: Props) => {
     const [isDeleting, setIsDeleting] = useState(false);
+    
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            await deleteAssistant(assistantId);
+            await deletePrompt(promptId);
             onDeleted();
             onClose();
         } catch (error) {
@@ -31,7 +32,7 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
 
     return (
         <AnimatePresence>
-            {isOpen &&
+            {isOpen && (
                 <>
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -40,7 +41,7 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
                         onClick={onClose}
                         className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
                     />
-                    <div className='size-full fixed top-0 left-0 z-50 flex items-center justify-center p-4'>
+                    <div className="size-full fixed top-0 left-0 z-50 flex items-center justify-center p-4">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -54,12 +55,12 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
                                         <TrashIcon className="text-2xl text-invalid" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold">Eliminar Asistente</h3>
-                                        <p className="text-sm text-card-lightest">Esta acción no se puede deshacer</p>
+                                        <h3 className="text-xl font-bold">Eliminar Prompt</h3>
+                                        <p className="text-sm opacity-75">Esta acción no se puede deshacer</p>
                                     </div>
                                 </div>
                                 <button
-                                    type='button'
+                                    type="button"
                                     onClick={onClose}
                                     className="p-2 rounded-lg hover:bg-card-light transition-colors"
                                     disabled={isDeleting}
@@ -67,13 +68,19 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
                                     <CrossIcon className="text-xl" />
                                 </button>
                             </div>
+                            
                             <div className="mb-6">
-                                <p className="text-sm text-card-lightest mb-2">¿Estás seguro que querés eliminar el asistente <span className="font-bold text-card-lightest">&ldquo;{assistantTitle}&rdquo;</span>?</p>
-                                <p className="text-sm text-card-lighter">Se eliminará de forma permanente y no podrás recuperarlo.</p>
+                                <p className="text-sm opacity-75 mb-2">
+                                    ¿Estás seguro que querés eliminar el prompt <span className="font-bold text-card-lightest">&ldquo;{promptTitle}&rdquo;</span>?
+                                </p>
+                                <p className="text-sm text-card-lighter">
+                                    Se eliminará de forma permanente y no podrás recuperarlo.
+                                </p>
                             </div>
+                            
                             <div className="flex gap-3">
                                 <button
-                                    type='button'
+                                    type="button"
                                     onClick={onClose}
                                     disabled={isDeleting}
                                     className="flex-1 px-6 py-3 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-colors disabled:opacity-50"
@@ -81,24 +88,28 @@ export const DeleteAssistantModal = ({ isOpen, onClose, assistantId, assistantTi
                                     Cancelar
                                 </button>
                                 <button
-                                    type='button'
+                                    type="button"
                                     onClick={handleDelete}
                                     disabled={isDeleting}
                                     className="flex-1 px-6 py-3 bg-invalid text-white rounded-lg font-semibold hover:bg-invalid/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                                 >
-                                    {isDeleting ? <>
-                                        <SpinnerIcon className="animate-spin" />
-                                        Eliminando...
-                                    </> : <>
-                                        <TrashIcon />
-                                        Eliminar
-                                    </>}
+                                    {isDeleting ? (
+                                        <>
+                                            <SpinnerIcon className="animate-spin" />
+                                            Eliminando...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <TrashIcon />
+                                            Eliminar
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </motion.div>
                     </div>
                 </>
-            }
+            )}
         </AnimatePresence>
     );
 };

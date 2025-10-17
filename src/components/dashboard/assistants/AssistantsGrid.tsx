@@ -82,22 +82,24 @@ export const AssistantsGrid = () => {
     return (
         <>
             <div className="w-full grow flex flex-col gap-4">
-                <section className="card">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex flex-col gap-2">
-                            <h1 className="title-2">Banco de Asistentes</h1>
-                            <p className="subtitle-1">Descubre y utiliza asistentes personalizados creados por la comunidad STANNUM</p>
+                <section className="w-full lg:card">
+                    <div className="w-full flex flex-row lg:flex-row items-end lg:items-center justify-between gap-4">
+                        <div className="grow flex flex-col gap-2 min-w-0">
+                            <h1 className="w-full title-2 truncate">Banco de Asistentes</h1>
+                            <p className="w-full subtitle-1 sr-only lg:not-sr-only">Descubre y utiliza asistentes personalizados creados por la comunidad STANNUM</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Link href="/dashboard/community/assistants/my-assistants">
-                                <button className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light text-card-lightest transition-200 flex items-center gap-2">
-                                    <HiOutlineFolder className="text-lg"/>
-                                    <span className="hidden sm:inline">Mis Asistentes</span>
-                                </button>
+                        <div className="w-fit shrink-0 flex items-center gap-2">
+                            <Link href="/dashboard/community/assistants/my-assistants" className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-200 flex items-center gap-2">
+                                <HiOutlineFolder className="text-lg"/>
+                                <span className="hidden sm:inline">Mis Asistentes</span>
                             </Link>
-                            <button onClick={() => setIsCreateModalOpen(true)} className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2">
+                            <button
+                                type='button'
+                                onClick={() => setIsCreateModalOpen(true)}
+                                className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2"
+                            >
                                 <HiPlus className="text-lg"/>
-                                <span className="hidden sm:inline">Cargar Asistente</span>
+                                <span className="hidden sm:inline">Añadir Asistente</span>
                             </button>
                         </div>
                     </div>
@@ -118,16 +120,14 @@ export const AssistantsGrid = () => {
                     >
                         <HiOutlineSparkles className="text-6xl text-card-lighter mb-4" />
                         <h3 className="text-xl font-bold mb-2">No se encontraron asistentes</h3>
-                        <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en crear un asistente para la comunidad.</p>
-                        <motion.button
+                        <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en añadir un asistente para la comunidad.</p>
+                        <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 transition-colors flex items-center gap-2"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 transition-200 flex items-center gap-2"
                         >
                             <HiPlus className="text-lg" />
-                            Cargar asistente
-                        </motion.button>
+                            Añadir asistente
+                        </button>
                     </motion.div>
                 }
                 {!isLoading && assistants.length > 0 &&
@@ -150,14 +150,13 @@ export const AssistantsGrid = () => {
                 }
                 {hasMore && !isLoading &&
                     <div className="flex justify-center">
-                        <motion.button
+                        <button
+                            type="button"
                             onClick={handleLoadMore}
-                            className="px-6 py-3 bg-stannum/20 border border-stannum text-stannum rounded-lg font-semibold hover:bg-stannum/30 transition-colors"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="px-6 py-3 bg-stannum/20 border border-stannum text-stannum rounded-lg font-semibold hover:bg-stannum/30 transition-200"
                         >
-                            Cargar más asistentes
-                        </motion.button>
+                            Añadir más asistentes
+                        </button>
                     </div>
                 }
             </div>

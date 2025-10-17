@@ -115,6 +115,7 @@ export interface UpdatePromptData {
     customGptUrl?: string;
     tags?: string[];
     exampleOutput?: string;
+    visibility?: PromptVisibility;
 }
 
 export interface PromptsResponse {
@@ -128,6 +129,45 @@ export interface PromptsResponse {
 export interface PromptResponse {
     success: boolean;
     data: Prompt;
+}
+
+export interface MyPromptCard {
+    id: string;
+    title: string;
+    description: string;
+    content: string;
+    category: PromptCategory;
+    difficulty: PromptDifficulty;
+    platforms: PromptPlatform[];
+    tags: string[];
+    visibility: PromptVisibility;
+    stannumVerified: boolean;
+    hasCustomGpt: boolean;
+    customGptUrl?: string;
+    exampleOutput?: string;
+    useCases?: string;
+    metrics: {
+        copiesCount: number;
+        likesCount: number;
+        favoritesCount: number;
+        viewsCount: number;
+    };
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export interface MyPromptsResponse {
+    success: boolean;
+    data: {
+        prompts: MyPromptCard[];
+        pagination: {
+            currentPage: number;
+            totalPages: number;
+            totalPrompts: number;
+            hasNextPage: boolean;
+            hasPrevPage: boolean;
+        };
+    };
 }
 
 export interface CopyPromptResponse {
@@ -161,14 +201,6 @@ export interface ToggleVisibilityPromptResponse {
     message: string;
     data: {
         visibility: PromptVisibility;
-    };
-}
-
-export interface MyPromptsResponse {
-    success: boolean;
-    data: {
-        prompts: Prompt[];
-        pagination: PromptPagination;
     };
 }
 

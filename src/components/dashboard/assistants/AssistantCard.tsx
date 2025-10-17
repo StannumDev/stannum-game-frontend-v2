@@ -8,7 +8,7 @@ import { TbExternalLink } from 'react-icons/tb';
 import { BookmarkIcon, BookmarkedIcon } from '@/icons';
 import { clickAssistant, likeAssistant, unlikeAssistant, toggleFavoriteAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
-import { categoryIcons, difficultyIcons, platformOptions, categoryOptions } from '@/helpers/assistants';
+import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
 import type { AssistantCard as IAssistantCard } from '@/interfaces';
 import default_user from "@/assets/user/default_user.webp";
 
@@ -34,6 +34,9 @@ export const AssistantCard = ({ assistant }: Props) => {
     const CategoryIcon = categoryIcons[assistant.category];
     const DifficultyIcon = difficultyIcons[assistant.difficulty];
     const categoryLabel = categoryOptions.find(c => c.value === assistant.category)?.label || assistant.category;
+    const difficultyLabel = difficultyOptions.find((d) => d.value === assistant.difficulty)?.label || assistant.difficulty;
+    const platformData = platformOptions.find(p => p.value === assistant.platform);
+    const Icon = platformData?.icon;
 
     useEffect(() => {
         const el = visibleRef.current;
@@ -127,20 +130,19 @@ export const AssistantCard = ({ assistant }: Props) => {
             <div className="flex justify-between items-start mb-3">
                 <div className="flex items-center gap-2">
                     <CategoryIcon className="text-2xl text-stannum" />
-                    <span className="text-xs text-card-lighter">{categoryLabel}</span>
-
+                    <span className="subtitle-1">{categoryLabel}</span>
                 </div>
-                <motion.button
-                    onClick={handleFavorite}
-                    className={`p-1.5 rounded-lg border transition-colors ${isFavorited ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light text-card-lighter hover:text-stannum'}`}
-                    whileTap={{ scale: 0.9 }}
+                <button
+                    type='button'
                     disabled={isProcessing}
+                    onClick={handleFavorite}
+                    className={`p-1.5 rounded-lg border ${isFavorited ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50' : 'bg-card border-card-light text-card-lighter hover:text-stannum'} transition-200`}
                 >
-                    {isFavorited ? <BookmarkedIcon className="text-base" /> : <BookmarkIcon className="text-base" />}
-                </motion.button>
+                    {isFavorited ? <BookmarkedIcon /> : <BookmarkIcon />}
+                </button>
             </div>
-            <h3 className="text-lg font-bold mb-2 line-clamp-2 group-hover:text-stannum transition-colors">{assistant.title}</h3>
-            <div className="mb-3">
+            <h3 className="text-lg font-bold group-hover:text-stannum transition-colors">{assistant.title}</h3>
+            <div className="mt-2 mb-4">
                 <motion.div
                     ref={visibleRef}
                     animate={{ 
@@ -150,60 +152,48 @@ export const AssistantCard = ({ assistant }: Props) => {
                     transition={{ duration: 0.28 }}
                     className="overflow-hidden"
                 >
-                    <p className="text-sm text-card-lightest">{assistant.description}</p>
+                    <p className="text-sm opacity-75">{assistant.description}</p>
                 </motion.div>
-                <div
-                    ref={measureRef}
-                    aria-hidden="true"
-                    className="invisible absolute -z-10 w-full pointer-events-none"
-                >
-                    <p className="text-sm text-card-lightest">{assistant.description}</p>
+                <div ref={measureRef} aria-hidden="true" className="invisible absolute -z-10 w-full pointer-events-none">
+                    <p className="text-sm opacity-75">{assistant.description}</p>
                 </div>
                 { shouldShowButton &&
-                    <button onClick={toggleDescription} className="mt-1.5 text-xs text-stannum hover:text-stannum/80 font-semibold transition-colors" >
+                    <button type='button' onClick={toggleDescription} className="mt-1.5 text-xs text-stannum hover:text-stannum/80 font-semibold transition-colors" >
                         {isExpanded ? "Mostrar menos" : "Mostrar más"}
                     </button>
                 }
             </div>
             {assistant.tags.length > 0 &&
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                    {assistant.tags.slice(0, 3).map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card-light border border-card-lighter rounded-full text-card-lightest">#{tag}</span>)}
-                    {assistant.tags.length > 3 && <span className="px-2 py-0.5 text-xs text-card-lighter">+{assistant.tags.length - 3}</span>}
+                <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                    {assistant.tags.slice(0, 3).map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
+                    {assistant.tags.length > 3 && <span className="text-xs text-card-lighter">+{assistant.tags.length - 3}</span>}
                 </div>
             }
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-card-light">
-                {assistant.platforms.slice(0, 4).map((platform, idx) => {
-                    const platformData = platformOptions.find(p => p.value === platform);
-                    const Icon = platformData?.icon;
-                    return (
-                        <div key={idx} className="px-2 py-1 text-xs bg-card border border-card-lighter rounded flex items-center gap-1.5">
-                            {Icon && <Icon className="text-sm" />}
-                            <span className="capitalize">{platformData?.label || platform}</span>
-                        </div>
-                    );
-                })}
-                {assistant.platforms.length > 4 && <span className="text-xs text-card-lighter">+{assistant.platforms.length - 4}</span>}
+                <div className="px-2 py-1 text-xs bg-card border border-card-lighter rounded flex items-center gap-1.5">
+                    {Icon && <Icon className="text-sm" />}
+                    <span className="capitalize">{platformData?.label || assistant.platform}</span>
+                </div>
             </div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <span className="px-2 py-1 text-xs font-semibold rounded border capitalize flex items-center gap-1 text-stannum border-stannum/50 bg-stannum/10">
                         <DifficultyIcon className="text-sm" />
-                        {assistant.difficulty}
+                        {difficultyLabel}
                     </span>
                     <div className="flex items-center gap-3 text-xs text-card-lighter">
                         <span className="flex items-center gap-1">
                             <TbExternalLink className="text-sm" />
                             {clicksCount}
                         </span>
-                        <motion.button
+                        <button
                             onClick={handleLike}
-                            className={`flex items-center gap-1 ${isLiked && 'text-stannum'}`}
-                            whileTap={{ scale: 0.95 }}
+                            className={`flex items-center gap-1 ${isLiked ? 'text-stannum hover:opacity-50' : 'text-card-lighter hover:text-stannum'} transition-200`}
                             disabled={isProcessing}
                         >
                             {isLiked ? <BiSolidLike className="text-sm" /> : <BiLike className="text-sm" />}
                             {likesCount}
-                        </motion.button>
+                        </button>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-card-lighter">

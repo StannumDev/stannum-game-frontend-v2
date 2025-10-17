@@ -103,7 +103,7 @@ export const ProgramInstructionDetails = ({}: Props) => {
                     </div>
                     <div className="w-full">
                         <h3 className="title-3 text-stannum">Entregable</h3>
-                        <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas pprincipales y agregar la captura en &ldquo;Tu trabajo&rdquo; cuandoo ingresan en la instrucción.</p>
+                        <p className="mt-2 text-stannum">Debes subir una captura de pantalla de la organización de las áreas principales y añadir la captura en &ldquo;Tu trabajo&rdquo; cuando ingresan en la instrucción.</p>
                     </div>
                 </div>
                 <div className="w-full max-w-md lg:max-w-sm aspect-square">

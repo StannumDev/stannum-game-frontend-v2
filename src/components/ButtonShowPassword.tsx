@@ -2,7 +2,7 @@
 
 import { SetStateAction } from "react";
 import { motion } from "framer-motion";
-import { HidePasswordIcon, ShowPassowrdIcon } from "@/icons";
+import { HidePasswordIcon, ShowPasswordIcon } from "@/icons";
 
 interface Props{
     status: boolean;
@@ -22,7 +22,7 @@ export const ButtonShowPassword = ({status, changeStatus, className, iconClassNa
             onClick={ () => { changeStatus(!status) }}
         >
             {
-                status ? <ShowPassowrdIcon className={iconClassName}/> : <HidePasswordIcon className={iconClassName}/>
+                status ? <ShowPasswordIcon className={iconClassName}/> : <HidePasswordIcon className={iconClassName}/>
             }
         </motion.button>
     )

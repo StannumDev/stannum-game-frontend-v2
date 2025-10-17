@@ -81,18 +81,16 @@ export const PromptsGrid = () => {
     return (
         <>
             <div className="w-full grow flex flex-col gap-4">
-                <section className="card">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex flex-col gap-2">
-                            <h1 className="title-2">Banco de Prompts</h1>
-                            <p className="subtitle-1">Descubre y copia prompts personalizados creados por la comunidad STANNUM</p>
+                <section className="w-full lg:card">
+                    <div className="w-full flex flex-row lg:flex-row items-end lg:items-center justify-between gap-4">
+                        <div className="grow flex flex-col gap-2 min-w-0">
+                            <h1 className="w-full title-2 truncate">Banco de Prompts</h1>
+                            <p className="w-full subtitle-1 sr-only lg:not-sr-only">Descubre y copia prompts personalizados creados por la comunidad STANNUM</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <Link href="/dashboard/community/prompts/my-prompts">
-                                <button className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light text-card-lightest transition-200 flex items-center gap-2">
-                                    <HiOutlineFolder className="text-lg"/>
-                                    <span className="hidden sm:inline">Mis Prompts</span>
-                                </button>
+                        <div className="w-fit shrink-0 flex items-center gap-2">
+                            <Link href="/dashboard/community/prompts/my-prompts" className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-200 flex items-center gap-2">
+                                <HiOutlineFolder className="text-lg"/>
+                                <span className="hidden sm:inline">Mis Prompts</span>
                             </Link>
                             <button
                                 type='button'
@@ -100,7 +98,7 @@ export const PromptsGrid = () => {
                                 className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2"
                             >
                                 <HiPlus className="text-lg"/>
-                                <span className="hidden sm:inline">Cargar Prompt</span>
+                                <span className="hidden sm:inline">Añadir Prompt</span>
                             </button>
                         </div>
                     </div>
@@ -121,14 +119,14 @@ export const PromptsGrid = () => {
                     >
                         <HiOutlineSparkles className="text-6xl text-card-lighter mb-4" />
                         <h3 className="text-xl font-bold mb-2">No se encontraron prompts</h3>
-                        <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en crear un prompt para la comunidad.</p>
+                        <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en añadir un prompt para la comunidad.</p>
                         <button
                             type='button'
                             onClick={() => setIsCreateModalOpen(true)}
                             className="px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 flex items-center gap-2 transition-200"
                         >
                             <HiPlus className="text-lg" />
-                            Cargar prompt
+                            Añadir prompt
                         </button>
                     </motion.div>
                 }
@@ -158,15 +156,15 @@ export const PromptsGrid = () => {
                             onClick={handleLoadMore}
                             className="px-6 py-3 bg-stannum/20 border border-stannum text-stannum rounded-lg font-semibold hover:bg-stannum/30 transition-200"
                         >
-                            Cargar más prompts
+                            Añadir más prompts
                         </button>
                     </div>
                 }
             </div>
             <PromptDetailModal
                 promptId={selectedPromptId}
-                isOpen={!!selectedPromptId}
-                onClose={() => setSelectedPromptId(null)}
+                selectedPromptId={!!selectedPromptId}
+                setSelectedPromptId={setSelectedPromptId}
                 onUpdate={fetchPrompts}
             />
             <CreatePromptModal

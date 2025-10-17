@@ -31,7 +31,7 @@ export interface Assistant {
     assistantUrl: string;
     category: AssistantCategory;
     difficulty: AssistantDifficulty;
-    platforms: AssistantPlatform[];
+    platform: AssistantPlatform;
     tags: string[];
     useCases?: string;
     metrics: AssistantMetrics;
@@ -52,7 +52,8 @@ export interface AssistantCard {
     assistantUrl: string;
     category: AssistantCategory;
     difficulty: AssistantDifficulty;
-    platforms: AssistantPlatform[];
+    platform: AssistantPlatform;
+    useCases?: string;
     tags: string[];
     metrics: AssistantMetrics;
     author: {
@@ -87,7 +88,7 @@ export interface CreateAssistantData {
     assistantUrl: string;
     category: string;
     difficulty?: string;
-    platforms: string[];
+    platform: string;
     tags?: string[];
     useCases?: string;
     visibility?: 'published' | 'draft';

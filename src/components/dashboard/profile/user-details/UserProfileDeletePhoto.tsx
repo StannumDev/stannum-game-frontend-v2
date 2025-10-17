@@ -50,7 +50,7 @@ export const UserProfileDeletePhoto = ({showModal, setShowModal, fetchUserData}:
             >
                 <div className="w-full flex flex-col justify-center items-center text-center">
                     <h2 className="title-3 text-3xl text-pretty">¿Estas seguro que deseas eliminar tu foto de perfil?</h2>
-                    <p className="mt-4 subtitle-1">No podras deshacer esta acción. Sin embargo, eres libre de agregar una foto nueva de perfil en cualquier momento.</p>
+                    <p className="mt-4 subtitle-1">No podras deshacer esta acción. Sin embargo, eres libre de añadir una foto nueva de perfil en cualquier momento.</p>
                     <div className="mt-6 w-full flex justify-center items-center gap-4">
                         <button
                             disabled={isLoading}

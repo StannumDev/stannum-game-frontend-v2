@@ -43,7 +43,7 @@ export const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm mt-6 lg:mt-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg mt-6 lg:mt-8">
             <div className="w-full flex flex-col">
                 <div className='w-full flex flex-col gap-1'>
                     <input
@@ -91,7 +91,7 @@ export const LoginForm = () => {
                 </div>
             </div>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||''} className="mt-4 w-fit"/>
-            <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-9 text-sm font-semibold"/>
+            <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-12 bg-stannum hover:bg-stannum-light rounded text-card lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200"/>
         </form>
     )
 }

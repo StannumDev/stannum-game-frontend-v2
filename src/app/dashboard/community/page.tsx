@@ -1,13 +1,14 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
+import { CommunityLanding } from '@/components';
 
 export const metadata: Metadata = {
-    title: 'Comunidad',
-    description: "Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.",
-    keywords: ['emprendedores', 'STANNUM'],
+    title: 'Comunidad STANNUM',
+    description: 'Accede al Banco de Prompts y Banco de Asistentes de IA creados por la comunidad STANNUM Game. Potencia tu productividad con herramientas especializadas.',
+    keywords: ['comunidad STANNUM', 'prompts IA', 'asistentes IA', 'ChatGPT', 'Claude', 'productividad'],
     openGraph: {
-        title: 'Comunidad | STANNUM Game',
-        description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
-        url: 'https://stanumgame.com/dashboard/community',
+        title: 'Comunidad STANNUM | Banco de Prompts y Asistentes',
+        description: 'Descubre prompts y asistentes de IA creados por la comunidad STANNUM Game.',
+        url: 'https://stannumgame.com/dashboard/community',
         siteName: 'STANNUM',
         locale: 'es_AR',
         type: 'website',
@@ -16,19 +17,15 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         site: 'https://stannumgame.com/dashboard/community',
         creator: 'STANNUM',
-        title: 'Comunidad | STANNUM Game',
-        description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
+        title: 'Comunidad STANNUM | Banco de Prompts y Asistentes',
+        description: 'Descubre prompts y asistentes de IA creados por la comunidad STANNUM Game.',
     },
 };
 
-export default async function CommunityPage() {
+export default function CommunityPage() {
     return (
-        <main className="main-container size-full px-4 text-center justify-center items-center gap-0">
-            <h1 className="sr-only">Comunidad STANNUM Game</h1>
-            <div className="flex flex-col justify-center items-center">
-                <h2 className="title-2 text-3xl lg:text-5xl opacity-75">Proximamente</h2>
-                <p className='mt-4 subtitle-1 max-w-xl no-truncate'>Aquí se abrirá la puerta a la Comunidad STANNUM, el lugar donde los líderes se potencian juntos. Tendrás acceso al <b className="font-black text-stannum">Banco de Prompts Perfectos</b> listos para aplicar, una <b className="font-black text-stannum">biblioteca de GPTs personalizados</b> diseñados para negocios reales, y muchos más recursos que llevarán tu rendimiento al siguiente nivel.</p>
-            </div>
+        <main className="h-full w-full overflow-hidden">
+            <CommunityLanding />
         </main>
     );
 }

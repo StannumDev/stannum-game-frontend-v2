@@ -44,7 +44,7 @@ export default function LandingPage() {
         <p className="mt-2 w-full max-w-lg text-sm lg:text-base text-white/75">Desarrollamos una forma de enseñanza que combina, los objetivos desafiantes que tienen los grandes deportistas, con lo divertido de los videojuegos.</p>
         <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">Si ya tienes una cuenta</p>
         <Link href={'/login'} className="mt-2 w-full max-w-lg h-12 bg-stannum hover:bg-stannum-light rounded text-card lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200">
-          Inicia sesión
+          Iniciar sesión
         </Link>
         <p className="mt-8 subtitle-1 text-base lg:text-lg text-white">O regístrate gratis ahora</p>
         <Link href={'/register'} className="mt-2 w-full max-w-lg h-12 bg-card-light lg:bg-card hover:bg-card-lighter lg:hover:bg-card-light rounded lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200">
@@ -55,7 +55,7 @@ export default function LandingPage() {
           <p className="shrink-0 subtitle-1">O inicia sesión con</p>
           <div className="grow h-px bg-card-lightest"></div>
         </div>
-        <div className="mt-6 w-full flex justify-center">
+        <div className="mt-6 w-full max-w-lg flex justify-center">
           <GoogleAuthButton/>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons';
 import { HiOutlineCurrencyDollar, HiOutlineLightBulb, HiOutlineMegaphone, HiOutlineRocketLaunch, HiOutlineUserGroup, HiOutlineChartBar, HiOutlineCog, HiOutlineDocumentText, HiOutlineBeaker, HiOutlineArrowTrendingUp } from 'react-icons/hi2';
-import { TbSparkles, TbFlame, TbRocket } from 'react-icons/tb';
+import { TbSparkles, TbFlame, TbRocket, TbClock, TbThumbUp, TbCopy, TbEye } from 'react-icons/tb';
 import { SiOpenai, SiGoogle, SiPerplexity } from 'react-icons/si';
 import { RiRobot2Line } from 'react-icons/ri';
 
@@ -56,10 +56,9 @@ export const platformOptions = [
 ];
 
 export const sortByOptions = [
-    { value: 'popular', label: 'Más populares' },
-    { value: 'newest', label: 'Más recientes' },
-    { value: 'mostCopied', label: 'Más copiados' },
-    { value: 'mostLiked', label: 'Más valorados' },
-    { value: 'mostViewed', label: 'Más vistos' },
-    { value: 'verified', label: 'Verificados' }
+    { value: 'popular', label: 'Más populares', icon: TbFlame },
+    { value: 'newest', label: 'Más recientes', icon: TbClock },
+    { value: 'mostCopied', label: 'Más copiados', icon: TbCopy },
+    { value: 'mostLiked', label: 'Más valorados', icon: TbThumbUp },
+    { value: 'mostViewed', label: 'Más vistos', icon: TbEye },
 ];
