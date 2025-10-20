@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function CommunityPage() {
     return (
-        <main className="h-full w-full overflow-hidden">
+        <main className="main-container">
             <CommunityLanding />
         </main>
     );
