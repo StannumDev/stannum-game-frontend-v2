@@ -94,6 +94,21 @@
     @apply text-invalid text-xs relative bottom-0.5;
   }
 
+  .lesson-description ol,
+  .lesson-description ul{
+    @apply space-y-[0.25lh]
+  }
+
+  .lesson-description strong{
+    @apply font-black
+  }
+
+  .lesson-description h1,
+  .lesson-description h2,
+  .lesson-description h3{
+    @apply title-3
+  }
+
   @media (width >= 1024px){
     .main-container{
       padding-block: 1rem;

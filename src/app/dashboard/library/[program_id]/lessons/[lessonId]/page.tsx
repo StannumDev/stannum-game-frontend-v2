@@ -117,7 +117,7 @@ export default async function LessonPage({ params }: Props) {
                 </div>
                 <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
                 <div className="w-full max-w-5xl h-64 lg:h-auto text-sm text-left overflow-y-auto relative">
-                    <div dangerouslySetInnerHTML={{ __html: lesson.description }} className="size-full absolute lg:static top-0 left-0 whitespace-pre-line"/>
+                    <div dangerouslySetInnerHTML={{ __html: lesson.description }} className="size-full absolute lg:static top-0 left-0 whitespace-pre-line flex flex-col gap-4 lesson-description"/>
                 </div>
             </div>
             <div className="mt-4 lg:hidden lg:content-visibility-hidden w-full h-96 relative overflow-y-auto overflow-x-hidden">
