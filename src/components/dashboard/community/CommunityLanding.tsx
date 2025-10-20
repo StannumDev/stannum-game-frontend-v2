@@ -4,8 +4,8 @@ import { MotionWrapperLayout } from '@/components';
 
 export const CommunityLanding = () => {
     return (
-        <MotionWrapperLayout>
-            <div className="w-full min-h-svh grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <MotionWrapperLayout className='grow'>
+            <div className="size-full grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <Link href={"/dashboard/community/prompts"} className="size-full card card-link group cursor-pointer overflow-hidden relative">
                     <div className="relative h-full flex flex-col items-center justify-center text-center">
                         <div className="p-6 bg-card group-hover:bg-stannum rounded-full border-2 border-stannum text-stannum group-hover:text-card transition-200">
@@ -18,7 +18,7 @@ export const CommunityLanding = () => {
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Múltiples plataformas compatibles</div>
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Comunidad activa y colaborativa</div>
                         </div>
-                        <button type='button' className="mt-8 px-8 py-4 bg-stannum rounded-lg font-bold text-card text-lg group-hover:bg-stannum/75 transition-200 shadow-lg">Explorar Prompts</button>
+                        <button type='button' className="mt-8 px-8 py-4 rounded-lg subtitle-1 text-stannum text-lg">Explorar Prompts</button>
                     </div>
                     <div className="absolute top-10 right-10 w-32 h-32 bg-stannum/20 rounded-full blur-3xl" />
                     <div className="absolute bottom-10 left-10 w-40 h-40 bg-stannum/20 rounded-full blur-3xl" />
@@ -35,7 +35,7 @@ export const CommunityLanding = () => {
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Especializados por categoría</div>
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Creados por expertos</div>
                         </div>
-                        <button type='button' className="mt-8 px-8 py-4 bg-stannum rounded-lg font-bold text-card text-lg group-hover:bg-stannum/75 transition-200 shadow-lg">Explorar Asistentes</button>
+                        <button type='button' className="mt-8 px-8 py-4 rounded-lg subtitle-1 text-stannum text-lg">Explorar Asistentes</button>
                     </div>
                     <div className="absolute top-10 left-10 w-32 h-32 bg-stannum/20 rounded-full blur-3xl" />
                     <div className="absolute bottom-10 right-10 w-40 h-40 bg-stannum/20 rounded-full blur-3xl" />

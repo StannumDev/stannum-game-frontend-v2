@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllPrompts } from '@/services';
 import { errorHandler } from '@/helpers';
-import { PromptCard, PromptsGridFilter, CreatePromptModal, PromptDetailModal, LoadingScreen } from '@/components';
+import { PromptCard, PromptsGridFilter, CreatePromptModal, PromptDetailModal, LoadingScreen, GoBackButton } from '@/components';
 import type { PromptCard as PromptCardType, PromptFilters, PromptsResponse } from '@/interfaces';
 
 export const PromptsGrid = () => {
@@ -80,6 +80,9 @@ export const PromptsGrid = () => {
 
     return (
         <>
+            <div>
+                <GoBackButton/>
+            </div>
             <div className="w-full grow flex flex-col gap-4">
                 <section className="w-full lg:card">
                     <div className="w-full flex flex-row lg:flex-row items-end lg:items-center justify-between gap-4">

@@ -7,7 +7,7 @@ import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { AssistantCard as AssistantCardType, AssistantFilters, AssistantsResponse } from '@/interfaces';
-import { AssistantCard, AssistantsGridFilter, CreateAssistantModal, LoadingScreen } from '@/components';
+import { AssistantCard, AssistantsGridFilter, CreateAssistantModal, GoBackButton, LoadingScreen } from '@/components';
 
 export const AssistantsGrid = () => {
     const [assistants, setAssistants] = useState<AssistantCardType[]>([]);
@@ -81,6 +81,9 @@ export const AssistantsGrid = () => {
 
     return (
         <>
+            <div>
+                <GoBackButton/>
+            </div>
             <div className="w-full grow flex flex-col gap-4">
                 <section className="w-full lg:card">
                     <div className="w-full flex flex-row lg:flex-row items-end lg:items-center justify-between gap-4">
