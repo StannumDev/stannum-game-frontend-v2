@@ -1,7 +1,6 @@
-import { MotionWrapperLayout } from '@/components/ui/MotionWrapperLayout';
 import Link from 'next/link';
-import { HiOutlinePencil } from 'react-icons/hi2';
-import { RiRobot2Line } from 'react-icons/ri';
+import { RobotIcon, ToolsIcon } from '@/icons';
+import { MotionWrapperLayout } from '@/components';
 
 export const CommunityLanding = () => {
     return (
@@ -10,7 +9,7 @@ export const CommunityLanding = () => {
                     <Link href={"/dashboard/community/prompts"} className="size-full card card-link group cursor-pointer overflow-hidden relative">
                         <div className="relative h-full flex flex-col items-center justify-center text-center">
                             <div className="p-6 bg-card group-hover:bg-stannum rounded-full border-2 border-stannum text-stannum group-hover:text-card transition-200">
-                                <HiOutlinePencil className="text-6xl lg:text-8xl" />
+                                <ToolsIcon className="text-6xl lg:text-8xl" />
                             </div>
                             <h1 className="mt-8 text-5xl lg:text-7xl xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">PROMPTS</span></h1>
                             <p className="max-w-md text-lg lg:text-xl text-white">Descubre y comparte prompts de IA creados por la comunidad STANNUM</p>
@@ -27,7 +26,7 @@ export const CommunityLanding = () => {
                     <Link href={"/dashboard/community/assistants"} className="size-full card card-link group cursor-pointer overflow-hidden relative">
                         <div className="relative h-full flex flex-col items-center justify-center p-4 text-center">
                             <div className="p-6 bg-card group-hover:bg-stannum rounded-full border-2 border-stannum text-stannum group-hover:text-card transition-200">
-                                <RiRobot2Line className="text-6xl lg:text-8xl" />
+                                <RobotIcon className="text-6xl lg:text-8xl" />
                             </div>
                             <h1 className="mt-8 text-5xl lg:text-7xl xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">ASISTENTES</span></h1>
                             <p className="max-w-md text-lg lg:text-xl text-white">Accede a asistentes especializados de IA compartidos por la comunidad</p>

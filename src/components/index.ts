@@ -133,29 +133,28 @@ export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
 export { CommunityLanding } from "./dashboard/community/CommunityLanding";
 
 // ASSISTANTS BANK
-export { AssistantsGrid } from "./dashboard/assistants/AssistantsGrid";
-export { AssistantCard } from './dashboard/assistants/AssistantCard';
-export { AssistantsGridFilter } from './dashboard/assistants/AssistantGridFilter';
-export { CreateAssistantModal } from './dashboard/assistants/CreateAssistantModal';
-export { BankFilterDropdown } from './dashboard/assistants/BankFilterDropdown';
-// MY ASSISTANTS
-export { MyAssistantsGrid } from './dashboard/assistants/my-assistants/MyAssistantsGrid';
-export { MyAssistantCard } from './dashboard/assistants/my-assistants/MyAssistantCard';
-export { DeleteAssistantModal } from './dashboard/assistants/my-assistants/DeleteAssistantModal';
-export { MyAssistantCardOptionsMenu } from './dashboard/assistants/my-assistants/MyAssistantCardOptionsMenu';
-export { EditAssistantModal } from './dashboard/assistants/my-assistants/EditAssistantModal';
+export { AssistantsGrid } from "./dashboard/community/assistants/AssistantsGrid";
+export { AssistantCard } from './dashboard/community/assistants/AssistantCard';
+export { AssistantsGridFilter } from './dashboard/community/assistants/AssistantGridFilter';
+export { CreateAssistantModal } from './dashboard/community/assistants/CreateAssistantModal';
+export { BankFilterDropdown } from './dashboard/community/assistants/BankFilterDropdown';
+export { MyAssistantsGrid } from './dashboard/community/assistants/my-assistants/MyAssistantsGrid';
+export { MyAssistantCard } from './dashboard/community/assistants/my-assistants/MyAssistantCard';
+export { DeleteAssistantModal } from './dashboard/community/assistants/my-assistants/DeleteAssistantModal';
+export { MyAssistantCardOptionsMenu } from './dashboard/community/assistants/my-assistants/MyAssistantCardOptionsMenu';
+export { EditAssistantModal } from './dashboard/community/assistants/my-assistants/EditAssistantModal';
 
 // PROMPT BANK
-export { PromptsGrid } from './dashboard/prompts/PromptsGrid';
-export { PromptCard } from './dashboard/prompts/PromptCard';
-export { PromptsGridFilter } from './dashboard/prompts/PromptsGridFilter';
-export { CreatePromptModal } from './dashboard/prompts/CreatePromptModal';
-export { PromptDetailModal } from './dashboard/prompts/PromptDetailModal';
-export { MyPromptsGrid } from './dashboard/prompts/my-prompts/MyPromptsGrid';
-export { MyPromptCard } from './dashboard/prompts/my-prompts/MyPromptCard';
-export { MyPromptCardOptionsMenu } from './dashboard/prompts/my-prompts/MyPromptCardOptionsMenu';
-export { DeletePromptModal } from './dashboard/prompts/my-prompts/DeletePromptModal';
-export { EditPromptModal } from './dashboard/prompts/my-prompts/EditPromptModal';
+export { PromptsGrid } from './dashboard/community/prompts/PromptsGrid';
+export { PromptCard } from './dashboard/community/prompts/PromptCard';
+export { PromptsGridFilter } from './dashboard/community/prompts/PromptsGridFilter';
+export { CreatePromptModal } from './dashboard/community/prompts/CreatePromptModal';
+export { PromptDetailModal } from './dashboard/community/prompts/PromptDetailModal';
+export { MyPromptsGrid } from './dashboard/community/prompts/my-prompts/MyPromptsGrid';
+export { MyPromptCard } from './dashboard/community/prompts/my-prompts/MyPromptCard';
+export { MyPromptCardOptionsMenu } from './dashboard/community/prompts/my-prompts/MyPromptCardOptionsMenu';
+export { DeletePromptModal } from './dashboard/community/prompts/my-prompts/DeletePromptModal';
+export { EditPromptModal } from './dashboard/community/prompts/my-prompts/EditPromptModal';
 
 // TOAST
 export { ToastCloseButton } from "./toast/ToastCloseButton";

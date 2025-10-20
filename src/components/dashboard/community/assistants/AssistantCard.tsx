@@ -3,9 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { BiLike, BiSolidLike } from 'react-icons/bi';
-import { TbExternalLink } from 'react-icons/tb';
-import { BookmarkIcon, BookmarkedIcon } from '@/icons';
+import { BookmarkIcon, BookmarkedIcon, ExternalLinkIcon, LikeIcon, LikedIcon } from '@/icons';
 import { clickAssistant, likeAssistant, unlikeAssistant, toggleFavoriteAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
@@ -165,8 +163,8 @@ export const AssistantCard = ({ assistant }: Props) => {
             </div>
             {assistant.tags.length > 0 &&
                 <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                    {assistant.tags.slice(0, 3).map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
-                    {assistant.tags.length > 3 && <span className="text-xs text-card-lighter">+{assistant.tags.length - 3}</span>}
+                    {assistant.tags.map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
+                    {/* {assistant.tags.length > 3 && <span className="text-xs text-card-lighter">+{assistant.tags.length - 3}</span>} */}
                 </div>
             }
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-card-light">
@@ -183,7 +181,7 @@ export const AssistantCard = ({ assistant }: Props) => {
                     </span>
                     <div className="flex items-center gap-3 text-xs text-card-lighter">
                         <span className="flex items-center gap-1">
-                            <TbExternalLink className="text-sm" />
+                            <ExternalLinkIcon className="text-sm" />
                             {clicksCount}
                         </span>
                         <button
@@ -191,7 +189,7 @@ export const AssistantCard = ({ assistant }: Props) => {
                             className={`flex items-center gap-1 ${isLiked ? 'text-stannum hover:opacity-50' : 'text-card-lighter hover:text-stannum'} transition-200`}
                             disabled={isProcessing}
                         >
-                            {isLiked ? <BiSolidLike className="text-sm" /> : <BiLike className="text-sm" />}
+                            {isLiked ? <LikedIcon className="text-sm" /> : <LikeIcon className="text-sm" />}
                             {likesCount}
                         </button>
                     </div>

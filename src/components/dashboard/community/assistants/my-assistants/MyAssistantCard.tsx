@@ -3,9 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { TbExternalLink } from 'react-icons/tb';
-import { BiLike } from 'react-icons/bi';
-import { BookmarkIcon, HidePasswordIcon, TrashIcon } from '@/icons';
+import { BookmarkIcon, ExternalLinkIcon, HidePasswordIcon, LikeIcon, TrashIcon } from '@/icons';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
 import { DeleteAssistantModal, MyAssistantCardOptionsMenu, EditAssistantModal } from '@/components';
 import type { MyAssistantCard as IMyAssistantCard, AssistantVisibility } from '@/interfaces';
@@ -110,11 +108,11 @@ export const MyAssistantCard = ({ assistant, onDeleted, onVisibilityChanged, onU
                     </span>
                     <div className="flex items-center gap-3 text-xs text-card-lighter">
                         <span className="flex items-center gap-1" title="Clicks">
-                            <TbExternalLink className="text-sm" />
+                            <ExternalLinkIcon className="text-sm" />
                             {assistant.metrics.clicksCount}
                         </span>
                         <span className="flex items-center gap-1" title="Likes">
-                            <BiLike className="text-sm" />
+                            <LikeIcon className="text-sm" />
                             {assistant.metrics.likesCount}
                         </span>
                         <span className="flex items-center gap-1" title="Favoritos">
@@ -124,7 +122,7 @@ export const MyAssistantCard = ({ assistant, onDeleted, onVisibilityChanged, onU
                     </div>
                 </div>
                 <Link href={assistant.assistantUrl} target="_blank" className="w-full px-4 py-2 bg-stannum text-card rounded-lg text-sm font-semibold hover:bg-stannum/90 transition-colors flex items-center justify-center gap-2">
-                    <TbExternalLink />
+                    <ExternalLinkIcon />
                     Abrir asistente
                 </Link>
             </motion.article>

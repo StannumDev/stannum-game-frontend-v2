@@ -2,9 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BiLike } from 'react-icons/bi';
-import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { BookmarkIcon, HidePasswordIcon, TrashIcon } from '@/icons';
+import { BookmarkIcon, CopyIcon, HidePasswordIcon, LikeIcon, TrashIcon } from '@/icons';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
 import { DeletePromptModal, MyPromptCardOptionsMenu, EditPromptModal } from '@/components';
 import type { MyPromptCard as IMyPromptCard, PromptVisibility } from '@/interfaces';
@@ -137,11 +135,11 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                     </span>
                     <div className="flex items-center gap-3 text-xs text-card-lighter">
                         <span className="flex items-center gap-1" title="Copias">
-                            <HiOutlineDocumentDuplicate className="text-sm" />
+                            <CopyIcon className="text-sm" />
                             {prompt.metrics.copiesCount}
                         </span>
                         <span className="flex items-center gap-1" title="Likes">
-                            <BiLike className="text-sm" />
+                            <LikeIcon className="text-sm" />
                             {prompt.metrics.likesCount}
                         </span>
                         <span className="flex items-center gap-1" title="Favoritos">

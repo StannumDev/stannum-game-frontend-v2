@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { CrossIcon, SpinnerIcon, CheckIcon } from '@/icons';
+import { CrossIcon, SpinnerIcon, CheckIcon, EditIcon } from '@/icons';
 import { updatePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryOptions, difficultyOptions, platformOptions, PROMPT_PLATFORMS, PROMPT_CATEGORIES, PROMPT_DIFFICULTIES } from '@/helpers/prompts';
@@ -362,7 +361,7 @@ export const EditPromptModal = ({ isOpen, onClose, onSuccess, prompt }: Props) =
                                 >
                                     {isLoading ? <SpinnerIcon className="animate-spin" /> :
                                         <>
-                                            <HiOutlineDocumentDuplicate className="text-base" />
+                                            <EditIcon className="text-base" />
                                             Guardar Borrador
                                         </>
                                     }

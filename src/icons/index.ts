@@ -20,15 +20,18 @@ export {
     FaGithub as GitHubIcon,
     FaLink as LinkIcon,
     FaPlus as PlusIcon
-} from 'react-icons/fa6';
+} from "react-icons/fa6";
 
 export {
     IoPlay as PlayIcon,
     IoPlayCircle as PlayCircleIcon,
     IoPause as PauseIcon,
     IoBagHandle as StoreIcon,
-    IoHourglassSharp as HourglassIcon
-} from 'react-icons/io5';
+    IoHourglassSharp as HourglassIcon,
+    IoShieldCheckmark as ShieldCompletedIcon,
+    IoShieldHalfSharp as ShieldHalfIcon,
+    IoShield as ShieldEmpyIcon
+} from "react-icons/io5";
 
 export {
     CiSearch as SearchIcon,
@@ -43,7 +46,11 @@ export {
     TbAlertHexagon as AlertHexagonIcon,
     TbHelpHexagon as HelpHexagonIcon,
     TbInfoCircleFilled as InfoCircleIcon,
+    TbAdjustmentsHorizontal as FilterIcon,
     TbWorld as WorldIcon,
+    TbExternalLink as ExternalLinkIcon,
+    TbDots as OptionsIcon,
+    TbCopy as CopyIcon
 } from "react-icons/tb";
 
 export {
@@ -59,7 +66,8 @@ export {
     RiFilePaper2Fill as PaperIcon,
     RiFireLine as FireIcon,
     RiToolsLine as ToolsIcon,
-    RiVipCrownLine as CrownIcon
+    RiVipCrownLine as CrownIcon,
+    RiRobot2Line as RobotIcon
 } from "react-icons/ri";
 
 export {
@@ -69,7 +77,15 @@ export {
 export {
     MdModeEdit as EditIcon,
     MdAddAPhoto as AddPhotoIcon,
-    MdOutlineVpnKey as KeyIcon
+    MdOutlineVpnKey as KeyIcon,
+    MdShowChart as AnalysisIcon,
+    MdOutlineTimer as AutomationIcon,
+    MdTrendingUp as GrowthIcon,
+    MdLightbulb as InnovationIcon,
+    MdGroups as LeadershipIcon,
+    MdCampaign as MarketingIcon,
+    MdSpeed as ProductivityIcon,
+    MdOutlineAttachMoney as SalesIcon,
 } from "react-icons/md";
 
 export {
@@ -78,7 +94,7 @@ export {
 
 export {
     GrPowerShutdown as PowerIcon
-} from 'react-icons/gr';
+} from "react-icons/gr";
 
 export {
     LuPanelLeftClose as PanelCloseIcon,
@@ -102,14 +118,20 @@ export {
 } from "react-icons/fi";
 
 export {
-    HiSelector as SelectorIcon
+    HiSelector as SelectorIcon,
 } from "react-icons/hi";
+
+export {
+    HiOutlineFolder as FolderIcon,
+    HiOutlineDocumentText as ContentIcon,
+    HiOutlineChartBar as StrategyIcon,
+} from "react-icons/hi2";
 
 export {
     TfiLock  as LockIcon,
     TfiUnlock as UnlockIcon,
     TfiBackLeft as ArrowBackIcon
-} from 'react-icons/tfi';
+} from "react-icons/tfi";
 
 export {
     FcGoogle as GoogleColourIcon,
@@ -123,5 +145,14 @@ export {
 
 export {
     SiGoogledocs as DocumentIcon,
-    SiGoogleslides as SlidesIcon
+    SiGoogleslides as SlidesIcon,
+    SiOpenai as ChatGPTIcon,
+    SiClaude as ClaudeIcon,
+    SiPerplexity as PerplexityIcon,
+    SiPoe as PoeIcon
 } from "react-icons/si";
+
+export {
+    BiLike as LikeIcon,
+    BiSolidLike as LikedIcon
+} from "react-icons/bi";

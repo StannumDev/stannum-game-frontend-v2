@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TbEye, TbEyeOff, TbDots, TbPencil } from 'react-icons/tb';
+import { EditIcon, HidePasswordIcon, OptionsIcon, ShowPasswordIcon } from '@/icons';
 import { togglePromptVisibility } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { PromptVisibility } from '@/interfaces';
@@ -55,13 +55,13 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
             options.push({ 
                 value: 'edit', 
                 label: 'Editar', 
-                icon: TbPencil, 
+                icon: EditIcon, 
                 action: handleEdit 
             });
             options.push({ 
                 value: 'published' as PromptVisibility, 
                 label: 'Publicar', 
-                icon: TbEye, 
+                icon: ShowPasswordIcon, 
                 action: () => handleToggle('published') 
             });
         }
@@ -70,7 +70,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
             options.push({ 
                 value: 'hidden' as PromptVisibility, 
                 label: 'Ocultar', 
-                icon: TbEyeOff, 
+                icon: HidePasswordIcon, 
                 action: () => handleToggle('hidden') 
             });
         }
@@ -79,7 +79,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
             options.push({ 
                 value: 'published' as PromptVisibility, 
                 label: 'Publicar', 
-                icon: TbEye, 
+                icon: ShowPasswordIcon, 
                 action: () => handleToggle('published') 
             });
         }
@@ -99,7 +99,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
             >
-                <TbDots className="text-base" />
+                <OptionsIcon className="text-base" />
             </button>
             
             <AnimatePresence>

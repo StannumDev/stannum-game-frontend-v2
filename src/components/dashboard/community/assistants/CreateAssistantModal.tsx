@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { CrossIcon, SpinnerIcon } from '@/icons';
+import { CrossIcon, EditIcon, SpinnerIcon } from '@/icons';
 import { createAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryOptions, difficultyOptions, platformOptions, ASSISTANT_PLATFORMS, ASSISTANT_CATEGORIES, ASSISTANT_DIFFICULTIES } from '@/helpers/assistants';
@@ -314,7 +313,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                 >
                                     {isLoading ? <SpinnerIcon className="animate-spin" /> : (
                                         <>
-                                            <HiOutlineDocumentDuplicate className="text-base" />
+                                            <EditIcon />
                                             Guardar Borrador
                                         </>
                                     )}

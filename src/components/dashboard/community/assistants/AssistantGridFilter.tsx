@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CrossIcon, BookmarkedIcon, SearchIcon } from '@/icons';
-import { TbAdjustmentsHorizontal } from 'react-icons/tb';
+import { CrossIcon, BookmarkedIcon, SearchIcon, FilterIcon } from '@/icons';
 import { BankFilterDropdown } from '@/components';
 import { categoryOptions, difficultyOptions, platformOptions, sortByOptions } from '@/helpers/assistants';
 import type { AssistantFilters } from '@/interfaces';
@@ -62,7 +61,7 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                             onClick={() => setIsFiltersOpen(true)}
                             className={`flex-1 px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ activeFiltersCount > 0 ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                         >
-                            <TbAdjustmentsHorizontal className="text-lg" />
+                            <FilterIcon className="text-lg" />
                             Filtros
                             {activeFiltersCount > 0 && <span className="px-1.5 py-0.5 bg-stannum text-card rounded-full text-xs font-bold">{activeFiltersCount}</span>}
                         </button>

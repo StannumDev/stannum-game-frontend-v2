@@ -2,10 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { TbEye, TbEyeOff, TbDots, TbPencil } from 'react-icons/tb';
 import { toggleVisibility } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { AssistantVisibility } from '@/interfaces';
+import { EditIcon, HidePasswordIcon, OptionsIcon, ShowPasswordIcon } from '@/icons';
 
 interface Props {
     assistantId: string;
@@ -54,13 +54,13 @@ export const MyAssistantCardOptionsMenu = ({ assistantId, currentVisibility, onV
             options.push({ 
                 value: 'edit', 
                 label: 'Editar', 
-                icon: TbPencil, 
+                icon: EditIcon, 
                 action: handleEdit 
             });
             options.push({ 
                 value: 'published' as AssistantVisibility, 
                 label: 'Publicar', 
-                icon: TbEye, 
+                icon: ShowPasswordIcon, 
                 action: () => handleToggle('published') 
             });
         }
@@ -68,7 +68,7 @@ export const MyAssistantCardOptionsMenu = ({ assistantId, currentVisibility, onV
             options.push({ 
                 value: 'hidden' as AssistantVisibility, 
                 label: 'Ocultar', 
-                icon: TbEyeOff, 
+                icon: HidePasswordIcon, 
                 action: () => handleToggle('hidden') 
             });
         }
@@ -76,7 +76,7 @@ export const MyAssistantCardOptionsMenu = ({ assistantId, currentVisibility, onV
             options.push({ 
                 value: 'published' as AssistantVisibility, 
                 label: 'Publicar', 
-                icon: TbEye, 
+                icon: ShowPasswordIcon, 
                 action: () => handleToggle('published') 
             });
         }
@@ -95,7 +95,7 @@ export const MyAssistantCardOptionsMenu = ({ assistantId, currentVisibility, onV
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
             >
-                <TbDots className="text-base" />
+                <OptionsIcon className="text-base" />
             </button>
             <AnimatePresence>
                 {isOpen && (

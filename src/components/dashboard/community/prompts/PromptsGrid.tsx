@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineFolder, HiOutlineSparkles, HiPlus } from 'react-icons/hi2';
+import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllPrompts } from '@/services';
 import { errorHandler } from '@/helpers';
 import { PromptCard, PromptsGridFilter, CreatePromptModal, PromptDetailModal, LoadingScreen } from '@/components';
@@ -89,7 +89,7 @@ export const PromptsGrid = () => {
                         </div>
                         <div className="w-fit shrink-0 flex items-center gap-2">
                             <Link href="/dashboard/community/prompts/my-prompts" className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-200 flex items-center gap-2">
-                                <HiOutlineFolder className="text-lg"/>
+                                <FolderIcon className="text-lg"/>
                                 <span className="hidden sm:inline">Mis Prompts</span>
                             </Link>
                             <button
@@ -97,7 +97,7 @@ export const PromptsGrid = () => {
                                 onClick={() => setIsCreateModalOpen(true)} 
                                 className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2"
                             >
-                                <HiPlus className="text-lg"/>
+                                <PlusIcon className="text-lg"/>
                                 <span className="hidden sm:inline">Añadir Prompt</span>
                             </button>
                         </div>
@@ -117,7 +117,7 @@ export const PromptsGrid = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >
-                        <HiOutlineSparkles className="text-6xl text-card-lighter mb-4" />
+                        <InfoCircleIcon className="text-6xl text-card-lighter mb-4" />
                         <h3 className="text-xl font-bold mb-2">No se encontraron prompts</h3>
                         <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en añadir un prompt para la comunidad.</p>
                         <button
@@ -125,7 +125,7 @@ export const PromptsGrid = () => {
                             onClick={() => setIsCreateModalOpen(true)}
                             className="px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 flex items-center gap-2 transition-200"
                         >
-                            <HiPlus className="text-lg" />
+                            <PlusIcon className="text-lg" />
                             Añadir prompt
                         </button>
                     </motion.div>

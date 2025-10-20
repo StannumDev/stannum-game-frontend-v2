@@ -2,10 +2,7 @@
 
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
-import { BiLike, BiSolidLike } from 'react-icons/bi';
-import { HiOutlineExternalLink } from 'react-icons/hi';
-import { TbCopy, TbCheck } from 'react-icons/tb';
-import { BookmarkIcon, BookmarkedIcon, SpinnerIcon } from '@/icons';
+import { BookmarkIcon, BookmarkedIcon, CheckIcon, CopyIcon, ExternalLinkIcon, LikeIcon, LikedIcon, SpinnerIcon } from '@/icons';
 import { getPromptById, copyPrompt, likePrompt, unlikePrompt, toggleFavoritePrompt } from '@/services';
 import { Modal, STANNUMIcon } from '@/components';
 import { errorHandler } from '@/helpers';
@@ -40,7 +37,7 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
         if (!showModal && selectedPromptId) {
             setSelectedPromptId(null);
         }
-    }, [showModal, selectedPromptId, setSelectedPromptId]);
+    }, [showModal, setSelectedPromptId]);
 
     const fetchPromptDetails = useCallback(async () => {
         if (!promptId) return;
@@ -208,7 +205,7 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                                     className="shrink-0 px-4 py-2 bg-stannum text-card rounded-lg text-sm font-semibold hover:bg-stannum/90 transition-colors flex items-center justify-center gap-2"
                                 >
                                     Abrir Asistente
-                                    <HiOutlineExternalLink />
+                                    <ExternalLinkIcon />
                                 </a>
                             </div>
                         </div>
@@ -243,10 +240,10 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                                     className="px-4 py-2 bg-stannum text-card rounded-lg text-sm font-semibold hover:bg-stannum/90 transition-colors flex items-center gap-2 disabled:opacity-50"
                                 >
                                     {showCopiedFeedback ? <>
-                                        <TbCheck className="text-base" />
+                                        <CheckIcon className="text-base" />
                                         ¡Copiado!
                                     </> : <>
-                                        <TbCopy className="text-base" />
+                                        <CopyIcon className="text-base" />
                                         Copiar Prompt
                                     </>}
                                 </button>
@@ -289,7 +286,7 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                                     disabled={isProcessing}
                                     className={`px-2 py-1 rounded-lg border text-sm font-medium transition-200 flex items-center gap-2 disabled:opacity-50 ${ prompt.userActions?.hasLiked ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50': 'bg-card border-card-light hover:border-stannum'}`}
                                 >
-                                    {prompt.userActions?.hasLiked ? <BiSolidLike className="text-base" /> : <BiLike className="text-base" />}
+                                    {prompt.userActions?.hasLiked ? <LikedIcon className="text-base" /> : <LikeIcon className="text-base" />}
                                     {prompt.metrics.likesCount}
                                 </button>
                                 <button

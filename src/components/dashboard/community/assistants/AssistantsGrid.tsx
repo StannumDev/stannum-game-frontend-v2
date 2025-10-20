@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineFolder, HiOutlineSparkles, HiPlus } from 'react-icons/hi2';
+import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { AssistantCard as AssistantCardType, AssistantFilters, AssistantsResponse } from '@/interfaces';
 import { AssistantCard, AssistantsGridFilter, CreateAssistantModal, LoadingScreen } from '@/components';
-import Link from 'next/link';
 
 export const AssistantsGrid = () => {
     const [assistants, setAssistants] = useState<AssistantCardType[]>([]);
@@ -90,7 +90,7 @@ export const AssistantsGrid = () => {
                         </div>
                         <div className="w-fit shrink-0 flex items-center gap-2">
                             <Link href="/dashboard/community/assistants/my-assistants" className="shrink-0 px-4 py-2 bg-card border border-card-light rounded-lg font-semibold hover:bg-card-light transition-200 flex items-center gap-2">
-                                <HiOutlineFolder className="text-lg"/>
+                                <FolderIcon className="text-lg"/>
                                 <span className="hidden sm:inline">Mis Asistentes</span>
                             </Link>
                             <button
@@ -98,7 +98,7 @@ export const AssistantsGrid = () => {
                                 onClick={() => setIsCreateModalOpen(true)}
                                 className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2"
                             >
-                                <HiPlus className="text-lg"/>
+                                <PlusIcon className="text-lg"/>
                                 <span className="hidden sm:inline">Añadir Asistente</span>
                             </button>
                         </div>
@@ -118,14 +118,14 @@ export const AssistantsGrid = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >
-                        <HiOutlineSparkles className="text-6xl text-card-lighter mb-4" />
+                        <InfoCircleIcon className="text-6xl text-card-lighter mb-4" />
                         <h3 className="text-xl font-bold mb-2">No se encontraron asistentes</h3>
                         <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en añadir un asistente para la comunidad.</p>
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
                             className="px-6 py-3 bg-stannum text-card rounded-lg font-semibold hover:bg-stannum/90 transition-200 flex items-center gap-2"
                         >
-                            <HiPlus className="text-lg" />
+                            <PlusIcon className="text-lg" />
                             Añadir asistente
                         </button>
                     </motion.div>

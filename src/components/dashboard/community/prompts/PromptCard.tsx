@@ -3,9 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { BiLike, BiSolidLike } from 'react-icons/bi';
-import { HiOutlineDocumentDuplicate } from 'react-icons/hi2';
-import { BookmarkIcon, BookmarkedIcon } from '@/icons';
+import { BookmarkIcon, BookmarkedIcon, CopyIcon, LikeIcon, LikedIcon } from '@/icons';
 import { copyPrompt, likePrompt, unlikePrompt, toggleFavoritePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
@@ -175,8 +173,8 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
             </div>
             {prompt.tags.length > 0 &&
                 <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                    {prompt.tags.slice(0, 3).map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
-                    {prompt.tags.length > 3 && <span className="text-xs text-card-lighter">+{prompt.tags.length - 3}</span>}
+                    {prompt.tags.map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
+                    {/* {prompt.tags.length > 3 && <span className="text-xs text-card-lighter">+{prompt.tags.length - 3}</span>} */}
                 </div>
             }
             <div className="flex items-center gap-2 mb-3 pb-3 border-b border-card-light">
@@ -205,7 +203,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                             disabled={isProcessing}
                             className={`flex items-center gap-1 relative ${ showCopiedFeedback ? 'text-stannum' : 'text-card-lighter hover:text-stannum'} transition-200`}
                         >
-                            <HiOutlineDocumentDuplicate className="text-sm" />
+                            <CopyIcon className="text-sm" />
                             {copiesCount}
                             {showCopiedFeedback &&
                                 <motion.span
@@ -224,7 +222,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                             disabled={isProcessing}
                             className={`flex items-center gap-1 ${ isLiked ? 'text-stannum hover:opacity-50' : 'text-card-lighter hover:text-stannum'} transition-200`}
                         >
-                            {isLiked ? <BiSolidLike className="text-sm" /> : <BiLike className="text-sm" />}
+                            {isLiked ? <LikedIcon className="text-sm" /> : <LikeIcon className="text-sm" />}
                             {likesCount}
                         </button>
                     </div>
