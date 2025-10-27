@@ -97,12 +97,12 @@ export const BankFilterDropdown = ({ label, placeholder, options, value, onChang
                         role="listbox"
                     >
                         <div className="flex items-center justify-between px-2 pb-1">
-                            <span className="text-[11px] text-card-lighter font-semibold">{placeholder}</span>
+                            <span className="text-xs text-card-lighter font-semibold">{placeholder}</span>
                             {selectedCount > 0 &&
                                 <button 
                                     type="button"
                                     onClick={clearAll} 
-                                    className="text-[11px] underline text-card-lighter hover:text-invalid transition-colors"
+                                    className="text-xs underline text-card-lighter hover:text-invalid transition-colors"
                                 >
                                     Limpiar
                                 </button>
@@ -128,7 +128,7 @@ export const BankFilterDropdown = ({ label, placeholder, options, value, onChang
                                             {Icon && <Icon className="text-sm shrink-0" />}
                                             <span>{opt.label}</span>
                                         </div>
-                                        {isDisabled && <span className="text-[9px] text-card-lighter font-bold">PRÓX</span>}
+                                        {isDisabled && <span className="text-xs text-card-lighter font-bold">PRÓX</span>}
                                     </button>
                                 );
                             })}

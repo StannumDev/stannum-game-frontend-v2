@@ -61,6 +61,7 @@ export const MyAssistantCard = ({ assistant, onDeleted, onVisibilityChanged, onU
                     <div className="flex items-center gap-2">
                         <CategoryIcon className="text-2xl text-stannum" />
                         <span className="text-xs text-card-lighter">{categoryLabel}</span>
+                        {assistant.stannumVerified.isVerified && <span className="px-1.5 py-0.5 text-xs bg-stannum/20 border border-stannum text-stannum rounded font-bold uppercase">Verificado</span>}
                     </div>
                     <div className="flex items-center gap-2">
                         {getVisibilityBadge()}

@@ -253,7 +253,7 @@ export const EditAssistantModal = ({ isOpen, onClose, onSuccess, assistant }: Pr
                                             >
                                                 {Icon && <Icon className="text-base" />}
                                                 {platform.label}
-                                                {platform.disabled && <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-card-lighter text-card text-[9px] rounded-full font-bold">PRÓX</span>}
+                                                {platform.disabled && <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-card-lighter text-card text-xs rounded-full font-bold">PRÓX</span>}
                                             </button>
                                         );
                                     })}

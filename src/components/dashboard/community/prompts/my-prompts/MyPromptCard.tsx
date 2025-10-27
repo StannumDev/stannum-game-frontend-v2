@@ -17,7 +17,7 @@ interface Props {
 export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated }: Props) => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    
+
     const CategoryIcon = categoryIcons[prompt.category];
     const DifficultyIcon = difficultyIcons[prompt.difficulty];
     const categoryLabel = categoryOptions.find((c) => c.value === prompt.category)?.label || prompt.category;
@@ -54,16 +54,11 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                 transition={{ duration: 0.2 }}
                 layout
             >
-                {/* Header */}
                 <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-2">
                         <CategoryIcon className="text-2xl text-stannum" />
                         <span className="subtitle-1">{categoryLabel}</span>
-                        {prompt.stannumVerified && (
-                            <span className="px-1.5 py-0.5 text-[10px] bg-stannum/20 border border-stannum text-stannum rounded font-bold">
-                                VERIFICADO
-                            </span>
-                        )}
+                        {prompt.stannumVerified.isVerified && <span className="px-1.5 py-0.5 text-xs bg-stannum/20 border border-stannum text-stannum rounded font-bold uppercase">Verificado</span>}
                     </div>
                     <div className="flex items-center gap-2">
                         {getVisibilityBadge()}
@@ -82,33 +77,14 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                         </button>
                     </div>
                 </div>
-
-                {/* Título */}
                 <h3 className="text-lg font-bold mb-2 line-clamp-2">{prompt.title}</h3>
-
-                {/* Descripción */}
                 <p className="text-sm opacity-75 mb-3 line-clamp-3">{prompt.description}</p>
-
-                {/* Tags */}
-                {prompt.tags.length > 0 && (
+                {prompt.tags.length > 0 &&
                     <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                        {prompt.tags.slice(0, 3).map((tag, idx) => (
-                            <span 
-                                key={idx} 
-                                className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest"
-                            >
-                                #{tag}
-                            </span>
-                        ))}
-                        {prompt.tags.length > 3 && (
-                            <span className="text-xs text-card-lighter">
-                                +{prompt.tags.length - 3}
-                            </span>
-                        )}
+                        {prompt.tags.slice(0, 3).map((tag, idx) => <span key={idx} className="px-2 py-0.5 text-xs bg-card border border-card-light rounded-full text-card-lightest">#{tag}</span>)}
+                        {prompt.tags.length > 3 && <span className="text-xs text-card-lighter">+{prompt.tags.length - 3}</span>}
                     </div>
-                )}
-
-                {/* Plataformas */}
+                }
                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-card-light">
                     {prompt.platforms.slice(0, 4).map((platform, idx) => {
                         const platformData = platformOptions.find(p => p.value === platform);
@@ -120,14 +96,8 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                             </div>
                         );
                     })}
-                    {prompt.platforms.length > 4 && (
-                        <span className="text-xs text-card-lighter">
-                            +{prompt.platforms.length - 4}
-                        </span>
-                    )}
+                    {prompt.platforms.length > 4 && <span className="text-xs text-card-lighter">+{prompt.platforms.length - 4}</span>}
                 </div>
-
-                {/* Footer con métricas */}
                 <div className="flex items-center justify-between">
                     <span className="px-2 py-1 text-xs font-semibold rounded border capitalize flex items-center gap-1 text-stannum border-stannum/50 bg-stannum/10">
                         <DifficultyIcon className="text-sm" />
@@ -148,19 +118,13 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                         </span>
                     </div>
                 </div>
-
-                {/* GPT Personalizado */}
-                {prompt.hasCustomGpt && (
+                {prompt.hasCustomGpt &&
                     <div className="mt-3 pt-3 border-t border-card-light">
-                        <span className="text-xs text-stannum font-semibold flex items-center gap-1">
-                            🎯 Incluye GPT personalizado
-                        </span>
+                        <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye GPT personalizado</span>
                     </div>
-                )}
+                }
             </motion.article>
-
-            {/* Modales */}
-            {prompt.visibility === 'draft' && (
+            {prompt.visibility === 'draft' &&
                 <EditPromptModal
                     isOpen={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}
@@ -170,8 +134,7 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                     }}
                     prompt={prompt}
                 />
-            )}
-            
+            }
             <DeletePromptModal
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}

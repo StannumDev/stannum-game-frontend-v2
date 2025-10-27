@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CrossIcon, BookmarkedIcon, SearchIcon, FilterIcon } from '@/icons';
-import { BankFilterDropdown } from '@/components';
+import { BankFilterDropdown, STANNUMIcon } from '@/components';
 import { categoryOptions, difficultyOptions, platformOptions, sortByOptions } from '@/helpers/assistants';
 import type { AssistantFilters } from '@/interfaces';
 
@@ -17,17 +17,20 @@ interface Props {
 
 export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFilterChange, onClearFilters }: Props) => {
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(filters.favoritesOnly || false);
+    const [showVerifiedOnly, setShowVerifiedOnly] = useState(filters.stannumVerifiedOnly || false);
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
     useEffect(() => {
         setShowFavoritesOnly(filters.favoritesOnly || false);
-    }, [filters.favoritesOnly]);
+        setShowVerifiedOnly(filters.stannumVerifiedOnly || false);
+    }, [filters.favoritesOnly, filters.stannumVerifiedOnly]);
 
     const activeFiltersCount = [
         filters.category,
         filters.difficulty,
         filters.platforms,
-        filters.favoritesOnly
+        filters.favoritesOnly,
+        filters.stannumVerifiedOnly
     ].filter(Boolean).length;
 
     const handleToggleFavorites = () => {
@@ -36,8 +39,15 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
         onFilterChange('favoritesOnly', newValue);
     };
 
+    const handleToggleVerified = () => {
+        const newValue = !showVerifiedOnly;
+        setShowVerifiedOnly(newValue);
+        onFilterChange('stannumVerifiedOnly', newValue);
+    };
+
     const handleClearAll = () => {
         setShowFavoritesOnly(false);
+        setShowVerifiedOnly(false);
         onClearFilters();
     };
 
@@ -107,6 +117,14 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                         <BookmarkedIcon />
                         Favoritos
                     </button>
+                    <button
+                        type="button"
+                        onClick={handleToggleVerified}
+                        className={`px-3 h-10 rounded-md border text-sm font-medium transition-200 flex items-center gap-1.5 ${ showVerifiedOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                    >
+                        <STANNUMIcon className={`size-3 ${showVerifiedOnly ? 'fill-stannum' : 'fill-white'} transition-200`} />
+                        Verificados
+                    </button>
                     {activeFiltersCount > 0 &&
                         <button
                             type="button"
@@ -175,6 +193,14 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                                 onChange={(v) => onFilterChange('platforms', v)}
                                 multi
                             />
+                            <button
+                                type="button"
+                                onClick={handleToggleVerified}
+                                className={`w-full px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ showVerifiedOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                            >
+                                <STANNUMIcon className={`size-3 ${showVerifiedOnly ? 'fill-stannum' : 'fill-white'} transition-200`} />
+                                Verificados
+                            </button>
                             <button
                                 type="button"
                                 onClick={handleToggleFavorites}

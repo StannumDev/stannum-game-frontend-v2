@@ -65,7 +65,7 @@ export interface PromptCard {
         username: string;
         profilePhotoUrl?: string;
     };
-    stannumVerified: boolean;
+    stannumVerified: StannumVerification;
     createdAt: Date;
     hasCustomGpt: boolean;
     userActions?: PromptUserActions;
@@ -141,7 +141,7 @@ export interface MyPromptCard {
     platforms: PromptPlatform[];
     tags: string[];
     visibility: PromptVisibility;
-    stannumVerified: boolean;
+    stannumVerified: StannumVerification;
     hasCustomGpt: boolean;
     customGptUrl?: string;
     exampleOutput?: string;

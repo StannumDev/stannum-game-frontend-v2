@@ -137,12 +137,12 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                             {CategoryIcon && <CategoryIcon className="text-2xl text-stannum" />}
                             <span className="subtitle-1">{categoryLabel}</span>
                             <div className='grow'></div>
-                            {prompt.stannumVerified.isVerified && (
+                            {prompt.stannumVerified.isVerified &&
                                 <span className="px-2 py-0.5 subtitle-1 bg-stannum/20 border border-stannum text-stannum rounded font-bold flex items-center gap-1">
                                     <STANNUMIcon className='size-3 fill-stannum' />
                                     Verificado
                                 </span>
-                            )}
+                            }
                         </div>
                         <h2 className="text-2xl font-bold mb-2">{prompt.title}</h2>
                         <p className="text-sm opacity-75 leading-relaxed">{prompt.description}</p>

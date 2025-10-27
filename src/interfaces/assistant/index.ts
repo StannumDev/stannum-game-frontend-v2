@@ -60,7 +60,7 @@ export interface AssistantCard {
         username: string;
         profilePhotoUrl?: string | null;
     };
-    stannumVerified: boolean;
+    stannumVerified: StannumVerification;
     createdAt: Date;
     userActions?: AssistantUserActions;
 }

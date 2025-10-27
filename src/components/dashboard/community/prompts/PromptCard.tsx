@@ -134,7 +134,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                 <div className="flex items-center gap-2">
                     <CategoryIcon className="text-2xl text-stannum" />
                     <span className="subtitle-1">{categoryLabel}</span>
-                    {prompt.stannumVerified && <span className="px-1.5 py-0.5 text-[10px] bg-stannum/20 border border-stannum text-stannum rounded font-bold">VERIFICADO</span>}
+                    {prompt.stannumVerified.isVerified && <span className="px-1.5 py-0.5 text-xs bg-stannum/20 border border-stannum text-stannum rounded font-bold uppercase">Verificado</span>}
                 </div>
                 <button
                     type="button"
@@ -210,7 +210,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
-                                    className="absolute -top-6 left-0 text-[10px] bg-stannum text-card px-2 py-0.5 rounded font-bold whitespace-nowrap"
+                                    className="absolute -top-6 left-0 text-xs bg-stannum text-card px-2 py-0.5 rounded font-bold whitespace-nowrap"
                                 >
                                     ¡Copiado!
                                 </motion.span>
@@ -240,9 +240,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
             </div>
             {prompt.hasCustomGpt && 
                 <div className="mt-3 pt-3 border-t border-card-light">
-                    <span className="text-xs text-stannum font-semibold flex items-center gap-1">
-                        🎯 Incluye GPT personalizado
-                    </span>
+                    <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye GPT personalizado</span>
                 </div>
             }
         </motion.article>

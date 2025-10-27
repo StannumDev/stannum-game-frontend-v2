@@ -113,7 +113,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
                         role="menu"
                     >
                         <div className="flex items-center justify-between px-2 pb-1">
-                            <span className="text-[11px] text-card-lighter font-semibold">Opciones</span>
+                            <span className="text-xs text-card-lighter font-semibold">Opciones</span>
                         </div>
                         <ul className="w-full space-y-1">
                             {availableOptions.map((option) => {

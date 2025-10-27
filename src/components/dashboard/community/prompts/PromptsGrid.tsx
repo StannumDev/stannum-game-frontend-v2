@@ -116,11 +116,11 @@ export const PromptsGrid = () => {
                 {isLoading && prompts.length === 0 && <LoadingScreen />}
                 {!isLoading && prompts.length === 0 &&
                     <motion.div
-                        className="card grow flex flex-col justify-center items-center text-center"
+                        className="grow flex flex-col justify-center items-center text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >
-                        <InfoCircleIcon className="text-6xl text-card-lighter mb-4" />
+                        <InfoCircleIcon className="text-6xl text-card-lightest mb-4" />
                         <h3 className="text-xl font-bold mb-2">No se encontraron prompts</h3>
                         <p className="text-card-lightest max-w-md mb-4">Prueba ajustando los filtros o sé el primero en añadir un prompt para la comunidad.</p>
                         <button
