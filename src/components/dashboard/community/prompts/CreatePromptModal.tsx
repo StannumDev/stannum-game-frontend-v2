@@ -132,18 +132,18 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                     animate={{ x: 0 }}
                     exit={{ x: '100%' }}
                     transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-card border-l border-card-light z-50 overflow-y-auto"
+                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-card border-l border-card-light z-[99999999999999] overflow-y-auto"
                 >
-                    <form className="p-6 space-y-6">
-                        <div className="flex items-center justify-between pb-4 border-b border-card-light">
-                            <div>
-                                <h2 className="text-2xl font-bold">Añadir un Prompt</h2>
-                                <p className="subtitle-1 mt-1">Comparte tu prompt de IA con la comunidad STANNUM</p>
+                    <form className="w-full p-4 sm:p-6 space-y-6">
+                        <div className="w-full flex items-start sm:items-center justify-between pb-4 border-b border-card-light">
+                            <div className='grow min-w-0'>
+                                <h2 className="w-full text-2xl font-bold">Añadir un Prompt</h2>
+                                <p className="w-full subtitle-1 no-truncate mt-1">Comparte tu prompt de IA con la comunidad STANNUM</p>
                             </div>
                             <button
                                 type="button"
                                 onClick={handleClose}
-                                className="p-2 rounded-lg hover:bg-card-light transition-colors"
+                                className="shrink-0 p-2 rounded-lg hover:bg-card-light transition-colors"
                                 disabled={isLoading}
                             >
                                 <CrossIcon className="text-xl" />
@@ -336,7 +336,7 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                 <FormErrorMessage condition={errors.exampleOutput} message={errors?.exampleOutput?.message} className="mt-2"/>
                             </div>
                         </div>
-                        <div className="flex gap-3 pt-4 border-t border-card-light">
+                        <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4 border-t border-card-light">
                             <button
                                 type="button"
                                 onClick={handleSubmit(onSaveDraft)}
