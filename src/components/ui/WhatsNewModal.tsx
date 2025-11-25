@@ -7,16 +7,14 @@ import { motion } from 'framer-motion';
 import { Modal } from '@/components';
 import { RobotIcon, ToolsIcon, CheckIcon } from '@/icons';
 
-const COOKIE_NAME = 'stannum_banks_announcement_seenn';
-const COOKIE_VERSION = 'v1.2';
+const COOKIE_KEY = 'BANKS_V1';
 
 export const WhatsNewModal = () => {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        const hasSeenAnnouncement = Cookies.get(COOKIE_NAME);
-        if (hasSeenAnnouncement && hasSeenAnnouncement === COOKIE_VERSION) return;
+        if (Cookies.get(COOKIE_KEY)) return;
         const timer = setTimeout(() => {
             setShowModal(true);
         }, 1000);
@@ -24,7 +22,7 @@ export const WhatsNewModal = () => {
     }, []);
 
     const handleClose = () => {
-        Cookies.set(COOKIE_NAME, COOKIE_VERSION, { expires: 365 });
+        Cookies.set(COOKIE_KEY, '1', { expires: 365 });
         setShowModal(false);
     };
 
