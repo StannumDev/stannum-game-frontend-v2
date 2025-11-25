@@ -1,5 +1,5 @@
 import type { IconType } from 'react-icons';
-import { AnalysisIcon, AutomationIcon, ChatGPTIcon, ClockIcon, ContentIcon, CopyIcon, FireIcon, GoogleColourIcon, GrowthIcon, InnovationIcon, LeadershipIcon, LikeIcon, MarketingIcon, PerplexityIcon, PoeIcon, ProductivityIcon, RobotIcon, SalesIcon, ShieldCompletedIcon, ShieldEmpyIcon, ShieldHalfIcon, ShowPasswordIcon, StrategyIcon } from '@/icons';
+import { AnalysisIcon, AutomationIcon, ChatGPTIcon, ClaudeIcon, ClockIcon, ContentIcon, CopyIcon, FireIcon, GoogleColourIcon, GrowthIcon, InnovationIcon, LeadershipIcon, LikeIcon, MarketingIcon, PerplexityIcon, PoeIcon, ProductivityIcon, RobotIcon, SalesIcon, ShieldCompletedIcon, ShieldEmpyIcon, ShieldHalfIcon, ShowPasswordIcon, StrategyIcon } from '@/icons';
 
 export const PROMPT_CATEGORIES = [ 'sales', 'productivity', 'marketing', 'innovation', 'leadership', 'strategy', 'automation', 'content', 'analysis', 'growth' ] as const;
 export const PROMPT_DIFFICULTIES = ['basic', 'intermediate', 'advanced'] as const;
@@ -45,7 +45,7 @@ export const difficultyIcons: Record<typeof PROMPT_DIFFICULTIES[number], IconTyp
 
 export const platformOptions = [
     { value: 'chatgpt', label: 'ChatGPT', icon: ChatGPTIcon },
-    { value: 'claude', label: 'Claude', icon: RobotIcon },
+    { value: 'claude', label: 'Claude', icon: ClaudeIcon },
     { value: 'gemini', label: 'Gemini', icon: GoogleColourIcon },
     { value: 'poe', label: 'Poe', icon: PoeIcon },
     { value: 'perplexity', label: 'Perplexity', icon: PerplexityIcon },

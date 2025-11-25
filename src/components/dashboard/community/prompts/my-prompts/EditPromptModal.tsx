@@ -283,7 +283,7 @@ export const EditPromptModal = ({ isOpen, onClose, onSuccess, prompt }: Props) =
                                 </div>
                                 <div className="w-full">
                                     <div className="w-full flex flex-col gap-1">
-                                        <label htmlFor="customGptUrl" className="text-sm font-semibold">URL de GPT Personalizado (opcional)</label>
+                                        <label htmlFor="customGptUrl" className="text-sm font-semibold">URL de Asistente personalizado</label>
                                         <input
                                             {...register('customGptUrl')}
                                             type="url"

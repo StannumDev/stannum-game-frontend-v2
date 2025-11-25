@@ -60,14 +60,14 @@ export const Sidebar = () => {
             Icon: AppsIcon,
         },
         {
-            label: 'Tienda',
-            href: '/dashboard/store',
-            Icon: StoreIcon,
-        },
-        {
             label: 'Comunidad',
             href: '/dashboard/community',
             Icon: CommunityIcon,
+        },
+        {
+            label: 'Tienda',
+            href: '/dashboard/store',
+            Icon: StoreIcon,
         },
         {
             label: 'Mi perfil',

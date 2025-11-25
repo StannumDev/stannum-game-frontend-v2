@@ -79,9 +79,9 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                     animate={{ y: 0 }}
                     transition={{ type: 'spring', bounce: 0 }}
                 >
-                    <ul id='sidebar-buttons' className="w-full grid grid-cols-5 justify-center items-center overflow-hidden">
+                    <ul id='sidebar-buttons' className="w-full grid grid-cols-6 justify-center items-center overflow-hidden">
                         {
-                            links.map((link:SidebarLink, i:number) => link.label !== 'Comunidad' && (
+                            links.map((link:SidebarLink, i:number) => 
                                 <Fragment key={`sidebar_mobile_link_${i}`}>
                                     {i === 1 && (
                                         <BuscadorSidebarMobile pathname={pathname} isSearching={isSearching} setIsSearching={setIsSearching}/>
@@ -96,7 +96,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         <SidebarMobileLink link={link} pathname={pathname} isSearching={isSearching}/>
                                     </motion.li>
                                 </Fragment>
-                            ))
+                            )
                         }
                     </ul>
                 </motion.nav>

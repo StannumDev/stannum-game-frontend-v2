@@ -120,7 +120,7 @@ export const PromptsGridFilter = ({ filters, searchTerm, onSearchChange, onFilte
                     <button
                         type="button"
                         onClick={handleToggleFavorites}
-                        className={`px-3 h-10 rounded-md border text-sm font-medium transition-200 flex items-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                        className={`px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                     >
                         <BookmarkedIcon />
                         Favoritos
@@ -139,118 +139,100 @@ export const PromptsGridFilter = ({ filters, searchTerm, onSearchChange, onFilte
             </section>
             <AnimatePresence>
                 {isFiltersOpen && <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsFiltersOpen(false)}
-                            className="md:hidden fixed inset-0 bg-black/60 z-[99999999] backdrop-blur-sm"
-                        />
-                        <motion.div
-                            initial={{ y: '100%' }}
-                            animate={{ y: 0 }}
-                            exit={{ y: '100%' }}
-                            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                            className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-card-light z-[999999999] rounded-t-2xl max-h-[85vh] overflow-y-auto"
-                        >
-                            <div className="p-6 space-y-4">
-                                <div className="flex items-center justify-between pb-4 border-b border-card-light">
-                                    <h3 className="text-lg font-bold">Filtros</h3>
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsFiltersOpen(false)}
-                                        className="p-2 rounded-lg hover:bg-card-light transition-colors"
-                                    >
-                                        <CrossIcon className="text-xl" />
-                                    </button>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Ordenar por</label>
-                                    <BankFilterDropdown
-                                        label="Ordenar por"
-                                        placeholder="Selecciona orden"
-                                        options={sortByOptions}
-                                        value={filters.sortBy || 'popular'}
-                                        onChange={(v) => onFilterChange('sortBy', v)}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Categoría</label>
-                                    <BankFilterDropdown
-                                        label="Categoría"
-                                        placeholder="Selecciona una categoría"
-                                        options={categoryOptions}
-                                        value={filters.category || ''}
-                                        onChange={(v) => onFilterChange('category', v)}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Complejidad</label>
-                                    <BankFilterDropdown
-                                        label="Complejidad"
-                                        placeholder="Selecciona la complejidad"
-                                        options={difficultyOptions}
-                                        value={filters.difficulty || ''}
-                                        onChange={(v) => onFilterChange('difficulty', v)}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Plataformas</label>
-                                    <BankFilterDropdown
-                                        label="Plataformas"
-                                        placeholder="Selecciona una o varias"
-                                        options={platformOptions}
-                                        value={filters.platforms || ''}
-                                        onChange={(v) => onFilterChange('platforms', v)}
-                                        multi
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Otros filtros</label>
-                                    <div className="space-y-2">
-                                        <button
-                                            type="button"
-                                            onClick={handleToggleFavorites}
-                                            className={`w-full px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
-                                        >
-                                            <BookmarkedIcon />
-                                            Favoritos
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={handleToggleVerified}
-                                            className={`w-full px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ showVerifiedOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
-                                        >
-                                            <STANNUMIcon className={`size-3 ${showVerifiedOnly ? 'fill-stannum' : 'fill-white'} transition-200`} />
-                                            Verificados
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="flex gap-3 pt-4 border-t border-card-light">
-                                    {activeFiltersCount > 0 &&
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                handleClearAll();
-                                                setIsFiltersOpen(false);
-                                            }}
-                                            className="flex-1 px-4 py-3 bg-card border border-card-light text-card-lightest rounded-lg text-sm font-semibold hover:bg-card-light transition-colors"
-                                        >
-                                            Limpiar filtros
-                                        </button>
-                                    }
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsFiltersOpen(false)}
-                                        className="flex-1 px-4 py-3 bg-stannum text-card rounded-lg text-sm font-semibold hover:bg-stannum/90 transition-colors"
-                                    >
-                                        Aplicar filtros
-                                    </button>
-                                </div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsFiltersOpen(false)}
+                        className="md:hidden fixed inset-0 bg-black/60 z-[99999999] backdrop-blur-sm"
+                    />
+                    <motion.div
+                        initial={{ y: '100%' }}
+                        animate={{ y: 0 }}
+                        exit={{ y: '100%' }}
+                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                        className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-card-light z-[999999999] rounded-t-2xl max-h-[85vh] overflow-y-auto"
+                    >
+                        <div className="p-6 space-y-4">
+                            <div className="flex items-center justify-between pb-4 border-b border-card-light">
+                                <h3 className="text-lg font-bold">Filtros</h3>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsFiltersOpen(false)}
+                                    className="p-2 rounded-lg hover:bg-card-light transition-colors"
+                                >
+                                    <CrossIcon className="text-xl" />
+                                </button>
                             </div>
-                        </motion.div>
-                    </>
-                }
+                            <BankFilterDropdown
+                                label="Ordenar por"
+                                placeholder="Selecciona orden"
+                                options={sortByOptions}
+                                value={filters.sortBy || 'popular'}
+                                onChange={(v) => onFilterChange('sortBy', v)}
+                            />
+                            <BankFilterDropdown
+                                label="Categoría"
+                                placeholder="Selecciona una categoría"
+                                options={categoryOptions}
+                                value={filters.category || ''}
+                                onChange={(v) => onFilterChange('category', v)}
+                            />
+                            <BankFilterDropdown
+                                label="Complejidad"
+                                placeholder="Selecciona la complejidad"
+                                options={difficultyOptions}
+                                value={filters.difficulty || ''}
+                                onChange={(v) => onFilterChange('difficulty', v)}
+                            />
+                            <BankFilterDropdown
+                                label="Plataformas"
+                                placeholder="Selecciona una o varias"
+                                options={platformOptions}
+                                value={filters.platforms || ''}
+                                onChange={(v) => onFilterChange('platforms', v)}
+                                multi
+                            />
+                            <button
+                                type="button"
+                                onClick={handleToggleVerified}
+                                className={`w-full px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ showVerifiedOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                            >
+                                <STANNUMIcon className={`size-3 ${showVerifiedOnly ? 'fill-stannum' : 'fill-white'} transition-200`} />
+                                Verificados
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleToggleFavorites}
+                                className={`w-full px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center justify-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                            >
+                                <BookmarkedIcon />
+                                Favoritos
+                            </button>
+                            <div className="flex gap-3 pt-4 border-t border-card-light">
+                                {activeFiltersCount > 0 &&
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            handleClearAll();
+                                            setIsFiltersOpen(false);
+                                        }}
+                                        className="flex-1 px-4 py-3 bg-card border border-card-light text-card-lightest rounded-lg text-sm font-semibold hover:bg-card-light transition-colors"
+                                    >
+                                        Limpiar filtros
+                                    </button>
+                                }
+                                <button
+                                    type="button"
+                                    onClick={() => setIsFiltersOpen(false)}
+                                    className="flex-1 px-4 py-3 bg-stannum text-card rounded-lg text-sm font-semibold hover:bg-stannum/90 transition-colors"
+                                >
+                                    Aplicar filtros
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </> }
             </AnimatePresence>
         </>
     );

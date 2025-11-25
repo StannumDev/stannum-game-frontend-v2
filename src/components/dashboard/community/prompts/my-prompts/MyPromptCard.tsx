@@ -120,7 +120,7 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                 </div>
                 {prompt.hasCustomGpt &&
                     <div className="mt-3 pt-3 border-t border-card-light">
-                        <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye GPT personalizado</span>
+                        <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye Asistente personalizado</span>
                     </div>
                 }
             </motion.article>

@@ -13,6 +13,7 @@ export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
 export { MotionWrapperLayoutClient } from "./ui/MotionWrapperLayoutClient";
 export { Modal } from "./ui/Modal";
 export { LoadingScreen } from "./ui/LoadingScreen";
+export { WhatsNewModal } from "./ui/WhatsNewModal";
 
 // SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";

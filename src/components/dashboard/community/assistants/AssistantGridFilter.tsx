@@ -111,19 +111,19 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                     />
                     <button
                         type="button"
-                        onClick={handleToggleFavorites}
-                        className={`px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
-                    >
-                        <BookmarkedIcon />
-                        Favoritos
-                    </button>
-                    <button
-                        type="button"
                         onClick={handleToggleVerified}
                         className={`px-3 h-10 rounded-md border text-sm font-medium transition-200 flex items-center gap-1.5 ${ showVerifiedOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
                     >
                         <STANNUMIcon className={`size-3 ${showVerifiedOnly ? 'fill-stannum' : 'fill-white'} transition-200`} />
                         Verificados
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleToggleFavorites}
+                        className={`px-3 h-10 rounded-md border text-sm font-medium transition-all flex items-center gap-1.5 ${ showFavoritesOnly ? 'bg-stannum/20 border-stannum text-stannum' : 'bg-card border-card-light hover:border-card-lighter'}`}
+                    >
+                        <BookmarkedIcon />
+                        Favoritos
                     </button>
                     {activeFiltersCount > 0 &&
                         <button

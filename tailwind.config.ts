@@ -18,9 +18,7 @@ const config: Config = {
   				DEFAULT: '#f45050'
   			},
   			stannum: {
-  				// DEFAULT: '#41cfc9',
   				DEFAULT: '#00FFCC',
-  				// light: '#66eae5'
   				light: '#4fffdc'
   			},
   			tmd: {

@@ -1,18 +1,29 @@
 'use client'
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 import { SoundOnIcon, SoundOffIcon, PlayIcon, PauseIcon } from "@/icons";
+import { LoadingScreen } from "@/components";
 import Image from "next/image";
 import background from '@/assets/background/the_game.webp';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export const VideoIntro = () => {
+const INTRO_SEEN = 'stannum_intro_v1';
 
+export const VideoIntro = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const [isChecking, setIsChecking] = useState(true);
+    const [shouldShow, setShouldShow] = useState(false);
     const [start, setStart] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
     const [isPlaying, setIsPlaying] = useState(true);
     const [isEnded, setIsEnded] = useState(false);
+
+    useEffect(() => {
+        const hasSeen = Cookies.get(INTRO_SEEN);
+        setShouldShow(!hasSeen);
+        setIsChecking(false);
+    }, []);
 
     const toggleMute = () => {
         if (videoRef.current) {
@@ -41,6 +52,21 @@ export const VideoIntro = () => {
         }
     };
 
+    const markAsSeen = () => {
+        Cookies.set(INTRO_SEEN, '1', { expires: 365 });
+        setIsEnded(true);
+    };
+
+    if (isChecking) {
+        return (
+            <div className="size-full absolute top-0 left-0 z-[99999999] bg-black">
+                <LoadingScreen fullScreen />
+            </div>
+        );
+    }
+
+    if (!shouldShow) return null;
+
     return (
         <div className={`size-full absolute top-0 left-0 z-[99999999] ${ isEnded && "pointer-events-none" }`}>
             { !isEnded && <div className="size-full bg-black absolute top-0 left-0"></div>}
@@ -64,7 +90,7 @@ export const VideoIntro = () => {
                             </button>
                         </div>
                     </motion.div>
-                : !isEnded ?
+                : !isEnded &&
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -85,36 +111,33 @@ export const VideoIntro = () => {
                                     type="button"
                                     onClick={toggleMute}
                                     className="text-white opacity-75 hover:opacity-100 lg:text-2xl pointer-events-auto cursor-pointer transition-150"
-                                    >
-                                    {
-                                        isMuted ? <SoundOffIcon/> : <SoundOnIcon/>
-                                    }
+                                >
+                                    { isMuted ? <SoundOffIcon/> : <SoundOnIcon/> }
                                 </button>
                             </div>
                             <div className="absolute top-4 lg:top-12 right-4 lg:right-12 z-50 pointer-events-auto">
                                 <button
                                     type="button"
-                                    onClick={() => setIsEnded(true)}
+                                    onClick={markAsSeen}
                                     className="px-4 saltar_video_intro text-white lg:text-2xl rounded-lg bg-transparent hover:bg-white/10 border border-white/25 flex items-center gap-2 opacity-75 hover:opacity-100 pointer-events-auto cursor-pointer transition-150"
                                 >
                                     Saltar
                                 </button>
                             </div>
                             <div className="size-full bg-black absolute top-0 left-0 z-0"></div>
-                            <video
-                                ref={videoRef}
-                                controls={false}
-                                playsInline
-                                autoPlay
-                                onEnded={() => setIsEnded(true)}
-                                className="size-full object-contain lg:object-cover pointer-events-none select-none relative z-10"
-                            >
-                                <source src="/assets/videos/welcome_stannum_game.mp4" type="video/mp4" />
-                                Tu navegador no soporta este video.
-                            </video>
-                        </div>
+                                <video
+                                    ref={videoRef}
+                                    controls={false}
+                                    playsInline
+                                    autoPlay
+                                    onEnded={markAsSeen}
+                                    className="size-full object-contain lg:object-cover pointer-events-none select-none relative z-10"
+                                >
+                                    <source src="/assets/videos/welcome_stannum_game.mp4" type="video/mp4" />
+                                    Tu navegador no soporta este video.
+                                </video>
+                           </div>
                     </motion.div>
-                : null
                 }
             </AnimatePresence>
         </div>
