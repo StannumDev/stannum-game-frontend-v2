@@ -25,7 +25,7 @@ const schema = z.object({
     category: z.enum(PROMPT_CATEGORIES, { errorMap: () => ({ message: 'Debes seleccionar una categoría' }) }),
     difficulty: z.enum(PROMPT_DIFFICULTIES).default('basic'),
     platforms: z.array(z.enum(PROMPT_PLATFORMS)).min(1, 'Debes seleccionar al menos una plataforma'),
-    tags: z.array(z.string().min(2, 'Cada tag debe tener al menos 2 caracteres').max(30, 'Cada tag no puede exceder 30 caracteres').regex(/^[a-záéíóúüñ0-9\s\-_.]+$/, 'Solo se permiten letras, números, guiones, guiones bajos, puntos y espacios')).max(10, 'No puedes añadir más de 10 tags').default([]),
+    tags: z.array(z.string().min(2, 'Cada etiqueta debe tener al menos 2 caracteres').max(30, 'Cada etiqueta no puede exceder 30 caracteres').regex(/^[a-záéíóúüñ0-9\s\-_.]+$/, 'Solo se permiten letras, números, guiones, guiones bajos, puntos y espacios')).max(10, 'No puedes añadir más de 10 etiquetas').default([]),
     customGptUrl: z.union([z.literal(''), z.string().url('Debe ser una URL válida')]).optional(),
     exampleOutput: z.union([z.literal(''), z.string().max(2000, 'El ejemplo no puede exceder 2000 caracteres')]).optional(),
 });
@@ -276,14 +276,14 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                 <FormErrorMessage condition={errors.customGptUrl} message={errors?.customGptUrl?.message} className="mt-2"/>
                             </div>
                             <div className="w-full">
-                                <label className="text-sm font-semibold">Tags (máx. 10)</label>
+                                <label className="text-sm font-semibold">Etiquetas (máx. 10)</label>
                                 <div className="my-2 flex gap-2">
                                     <input
                                         type="text"
                                         value={tagInput}
                                         onChange={(e) => setTagInput(e.target.value)}
                                         onKeyDown={handleTagKeyDown}
-                                        placeholder="Escribe un tag y presiona Enter"
+                                        placeholder="Escribe una etiqueta y presiona Enter"
                                         disabled={isLoading || watchedTags.length >= 10}
                                         className="flex-1 px-4 py-2 bg-card border border-card-light rounded-lg text-sm focus:outline-none focus:border-stannum disabled:opacity-50 transition-colors"
                                     />

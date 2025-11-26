@@ -25,7 +25,7 @@ const schema = z.object({
     category: z.enum(ASSISTANT_CATEGORIES, { errorMap: () => ({ message: 'Debes seleccionar una categoría' }) }),
     difficulty: z.enum(ASSISTANT_DIFFICULTIES).default('basic'),
     platform: z.enum(ASSISTANT_PLATFORMS, { errorMap: () => ({ message: 'Debes seleccionar una plataforma' }) }),
-    tags: z.array(z.string().min(2, 'Cada tag debe tener al menos 2 caracteres').max(30, 'Cada tag no puede exceder 30 caracteres').regex(/^[a-záéíóúüñ0-9\s\-_.]+$/, 'Solo se permiten letras minúsculas, números, guiones, guiones bajos, puntos y espacios')).max(10, 'No puedes añadir más de 10 tags').default([]),
+    tags: z.array(z.string().min(2, 'Cada tag debe tener al menos 2 caracteres').max(30, 'Cada tag no puede exceder 30 caracteres').regex(/^[a-záéíóúüñ0-9\s\-_.]+$/, 'Solo se permiten letras minúsculas, números, guiones, guiones bajos, puntos y espacios')).max(10, 'No puedes añadir más de 10 etiquetas').default([]),
     useCases: z.string().max(1000, 'Debe contener menos de 1000 caracteres').trim().optional(),
 });
 
@@ -249,14 +249,14 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                     <FormErrorMessage condition={errors?.platform} message={errors?.platform?.message} className="mt-2"/>
                                 </div>
                                 <div className="w-full">
-                                    <label className="text-sm font-semibold">Tags (máx. 10)</label>
+                                    <label className="text-sm font-semibold">Etiquetas (máx. 10)</label>
                                     <div className="my-2 flex gap-2">
                                         <input
                                             type="text"
                                             value={tagInput}
                                             onChange={(e) => setTagInput(e.target.value)}
                                             onKeyDown={handleTagKeyDown}
-                                            placeholder="Escribe un tag y presiona Enter"
+                                            placeholder="Escribe una etiqueta y presiona Enter"
                                             disabled={isLoading || watchedTags.length >= 10}
                                             className="flex-1 px-4 py-2 bg-card border border-card-light rounded-lg text-sm focus:outline-none focus:border-stannum disabled:opacity-50 transition-colors"
                                         />
