@@ -61,7 +61,6 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
     const submitPrompt = async (data: Schema, visibility: 'published' | 'draft') => {
         setIsLoading(true);
         try {
-            console.log(data, visibility)
             await createPrompt({
                 title: data.title,
                 description: data.description,
@@ -77,7 +76,6 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
             await onSuccess();
             handleClose();
         } catch (error: unknown) {
-            console.log(error)
             errorHandler(error);
         } finally {
             setIsLoading(false);

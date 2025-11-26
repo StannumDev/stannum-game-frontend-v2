@@ -18,7 +18,6 @@ export const ProgramModuleHandler = ({ program_module, index, section, user, pro
   if(!moduleProgress) return null;
 
   const { status, lessonsProgress, instructionsProgress } = moduleProgress;
-  // console.log({ status, lessonsProgress, instructionsProgress });
   if (status === "COMPLETED") {
     return (
       <Link href={`/dashboard/library/${programId}/${section.id}/${program_module.id}`} className="w-full">

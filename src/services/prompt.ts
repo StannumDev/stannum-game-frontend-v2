@@ -43,7 +43,6 @@ export const getAllPrompts = async (filters?: PromptFilters): Promise<PromptsRes
         if (filters?.limit) params.append('limit', filters.limit.toString());
 
         const response = await axios.get<PromptsResponse>(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PROMPT_URL}?${params.toString()}`, { headers: getAuthHeaders() });
-        console.log(response)
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error: unknown) {
@@ -73,7 +72,6 @@ export const createPrompt = async (promptData: CreatePromptData): Promise<boolea
 
 export const updatePrompt = async (id: string, promptData: UpdatePromptData): Promise<boolean> => {
     try {
-        console.log(promptData)
         const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PROMPT_URL}/${id}`, promptData, { headers: getAuthHeaders() });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;

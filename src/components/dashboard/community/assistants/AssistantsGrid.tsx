@@ -25,7 +25,6 @@ export const AssistantsGrid = () => {
         setIsLoading(true);
         try {
             const response: AssistantsResponse = await getAllAssistants(filters);
-            console.log(response.data.assistants)
             setAssistants(response.data.assistants);
             setHasMore(response.data.pagination.hasNextPage);
         } catch (error) {
