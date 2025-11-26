@@ -9,6 +9,7 @@ import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
 import type { AssistantCard as IAssistantCard } from '@/interfaces';
 import default_user from "@/assets/user/default_user.webp";
+import Link from 'next/link';
 
 interface Props {
     assistant: IAssistantCard;
@@ -195,10 +196,10 @@ export const AssistantCard = ({ assistant }: Props) => {
                         </button>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-card-lighter">
+                <Link href={`/dashboard/profile/${assistant.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
                     <Image src={assistant.author.profilePhotoUrl || default_user} alt={`Foto de ${assistant.author.username}`} width={24} height={24} className="size-6 rounded-full" />
-                    <span className="font-semibold text-card-lightest">{assistant.author.username}</span>
-                </div>
+                    <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{assistant.author.username}</span>
+                </Link>
             </div>
         </motion.article>
     );

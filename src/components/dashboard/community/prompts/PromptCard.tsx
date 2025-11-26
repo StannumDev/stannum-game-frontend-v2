@@ -9,6 +9,7 @@ import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
 import type { PromptCard as PromptCardType } from '@/interfaces';
 import default_user from "@/assets/user/default_user.webp";
+import Link from 'next/link';
 
 interface Props {
     prompt: PromptCardType;
@@ -227,16 +228,10 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                         </button>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-card-lighter">
-                    <Image 
-                        src={prompt.author.profilePhotoUrl || default_user} 
-                        alt={`Foto de ${prompt.author.username}`} 
-                        width={24} 
-                        height={24} 
-                        className="size-6 rounded-full" 
-                    />
-                    <span className="font-semibold text-card-lightest">{prompt.author.username}</span>
-                </div>
+                <Link href={`/dashboard/profile/${prompt.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
+                    <Image src={prompt.author.profilePhotoUrl || default_user} alt={`Foto de ${prompt.author.username}`} width={24} height={24} className="size-6 rounded-full" />
+                    <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{prompt.author.username}</span>
+                </Link>
             </div>
             {prompt.hasCustomGpt && 
                 <div className="mt-3 pt-3 border-t border-card-light">
