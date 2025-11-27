@@ -11,7 +11,7 @@ export const CommunityLanding = () => {
                         <div className="p-6 bg-card group-hover:bg-stannum rounded-full border-2 border-stannum text-stannum group-hover:text-card transition-200">
                             <ToolsIcon className="text-6xl lg:text-8xl" />
                         </div>
-                        <h1 className="mt-8 text-5xl lg:text-7xl xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">PROMPTS</span></h1>
+                        <h1 className="mt-8 text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">PROMPTS</span></h1>
                         <p className="max-w-md text-lg lg:text-xl text-white">Descubre y comparte prompts de IA creados por la comunidad STANNUM</p>
                         <div className="mt-8 flex flex-col gap-3">
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Prompts verificados y curados</div>
@@ -28,7 +28,7 @@ export const CommunityLanding = () => {
                         <div className="p-6 bg-card group-hover:bg-stannum rounded-full border-2 border-stannum text-stannum group-hover:text-card transition-200">
                             <RobotIcon className="text-6xl lg:text-8xl" />
                         </div>
-                        <h1 className="mt-8 text-5xl lg:text-7xl xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">ASISTENTES</span></h1>
+                        <h1 className="mt-8 text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black mb-6 text-white tracking-tight">Banco de <span className="text-stannum block">ASISTENTES</span></h1>
                         <p className="max-w-md text-lg lg:text-xl text-white">Accede a asistentes especializados de IA compartidos por la comunidad</p>
                         <div className="mt-8 flex flex-col gap-3">
                             <div className="px-6 py-3 backdrop-blur-sm rounded-lg bg-stannum/20 border border-stannum text-stannum subtitle-1">Asistentes listos para usar</div>
