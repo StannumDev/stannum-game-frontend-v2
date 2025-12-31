@@ -8,13 +8,13 @@ import { Program } from "@/interfaces";
 
 interface Props {
     children: ReactNode;
-    params: {
+    params: Promise<{
         program_id: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { program_id } = params;
+    const { program_id } = await params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
 
     if (!foundProgram) {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProgramDashboardLayout({children, params}:Props) {
 
-    const { program_id } = params;
+    const { program_id } = await params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     if (!foundProgram) return notFound();
     
