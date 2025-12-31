@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export type ProgramId = 'tmd' | 'tia';
+export type ProgramId = 'tmd' | 'tia' | 'tia_summer';
 export type ProgramCategory = '' | 'main' | 'free' | 'shorts';
 
 export interface Resource {
@@ -30,6 +30,7 @@ export interface Lesson {
     longTitle: string;
     duration: number;
     muxPlaybackId: string;
+    blocked?: boolean;
 }
 
 export interface Module {
@@ -55,5 +56,6 @@ export interface Program {
     categories: Array<ProgramCategory>;
     description: string;
     logo: StaticImageData;
+    background: StaticImageData;
     sections: Array<Section>;
 }

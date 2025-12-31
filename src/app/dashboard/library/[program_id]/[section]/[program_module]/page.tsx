@@ -43,6 +43,7 @@ export default async function ProgramModulePage({ params }: Props) {
                             {foundModule.lessons.map((lesson, index) => {
                             const isCompleted = userLessons.some((ul) => ul.lessonId === lesson.id);
                             const isAvailable = isLessonAvailable(user, foundModule, lesson.id);
+                            const isBlocked = lesson.blocked;
                             return (
                                 <ProgramLessonCard
                                     key={lesson.id}
@@ -52,6 +53,7 @@ export default async function ProgramModulePage({ params }: Props) {
                                     title={lesson.title}
                                     isCompleted={isCompleted}
                                     isAvailable={isAvailable}
+                                    isBlocked={isBlocked}
                                 />
                             );
                             })}

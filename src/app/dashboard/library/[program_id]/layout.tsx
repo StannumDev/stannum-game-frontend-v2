@@ -30,10 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: 'TRENNO IA | STANNUM Game',
             description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
-            url: 'https://stanumgame.com/dashboard/library/tia',
+            url: `https://stanumgame.com/dashboard/library/${program_id}`,
         },
         twitter: {
-            site: 'https://stannumgame.com/dashboard/library/tia',
+            site: `https://stannumgame.com/dashboard/library/${program_id}`,
             title: 'TRENNO IA | STANNUM Game',
             description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
         },

@@ -61,14 +61,7 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
                     {filteredPrograms.map(program => {
                         const progress = calculateProgramProgress(program, user);
                         return (
-                            <LibraryCard
-                                key={program.id}
-                                id={program.id}
-                                name={program.name}
-                                description={program.description}
-                                logo={program.logo}
-                                progress={progress}
-                            />
+                            <LibraryCard program={program} key={program.id} progress={progress}/>
                         );
                     })}
                 </div>  
