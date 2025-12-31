@@ -152,7 +152,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
             name: "Pretemporada",
             modules: [
                 {
-                    id: "TIAM01",
+                    id: "TIASM01",
                     name: "Dominio de PROMPTS",
                     description: "Aprende a dominar y redactar PROMPTs como un profesional.",
                     lessons: [
@@ -167,7 +167,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
                     instructions: []
                 },
                 {
-                    id: "TIAM02",
+                    id: "TIASM02",
                     name: "Personalización de ChatGPT",
                     description: "Conviertete en un experto en la personalización de ChatGPT.",
                     lessons: [
