@@ -7,14 +7,14 @@ import { Lesson, Module, Program, Section } from "@/interfaces";
 import { programs } from "@/config/programs";
 
 interface Props {
-    params: {
+    params: Promise<{
         program_id: string;
         lessonId: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { program_id, lessonId } = params;
+    const { program_id, lessonId } = await params;
 
     const program: Program | undefined = programs.find(p => p.id === program_id.toLowerCase());
     const modules: Module[] = program?.sections.flatMap(section => section.modules||[]) ?? [];
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LessonPage({ params }: Props) {
-    const { program_id, lessonId } = params;
+    const { program_id, lessonId } = await params;
     const program = programs.find(p => p.id === program_id.toLowerCase());
     if (!program) return notFound();
     let section: Section | undefined;

@@ -6,15 +6,15 @@ import type { Module, Program, Section, Instruction } from '@/interfaces';
 import { isLessonAvailable } from '@/utilities';
 
 interface Props {
-  params: {
+  params: Promise<{
     program_id: string;
     section: string;
     program_module: string;
-  };
+  }>;
 }
 
 export default async function ProgramModulePage({ params }: Props) {
-    const { program_id, section, program_module } = params;
+    const { program_id, section, program_module } = await params;
 
     const foundProgram: Program | undefined = programs.find(program => program.id === program_id.toLowerCase());
     if (!foundProgram) return notFound();

@@ -6,14 +6,14 @@ import { programs } from "@/config/programs";
 import { GoBackButton, ProgramInstructionDetails } from "@/components";
 
 interface Props {
-    params: {
+    params: Promise<{
         program_id: string;
         instructionId: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { program_id, instructionId } = params;
+    const { program_id, instructionId } = await params;
 
     const program: Program | undefined = programs.find(p => p.id === program_id.toLowerCase());
     const modules: Module[] = program?.sections.flatMap(section => section.modules||[]) ?? [];
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function InstructionPage({ params }: Props) {
-    const { program_id, instructionId } = params;
+    const { program_id, instructionId } = await params;
     const program = programs.find(p => p.id === program_id.toLowerCase());
     if (!program) return notFound();
     let section: Section | undefined;

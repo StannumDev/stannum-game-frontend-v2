@@ -5,15 +5,15 @@ import { Module, Program } from "@/interfaces";
 import { programs } from "@/config/programs";
 
 interface Props {
-    params: {
+    params: Promise<{
         program_id: string;
         section: string;
-    };
+    }>;
 }
 
 export default async function ProgramSectionPage({ params }: Props) {
     
-    const { program_id, section } = params;
+    const { program_id, section } = await params;
 
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     const foundSection = foundProgram?.sections.find(sec => sec.id === section);
