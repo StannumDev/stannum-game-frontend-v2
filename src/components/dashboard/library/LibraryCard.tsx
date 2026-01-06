@@ -1,17 +1,15 @@
 import Link from 'next/link';
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { ArrowRightIcon } from '@/icons';
-import background from '@/assets/background/stannum_game_trophy.webp';
+import { Program } from '@/interfaces';
 
 interface Props {
-    id: string;
-    name: string;
-    description: string;
-    logo: StaticImageData;
+    program: Program;
     progress: number;
 }
 
-export const LibraryCard = ({ id, name, description, logo, progress }: Props) => {
+export const LibraryCard = ({ program, progress }: Props) => {
+    const { id, name, description, logo, background } = program
     return (
         <Link href={`/dashboard/library/${id.toLowerCase()}`} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">

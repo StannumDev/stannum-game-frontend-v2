@@ -154,6 +154,7 @@ export interface FullUserDetails {
     favorites: UserFavorites;
     programs: {
         tia: UserProgram;
+        tia_summer: UserProgram;
         tmd: UserProgram;
     };
     preferences: UserPreferences;

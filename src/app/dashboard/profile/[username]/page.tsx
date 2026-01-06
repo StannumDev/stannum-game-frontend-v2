@@ -4,14 +4,15 @@ import { getUserByToken, getUserDetailsByUsernameServer } from "@/services";
 import { UserProfileWrapper } from "@/components";
 
 interface Props {
-    params: {
+    params: Promise<{
         username: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { username } = await params
     try {
-        const user = await getUserDetailsByUsernameServer(params.username);
+        const user = await getUserDetailsByUsernameServer(username);
 
         if (!user) {
             return {
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProfilePage({ params }: Props) {
-    const { username } = params;
+    const { username } = await params;
     const user = await getUserByToken();
     const userDetails = await getUserDetailsByUsernameServer(username);
     if (!userDetails) return notFound();

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon } from '@/icons';
 import { Program } from '@/interfaces';
-import background from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props {
     program:Program;
@@ -11,7 +10,7 @@ interface Props {
 
 export const StoreCard = ({ program, isPurchased }: Props) => {
 
-    const { id, name, description, href, logo, price } = program;
+    const { id, name, description, href, logo, price, background } = program;
 
     if(price < 0){
         return (

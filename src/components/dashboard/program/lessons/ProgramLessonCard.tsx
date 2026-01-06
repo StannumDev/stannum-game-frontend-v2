@@ -9,9 +9,10 @@ interface Props{
     title: string;
     isCompleted: boolean;
     isAvailable: boolean;
+    isBlocked?: boolean;
 }
 
-export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, isAvailable }: Props) => {
+export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, isAvailable, isBlocked }: Props) => {
 
     if(isAvailable){
         return (
@@ -54,7 +55,7 @@ export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, 
                     <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
                 </div>
                 <div className='hidden lg:flex w-fit mr-[7.5rem] items-center gap-4 shrink-0 relative z-10'>
-                    <div className='subtitle-1 text-white/25'>Completa la lección anterior</div>
+                    <div className='subtitle-1 text-white/25'>{ isBlocked ? "Disponible luego de la sesión" : "Completa la lección anterior" }</div>
                     <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
                         Bloqueado
                     </div>

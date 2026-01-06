@@ -1,5 +1,6 @@
 import stannum_achievement_background from '@/assets/achievements/stannum_achievement_background.webp';
 import tia_achievement_background from '@/assets/achievements/tia_achievement_background.webp';
+import tia_summer_achievement_background from '@/assets/achievements/tia_summer_achievement_background.webp';
 
 import { FullUserDetails, Achievement } from "@/interfaces";
 import { programs } from "@/config/programs";
@@ -235,5 +236,60 @@ export const achievements: Array<Achievement> = [
                 )
             ) ? 100 : 0;
         }
-    }
+    },
+    {
+        id: "trenno_ia_summer_joined",
+        title: "Edición SUMMER 26",
+        description: "Participaste del programa exclusivo TRENNO IA SUMMER 2026",
+        background: tia_summer_achievement_background,
+        categories: ["summer"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => {
+            const tiaSummer = user.programs?.tia_summer;
+            return tiaSummer?.isPurchased ? 100 : 0;
+        }
+    },
+    {
+        id: "trenno_ia_summer_halfway",
+        title: "Mitad de cancha",
+        description: "Llegá a la mitad del programa SUMMER",
+        background: tia_summer_achievement_background,
+        categories: ["summer"],
+        xpReward: 150,
+        getProgress: (user: FullUserDetails) => {
+            const tiaSummer = user.programs?.tia_summer;
+            if (!tiaSummer) return 0;
+            const completed = (tiaSummer.lessonsCompleted || []).length;
+            return completed >= 10 ? 100 : Math.floor((completed / 10) * 100);
+        }
+    },
+    {
+        id: "trenno_ia_summer_graduate",
+        title: "Graduado SUMMER 26",
+        description: "Completá el 100% del programa TRENNO IA SUMMER 2026",
+        background: tia_summer_achievement_background,
+        categories: ["summer"],
+        xpReward: 500,
+        getProgress: (user: FullUserDetails) => {
+            const tiaSummer = user.programs?.tia_summer;
+            if (!tiaSummer) return 0;
+            const tiaSummerConfig = programs.find(p => p.id === "tia_summer");
+            if (!tiaSummerConfig) return 0;
+            const allLessonsDone = tiaSummerConfig.sections.every(section =>
+                section.modules?.every(mod =>
+                    mod.lessons.every(lesson =>
+                        tiaSummer.lessonsCompleted?.some(lc => lc.lessonId === lesson.id)
+                    )
+                )
+            );
+            const allInstructionsDone = tiaSummerConfig.sections.every(section =>
+                section.modules?.every(mod =>
+                    mod.instructions.every(inst =>
+                        tiaSummer.instructions?.some(i => i.instructionId === inst.id && i.status === "GRADED")
+                    )
+                )
+            );
+            return (allLessonsDone && allInstructionsDone) ? 100 : 0;
+        }
+    },
 ];

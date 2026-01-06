@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/ProgramCover.module.css';
-import background from '@/assets/background/the_game.webp';
 import texture from '@/assets/background/dotted_texture.svg';
 import type { FullUserDetails, Program } from '@/interfaces';
 import { calculateProgramProgress } from '@/utilities';
@@ -36,7 +35,7 @@ export const ProgramCover = ({ program, user }: Props) => {
                 <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-20'></div>
                 <Image
                     priority
-                    src={background}
+                    src={program.background}
                     alt={program.name}
                     className='size-full object-cover relative blur-sm object-[50%_30%] z-0'
                 />

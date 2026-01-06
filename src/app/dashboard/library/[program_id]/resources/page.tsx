@@ -5,13 +5,13 @@ import { DocumentIcon, EditIcon, FolderColourIcon, PlayCircleIcon, SlidesIcon } 
 import Link from "next/link";
 
 interface Props {
-    params: {
+    params: Promise<{
         program_id: string;
-    };
+    }>;
 }
 
 export default async function ProgramResourcesPage({ params }: Props) {
-    const { program_id } = params;
+    const { program_id } = await params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     const foundSection = foundProgram?.sections.find(sec => sec.id === "resources");
     if (!foundProgram || !foundSection || !foundSection.resources) return notFound();

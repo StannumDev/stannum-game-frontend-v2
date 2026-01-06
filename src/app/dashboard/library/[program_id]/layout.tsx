@@ -8,13 +8,13 @@ import { Program } from "@/interfaces";
 
 interface Props {
     children: ReactNode;
-    params: {
+    params: Promise<{
         program_id: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { program_id } = params;
+    const { program_id } = await params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
 
     if (!foundProgram) {
@@ -30,10 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: 'TRENNO IA | STANNUM Game',
             description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
-            url: 'https://stanumgame.com/dashboard/library/tia',
+            url: `https://stanumgame.com/dashboard/library/${program_id}`,
         },
         twitter: {
-            site: 'https://stannumgame.com/dashboard/library/tia',
+            site: `https://stannumgame.com/dashboard/library/${program_id}`,
             title: 'TRENNO IA | STANNUM Game',
             description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
         },
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProgramDashboardLayout({children, params}:Props) {
 
-    const { program_id } = params;
+    const { program_id } = await params;
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     if (!foundProgram) return notFound();
     
