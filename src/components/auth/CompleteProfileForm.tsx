@@ -91,7 +91,7 @@ export const CompleteProfileForm = () => {
             <div className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
                     <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
-                    <h2 className="mt-12 text-3xl md:text-5xl font-black uppercase text-center"><b className="text-stannum font-black">Completá</b> tu perfil</h2>
+                    <h2 className="md:mt-12 text-3xl md:text-5xl font-black uppercase text-center"><b className="text-stannum font-black">Completá</b> tu perfil</h2>
                     <p className="mt-4 text-center text-neutral-400 max-w-md">Necesitamos algunos datos más para que puedas acceder a la plataforma.</p>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8 w-full">
