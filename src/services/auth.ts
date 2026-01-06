@@ -3,7 +3,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
-import { AchievementDetails, RegisterState } from '@/interfaces';
+import { AuthUserResponse, RegisterState, UpdateUsernameResponse } from '@/interfaces';
 
 const tokenError = {
     response: {
@@ -19,24 +19,31 @@ const tokenError = {
     },
 }
 
-export const authUserByToken = async (token: string | undefined): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[]; }> => {
+export const authUserByToken = async (token: string | undefined): Promise<AuthUserResponse> => {
     try {
         if (!token) throw tokenError;
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/auth-user`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/auth-user`,
+        {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
         });
+
         if (!response?.data?.success) {
             logout();
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
-        return { success: response.data.success, achievementsUnlocked: response.data.achievementsUnlocked || [] };
-    } catch (error:unknown) {
+
+        return {
+            success: response.data.success, 
+            achievementsUnlocked: response.data.achievementsUnlocked || [],
+            profileStatus: response.data.profileStatus || 'complete'
+        };
+    } catch (error: unknown) {
         logout();
-        return { success: false, achievementsUnlocked: [] };
+        return { success: false, achievementsUnlocked: [], profileStatus: 'complete' };
     }
 };
 
@@ -165,21 +172,18 @@ export const googleLogin = async (googleToken: string): Promise<string> => {
     }
 };
 
-export const updateUsername = async (username: string): Promise<boolean> => {
+export const updateUsername = async (username: string): Promise<UpdateUsernameResponse> => {
     try {
         const token = Cookies.get("token");
-        if (!token) throw tokenError
-
+        if (!token) throw tokenError;
         const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/update-username`, { username },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
+            { headers: {
+                Authorization: `Bearer ${token}`,
+            }}
         );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-        return response.data.success;
-    } catch (error:unknown) {
+        return { success: response.data.success, profileStatus: response.data.profileStatus || 'complete' };
+    } catch (error: unknown) {
         throw error;
     }
 };

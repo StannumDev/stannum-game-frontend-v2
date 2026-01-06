@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,21 +20,24 @@ export const GoogleAuthUsername = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
-    const router = useRouter();
 
     const onSubmit: SubmitHandler<Schema> = async ({ username }: Schema) => {
         setIsLoading(true);
         try {
-            router.prefetch('/dashboard');
             const usernameAvailable = await checkUsernameExists(username);
             if (!usernameAvailable) {
                 console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
-
-            const success = await updateUsername(username);
-            if (success) window.location.replace('/dashboard');
+            const { success, profileStatus } = await updateUsername(username);
+            if (success) {
+                if (profileStatus === 'needs_profile') {
+                    window.location.replace('/register/complete-profile');
+                } else {
+                    window.location.replace('/dashboard');
+                }
+            }
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             console.error("Error en el registro:", appError);

@@ -174,3 +174,16 @@ export interface FullUserDetails {
         unlockedDate: string;
     }>;
 }
+
+export type ProfileStatus = 'complete' | 'needs_username' | 'needs_profile';
+
+export interface AuthUserResponse {
+  success: boolean;
+  achievementsUnlocked: AchievementDetails[];
+  profileStatus: ProfileStatus;
+}
+
+export interface UpdateUsernameResponse {
+  success: boolean;
+  profileStatus: ProfileStatus;
+}

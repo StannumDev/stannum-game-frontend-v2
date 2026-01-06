@@ -100,7 +100,7 @@ export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPla
 
 // AUTH
 export { AuthUser } from "./auth/AuthUser";
-
+export { CompleteProfileForm } from "./auth/CompleteProfileForm";
 
 // LOGIN
 export { LoginForm } from "./auth/login/LoginForm";
