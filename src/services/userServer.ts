@@ -41,8 +41,6 @@ export const getUserByToken = async (): Promise<FullUserDetails> => {
 export const getUserDetailsByUsernameServer = async (username: string): Promise<FullUserDetails | null> => {
     try {
         const token = (await cookies()).get("token")
-        console.log(token?.value)
-        console.log(username)
         if (!token) throw tokenError
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
