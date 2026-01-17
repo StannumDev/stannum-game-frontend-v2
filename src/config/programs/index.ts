@@ -212,6 +212,24 @@ export const TIA_SUMMER_PROGRAM: Program = {
                     link: "https://docs.google.com/document/d/1iIxxIFbnV_pk3faDHrsGFZ72MpLSWQj6F2j0h0tzw28/edit?usp=sharing",
                     type: "document",
                 },
+                {
+                    title: "Grabación Sesión 01",
+                    description: "Repite la sesión cuando quieras",
+                    link: "https://drive.google.com/file/d/1ZmpBrRCPvQIIUxPExXccmWgU08rN8hdP/view?usp=sharing",
+                    type: "video",
+                },
+                {
+                    title: "Apuntes Sesión 01",
+                    description: "Conceptos clave",
+                    link: "https://drive.google.com/file/d/1RYdNNH_CcnBxBLNlLpDH7dZM4CCKis_L/view?usp=sharing",
+                    type: "document",
+                },
+                {
+                    title: "Ejercicios Sesión 01",
+                    description: "Ejercicios Prácticos de Consolidación",
+                    link: "https://drive.google.com/file/d/15bghdQyCuOEMv_FnKFiC_isuCepuvZe9/view?usp=sharing",
+                    type: "document",
+                },
                 // {
                 //     title: "Plantilla para el desarrollo del ROL",
                 //     description: "Documento",
