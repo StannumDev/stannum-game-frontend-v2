@@ -228,7 +228,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
                     title: "Ejercicios Sesión 01",
                     description: "Ejercicios Prácticos de Consolidación",
                     link: "https://drive.google.com/file/d/15bghdQyCuOEMv_FnKFiC_isuCepuvZe9/view?usp=sharing",
-                    type: "document",
+                    type: "activity",
                 },
                 // {
                 //     title: "Plantilla para el desarrollo del ROL",
