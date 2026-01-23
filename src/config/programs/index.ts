@@ -231,7 +231,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
                     type: "activity",
                 },
                 {
-                    title: "Grabación Sesión 01",
+                    title: "Grabación Sesión 02",
                     description: "Repite la sesión cuando quieras",
                     link: "https://drive.google.com/file/d/1ua6L2PiFTDUhgWmtJp6BbFuaaUWPlCLL/view?usp=sharing",
                     type: "video",
