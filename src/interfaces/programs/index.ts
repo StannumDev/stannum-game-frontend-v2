@@ -4,10 +4,12 @@ export type ProgramId = 'tmd' | 'tia' | 'tia_summer';
 export type ProgramCategory = '' | 'main' | 'free' | 'shorts';
 
 export interface Resource {
+    id?: string;
     title: string;
     description: string;
-    link: string;
-    type: 'document' | 'video' | 'presentation' | 'folder' | 'activity'
+    link?: string;
+    type: 'document' | 'video' | 'presentation' | 'folder' | 'activity';
+    children?: Array<Resource>;
 }
 
 export interface Instruction {
