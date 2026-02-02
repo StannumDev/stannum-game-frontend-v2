@@ -289,12 +289,6 @@ export const TIA_SUMMER_PROGRAM: Program = {
                             type: "document",
                         },
                         {
-                            title: "Ejercicios Sesión 03",
-                            description: "Ejercicios Prácticos de Consolidación",
-                            link: "https://drive.google.com/file/d/12--l0RIk0tnfUPzJhnsue9GXhdLQfrkj/view?usp=drive_link",
-                            type: "activity",
-                        },
-                        {
                             title: "PROMPTs Sesión 03",
                             description: "Instrucciones y PROMPTs de la sesión",
                             link: "https://docs.google.com/document/d/1W7GldKXlZMJWTL25vnkINO2YTu4qJlX8tl57yAhlxdU/edit?usp=drive_link",
@@ -317,6 +311,18 @@ export const TIA_SUMMER_PROGRAM: Program = {
                             description: "Documento de referencia",
                             link: "https://drive.google.com/file/d/1wFodtUNiVYsrv7LWq6L0j7jT__FDiivm/view?usp=drive_link",
                             type: "document",
+                        },
+                        {
+                            title: "Ejercicios Sesión 03",
+                            description: "Ejercicios Prácticos de Consolidación",
+                            link: "https://drive.google.com/file/d/12--l0RIk0tnfUPzJhnsue9GXhdLQfrkj/view?usp=drive_link",
+                            type: "activity",
+                        },
+                        {
+                            title: "Entrega Online de Tareas y Ejercicios",
+                            description: "Sube tu respuesta aquí",
+                            link: "https://drive.google.com/drive/folders/1mTxe5W65V_Q4a_5Zs1MeA1FUWll8hksd",
+                            type: "activity",
                         },
                     ],
                 },
