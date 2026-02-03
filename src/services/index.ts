@@ -3,6 +3,7 @@ export * from './profilePhoto';
 export * from './user';
 export * from './userServer';
 export * from './lesson';
+export * from './instruction';
 export * from './productKey';
 export * from './ranking';
 export * from './assistant';

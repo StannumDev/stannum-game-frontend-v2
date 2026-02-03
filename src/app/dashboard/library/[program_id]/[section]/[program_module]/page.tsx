@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import { GoBackButton, ProgramLessonCard, ProgramInstructionCard } from '@/components';
 import { programs } from "@/config/programs";
 import { getUserByToken } from '@/services';
-import type { Module, Program, Section, Instruction } from '@/interfaces';
-import { isLessonAvailable } from '@/utilities';
+import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
+import { isLessonAvailable, isInstructionAvailable } from '@/utilities';
 
 interface Props {
   params: Promise<{
@@ -11,6 +11,25 @@ interface Props {
     section: string;
     program_module: string;
   }>;
+}
+
+type ModuleItem = { type: 'lesson'; lesson: Lesson; index: number } | { type: 'instruction'; instruction: Instruction; index: number };
+
+function buildModuleItems(module: Module): ModuleItem[] {
+    const items: ModuleItem[] = [];
+    let lessonIndex = 0;
+    let instructionIndex = 0;
+    for (const lesson of module.lessons) {
+        lessonIndex++;
+        items.push({ type: 'lesson', lesson, index: lessonIndex });
+
+        const instructionsAfter = module.instructions.filter(i => i.afterLessonId === lesson.id);
+        for (const instr of instructionsAfter) {
+            instructionIndex++;
+            items.push({ type: 'instruction', instruction: instr, index: instructionIndex });
+        }
+    }
+    return items;
 }
 
 export default async function ProgramModulePage({ params }: Props) {
@@ -26,8 +45,11 @@ export default async function ProgramModulePage({ params }: Props) {
     if (!foundModule) return notFound();
 
     const user = await getUserByToken();
-    const userLessons = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted || [];
-    const userInstructions = user.programs?.[program_id as keyof typeof user.programs]?.instructions || [];
+    const programId = program_id as ProgramId;
+    const userLessons = user.programs?.[programId]?.lessonsCompleted || [];
+    const userInstructions = user.programs?.[programId]?.instructions || [];
+    const items = buildModuleItems(foundModule);
+
     return (
         <section className="w-full">
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
@@ -36,52 +58,40 @@ export default async function ProgramModulePage({ params }: Props) {
                 <h2 className="subtitle-1 no-truncate">{foundModule.description}</h2>
             </div>
             <div className='mt-6 w-full'>
-                { foundModule.lessons.length > 0 && 
-                    <section className="mt-4 w-full">
-                        <h3 className="subtitle-1">Lecciones</h3>
-                        <div className="mt-4 w-full flex flex-col gap-4">
-                            {foundModule.lessons.map((lesson, index) => {
-                            const isCompleted = userLessons.some((ul) => ul.lessonId === lesson.id);
-                            const isAvailable = isLessonAvailable(user, foundModule, lesson.id);
-                            const isBlocked = lesson.blocked;
+                <div className="mt-4 w-full flex flex-col gap-4">
+                    {items.map((item) => {
+                        if (item.type === 'lesson') {
+                            const isCompleted = userLessons.some((ul) => ul.lessonId === item.lesson.id);
+                            const isAvailable = isLessonAvailable(user, programId, foundModule, item.lesson.id);
+                            const isBlocked = item.lesson.blocked;
                             return (
                                 <ProgramLessonCard
-                                    key={lesson.id}
-                                    index={index + 1}
+                                    key={item.lesson.id}
+                                    index={item.index}
                                     programName={program_id}
-                                    id={lesson.id}
-                                    title={lesson.title}
+                                    id={item.lesson.id}
+                                    title={item.lesson.title}
                                     isCompleted={isCompleted}
                                     isAvailable={isAvailable}
                                     isBlocked={isBlocked}
                                 />
                             );
-                            })}
-                        </div>
-                    </section>
-                }
-                { foundModule.instructions.length > 0 &&
-                    <section className="mt-6 w-full">
-                        <h3 className="subtitle-1">Instrucciones</h3>
-                        <div className="mt-4 w-full flex flex-col gap-4">
-                            {foundModule.instructions.map((instruction: Instruction, index: number) => {
-                                const userInstruction = userInstructions.find((ui) => ui.instructionId === instruction.id);
-                                const completed = userInstruction?.status === "GRADED";
-                                const inProcess = userInstruction?.status === "IN_PROCESS" || userInstruction?.status === "SUBMITTED";
-                                return (
-                                    <ProgramInstructionCard
-                                        key={instruction.id}
-                                        index={index + 1}
-                                        programName={program_id}
-                                        instruction={instruction}
-                                        completed={completed}
-                                        inProcess={inProcess}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </section>
-                }
+                        } else {
+                            const userInstruction = userInstructions.find((ui) => ui.instructionId === item.instruction.id);
+                            const isAvailable = isInstructionAvailable(user, programId, item.instruction);
+                            return (
+                                <ProgramInstructionCard
+                                    key={item.instruction.id}
+                                    index={item.index}
+                                    programName={program_id}
+                                    instruction={item.instruction}
+                                    isAvailable={isAvailable}
+                                    userInstruction={userInstruction}
+                                />
+                            );
+                        }
+                    })}
+                </div>
             </div>
         </section>
     );

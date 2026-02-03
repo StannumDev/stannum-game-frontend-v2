@@ -34,17 +34,32 @@ export const startInstruction = async (programName: string, instructionId: strin
     }
 };
 
-export const submitInstruction = async (programName: string, instructionId: string): Promise<boolean> => {
+export const submitInstruction = async (programName: string, instructionId: string, deliverable?: { file?: File; text?: string }): Promise<boolean> => {
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError;
 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}/submit/${programName}/${instructionId}`, {},
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const url = `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}/submit/${programName}/${instructionId}`;
+
+        let response;
+        if (deliverable?.file) {
+            const formData = new FormData();
+            formData.append("file", deliverable.file);
+            response = await axios.post(url, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+        } else {
+            response = await axios.post(url, {
+                submittedText: deliverable?.text || undefined,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        }
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;

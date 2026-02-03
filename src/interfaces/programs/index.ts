@@ -23,6 +23,12 @@ export interface Instruction {
     maxFileSizeMB: number;
     deliverableHint: string;
     resources: Array<Resource>;
+    afterLessonId: string;
+    relatedLessonIds?: Array<string>;
+    estimatedTimeSec: number;
+    deliverableType: 'file' | 'text';
+    tools?: Array<string>;
+    steps: Array<string>;
 }
   
 export interface Lesson {

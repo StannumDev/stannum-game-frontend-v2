@@ -16,6 +16,8 @@ interface Props {
     lesson: Lesson;
     moduleLessons: Array<Lesson>;
     isCompleted: boolean;
+    isNextLessonAvailable: boolean;
+    nextInstruction?: { id: string; title: string };
     userId: string;
 }
 
@@ -28,7 +30,7 @@ const END_THRESHOLD = 10;
 const NEXT_COUNTDOWN = 15;
 const SAVE_INTERVAL_MS = 10_000;
 
-export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, userId }: Props) => {
+export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, userId }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -109,8 +111,10 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 if (counter <= 0) {
                     clearInterval(redirectTimeout.current!);
                     redirectTimeout.current = null;
-                    if (nextLesson) {
+                    if (nextLesson && isNextLessonAvailable) {
                         router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`);
+                    } else if (nextInstruction) {
+                        router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`);
                     } else {
                         router.push(`/dashboard/library/${program.toLowerCase()}`);
                     }
@@ -151,7 +155,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
 
     return (
         <div className='w-full aspect-video relative rounded-lg border border-card cursor-pointer overflow-hidden'>
-            {showNextOverlay && nextLesson && (
+            {showNextOverlay && nextLesson && isNextLessonAvailable && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
                     <p className="text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
@@ -168,12 +172,33 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button onClick={cancelRedirect} className="btn-secondary">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="btn-primary">Siguiente lección</button>
+                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Siguiente lección</button>
                     </div>
                 </div>
             )}
-
+            {showNextOverlay && nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
+                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    <p className="text-lg font-bold text-center">Completá la instrucción para seguir avanzando ({countdown}s)</p>
+                    <div className="flex flex-col items-center gap-1">
+                        <p className="text-sm opacity-80">Siguiente instrucción</p>
+                        <p className="font-semibold">{nextInstruction.title}</p>
+                    </div>
+                    <div className="flex gap-4 mt-2">
+                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir a la instrucción</button>
+                    </div>
+                </div>
+            )}
+            {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
+                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    <p className="text-lg font-bold text-center">Volviendo al módulo ({countdown}s)</p>
+                    <div className="flex gap-4 mt-2">
+                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir al módulo</button>
+                    </div>
+                </div>
+            )}
             <MuxPlayer
                 key={lesson.id}
                 ref={videoRef}
