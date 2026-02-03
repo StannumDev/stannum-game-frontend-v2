@@ -8,10 +8,11 @@ interface Props{
     showModal: boolean;
     setShowModal: Dispatch<SetStateAction<boolean>>;
     className?: string;
+    disableClose?: boolean;
     children: ReactNode;
 }
 
-export const Modal = ({showModal, setShowModal, children, className}:Props) => {
+export const Modal = ({showModal, setShowModal, children, className, disableClose}:Props) => {
 
     useEffect(() => {
         if(showModal) {
@@ -21,7 +22,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
         }
 
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && !disableClose) {
                 setShowModal(false);
             }
         };
@@ -45,7 +46,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.125 }}
                         className="w-full h-dvh bg-gradient-to-br from-black/75 to to-black fixed top-0 left-0 z-10"
-                        onClick={ () => { setShowModal(false) }}
+                        onClick={ () => { if(!disableClose) setShowModal(false) }}
                     ></motion.div>
                     <motion.div
                         initial={{ opacity: 0, scale: 0 }}
@@ -57,7 +58,7 @@ export const Modal = ({showModal, setShowModal, children, className}:Props) => {
                         }}
                         className={`w-full h-[75svh] lg:h-auto card relative z-50 ${className}`}
                     >
-                        <button onClick={ () => { setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className="size-6 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-3 right-0 -translate-y-full z-[9999999999] transition-all duration-200 ease-in-out">
+                        <button onClick={ () => { if(!disableClose) setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className={`size-6 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-3 right-0 -translate-y-full z-[9999999999] transition-all duration-200 ease-in-out ${disableClose ? 'opacity-50 pointer-events-none' : ''}`}>
                             <span className="sr-only">Cerrar</span>
                             <CrossIcon className="size-8"/>
                         </button>

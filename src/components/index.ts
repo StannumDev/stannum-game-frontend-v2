@@ -42,7 +42,6 @@ export { UserProfileWrapper } from "./dashboard/profile/UserProfileWrapper";
 export { UserProfileDetails } from "./dashboard/profile/UserProfileDetails";
 export { UserProfilePhoto } from "./dashboard/profile/user-details/UserProfilePhoto";
 export { UserProfileEditPhoto } from "./dashboard/profile/user-details/UserProfileEditPhoto";
-export { UserProfileDeletePhoto } from "./dashboard/profile/user-details/UserProfileDeletePhoto";
 export { UserProfileCover } from "./dashboard/profile/user-details/UserProfileCover";
 export { UserProfileEditCover } from "./dashboard/profile/user-details/UserProfileEditCover";
 export { UserProfileLevel } from "./dashboard/profile/user-details/UserProfileLevel";

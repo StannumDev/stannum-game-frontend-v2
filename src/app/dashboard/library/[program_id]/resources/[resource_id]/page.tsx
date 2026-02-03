@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Program, Resource } from "@/interfaces";
 import { programs } from "@/config/programs";
-import { DocumentIcon, EditIcon, FolderColourIcon, PlayCircleIcon, SlidesIcon } from "@/icons";
+import { DocumentIcon, EditIcon, FolderColourIcon, PlayCircleIcon, SlidesIcon, UploadIcon } from "@/icons";
 import { GoBackButton } from "@/components/ui/GoBackButton";
 import Link from "next/link";
 
@@ -18,6 +18,7 @@ function ResourceIcon({ type }: { type: Resource['type'] }) {
         type === "presentation" ? <SlidesIcon className="text-[#ffba00] size-12"/> :
         type === "activity" ? <EditIcon className="text-stannum size-12"/> :
         type === "video" ? <PlayCircleIcon className="text-invalid size-12"/> :
+        type === "submission" ? <UploadIcon className="text-gray-900 size-12"/> :
         null;
 }
 
@@ -41,14 +42,14 @@ export default async function ProgramResourceFolderPage({ params }: Props) {
                                 key={i}
                                 href={resource.link}
                                 target="_blank"
-                                className="w-full p-4 lg:p-6 rounded-lg bg-card border border-card-light card-link flex items-center gap-4 lg:gap-6"
+                                className={`w-full p-4 lg:p-6 rounded-lg flex items-center gap-4 lg:gap-6 transition-opacity ${resource.type === "submission" ? "bg-gradient-to-r from-[#00FFCC] to-[#4fffdc] hover:opacity-80 text-gray-900" : "bg-card border border-card-light card-link"}`}
                             >
                                 <div className="size-12 shrink-0">
                                     <ResourceIcon type={resource.type} />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <h4 className="text-lg leading-tight font-semibold sm:line-clamp-2">{resource.title}</h4>
-                                    <h5 className="mt-2 subtitle-1 no-truncate sm:line-clamp-2">{resource.description}</h5>
+                                    <h5 className={`mt-2 no-truncate sm:line-clamp-2 ${resource.type === "submission" ? "text-gray-700" : "subtitle-1"}`}>{resource.description}</h5>
                                 </div>
                             </Link>
                         ) : null

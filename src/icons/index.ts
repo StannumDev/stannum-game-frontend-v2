@@ -86,6 +86,7 @@ export {
     MdCampaign as MarketingIcon,
     MdSpeed as ProductivityIcon,
     MdOutlineAttachMoney as SalesIcon,
+    MdRotateRight as RotateRightIcon,
 } from "react-icons/md";
 
 export {
