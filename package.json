@@ -39,7 +39,6 @@
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-avatar-editor": "^13.0.3",
     "@types/react-dom": "^18",
     "@types/react-google-recaptcha": "^2.1.9",
     "eslint": "^9.39.2",

@@ -78,7 +78,7 @@ export const RegisterPhotoStep = () => {
                             color={[31, 31, 31, 0.6]}
                             scale={zoom}
                             rotate={rotate}
-                            className="!size-full absolute top-0 left-0 rounded"
+                            style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '0.25rem' }}
                         />
                     </div>
                     <div className="mt-4 w-full">
