@@ -17,7 +17,7 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
                     <UserProfileCover owner={owner}/>
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
-                            <UserProfilePhoto owner={owner} user={user} fetchUserData={fetchUserData}/>
+                            <UserProfilePhoto owner={owner} user={user}/>
                             <p className="mt-4 title-2">{user?.username}</p>
                             <p className="font-semibold text-stannum">{user?.enterprise?.name || ''}</p>
                         </div>
