@@ -8,7 +8,7 @@ export interface Resource {
     title: string;
     description: string;
     link?: string;
-    type: 'document' | 'video' | 'presentation' | 'folder' | 'activity';
+    type: 'document' | 'video' | 'presentation' | 'folder' | 'activity' | 'submission';
     children?: Array<Resource>;
 }
 
