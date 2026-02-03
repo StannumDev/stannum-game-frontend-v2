@@ -36,18 +36,30 @@ export const TIA_PROGRAM: Program = {
                         { id: "TIAM01L07", title: "Ejercicio: \"UN LIBRO\"", longTitle: "Ejercicio: \"UN LIBRO\" - Dominio de PROMPTS | TRENNO IA", description: "¡Prepárate para llevar tus interacciones con la IA al siguiente nivel! Este video es tu campo de entrenamiento para convertirte en un verdadero maestro del Prompt Engineering con ChatGPT.<br/> ¿Listo para una sesión intensiva? Aquí aprenderás a construir prompts que no solo obtengan respuestas, sino que te brinden soluciones accionables y personalizadas, como si tuvieras un equipo de expertos dedicados.<br/> Descubre cómo optimizar tu juego:<br/> Define tu Sustantivo Clave/Tema: La base de tu estrategia. ¿Sobre qué quieres que la IA se concentre?<br/> Marca tu Verbo/Intención: No es solo preguntar, es dirigir la acción. ¿Qué acción específica quieres que realice la IA?<br/> Asigna un Rol: Transforma la IA en un experto aliado. ¿Quieres que actúe como un especialista en marketing digital, un autor o incluso un amigo?<br/> Perfecciona la Forma/Salida/Respuesta: Diseña la presentación. Desde rankings detallados hasta resúmenes por capítulos, la forma de la respuesta es clave para su utilidad.<br/> Añade Contexto Infinito: La profundidad es poder. Cuantos más detalles y matices le des, más relevante y adaptada será la respuesta a tus necesidades específicas (por ejemplo, cómo implementar una estrategia de marketing en tu propia empresa).<br/> Incluye Adjetivos: Dale el toque final. ¿Qué tan creativo, práctico o directo quieres que sea el resultado?<br/> Observa la evolución en acción: Desde una búsqueda básica hasta un plan de implementación detallado de 3 semanas, con roles, tareas diarias y consejos específicos para tu equipo. Este video demuestra cómo cada capa de un prompt bien diseñado te acerca a la perfección en la productividad y la estrategia.<br/> ¡Es hora de entrenar a tu IA como un campeón! Aplica estas técnicas y transforma la forma en que trabajas.<br/>", duration: 582, muxPlaybackId: muxPlaybackIds["TIAM01L07"] ?? "" },
                     ],
                     instructions: [
-                        // {
-                        //     id: "TIAM01I01",
-                        //     title: "Organiza tu carpeta principal",
-                        //     shortDescription: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
-                        //     description: "Hola",
-                        //     difficulty: "LOW",
-                        //     rewardXP: 200,
-                        //     acceptedFormats: [".jpg", ".jpeg", ".png"],
-                        //     maxFileSizeMB: 15,
-                        //     deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive.",
-                        //     resources: [],
-                        // }
+                        {
+                            id: "TIAM01I01",
+                            title: "Organiza tu carpeta principal",
+                            shortDescription: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
+                            description: "En esta instrucción vas a organizar la carpeta principal de tu negocio en Google Drive siguiendo las mejores prácticas que aprendiste en las lecciones anteriores.",
+                            difficulty: "LOW",
+                            rewardXP: 200,
+                            acceptedFormats: [".jpg", ".jpeg", ".png"],
+                            maxFileSizeMB: 15,
+                            deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive.",
+                            resources: [],
+                            afterLessonId: "TIAM01L05",
+                            relatedLessonIds: ["TIAM01L03", "TIAM01L05"],
+                            estimatedTimeSec: 900,
+                            deliverableType: "file",
+                            tools: ["Google Drive", "ChatGPT"],
+                            steps: [
+                                "Crear una cuenta en Google Drive, en caso de no tenerla.",
+                                "Descargar Google Drive en su computadora.",
+                                "Crear la carpeta principal de tu negocio con las áreas principales como subcarpetas.",
+                                "Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.",
+                                "Dar acceso a los miembros de tu equipo a las carpetas correspondientes.",
+                            ],
+                        }
                     ]
                 },
                 {
@@ -164,7 +176,32 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         { id: "TIASM01L06", title: "Comprender la INTERFAZ de ChatGPT", longTitle: "Comprender la INTERFAZ de ChatGPT - Dominio de PROMPTS | TRENNO IA", description: "Sin descripción.", duration: 434, muxPlaybackId: muxPlaybackIds["TIAM01L06"] ?? "" },
                         { id: "TIASM01L07", title: "Ejercicio: \"UN LIBRO\"", longTitle: "Ejercicio: \"UN LIBRO\" - Dominio de PROMPTS | TRENNO IA", description: "¡Prepárate para llevar tus interacciones con la IA al siguiente nivel! Este video es tu campo de entrenamiento para convertirte en un verdadero maestro del Prompt Engineering con ChatGPT.<br/> ¿Listo para una sesión intensiva? Aquí aprenderás a construir prompts que no solo obtengan respuestas, sino que te brinden soluciones accionables y personalizadas, como si tuvieras un equipo de expertos dedicados.<br/> Descubre cómo optimizar tu juego:<br/> Define tu Sustantivo Clave/Tema: La base de tu estrategia. ¿Sobre qué quieres que la IA se concentre?<br/> Marca tu Verbo/Intención: No es solo preguntar, es dirigir la acción. ¿Qué acción específica quieres que realice la IA?<br/> Asigna un Rol: Transforma la IA en un experto aliado. ¿Quieres que actúe como un especialista en marketing digital, un autor o incluso un amigo?<br/> Perfecciona la Forma/Salida/Respuesta: Diseña la presentación. Desde rankings detallados hasta resúmenes por capítulos, la forma de la respuesta es clave para su utilidad.<br/> Añade Contexto Infinito: La profundidad es poder. Cuantos más detalles y matices le des, más relevante y adaptada será la respuesta a tus necesidades específicas (por ejemplo, cómo implementar una estrategia de marketing en tu propia empresa).<br/> Incluye Adjetivos: Dale el toque final. ¿Qué tan creativo, práctico o directo quieres que sea el resultado?<br/> Observa la evolución en acción: Desde una búsqueda básica hasta un plan de implementación detallado de 3 semanas, con roles, tareas diarias y consejos específicos para tu equipo. Este video demuestra cómo cada capa de un prompt bien diseñado te acerca a la perfección en la productividad y la estrategia.<br/> ¡Es hora de entrenar a tu IA como un campeón! Aplica estas técnicas y transforma la forma en que trabajas.<br/>", duration: 582, muxPlaybackId: muxPlaybackIds["TIAM01L07"] ?? "" },
                     ],
-                    instructions: []
+                    instructions: [
+                        {
+                            id: "TIASM01I01",
+                            title: "Organiza tu carpeta principal",
+                            shortDescription: "Sube una captura de pantalla de cómo estructuraste tu carpeta de Google Drive.",
+                            description: "En esta instrucción vas a organizar la carpeta principal de tu negocio en Google Drive siguiendo las mejores prácticas que aprendiste en las lecciones anteriores.",
+                            difficulty: "LOW",
+                            rewardXP: 200,
+                            acceptedFormats: [".jpg", ".jpeg", ".png"],
+                            maxFileSizeMB: 15,
+                            deliverableHint: "Sube una imagen clara que muestre tu estructura de carpetas en Drive.",
+                            resources: [],
+                            afterLessonId: "TIASM01L05",
+                            relatedLessonIds: ["TIASM01L03", "TIASM01L05"],
+                            estimatedTimeSec: 900,
+                            deliverableType: "file",
+                            tools: ["Google Drive", "ChatGPT"],
+                            steps: [
+                                "Crear una cuenta en Google Drive, en caso de no tenerla.",
+                                "Descargar Google Drive en su computadora.",
+                                "Crear la carpeta principal de tu negocio con las áreas principales como subcarpetas.",
+                                "Descargar la aplicación de Google Drive en tu celular y acceder a tu cuenta.",
+                                "Dar acceso a los miembros de tu equipo a las carpetas correspondientes.",
+                            ],
+                        }
+                    ]
                 },
                 {
                     id: "TIASM02",

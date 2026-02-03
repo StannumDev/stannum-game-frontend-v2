@@ -93,6 +93,7 @@ export { LessonMiniatureCard } from "./dashboard/program/lessons/LessonMiniature
 
 export { ProgramInstructionCard } from "./dashboard/program/instructions/ProgramInstructionCard";
 export { ProgramInstructionDetails } from "./dashboard/program/instructions/ProgramInstructionDetails";
+export { InstructionMiniatureCard } from "./dashboard/program/instructions/InstructionMiniatureCard";
 
 export { ProgramRankingLayout } from "./dashboard/program/sections/ProgramRankingLayout";
 export { ProgramTeamRankingCard } from "./dashboard/program/ranking/ProgramTeamRankingCard";

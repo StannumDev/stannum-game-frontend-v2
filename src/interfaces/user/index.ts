@@ -1,5 +1,3 @@
-import { Instruction } from "../programs";
-
 export interface BaseUser {
     id: string;
     username: string;
@@ -46,7 +44,7 @@ export interface AchievementDetails {
 export interface ProgramDetails {
     isPurchased: boolean;
     acquiredAt?: string;
-    instructions: Array<Instruction>;
+    instructions: Array<InstructionDetails>;
     lessonsCompleted: Array<LessonDetails>;
     lastWatchedLesson?: Array<LessonDetails>;
     // tests: Array<TestDetails>;
@@ -98,17 +96,7 @@ export interface UserFavorites {
 export interface UserProgram {
     isPurchased: boolean;
     acquiredAt?: string;
-    instructions: {
-        instructionId: string;
-        startDate: string;
-        submittedAt?: string;
-        reviewedAt?: string;
-        score?: number;
-        observations?: string;
-        xpGrantedAt?: string;
-        estimatedTimeSec?: number;
-        status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
-    }[];
+    instructions: Array<InstructionDetails>;
     lessonsCompleted: {
         lessonId: string;
         viewedAt: string;

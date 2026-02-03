@@ -1,4 +1,5 @@
 import type { FullUserDetails, Program, Lesson, ContinueEntry, ProgramId } from "@/interfaces";
+import { isLessonAvailable } from "./lessons";
 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
@@ -8,9 +9,15 @@ const flattenLessons = (program: Program): Lesson[] => program.sections.flatMap(
 const isLessonCompleted = (user: FullUserDetails, programId: string, lessonId: string) => !!user.programs?.[programId as keyof FullUserDetails["programs"]]?.lessonsCompleted?.some(l => l.lessonId === lessonId);
 
 const nextUncompletedLesson = (program: Program, user: FullUserDetails): Lesson | null => {
-    const all = flattenLessons(program);
-    const next = all.find(l => !isLessonCompleted(user, program.id, l.id));
-    return next || null;
+    const programId = program.id as ProgramId;
+    for (const section of program.sections) {
+        for (const mod of section.modules || []) {
+            for (const lesson of mod.lessons) {
+                if (!isLessonCompleted(user, program.id, lesson.id) && isLessonAvailable(user, programId, mod, lesson.id)) return lesson;
+            }
+        }
+    }
+    return null;
 };
 
 const pctFrom = (current: number, total: number) => {

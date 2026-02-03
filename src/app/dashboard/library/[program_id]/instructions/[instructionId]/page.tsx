@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getUserByToken } from "@/services";
-import { Instruction, Module, Program, Section } from "@/interfaces";
+import { isInstructionAvailable } from "@/utilities";
+import { Instruction, InstructionDetails, Lesson, Module, Program, ProgramId, Section } from "@/interfaces";
 import { programs } from "@/config/programs";
 import { GoBackButton, ProgramInstructionDetails } from "@/components";
 
@@ -55,6 +56,9 @@ export default async function InstructionPage({ params }: Props) {
     const { program_id, instructionId } = await params;
     const program = programs.find(p => p.id === program_id.toLowerCase());
     if (!program) return notFound();
+
+    const programId = program_id as ProgramId;
+
     let section: Section | undefined;
     let program_module: Module | undefined;
     for (const sec of program.sections) {
@@ -66,16 +70,30 @@ export default async function InstructionPage({ params }: Props) {
         }
     }
     if (!section || !program_module) return notFound();
+
     const instruction = program_module.instructions.find(l => l.id === instructionId);
     if (!instruction) return notFound();
-    
+
     const user = await getUserByToken();
-    const isCompleted = user.programs?.[program_id as keyof typeof user.programs]?.instructions.some((ul) => ul.instructionId === instruction.id);
+
+    const isAvailable = isInstructionAvailable(user, programId, instruction);
+    if (!isAvailable) return notFound();
+
+    const userProgram = user.programs?.[programId];
+    const userInstruction: InstructionDetails | undefined = userProgram?.instructions.find((ui) => ui.instructionId === instruction.id);
+
+    const relatedLessons: Lesson[] = (instruction.relatedLessonIds || []).map(id => program_module!.lessons.find(l => l.id === id)).filter((l): l is Lesson => l !== undefined);
+
     return (
-        <main className="main-container p-0 flex flex-col items-start">
+        <main className="main-container min-h-0 p-0 flex flex-col items-start">
             <h1 className="sr-only">{instruction.title}</h1>
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
-            <ProgramInstructionDetails instruction={instruction} isCompleted={isCompleted} />
+            <ProgramInstructionDetails
+                programId={programId}
+                instruction={instruction}
+                userInstruction={userInstruction}
+                relatedLessons={relatedLessons}
+            />
         </main>
     );
 }

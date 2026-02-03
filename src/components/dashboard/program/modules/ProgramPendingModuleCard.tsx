@@ -8,11 +8,11 @@ interface Props {
     instructionsProgress: number;
 }
 
-export const ProgramPendingModuleCard = ({ index, title, lessonsProgress }:Props) => {
+export const ProgramPendingModuleCard = ({ index, title, lessonsProgress, instructionsProgress }:Props) => {
 
     const getOffset = (progress: number) => 50 + (100 - 50) * (1 - progress / 100);
     const lessonsOffset = getOffset(lessonsProgress);
-    // const instructionsOffset = getOffset(instructionsProgress);
+    const instructionsOffset = getOffset(instructionsProgress);
 
     return (
         <div className='w-full h-16 lg:h-20 bg-card lg:bg-card/25 hover:bg-card-light/40 flex items-center rounded-lg relative overflow-hidden group cursor-pointer transition-200'>
@@ -26,33 +26,29 @@ export const ProgramPendingModuleCard = ({ index, title, lessonsProgress }:Props
             <div className="w-fit flex items-center lg:gap-4 shrink-0">
                 <div className='sr-only lg:not-sr-only subtitle-1 text-white/25'>En proceso</div>
                 <div className='lg:p-2 flex gap-1 lg:gap-2 lg:bg-card lg:border-2 lg:border-card-light lg:rounded-full relative z-10'>
-                    <div className={`size-9 ${ lessonsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
+                    <div className={`size-9 ${ lessonsProgress < 100 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Lecciones</span>
-                        <VideosIcon className={`size-4 ${ lessonsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
-                        { lessonsOffset > 0 &&
+                        <VideosIcon className={`size-4 ${ lessonsProgress < 100 ? 'text-white/50' : 'text-stannum' }`}/>
+                        { lessonsProgress < 100 &&
                             <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
                                 <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: lessonsOffset }}/>
                             </svg>
                         }
                     </div>
-                    <div className={`size-9 bg-card-light rounded-full opacity-25 flex justify-center items-center relative`}>
-                        <span className="sr-only">Misiones</span>
-                        <PaperIcon className="size-4 text-white/50"/>
-                    </div>
-                    {/* <div className={`size-9 ${ instructionsOffset > 0 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
+                    <div className={`size-9 ${ instructionsProgress < 100 ? 'bg-card-light' : 'lg:bg-stannum/40' }  rounded-full flex justify-center items-center relative`}>
                         <span className="sr-only">Instrucciones</span>
-                        <CompassIcon className={`size-4 ${ instructionsOffset > 0 ? 'text-white/50' : 'text-stannum' }`}/>
-                        { instructionsOffset > 0 &&
+                        <CompassIcon className={`size-4 ${ instructionsProgress < 100 ? 'text-white/50' : 'text-stannum' }`}/>
+                        { instructionsProgress < 100 &&
                             <svg className="size-full absolute top-0 left-0 -rotate-90" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-transparent"/>
                                 <circle cx="9" cy="9" r="8" fill="none" strokeWidth="1" strokeDasharray="100" strokeLinejoin={'round'} strokeLinecap={'round'} className="stroke-current text-stannum" style={{ strokeDashoffset: instructionsOffset }}/>
                             </svg>
                         }
-                    </div> */}
+                    </div>
                     <div className={`size-9 bg-card-light rounded-full opacity-25 flex justify-center items-center relative`}>
-                        <span className="sr-only">Instrucciones</span>
-                        <CompassIcon className="size-4 text-white/50"/>
+                        <span className="sr-only">Misiones</span>
+                        <PaperIcon className="size-4 text-white/50"/>
                     </div>
                 </div>
             </div>
