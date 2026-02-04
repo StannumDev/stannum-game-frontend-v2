@@ -77,12 +77,23 @@ export default async function LessonPage({ params }: Props) {
     const isCompleted = user.programs?.[program_id as keyof typeof user.programs]?.lessonsCompleted.some((ul) => ul.lessonId === lesson.id);
     const currentIndex = program_module.lessons.findIndex(l => l.id === lesson.id);
     const nextLessonObj = program_module.lessons[currentIndex + 1];
-    const isNextLessonAvailable = nextLessonObj ? isLessonAvailable(user, programId, program_module, nextLessonObj.id) : false;
+    const isNextLessonAvailable = nextLessonObj ? isLessonAvailable(user, programId, program_module, nextLessonObj.id, [lesson.id]) : false;
 
     const userInstructions = user.programs?.[programId]?.instructions || [];
 
     const nextInstructionConfig = program_module.instructions.find(inst => inst.afterLessonId === lesson.id);
     const nextInstruction = nextInstructionConfig ? { id: nextInstructionConfig.id, title: nextInstructionConfig.title } : undefined;
+
+    const allModulesWithSection: Array<{ module: Module; section: Section }> = [];
+    for (const sec of program.sections) {
+        for (const mod of sec.modules || []) {
+            allModulesWithSection.push({ module: mod, section: sec });
+        }
+    }
+    const currentModuleIndex = allModulesWithSection.findIndex(m => m.module.id === program_module.id);
+    const nextModuleEntry = allModulesWithSection[currentModuleIndex + 1];
+    const nextModuleFirstLesson = nextModuleEntry?.module.lessons[0];
+    const nextModule = nextModuleEntry && nextModuleFirstLesson ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
 
     const miniatureItems: Array<{ type: 'lesson'; lesson: Lesson; index: number } | { type: 'instruction'; instruction: Instruction }> = [];
     program_module.lessons.forEach((l, i) => {
@@ -136,6 +147,7 @@ export default async function LessonPage({ params }: Props) {
                         isCompleted={isCompleted}
                         isNextLessonAvailable={isNextLessonAvailable}
                         nextInstruction={nextInstruction}
+                        nextModule={nextModule}
                         userId={user.username}
                     />
                 </div>

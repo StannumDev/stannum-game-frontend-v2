@@ -1,6 +1,6 @@
 import type { FullUserDetails, Instruction, Module, ProgramId } from "@/interfaces";
 
-export const isLessonAvailable = (user: FullUserDetails, programId: ProgramId, module: Module, lessonId: string): boolean => {
+export const isLessonAvailable = (user: FullUserDetails, programId: ProgramId, module: Module, lessonId: string, extraCompletedLessons?: string[]): boolean => {
     const lesson = module.lessons.find(l => l.id === lessonId);
     if (!lesson) return false;
     if (lesson.blocked) return false;
@@ -8,7 +8,10 @@ export const isLessonAvailable = (user: FullUserDetails, programId: ProgramId, m
     const lessonIndex = module.lessons.findIndex(l => l.id === lessonId);
     if (lessonIndex === 0) return true;
 
-    const userLessons = (user.programs?.[programId]?.lessonsCompleted || []).map(l => l.lessonId);
+    const userLessons = [
+        ...(user.programs?.[programId]?.lessonsCompleted || []).map(l => l.lessonId),
+        ...(extraCompletedLessons || []),
+    ];
     const previousLessons = module.lessons.slice(0, lessonIndex);
     const allPreviousCompleted = previousLessons.filter(l => !l.blocked).every(l => userLessons.includes(l.id));
     if (!allPreviousCompleted) return false;

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
 import { CheckIcon, ClockIcon, CompassIcon, CrossIcon, CrownIcon, HourglassIcon, PlayIcon, SpinnerIcon, UploadIcon, ExternalLinkIcon } from "@/icons";
 import { startInstruction, submitInstruction } from "@/services";
 import { Instruction, InstructionDetails, Lesson, ProgramId, Resource } from "@/interfaces";
@@ -127,29 +126,9 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
 
     return (
         <div className="w-full lg:py-6 lg:bg-card lg:rounded-lg">
-            <div className='w-full lg:px-6 flex items-start justify-between gap-4'>
-                <div className='flex flex-col'>
-                    <span className='subtitle-1'>Instrucción</span>
-                    <h2 className='w-full title-2 text-xl'>{title}</h2>
-                </div>
-                {!isStarted && (
-                    <motion.button
-                        type="button"
-                        onClick={handleStart}
-                        disabled={isLoading}
-                        whileHover={{ scale: 1.06, boxShadow: '0 0 24px rgba(244,80,80,0.4)' }}
-                        whileTap={{ scale: 0.9 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                        className="size-20 lg:size-24 bg-invalid disabled:opacity-50 rounded-xl text-white flex flex-col justify-center items-center gap-1.5 shrink-0 shadow-lg shadow-invalid/20 cursor-pointer"
-                    >
-                        {isLoading ? <SpinnerIcon className="size-8 animate-spin" /> :
-                            <>
-                                <PlayIcon className="size-7 lg:size-8" />
-                                <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wider">Comenzar</span>
-                            </>
-                        }
-                    </motion.button>
-                )}
+            <div className='w-full lg:px-6 flex flex-col'>
+                <span className='subtitle-1'>Instrucción</span>
+                <h2 className='w-full title-2 text-xl'>{title}</h2>
             </div>
             <div className="mt-6 pb-6 lg:p-6 lg:pt-0 border-b border-white/10 grid grid-cols-2 gap-4 lg:flex lg:gap-8 lg:flex-wrap">
                 <div className='flex items-center gap-2'>
@@ -205,11 +184,30 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                 </div>
             </div>
             <div className="mt-6 w-full lg:px-6 flex flex-col gap-6">
-                <div>
-                    <h3 className="title-3">Descripción</h3>
-                    <p className="mt-2 text-white/75">{isStarted ? description : shortDescription}</p>
+                <div className={`flex flex-col ${!isStarted ? 'lg:flex-row lg:items-start' : ''} gap-6`}>
+                    <div className="grow">
+                        <h3 className="title-3">Descripción</h3>
+                        <p className="mt-2 text-white/75">{isStarted ? description : shortDescription}</p>
+                    </div>
+                    {!isStarted && (
+                        <div className="flex flex-col gap-3 shrink-0">
+                            <span className="text-xs font-bold uppercase tracking-widest text-invalid">¿Estás listo para entrenar?</span>
+                            <button
+                                type="button"
+                                onClick={handleStart}
+                                disabled={isLoading}
+                                className="w-full lg:w-96 h-14 px-8 bg-invalid hover:bg-invalid/80 disabled:opacity-50 rounded-xl text-white flex items-center justify-between lg:justify-center gap-4 cursor-pointer transition-200"
+                            >
+                                {isLoading ? <SpinnerIcon className="size-6 animate-spin" /> :
+                                    <>
+                                        <span className="text-sm lg:text-lg font-bold uppercase tracking-wider">Comenzar instrucción</span>
+                                        <PlayIcon className="size-6" />
+                                    </>
+                                }
+                            </button>
+                        </div>
+                    )}
                 </div>
-                {!isStarted && <p className="text-sm text-white/40">Al comenzar se revelarán los pasos y recursos necesarios. El temporizador iniciará automáticamente.</p>}
                 {isStarted && (
                     <div className="w-full flex flex-col lg:flex-row items-start gap-6">
                         <div className="w-full lg:w-auto lg:grow flex flex-col gap-6">
