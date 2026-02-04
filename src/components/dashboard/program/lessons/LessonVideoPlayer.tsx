@@ -18,6 +18,7 @@ interface Props {
     isCompleted: boolean;
     isNextLessonAvailable: boolean;
     nextInstruction?: { id: string; title: string };
+    nextModule?: { name: string; firstLessonId: string };
     userId: string;
 }
 
@@ -30,7 +31,7 @@ const END_THRESHOLD = 10;
 const NEXT_COUNTDOWN = 15;
 const SAVE_INTERVAL_MS = 10_000;
 
-export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, userId }: Props) => {
+export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, nextModule, userId }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -115,6 +116,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`);
                     } else if (nextInstruction) {
                         router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`);
+                    } else if (nextModule) {
+                        router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`);
                     } else {
                         router.push(`/dashboard/library/${program.toLowerCase()}`);
                     }
@@ -190,12 +193,25 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                     </div>
                 </div>
             )}
-            {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
+            {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && nextModule && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
-                    <p className="text-lg font-bold text-center">Volviendo al módulo ({countdown}s)</p>
+                    <p className="text-lg font-bold text-center">Siguiente módulo en {countdown} segundos...</p>
+                    <div className="flex flex-col items-center gap-1">
+                        <p className="text-sm opacity-80">Siguiente módulo</p>
+                        <p className="font-semibold">{nextModule.name}</p>
+                    </div>
                     <div className="flex gap-4 mt-2">
                         <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir al módulo</button>
+                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Siguiente módulo</button>
+                    </div>
+                </div>
+            )}
+            {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && !nextModule && (
+                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    <p className="text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
+                    <div className="flex gap-4 mt-2">
+                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir al programa</button>
                     </div>
                 </div>
             )}
