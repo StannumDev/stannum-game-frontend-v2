@@ -24,6 +24,7 @@ export interface Instruction {
     deliverableHint: string;
     resources: Array<Resource>;
     afterLessonId: string;
+    requiredActivityId?: string;
     relatedLessonIds?: Array<string>;
     estimatedTimeSec: number;
     deliverableType: 'file' | 'text';

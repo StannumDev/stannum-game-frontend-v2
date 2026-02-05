@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getUserByToken } from "@/services";
-import { isLessonAvailable, isInstructionAvailable } from "@/utilities";
+import { isLessonAvailable, isInstructionAvailable, isModuleComplete } from "@/utilities";
 import { LessonVideoPlayer, LessonMiniatureCard, InstructionMiniatureCard, GoBackButton } from "@/components";
 import { Instruction, Lesson, Module, Program, ProgramId, Section } from "@/interfaces";
 import { programs } from "@/config/programs";
@@ -81,7 +81,9 @@ export default async function LessonPage({ params }: Props) {
 
     const userInstructions = user.programs?.[programId]?.instructions || [];
 
-    const nextInstructionConfig = program_module.instructions.find(inst => inst.afterLessonId === lesson.id);
+    const nextInstructionConfig = program_module.instructions
+        .filter(inst => inst.afterLessonId === lesson.id)
+        .find(inst => isInstructionAvailable(user, programId, inst, [lesson.id]));
     const nextInstruction = nextInstructionConfig ? { id: nextInstructionConfig.id, title: nextInstructionConfig.title } : undefined;
 
     const allModulesWithSection: Array<{ module: Module; section: Section }> = [];
@@ -93,7 +95,8 @@ export default async function LessonPage({ params }: Props) {
     const currentModuleIndex = allModulesWithSection.findIndex(m => m.module.id === program_module.id);
     const nextModuleEntry = allModulesWithSection[currentModuleIndex + 1];
     const nextModuleFirstLesson = nextModuleEntry?.module.lessons[0];
-    const nextModule = nextModuleEntry && nextModuleFirstLesson ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
+    const isCurrentModuleComplete = isModuleComplete(user, programId, program_module, [lesson.id]);
+    const nextModule = nextModuleEntry && nextModuleFirstLesson && isCurrentModuleComplete ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
 
     const miniatureItems: Array<{ type: 'lesson'; lesson: Lesson; index: number } | { type: 'instruction'; instruction: Instruction }> = [];
     program_module.lessons.forEach((l, i) => {

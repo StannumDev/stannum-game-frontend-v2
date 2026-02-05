@@ -25,7 +25,7 @@ export const calculateProgramTotals = (program: Program, user: FullUserDetails):
             }
             instructionsTotal += mod.instructions.length;
             for (const instruction of mod.instructions) {
-                if (userInstructions.some((ui) => ui.instructionId === instruction.id && ui.status === "GRADED")) instructionsDone += 1;
+                if (userInstructions.some((ui) => ui.instructionId === instruction.id && ["SUBMITTED", "GRADED"].includes(ui.status))) instructionsDone += 1;
             }
         }
     }

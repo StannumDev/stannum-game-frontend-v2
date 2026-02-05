@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
-import { ArrowRightIcon, CheckIcon, CompassIcon, CrossIcon, CrownIcon, LockIcon } from '@/icons';
+import { ArrowRightIcon, CheckIcon, CompassIcon, CrossIcon, CrownIcon, HourglassIcon, LockIcon } from '@/icons';
 import styles from '@/components/styles/ProgramInstructionCard.module.css';
 import instruction_logo from '@/assets/background/stannum_game_trophy.webp';
 import { Instruction, InstructionDetails } from '@/interfaces';
@@ -38,14 +38,14 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                 <div className='w-full lg:w-fit h-full flex flex-col lg:flex-row items-center'>
                     <div className='mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 lg:bg-card/25'>
                         <div className='hidden lg:flex w-fit items-center gap-4 shrink-0 relative z-10'>
-                            <div className='subtitle-1 text-white/25'>Completa la lección anterior</div>
+                            <div className='subtitle-1 text-white/25'>Completa las actividades anteriores</div>
                             <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 tracking-widest font-semibold uppercase flex justify-center items-center gap-2'>
                                 Bloqueado
                             </div>
                         </div>
                         <div className='lg:hidden flex items-center gap-2'>
                             <LockIcon className='size-5 text-white/50'/>
-                            <span className='text-white/50'>Completa la lección anterior</span>
+                            <span className='text-white/50'>Completa las actividades anteriores</span>
                         </div>
                     </div>
                     <div className='mt-6 lg:mt-0 w-full lg:w-48 h-full flex flex-col justify-center items-center gap-4 shrink-0'>
@@ -70,8 +70,8 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                 <div className={`mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `lg:bg-card lg:group-hover:bg-card-light ${styles.completed__diagonal__lines}` : 'lg:bg-card lg:group-hover:bg-card-light' }`}>
                     <div className='w-full lg:w-auto grid grid-cols-2 lg:flex lg:flex-col gap-4'>
                         <div className='flex items-center gap-2 lg:relative lg:left-8'>
-                            <div className={`size-10 rounded-full ${active ? (completed ? 'bg-stannum/40' : 'bg-card-light') : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                <span className={`text-xl ${ active ? 'text-stannum' : 'text-invalid' }`}>D</span>
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>D</span>
                             </div>
                             <div className='flex flex-col'>
                                 <span>{difficultyLabels[difficulty] || difficulty}</span>
@@ -79,8 +79,8 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                             </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                            <div className={`size-10 rounded-full ${active ? (completed ? 'bg-stannum/40' : 'bg-card-light') : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                <span className={`text-xl ${ active ? 'text-stannum' : 'text-invalid' }`}>
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>
                                     <CrownIcon />
                                 </span>
                             </div>
@@ -90,9 +90,9 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                             </div>
                         </div>
                         <div className='flex items-center gap-2 lg:relative lg:right-8'>
-                            <div className={`size-10 rounded-full ${active ? (completed ? 'bg-stannum/40' : 'bg-card-light') : 'bg-invalid/25'}  flex justify-center items-center`}>
-                                <span className={`${active ? 'text-stannum' : 'text-invalid'}`}>
-                                    {completed ? <CheckIcon className='size-5' /> : <CrossIcon className='size-4' />}
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>
+                                    {completed ? <CheckIcon className='size-5' /> : submitted ? <HourglassIcon className='size-4' /> : inProcess ? <CompassIcon className='size-4' /> : <CrossIcon className='size-4' />}
                                 </span>
                             </div>
                             <div className='flex flex-col'>
@@ -105,12 +105,14 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                 <div className='mt-6 lg:mt-0 w-full lg:w-48 h-full flex flex-col justify-center items-center gap-4 shrink-0'>
                     { completed ?
                         <Fragment>
-                            <div className='size-16 bg-stannum-light rounded-full text-4xl flex justify-center items-center shadow-sm'>
-                                <CheckIcon/>
+                            <div className='size-14 bg-stannum-light rounded-full flex justify-center items-center shadow-sm'>
+                                <CheckIcon className='size-6 text-card'/>
                             </div>
-                            <div className='flex flex-col items-center gap-1'>
-                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Instrucción completada</p>
-                                { userInstruction?.score !== undefined && <p className='mt-1 text-sm'><b className='title-3 text-sm'>Puntuación</b> | {userInstruction.score}/100</p>}
+                            <div className='flex flex-col items-center gap-2 text-card'>
+                                { userInstruction?.score !== undefined && (
+                                    <p className='text-3xl font-bold'>{userInstruction.score}<span className='text-lg font-normal opacity-60'>/100</span></p>
+                                )}
+                                <span className='text-xs font-semibold uppercase tracking-wider opacity-75'>Completada</span>
                             </div>
                         </Fragment>
                     : submitted ?
