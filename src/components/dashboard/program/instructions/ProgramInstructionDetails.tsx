@@ -119,8 +119,8 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
         }
     };
 
-    const statusColor = status === 'PENDING' ? 'bg-invalid/25' : status === 'GRADED' ? 'bg-stannum/40' : 'bg-card-light';
-    const statusTextColor = status === 'PENDING' ? 'text-invalid' : 'text-stannum';
+    const statusColor = status === 'PENDING' ? 'bg-invalid/25' : status === 'GRADED' ? 'bg-stannum/40' : status === 'SUBMITTED' ? 'bg-yellow-400/25' : 'bg-card-light';
+    const statusTextColor = status === 'PENDING' ? 'text-invalid' : status === 'SUBMITTED' ? 'text-yellow-400' : 'text-stannum';
     const statusLabel = status === 'PENDING' ? 'Pendiente' : status === 'IN_PROCESS' ? 'En proceso' : status === 'SUBMITTED' ? 'En revisión' : 'Completado';
     const statusIcon = status === 'PENDING' ? <CrossIcon /> : status === 'IN_PROCESS' ? <CompassIcon /> : status === 'SUBMITTED' ? <HourglassIcon /> : <CheckIcon />;
 
@@ -330,22 +330,25 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                 </div>
                             )}
                             {status === 'SUBMITTED' &&
-                                <div className="size-full p-6 bg-stannum/40 border-2 border-dashed border-stannum rounded-lg flex flex-col justify-center items-center gap-4">
-                                    <HourglassIcon className="size-10 text-stannum" />
+                                <div className="size-full p-6 bg-yellow-400/25 border-2 border-dashed border-yellow-400 rounded-lg flex flex-col justify-center items-center gap-4">
+                                    <HourglassIcon className="size-10 text-yellow-400" />
                                     <h3 className="pb-2 title-3 border-b border-white/10">Instrucción en revisión</h3>
                                     <p className="w-full text-center text-sm text-white/75">Próximamente verás aquí reflejado el resultado de tu instrucción.</p>
                                     <p className="text-sm"><b className="title-3 text-sm">Tu tiempo</b> | {formatTime(elapsedSeconds)}</p>
                                 </div>
                             }
                             {status === 'GRADED' &&
-                                <div className="size-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4">
+                                <div className="size-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4 text-card">
                                     <div className="size-14 bg-stannum-light rounded-full flex justify-center items-center shadow-sm">
                                         <CheckIcon className="size-10" />
                                     </div>
-                                    <h3 className="pb-2 title-3 border-b border-white/10">Instrucción completada</h3>
-                                    {score !== undefined && <p className="text-6xl font-black">{score}<small className="text-xl font-thin opacity-75">/100</small></p>}
-                                    {observations && <p className="text-sm text-center text-white/75">{observations}</p>}
-                                    <p className="text-center text-sm"><b className="title-3 text-sm">Tu tiempo</b> | {formatTime(elapsedSeconds)}</p>
+                                    <h3 className="pb-2 title-3 border-b border-card/25">Instrucción completada</h3>
+                                    {score !== undefined && <p className="text-6xl font-black">{score}<small className="text-xl font-thin opacity-60">/100</small></p>}
+                                    {observations && <p className="text-base text-center">{observations}</p>}
+                                    <div className="flex flex-col items-center gap-1">
+                                        <span className="text-xs uppercase tracking-wider opacity-60">Tu tiempo</span>
+                                        <span className="text-xl font-semibold">{formatTime(elapsedSeconds)}</span>
+                                    </div>
                                 </div>
                             }
                         </div>

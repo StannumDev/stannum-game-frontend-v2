@@ -33,7 +33,40 @@ export const isLessonAvailable = (user: FullUserDetails, programId: ProgramId, m
     return true;
 };
 
-export const isInstructionAvailable = (user: FullUserDetails, programId: ProgramId, instruction: Instruction): boolean => {
-    const userLessons = user.programs?.[programId]?.lessonsCompleted || [];
-    return userLessons.some(l => l.lessonId === instruction.afterLessonId);
+export const isInstructionAvailable = (user: FullUserDetails, programId: ProgramId, instruction: Instruction, extraCompletedLessons?: string[]): boolean => {
+    const userLessons = [
+        ...(user.programs?.[programId]?.lessonsCompleted || []).map(l => l.lessonId),
+        ...(extraCompletedLessons || []),
+    ];
+    const lessonCompleted = userLessons.includes(instruction.afterLessonId);
+    if (!lessonCompleted) return false;
+
+    if (instruction.requiredActivityId) {
+        const userInstructions = user.programs?.[programId]?.instructions || [];
+        const requiredInstr = userInstructions.find(ui => ui.instructionId === instruction.requiredActivityId);
+        const isSubmitted = requiredInstr && ["SUBMITTED", "GRADED"].includes(requiredInstr.status);
+        if (!isSubmitted) return false;
+    }
+
+    return true;
+};
+
+export const isModuleComplete = (user: FullUserDetails, programId: ProgramId, module: Module, extraCompletedLessons?: string[]): boolean => {
+    const userLessons = [
+        ...(user.programs?.[programId]?.lessonsCompleted || []).map(l => l.lessonId),
+        ...(extraCompletedLessons || []),
+    ];
+    const userInstructions = user.programs?.[programId]?.instructions || [];
+
+    const allLessonsComplete = module.lessons
+        .filter(l => !l.blocked)
+        .every(l => userLessons.includes(l.id));
+    if (!allLessonsComplete) return false;
+
+    const allInstructionsComplete = module.instructions.every(instr => {
+        const userInstr = userInstructions.find(ui => ui.instructionId === instr.id);
+        return userInstr && ["SUBMITTED", "GRADED"].includes(userInstr.status);
+    });
+
+    return allInstructionsComplete;
 };
