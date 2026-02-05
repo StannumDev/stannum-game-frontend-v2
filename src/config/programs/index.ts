@@ -363,6 +363,20 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-04",
+                    title: "Sesión 04",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 04",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/1Pr3tzobAeP_mSferOdB_w4_WOG7r2KYD/view?usp=sharing",
+                            type: "video",
+                        },
+                    ],
+                },
             ],
         },
     ],
