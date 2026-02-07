@@ -1,17 +1,19 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { CheckIcon, ClockIcon, CompassIcon, CrossIcon, CrownIcon, HourglassIcon, PlayIcon, SpinnerIcon, UploadIcon, ExternalLinkIcon } from "@/icons";
 import { startInstruction, submitInstruction } from "@/services";
-import { Instruction, InstructionDetails, Lesson, ProgramId, Resource } from "@/interfaces";
+import { LessonMiniatureCard } from "@/components";
 import { errorHandler, callToast } from "@/helpers";
-import Link from "next/link";
+import { Instruction, InstructionDetails, Lesson, ProgramId, Resource } from "@/interfaces";
 
 interface Props {
     programId: ProgramId;
     instruction: Instruction;
     userInstruction?: InstructionDetails;
     relatedLessons: Lesson[];
+    referencedLessons: Lesson[];
 }
 
 type InstructionStatus = 'PENDING' | 'IN_PROCESS' | 'SUBMITTED' | 'GRADED';
@@ -39,7 +41,7 @@ function formatEstimatedTime(seconds: number): string {
     return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}min` : `${hours}h`;
 }
 
-export const ProgramInstructionDetails = ({ programId, instruction, userInstruction, relatedLessons }: Props) => {
+export const ProgramInstructionDetails = ({ programId, instruction, userInstruction, relatedLessons, referencedLessons }: Props) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [status, setStatus] = useState<InstructionStatus>(userInstruction?.status || 'PENDING');
@@ -254,7 +256,7 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                 <p className="mt-2">{deliverableHint}</p>
                             </div>
                         </div>
-                        <div className="w-full max-w-md lg:max-w-sm lg:aspect-square shrink-0">
+                        <div className={`w-full max-w-md lg:max-w-sm shrink-0 ${status !== 'GRADED' ? 'lg:aspect-square' : ''}`}>
                             {status === 'IN_PROCESS' && deliverableType === 'file' &&
                                 <div className={`group size-full p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center gap-4 relative transition-200 ${selectedFile ? 'border-stannum bg-transparent' : 'border-stannum bg-transparent hover:bg-stannum/5 cursor-pointer'}`}>
                                     {!selectedFile &&
@@ -338,17 +340,41 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                 </div>
                             }
                             {status === 'GRADED' &&
-                                <div className="size-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4 text-card">
-                                    <div className="size-14 bg-stannum-light rounded-full flex justify-center items-center shadow-sm">
-                                        <CheckIcon className="size-10" />
+                                <div className="w-full flex flex-col gap-6">
+                                    <div className="w-full p-6 bg-gradient-to-br from-stannum to-stannum-light/75 border-2 border-stannum rounded-lg flex flex-col justify-center items-center gap-4 text-card">
+                                        <div className="size-14 shrink-0 bg-stannum-light rounded-full flex justify-center items-center shadow-sm">
+                                            <CheckIcon className="size-10" />
+                                        </div>
+                                        <h3 className="pb-2 title-3 border-b border-card/25">Instrucción completada</h3>
+                                        {score !== undefined && <p className="text-6xl font-black">{score}<small className="text-xl font-thin opacity-60">/100</small></p>}
+                                        { observations &&
+                                            <div className="flex flex-col items-center gap-1">
+                                                <span className="text-xs uppercase tracking-wider opacity-60">Observaciones de STAN</span>
+                                                <p className="text-base text-center">{observations}</p>
+                                            </div>
+                                        }
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="text-xs uppercase tracking-wider opacity-60">Tu tiempo</span>
+                                            <span className="text-xl font-semibold">{formatTime(elapsedSeconds)}</span>
+                                        </div>
                                     </div>
-                                    <h3 className="pb-2 title-3 border-b border-card/25">Instrucción completada</h3>
-                                    {score !== undefined && <p className="text-6xl font-black">{score}<small className="text-xl font-thin opacity-60">/100</small></p>}
-                                    {observations && <p className="text-base text-center">{observations}</p>}
-                                    <div className="flex flex-col items-center gap-1">
-                                        <span className="text-xs uppercase tracking-wider opacity-60">Tu tiempo</span>
-                                        <span className="text-xl font-semibold">{formatTime(elapsedSeconds)}</span>
-                                    </div>
+                                    { referencedLessons.length > 0 &&
+                                        <div className="w-full flex flex-col gap-3">
+                                            <h3 className="title-3">Te recomiendo repasar</h3>
+                                            <div className="flex flex-col gap-1">
+                                                {referencedLessons.map((lesson, i) => (
+                                                    <LessonMiniatureCard
+                                                        key={lesson.id}
+                                                        lesson={lesson}
+                                                        index={i + 1}
+                                                        programId={programId}
+                                                        isCompleted={true}
+                                                        isAvailable={true}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             }
                         </div>

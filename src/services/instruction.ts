@@ -39,28 +39,31 @@ export const submitInstruction = async (programName: string, instructionId: stri
         const token = Cookies.get("token");
         if (!token) throw tokenError;
 
-        const url = `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}/submit/${programName}/${instructionId}`;
+        const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}`;
+        const authHeaders = { Authorization: `Bearer ${token}` };
 
-        let response;
+        let s3Key: string | undefined;
+
         if (deliverable?.file) {
-            const formData = new FormData();
-            formData.append("file", deliverable.file);
-            response = await axios.post(url, formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
+            const presignRes = await axios.post(`${baseUrl}/presign/${programName}/${instructionId}`,
+                {
+                    fileName: deliverable.file.name,
+                    contentType: deliverable.file.type,
                 },
-            });
-        } else {
-            response = await axios.post(url, {
-                submittedText: deliverable?.text || undefined,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                { headers: authHeaders }
+            );
+
+            if (!presignRes?.data?.success) throw new Error("Unexpected response structure");
+
+            const { presignedUrl, s3Key: key } = presignRes.data;
+            s3Key = key;
+
+            await axios.put(presignedUrl, deliverable.file, {
+                headers: { "Content-Type": deliverable.file.type },
             });
         }
 
+        const response = await axios.post(`${baseUrl}/submit/${programName}/${instructionId}`, { s3Key, submittedText: deliverable?.text || undefined }, { headers: authHeaders });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
     } catch (error:unknown) {
@@ -74,16 +77,9 @@ export const gradeInstruction = async (userId: string, programName: string, inst
         if (!token) throw tokenError;
 
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}/grade/${userId}/${programName}/${instructionId}`,
-        {
-            score,
-            observations
-        },
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
+            { score, observations },
+            { headers: { Authorization: `Bearer ${token}`}}
+        );
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return true;
     } catch (error:unknown) {

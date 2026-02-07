@@ -84,6 +84,10 @@ export default async function InstructionPage({ params }: Props) {
 
     const relatedLessons: Lesson[] = (instruction.relatedLessonIds || []).map(id => program_module!.lessons.find(l => l.id === id)).filter((l): l is Lesson => l !== undefined);
 
+    const allModules = program.sections.flatMap(s => s.modules || []);
+    const allLessons = allModules.flatMap(m => m.lessons);
+    const referencedLessons: Lesson[] = (userInstruction?.referencedLessons || []).map(id => allLessons.find(l => l.id === id)).filter((l): l is Lesson => l !== undefined);
+
     return (
         <main className="main-container min-h-0 p-0 flex flex-col items-start">
             <h1 className="sr-only">{instruction.title}</h1>
@@ -93,6 +97,7 @@ export default async function InstructionPage({ params }: Props) {
                 instruction={instruction}
                 userInstruction={userInstruction}
                 relatedLessons={relatedLessons}
+                referencedLessons={referencedLessons}
             />
         </main>
     );

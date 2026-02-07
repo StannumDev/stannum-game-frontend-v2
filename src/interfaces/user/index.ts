@@ -60,6 +60,7 @@ export interface InstructionDetails {
     xpGrantedAt?: string;
     estimatedTimeSec?: number;
     observations?: string;
+    referencedLessons?: string[];
     status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
 }
 
