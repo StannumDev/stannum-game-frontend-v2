@@ -22,12 +22,7 @@ const rotateSize = (width: number, height: number, rotation: number) => {
     };
 };
 
-export const getCroppedImage = async (
-    imageSrc: string,
-    pixelCrop: Area,
-    rotation: number = 0,
-    outputSize: number = 1080
-): Promise<Blob> => {
+export const getCroppedImage = async ( imageSrc: string, pixelCrop: Area, rotation: number = 0, outputSize: number = 1080 ): Promise<Blob> => {
     const image = await createImage(imageSrc);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -74,19 +69,24 @@ export const getCroppedImage = async (
     });
 };
 
-export const uploadProfilePhoto = async (formData: FormData): Promise<void> => {
+export const uploadProfilePhoto = async (imageBlob: Blob): Promise<void> => {
     try {
         const token = Cookies.get("token");
         if (!token) {
             throw new Error("Token is missing. Please log in again.");
         }
 
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PHOTO_URL}/upload-photo`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PHOTO_URL}`;
+        const authHeaders = { Authorization: `Bearer ${token}` };
+
+        const presignRes = await axios.post(`${baseUrl}/presign-photo`, {}, { headers: authHeaders });
+        if (!presignRes?.data?.success) throw new Error("Unexpected response structure");
+
+        const { presignedUrl } = presignRes.data;
+
+        await axios.put(presignedUrl, imageBlob, { headers: { "Content-Type": "image/jpeg" } });
+
+        await axios.post(`${baseUrl}/confirm-photo`, {}, { headers: authHeaders });
     } catch (error:unknown) {
         throw error;
     }
