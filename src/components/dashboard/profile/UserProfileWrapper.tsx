@@ -1,18 +1,20 @@
 'use client'
 
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { getUserDetailsByUsername, logout } from "@/services";
+import { getUserDetailsByUsername } from "@/services";
 import { errorHandler } from "@/helpers";
 import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
 import { AppError, FullUserDetails } from "@/interfaces";
 import { PowerIcon } from "@/icons";
+import { useUserStore } from "@/stores/userStore";
 
 interface Props{
     username: string;
-    owner: boolean;
 }
 
-export const UserProfileWrapper = ({username, owner}:Props) => {
+export const UserProfileWrapper = ({username}:Props) => {
+    const owner = useUserStore(s => s.user?.username) === username;
+    const storeLogout = useUserStore(s => s.logout);
 
     const [userData, setUserData] = useState<FullUserDetails|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -35,12 +37,7 @@ export const UserProfileWrapper = ({username, owner}:Props) => {
 
     
     const onLogout = () => {
-        try {
-            logout();
-        } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError)
-        }
+        storeLogout();
     }
 
     if(!userData || isLoading){

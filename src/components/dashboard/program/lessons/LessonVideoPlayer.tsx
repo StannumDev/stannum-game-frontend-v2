@@ -9,6 +9,7 @@ import { createBlurUp } from '@mux/blurup';
 import { markLessonAsCompleted, saveLastWatchedLesson } from "@/services";
 import { AppError, Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
+import { useUserStore } from '@/stores/userStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
 interface Props {
@@ -34,6 +35,7 @@ const SAVE_INTERVAL_MS = 10_000;
 export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, nextModule, userId }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const refreshUser = useUserStore(s => s.refreshUser);
 
     const videoRef = useRef<MuxPlayerElement | null>(null);
     const [blurData, setBlurData] = useState<BlurData>({ blurDataURL: "", aspectRatio: 16 / 9 });
@@ -94,6 +96,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             try {
                 setMarkedAsCompleted(true);
                 await markLessonAsCompleted(program.toLowerCase(), lesson.id);
+                refreshUser();
             } catch (error:unknown) {
                 const appError: AppError = errorHandler(error);
                 console.error(appError);

@@ -80,6 +80,7 @@ export { StoreCard } from "./dashboard/store/StoreCard";
 export { ProgramCover } from "./dashboard/program/ProgramCover";
 export { ProgramNavigationHandler } from "./dashboard/program/ProgramNavigationHandler";
 export { ProgramModuleHandler } from "./dashboard/program/modules/ProgramModuleHandler";
+export { ProgramModuleContent } from "./dashboard/program/modules/ProgramModuleContent";
 export { ProgramPendingModuleCard } from "./dashboard/program/modules/ProgramPendingModuleCard";
 export { ProgramCompletedModuleCard } from "./dashboard/program/modules/ProgramCompletedModuleCard";
 export { ProgramBlockedModuleCard } from "./dashboard/program/modules/ProgramBlockedModuleCard";
@@ -88,10 +89,12 @@ export { LessonDetails } from "./dashboard/program/lessons/LessonDetails";
 export { ChangeLessonsButtons } from "./dashboard/program/lessons/ChangeLessonsButtons";
 
 export { LessonVideoPlayer } from "./dashboard/program/lessons/LessonVideoPlayer";
+export { LessonPageContent } from "./dashboard/program/lessons/LessonPageContent";
 export { LessonMiniatureCard } from "./dashboard/program/lessons/LessonMiniatureCard";
 
 export { ProgramInstructionCard } from "./dashboard/program/instructions/ProgramInstructionCard";
 export { ProgramInstructionDetails } from "./dashboard/program/instructions/ProgramInstructionDetails";
+export { InstructionPageContent } from "./dashboard/program/instructions/InstructionPageContent";
 export { InstructionMiniatureCard } from "./dashboard/program/instructions/InstructionMiniatureCard";
 
 export { ProgramRankingLayout } from "./dashboard/program/sections/ProgramRankingLayout";
@@ -99,7 +102,7 @@ export { ProgramTeamRankingCard } from "./dashboard/program/ranking/ProgramTeamR
 export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPlayerRankingCard";
 
 // AUTH
-export { AuthUser } from "./auth/AuthUser";
+export { UserInitializer } from "./auth/UserInitializer";
 export { CompleteProfileForm } from "./auth/CompleteProfileForm";
 
 // LOGIN

@@ -3,11 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowTrendDown, ArrowTrendUp, ClockIcon, FireIcon, LockIcon, StarIcon } from "@/icons";
 import { MotionWrapperLayout } from "@/components";
-import { FullUserDetails } from "@/interfaces";
-
-interface Props {
-    user: FullUserDetails;
-}
+import { useUserStore } from "@/stores/userStore";
 
 const formatLocalDate = (tz: string, d: Date = new Date()) => {
     const dateInTZ = new Date(d.toLocaleString("en-US", { timeZone: tz }));
@@ -17,10 +13,12 @@ const formatLocalDate = (tz: string, d: Date = new Date()) => {
     return `${year}-${month}-${day}`;
 };
 
-export const RachaHome = ({ user }: Props) => {
+export const RachaHome = () => {
+    const user = useUserStore(s => s.user);
     const [streakStatus, setStreakStatus] = useState({missedToday: false, streakCount: 0, maxStreak: false});
 
     useEffect(() => {
+        if (!user) return;
         const { dailyStreak } = user;
         const timezone = dailyStreak?.timezone || "America/Argentina/Buenos_Aires";
         const today = formatLocalDate(timezone);
@@ -29,6 +27,8 @@ export const RachaHome = ({ user }: Props) => {
         const maxStreak = dailyStreak?.count >= 7;
         setStreakStatus({ missedToday, streakCount, maxStreak });
     }, [user]);
+
+    if (!user) return null;
 
     const days = Array.from({ length: 7 }, (_, i) => {
         if (i < streakStatus.streakCount) return "completed";

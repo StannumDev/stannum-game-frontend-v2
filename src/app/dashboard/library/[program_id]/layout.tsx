@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getUserByToken } from "@/services";
 import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
 import { programs } from '@/config/programs';
 import { Program } from "@/interfaces";
@@ -46,11 +45,10 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
     const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
     if (!foundProgram) return notFound();
     
-    const user = await getUserByToken();
     return (
         <main className="main-container">
             <h1 className="sr-only">Panel de control {foundProgram.name} STANNUM Game</h1>
-            <ProgramCover program={foundProgram} user={user}/>
+            <ProgramCover program={foundProgram}/>
             <MotionWrapperLayout>
                 <section className="w-full card px-0">
                     <h2 className="mb-4 title-2 px-4 lg:px-6">Explora las posiblidades</h2>

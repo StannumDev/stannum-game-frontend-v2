@@ -3,15 +3,13 @@
 import { useEffect, useState } from "react";
 import { getIndividualRanking  } from "@/services";
 import { errorHandler } from "@/helpers";
-import type { AppError, FullUserDetails, SimpleRanking } from "@/interfaces";
+import type { AppError, SimpleRanking } from "@/interfaces";
 import { RankingStarIcon, SpinnerIcon } from "@/icons";
 import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
+import { useUserStore } from "@/stores/userStore";
 
-interface Props{
-    user: FullUserDetails;
-}
-
-export const RankingHome = ({ user }: Props) => {
+export const RankingHome = () => {
+    const username = useUserStore(s => s.user?.username);
 
     const [rankings, setRankings] = useState<Array<SimpleRanking>>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,7 +62,7 @@ export const RankingHome = ({ user }: Props) => {
                             <div className="size-full bg-card flex justify-center items-center"><p className="max-w-sm text-center text-card-lightest">En breve veras reflejado tu puntaje y del resto de jugadores aquí.</p></div>
                         ) : (
                             <div className="w-full pr-1 lg:pr-2 grow flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
-                                {rankings.map((player, i) => <CardRankingHome user={player} owner={user.username === player.username} key={`ranking_home_${i}`} />)}
+                                {rankings.map((player, i) => <CardRankingHome user={player} owner={username === player.username} key={`ranking_home_${i}`} />)}
                             </div>
                         )}
                     </div>

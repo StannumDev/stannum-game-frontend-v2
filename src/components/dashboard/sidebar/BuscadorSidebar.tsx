@@ -1,21 +1,19 @@
 'use client'
 
-import { Dispatch, Fragment, SetStateAction } from "react";
+import { Fragment } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { CrossIcon, SearchIcon } from "@/icons";
 import { useSearchHandler } from "@/hooks";
+import { useSidebarStore } from "@/stores/sidebarStore";
 
-interface Props{
-    isExpanded: boolean;
-    setIsExpanded: Dispatch<SetStateAction<boolean>>
-}
-
-export const BuscadorSidebar = ({isExpanded, setIsExpanded}:Props) => {
+export const BuscadorSidebar = () => {
+    const isExpanded = useSidebarStore(s => s.isExpanded);
+    const setExpanded = useSidebarStore(s => s.setExpanded);
 
     const { register, handleSubmit, onSubmit, reset, setFocus, watch } = useSearchHandler();
 
     const openSearchSidebar = () => {
-        setIsExpanded(true);
+        setExpanded(true);
         setFocus("search");
     };
 

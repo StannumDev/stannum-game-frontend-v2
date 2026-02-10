@@ -2,14 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { NavbarSection as NavbarSectionType, ProgramCategory, FullUserDetails } from "@/interfaces";
+import type { NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { NewAppsIcon } from "@/icons";
 import { MotionWrapperLayoutClient, NavbarSection, StoreCard, StoreTutorial } from "@/components";
 import { programs } from "@/config/programs";
-
-interface Props {
-    user: FullUserDetails;
-}
+import { useUserStore } from "@/stores/userStore";
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: NewAppsIcon },
@@ -18,7 +15,8 @@ const sections: Array<NavbarSectionType> = [
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
-export const StoreSectionsLayout = ({ user }: Props) => {
+export const StoreSectionsLayout = () => {
+    const user = useUserStore(s => s.user);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -63,7 +61,7 @@ export const StoreSectionsLayout = ({ user }: Props) => {
                         </div>
                     )}
                     {filteredPrograms.map(program => {
-                        const isPurchased = user.programs?.[program.id as keyof typeof user.programs]?.isPurchased ?? false;
+                        const isPurchased = user?.programs?.[program.id as keyof typeof user.programs]?.isPurchased ?? false;
                         return (
                             <StoreCard
                                 key={program.id}

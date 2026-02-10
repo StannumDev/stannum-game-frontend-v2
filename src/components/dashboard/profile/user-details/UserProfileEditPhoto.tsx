@@ -8,6 +8,7 @@ import { errorHandler } from "@/helpers";
 import { RotateRightIcon, SpinnerIcon } from "@/icons";
 import { AppError } from "@/interfaces";
 import { Modal } from "@/components";
+import { useUserStore } from "@/stores/userStore";
 import styles from "@/components/styles/photoEditor.module.css";
 
 interface Props{
@@ -19,6 +20,7 @@ interface Props{
 }
 
 export const UserProfileEditPhoto = ({showModal, setShowModal, imageSrc, onClose, onPhotoUploaded}:Props) => {
+    const refreshUser = useUserStore(s => s.refreshUser);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCropperReady, setIsCropperReady] = useState<boolean>(false);
@@ -37,6 +39,7 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, imageSrc, onClose
         try {
             const imageBlob = await getCroppedImage(imageSrc, croppedAreaPixels, rotate);
             await uploadProfilePhoto(imageBlob);
+            await refreshUser();
             onPhotoUploaded?.();
             setShowModal(false);
         } catch (error:unknown) {

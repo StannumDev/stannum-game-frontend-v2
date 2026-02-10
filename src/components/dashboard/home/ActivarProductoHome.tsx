@@ -2,12 +2,14 @@
 
 import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
+import { useUserStore } from '@/stores/userStore';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { activateProductKey, verifyProductKey } from "@/services";
-import { achievementHandler, callToast, errorHandler } from "@/helpers";   
+import { callToast, errorHandler } from "@/helpers";   
 import { KeyIcon, AlertHexagonIcon, SpinnerIcon } from '@/icons';
 import { AppError } from "@/interfaces";
 import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
@@ -31,6 +33,8 @@ interface ProductInfo {
 };
 
 export const ActivarProductoHome = () => {
+    const router = useRouter();
+    const refreshUser = useUserStore(s => s.refreshUser);
 
     const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
     const [error, setError] = useState<AppError | null>(null);
@@ -88,10 +92,10 @@ export const ActivarProductoHome = () => {
         setIsLoading(true);
         setError(null);
         try {
-            const { achievementsUnlocked } = await activateProductKey(watch("code"));
-            achievementsUnlocked && achievementHandler(achievementsUnlocked);
+            await activateProductKey(watch("code"));
             callToast({ message: { title: "Producto activado", description: `Ya puedes acceder a ${productInfo?.product} desde tu biblioteca.`}})
-            window.location.replace("/dashboard/library");
+            await refreshUser();
+            router.push("/dashboard/library");
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setError(appError);

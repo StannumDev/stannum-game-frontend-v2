@@ -1,17 +1,20 @@
+'use client'
+
 import { useModuleProgress } from "@/hooks/useModuleProgress";
 import { ProgramCompletedModuleCard, ProgramBlockedModuleCard, ProgramPendingModuleCard } from "@/components";
-import type { FullUserDetails, Module, Section } from "@/interfaces";
+import type { Module, Section } from "@/interfaces";
+import { useUserStore } from "@/stores/userStore";
 import Link from "next/link";
 
 interface Props {
     program_module: Module;
     index: number;
     section: Section;
-    user: FullUserDetails;
     programId: string;
 }
 
-export const ProgramModuleHandler = ({ program_module, index, section, user, programId }: Props) => {
+export const ProgramModuleHandler = ({ program_module, index, section, programId }: Props) => {
+  const user = useUserStore(s => s.user);
   const { modules } = section;
 
   const moduleProgress = useModuleProgress({ program_module, moduleIndex: index, modules, user, programId });

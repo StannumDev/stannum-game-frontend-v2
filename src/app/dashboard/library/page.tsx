@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { getUserByToken } from "@/services";
 import { LibraryCover, LibrarySectionsLayout } from "@/components";
 
 export const metadata: Metadata = {
@@ -23,13 +22,12 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function LibraryPage() {
-    const user = await getUserByToken();
+export default function LibraryPage() {
     return (
         <main className="main-container">
             <h1 className="sr-only">Biblioteca STANNUM Game</h1>
             <LibraryCover/>
-            <LibrarySectionsLayout user={user}/>
+            <LibrarySectionsLayout/>
         </main>
     );
 }

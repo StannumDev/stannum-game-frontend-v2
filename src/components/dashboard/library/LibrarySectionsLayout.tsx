@@ -7,8 +7,7 @@ import { MotionWrapperLayoutClient, NavbarSection, LibraryCard } from "@/compone
 import { AppsIcon } from "@/icons";
 import { calculateProgramProgress } from "@/utilities";
 import { programs } from "@/config/programs";
-
-interface Props { user: FullUserDetails; }
+import { useUserStore } from "@/stores/userStore";
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: AppsIcon },
@@ -17,7 +16,8 @@ const sections: Array<NavbarSectionType> = [
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
-export const LibrarySectionsLayout = ({ user }: Props) => {
+export const LibrarySectionsLayout = () => {
+    const user = useUserStore(s => s.user);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -38,6 +38,8 @@ export const LibrarySectionsLayout = ({ user }: Props) => {
         layout ? params.set('section', layout) : params.delete('section');
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
+
+    if (!user) return null;
 
     const filteredPrograms = programs.filter(program => user.programs?.[program.id as keyof FullUserDetails['programs']]?.isPurchased).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
 

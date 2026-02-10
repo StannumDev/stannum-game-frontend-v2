@@ -1,15 +1,16 @@
+'use client';
+
 import { StaticImageData } from "next/image";
 import { PlayCircleIcon } from "@/icons";
 import { buildContinueEntryForProgram } from "@/utilities";
 import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
-import { ContinueEntry, FullUserDetails } from "@/interfaces";
+import { ContinueEntry } from "@/interfaces";
 import { programs } from "@/config/programs";
+import { useUserStore } from "@/stores/userStore";
 
-interface Props {
-    user: FullUserDetails
-}
-
-export const ContinuarHome = ({ user }: Props) => {
+export const ContinuarHome = () => {
+    const user = useUserStore(s => s.user);
+    if (!user) return null;
     const entries: Array<ContinueEntry> = programs.map(p => buildContinueEntryForProgram(p, user)).filter(Boolean) as ContinueEntry[];
     return (
         <MotionWrapperLayout className="grow">

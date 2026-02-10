@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AddPhotoIcon } from "@/icons";
 import { FullUserDetails } from "@/interfaces";
 import { UserProfileEditPhoto } from "@/components";
+import { useUserStore } from "@/stores/userStore";
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
@@ -13,10 +14,10 @@ interface Props{
 }
 
 export const UserProfilePhoto = ({user, owner}:Props) => {
+    const refreshCount = useUserStore(s => s._refreshCount);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
-    const [photoVersion, setPhotoVersion] = useState<number>(0);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -41,7 +42,7 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
                 priority
                 width={500}
                 height={500}
-                src={ profilePhotoError || !user.profilePhoto ? default_user : `${user.profilePhoto}?v=${photoVersion}`}
+                src={ profilePhotoError || !user.profilePhoto ? default_user : `${user.profilePhoto}?v=${refreshCount}`}
                 alt="Perfil de usuario STANNUM Game"
                 className="size-full object-cover absolute top-0 left-0 z-10 rounded-lg lg:rounded-2xl"
                 onError={() => setProfilePhotoError(true)}
@@ -63,7 +64,7 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
                         setShowModal={setShowEditModal}
                         imageSrc={imageSrc}
                         onClose={handleModalClose}
-                        onPhotoUploaded={() => setPhotoVersion(prev => prev + 1)}
+                        onPhotoUploaded={() => setProfilePhotoError(false)}
                     />
                 </>
             }
