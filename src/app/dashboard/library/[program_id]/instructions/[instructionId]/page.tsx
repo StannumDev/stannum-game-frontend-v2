@@ -1,10 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getUserByToken } from "@/services";
-import { isInstructionAvailable } from "@/utilities";
-import { Instruction, InstructionDetails, Lesson, Module, Program, ProgramId, Section } from "@/interfaces";
+import { InstructionPageContent } from "@/components";
+import { Instruction, Module, Program, Section } from "@/interfaces";
 import { programs } from "@/config/programs";
-import { GoBackButton, ProgramInstructionDetails } from "@/components";
 
 interface Props {
     params: Promise<{
@@ -57,8 +55,6 @@ export default async function InstructionPage({ params }: Props) {
     const program = programs.find(p => p.id === program_id.toLowerCase());
     if (!program) return notFound();
 
-    const programId = program_id as ProgramId;
-
     let section: Section | undefined;
     let program_module: Module | undefined;
     for (const sec of program.sections) {
@@ -74,31 +70,12 @@ export default async function InstructionPage({ params }: Props) {
     const instruction = program_module.instructions.find(l => l.id === instructionId);
     if (!instruction) return notFound();
 
-    const user = await getUserByToken();
-
-    const isAvailable = isInstructionAvailable(user, programId, instruction);
-    if (!isAvailable) return notFound();
-
-    const userProgram = user.programs?.[programId];
-    const userInstruction: InstructionDetails | undefined = userProgram?.instructions.find((ui) => ui.instructionId === instruction.id);
-
-    const relatedLessons: Lesson[] = (instruction.relatedLessonIds || []).map(id => program_module!.lessons.find(l => l.id === id)).filter((l): l is Lesson => l !== undefined);
-
-    const allModules = program.sections.flatMap(s => s.modules || []);
-    const allLessons = allModules.flatMap(m => m.lessons);
-    const referencedLessons: Lesson[] = (userInstruction?.referencedLessons || []).map(id => allLessons.find(l => l.id === id)).filter((l): l is Lesson => l !== undefined);
-
     return (
-        <main className="main-container min-h-0 p-0 flex flex-col items-start">
-            <h1 className="sr-only">{instruction.title}</h1>
-            <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
-            <ProgramInstructionDetails
-                programId={programId}
-                instruction={instruction}
-                userInstruction={userInstruction}
-                relatedLessons={relatedLessons}
-                referencedLessons={referencedLessons}
-            />
-        </main>
+        <InstructionPageContent
+            instruction={instruction}
+            program_module={program_module}
+            program={program}
+            programId={program_id}
+        />
     );
 }

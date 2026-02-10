@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link"
 import { AnimatePresence, motion } from 'framer-motion';
 import type { SidebarLink } from "@/interfaces";
+import { useSidebarStore } from "@/stores/sidebarStore";
 
 interface Props{
     link: SidebarLink
     pathname: string;
-    isExpanded: boolean
 }
 
-export const SidebarDesktopLink = ({link, pathname, isExpanded}:Props) => {
+export const SidebarDesktopLink = ({link, pathname}:Props) => {
+    const isExpanded = useSidebarStore(s => s.isExpanded);
     const { label, href, Icon } = link
     const [isActive, setIsActive] = useState<boolean>(false)
 

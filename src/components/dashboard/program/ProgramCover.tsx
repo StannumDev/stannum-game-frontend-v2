@@ -6,15 +6,17 @@ import { ArrowBackIcon } from '@/icons';
 import { MotionWrapperLayoutClient } from '@/components';
 import styles from '@/components/styles/ProgramCover.module.css';
 import texture from '@/assets/background/dotted_texture.svg';
-import type { FullUserDetails, Program } from '@/interfaces';
+import type { Program } from '@/interfaces';
 import { calculateProgramProgress } from '@/utilities';
+import { useUserStore } from '@/stores/userStore';
 
 interface Props {
     program: Program;
-    user: FullUserDetails;
 }
 
-export const ProgramCover = ({ program, user }: Props) => {
+export const ProgramCover = ({ program }: Props) => {
+    const user = useUserStore(s => s.user);
+    if (!user) return null;
 
     const progress = calculateProgramProgress(program, user);
 

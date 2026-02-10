@@ -39,9 +39,7 @@ export const RegisterPhotoStep = () => {
         setIsLoading(true);
         try {
             const imageBlob = await getCroppedImage(imageSrc, croppedAreaPixels, rotate);
-            const formData = new FormData();
-            formData.append("photo", imageBlob);
-            await uploadProfilePhoto(formData);
+            await uploadProfilePhoto(imageBlob);
             navigateToDashboard();
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import Cookies from "js-cookie";
-import type { AchievementDetails, FullUserDetails, UserSearchResult, UserSidebarDetails } from "@/interfaces";
+import type { AchievementDetails, FullUserDetails, UserSearchResult } from "@/interfaces";
 
 type GetUserOpts = { force?: boolean };
 
@@ -35,39 +35,6 @@ export const getUserByTokenClient = async (): Promise<FullUserDetails> => {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
         return response.data.data as FullUserDetails;
-    } catch (error:unknown) {
-        throw error;
-    }
-};
-
-export const getUserSidebarDetails = async (): Promise<UserSidebarDetails> => {
-    try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/sidebar-details`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response?.data?.success || !response.data?.data) {
-            throw {
-                response: {
-                    data: {
-                        success: false,
-                        code: "API_UNEXPECTED_RESPONSE",
-                        type: "error",
-                        showAlert: true,
-                        title: "Respuesta inesperada",
-                        techMessage: "The API response structure is not as expected.",
-                        friendlyMessage: "Hubo un problema al obtener los datos del usuario. Por favor, inténtalo nuevamente.",
-                    },
-                },
-            };
-        }
-
-        return response.data.data as UserSidebarDetails;
     } catch (error:unknown) {
         throw error;
     }

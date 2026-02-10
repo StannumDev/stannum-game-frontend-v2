@@ -12,12 +12,12 @@ interface Props {
     program_module: Module;
     moduleIndex: number;
     modules?: Module[];
-    user: FullUserDetails;
+    user: FullUserDetails | null;
     programId: string;
 }
 
 export const useModuleProgress = ({ program_module, moduleIndex, modules, user, programId }: Props): ModuleProgress|null => {
-    if(!modules) return null;
+    if(!modules || !user) return null;
     const { lessons, instructions } = program_module;
     const userLessons = user?.programs?.[programId as keyof FullUserDetails["programs"]]?.lessonsCompleted || [];
     const userInstructions = user?.programs?.[programId as keyof FullUserDetails["programs"]]?.instructions || [];

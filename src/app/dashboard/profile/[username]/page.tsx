@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getUserByToken, getUserDetailsByUsernameServer } from "@/services";
+import { getUserDetailsByUsernameServer } from "@/services";
 import { UserProfileWrapper } from "@/components";
 
 interface Props {
@@ -44,13 +44,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProfilePage({ params }: Props) {
     const { username } = await params;
-    const user = await getUserByToken();
     const userDetails = await getUserDetailsByUsernameServer(username);
     if (!userDetails) return notFound();
     return (
         <main className="main-container">
             <h1 className="sr-only">Perfil del jugador {username} en STANNUM Game</h1>
-            <UserProfileWrapper owner={user.username === username} username={username}/>
+            <UserProfileWrapper username={username}/>
         </main>
     );
 }

@@ -8,18 +8,16 @@ import { driver, type Driver } from "driver.js";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
-import type { AppError, FullUserDetails } from '@/interfaces';
+import type { AppError } from '@/interfaces';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
+import { useUserStore } from '@/stores/userStore';
 import background from "@/assets/background/the_game.webp";
 import "driver.js/dist/driver.css";
 
 const steps:Array<number> = [1,2,3,4,5];
 
-interface Props{
-    user: FullUserDetails;
-}
-
-export const PresentacionHome = ({ user }: Props) => {
+export const PresentacionHome = () => {
+    const user = useUserStore(s => s.user);
 
     const introRef = useRef<HTMLDivElement | null>(null);
     const driverRef = useRef<Driver | null>(null);
@@ -271,7 +269,7 @@ export const PresentacionHome = ({ user }: Props) => {
                     <AnimatePresence mode='wait' initial={false}>
                         {
                             selectedStep === 1 ? <StepOneTutorial direction={direction} key='step_one_tutorial' /> :
-                            selectedStep === 2 ? <StepTwoTutorial direction={direction} key='step_two_tutorial' user={user} /> :
+                            selectedStep === 2 && user ? <StepTwoTutorial direction={direction} key='step_two_tutorial' user={user} /> :
                             selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
                             selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
                             selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :

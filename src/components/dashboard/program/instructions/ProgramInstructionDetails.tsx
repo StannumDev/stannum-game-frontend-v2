@@ -6,6 +6,7 @@ import { CheckIcon, ClockIcon, CompassIcon, CrossIcon, CrownIcon, HourglassIcon,
 import { startInstruction, submitInstruction } from "@/services";
 import { LessonMiniatureCard } from "@/components";
 import { errorHandler, callToast } from "@/helpers";
+import { useUserStore } from '@/stores/userStore';
 import { Instruction, InstructionDetails, Lesson, ProgramId, Resource } from "@/interfaces";
 
 interface Props {
@@ -43,6 +44,7 @@ function formatEstimatedTime(seconds: number): string {
 
 export const ProgramInstructionDetails = ({ programId, instruction, userInstruction, relatedLessons, referencedLessons }: Props) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const refreshUser = useUserStore(s => s.refreshUser);
 
     const [status, setStatus] = useState<InstructionStatus>(userInstruction?.status || 'PENDING');
     const [startDate, setStartDate] = useState<string | undefined>(userInstruction?.startDate);
@@ -114,6 +116,7 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                 text: submittedText || undefined,
             });
             setStatus('SUBMITTED');
+            refreshUser();
         } catch (error: unknown) {
             errorHandler(error);
         } finally {

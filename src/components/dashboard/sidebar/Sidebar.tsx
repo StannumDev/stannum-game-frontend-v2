@@ -1,21 +1,21 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import type { AppError, SidebarLink, UserSidebarDetails } from "@/interfaces";
+import { useState, useEffect, useMemo } from "react";
+import { usePathname } from "next/navigation";
+import type { SidebarLink } from "@/interfaces";
 import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
-import { getUserSidebarDetails } from "@/services";
-import { errorHandler } from "@/helpers";
+import { useUserStore } from "@/stores/userStore";
 
 export const Sidebar = () => {
     const pathname = usePathname();
-    const router = useRouter();
+
+    const user = useUserStore(s => s.user);
+    const isLoading = useUserStore(s => s.isLoading);
+    const refreshCount = useUserStore(s => s._refreshCount);
 
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [userData, setUserData] = useState<UserSidebarDetails|null>(null);
-    
+
     useEffect(() => {
         const checkScreenSize = () => {
             window && setIsLargeScreen(window.innerWidth >= 1024);
@@ -27,27 +27,12 @@ export const Sidebar = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            setIsLoading(true);
-            try {
-                const userFetch = await getUserSidebarDetails()
-                if(userFetch.username.startsWith("google_")){
-                    router.push('/register/google');
-                    return;
-                }
-                setUserData(userFetch);
-            } catch (error:unknown) {
-                const appError:AppError = errorHandler(error);
-                console.error(appError);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    const userData = useMemo(() => {
+        if (!user) return null;
+        const photoUrl = user.profilePhoto ? `${user.profilePhoto}?v=${refreshCount}` : undefined;
+        return { id: user.id, username: user.username, profilePhoto: photoUrl };
+    }, [user?.id, user?.username, user?.profilePhoto, refreshCount]);
 
-        fetchUserData();
-    }, [router]);
-    
     const links: Array<SidebarLink> = [
         {
             label: 'Inicio',
@@ -78,7 +63,7 @@ export const Sidebar = () => {
 
     if(!userData) return;
 
-    return ( 
+    return (
     isLargeScreen ?
         <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={isLoading} />
     :

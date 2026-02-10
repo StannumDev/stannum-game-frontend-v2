@@ -4,9 +4,9 @@ import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import { logout  } from '@/services';
-import { errorHandler } from '@/helpers';
-import type { AppError, SidebarLink, UserSidebarDetails } from '@/interfaces';
+import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
+import { useUserStore } from '@/stores/userStore';
+import { useSidebarStore } from '@/stores/sidebarStore';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink } from '@/components';
 import default_user from "@/assets/user/default_user.webp";
@@ -20,16 +20,13 @@ interface Props{
 
 export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
 
-    const [isExpanded, setIsExpanded] = useState<boolean>(true);
+    const isExpanded = useSidebarStore(s => s.isExpanded);
+    const toggleExpanded = useSidebarStore(s => s.toggleExpanded);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
+    const storeLogout = useUserStore(s => s.logout);
 
     const onLogout = () => {
-        try {
-            logout();
-        } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError)
-        }
+        storeLogout();
     }
 
     return (
@@ -55,7 +52,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                             animate={{ width: isExpanded ? 20 : 48 }}
                             transition={{duration: 0}}
                             className={`h-7 flex justify-center items-center text-neutral-600 hover:text-neutral-500 absolute top-4 left-4 transition-200`}
-                            onClick={()=> setIsExpanded(!isExpanded) }
+                            onClick={toggleExpanded}
                         >
                             {
                                 isExpanded ?
@@ -103,12 +100,12 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ type: 'spring', delay: 0.125 + i*0.125 }}
                                     >
-                                        <SidebarDesktopLink link={link} pathname={pathname} isExpanded={isExpanded}/>
+                                        <SidebarDesktopLink link={link} pathname={pathname}/>
                                     </motion.li>
                                 ))
                             }
                         </ul>
-                        <BuscadorSidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded}/>
+                        <BuscadorSidebar />
                         <motion.div
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}

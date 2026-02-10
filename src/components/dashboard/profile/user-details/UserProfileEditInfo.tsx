@@ -9,8 +9,9 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { EditIcon, PlusIcon, SelectorIcon, TrashIcon } from "@/icons";
 import { updateUserProfile } from "@/services";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
-import { achievementHandler, errorHandler } from "@/helpers";
+import { errorHandler } from "@/helpers";
 import { AppError, FullUserDetails } from "@/interfaces";
+import { useUserStore } from "@/stores/userStore";
 
 interface Props{
     user: FullUserDetails,
@@ -42,6 +43,7 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
+    const refreshUser = useUserStore(s => s.refreshUser);
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,9 +57,9 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     const onSubmit:SubmitHandler<Schema> = async (data:Schema) => {
         setIsLoading(true);
         try {
-            const { achievementsUnlocked } = await updateUserProfile(data);
-            achievementsUnlocked && achievementHandler(achievementsUnlocked);
+            await updateUserProfile(data);
             await fetchUserData(true);
+            await refreshUser();
             setShowModal(false);
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
