@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { ReCaptchaField, type ReCaptchaFieldHandle } from "@/components/ui/ReCaptchaField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,19 +24,17 @@ interface Props {
 export const PasswordRecoveryEmail = ({ onSubmit, isLoading }: Props) => {
 
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
+    const reCAPTCHARef = useRef<ReCaptchaFieldHandle>(null);
     const [reCAPTCHAError, setReCAPTCHAError] = useState<string | null>(null);
-    const reCAPTCHARef = useRef<ReCAPTCHA | null>(null);
     const [reCAPTCHACompleted, setReCAPTCHACompleted] = useState(false);
 
     const resetReCAPTCHA = () => {
-        if (reCAPTCHARef?.current) {
-            reCAPTCHARef.current.reset();
-        }
+        reCAPTCHARef.current?.reset();
         setReCAPTCHAError(null);
         setReCAPTCHACompleted(false);
     };
     
-    const handleReCAPTCHA = async (token: string | null) => {
+    const handleReCAPTCHA = async (token: string) => {
         try {
             const isValid = await validateReCAPTCHA(token);
             if (!isValid) {
@@ -86,12 +84,8 @@ export const PasswordRecoveryEmail = ({ onSubmit, isLoading }: Props) => {
             </div>
             <div className="mt-8 mx-auto w-[300px] h-[74px] border border-card-light rounded-lg flex justify-center items-center overflow-hidden relative">
                 <div className="w-[304px] h-[78px] absolute -top-px scale-[1.0125]">
-                    <ReCAPTCHA
-                        size="normal"
-                        hl="es-419"
-                        theme="dark"
+                    <ReCaptchaField
                         ref={reCAPTCHARef}
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                         onError={() => setReCAPTCHAError("Hubo un error con el reCAPTCHA.")}
                         onExpired={() => setReCAPTCHAError("El reCAPTCHA expiró. Por favor, inténtalo nuevamente.")}
                         onChange={handleReCAPTCHA}
