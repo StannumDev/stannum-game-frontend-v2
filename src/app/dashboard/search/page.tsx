@@ -23,13 +23,14 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-    searchParams: {
+    searchParams: Promise<{
         query?: string
-    };
+    }>;
 }
 
-export default function SearchPage({ searchParams }:Props) {
-    const searchQuery = searchParams?.query || "";
+export default async function SearchPage({ searchParams }:Props) {
+    const { query } = await searchParams;
+    const searchQuery = query || "";
 
     return (
         <main className="main-container">

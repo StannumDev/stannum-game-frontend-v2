@@ -173,7 +173,7 @@ export const PresentacionHome = () => {
                         element: '#sidebar-buttons',
                         popover: {
                             title: "Navegación",
-                            description: "Desde aquí puedes acceder a las principales secciones: Inicio, Biblioteca, Tienda y Perfil.",
+                            description: "Desde aquí puedes acceder a las principales secciones: Inicio, Biblioteca, Comunidad, Tienda y Perfil.",
                             side: "right",
                             align: "start",
                         },

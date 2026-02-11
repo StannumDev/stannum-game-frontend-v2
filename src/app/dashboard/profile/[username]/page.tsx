@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
         if (!user) {
             return {
-                title: "Usuario no encontrado | STANNUM Game",
+                title: "Usuario no encontrado",
                 description: "El perfil solicitado no existe.",
             };
         }
 
         return {
-            title: `${user.username} | STANNUM Game`,
+            title: `${user.username}`,
             description: `Perfil de ${user.username} en STANNUM Game.`,
             openGraph: {
                 title: `${user.username} | STANNUM Game`,
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         };
     } catch (error:unknown) {
         return {
-            title: "Usuario no encontrado | STANNUM Game",
+            title: "Usuario no encontrado",
             description: "Hubo un problema al cargar el perfil solicitado.",
         };
     }

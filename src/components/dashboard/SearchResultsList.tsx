@@ -66,7 +66,7 @@ export const SearchResultsList = ({ query }: Props) => {
                                     <div className="grow min-w-0 relative">
                                         <p className="w-full title-3 text-lg truncate">{user.name}</p>
                                         <p className="w-full subtitle-1">@{user.username}</p>
-                                        { user.enterprise && <p className="mt-2 w-full text-sm text-stannum truncate">{user.jobPosition} - {user.enterprise}</p> }
+                                        { user.enterprise && <p className="mt-2 w-full text-sm text-stannum truncate">{user.jobPosition} en {user.enterprise}</p> }
                                     </div>
                                     <ArrowRightIcon className="size-4 text-card-lightest shrink-0"/>
                                 </div>
