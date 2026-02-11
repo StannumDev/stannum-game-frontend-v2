@@ -98,7 +98,7 @@ export const RachaHome = () => {
                             aria-valuenow={progressPct}
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            aria-valuetext={progressPct === 0 ? "Sin racha" : progressPct === 100 ? "Racha al maximo" : `${progressPct}% de racha`}
+                            aria-valuetext={progressPct === 0 ? "Sin racha" : progressPct === 100 ? "Racha al máximo" : `${progressPct}% de racha`}
                             title={`Progreso: ${progressPct}%`}
                         >
                             <div

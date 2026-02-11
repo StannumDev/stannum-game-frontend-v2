@@ -41,7 +41,7 @@ export const LibraryCover = () => {
                         </defs>
                         <path fill="url(#gradientFill)" d="M17.7635 36.9353C26.1378 18.9904 30.325 10.0179 38.19 5.00894C46.055 0 55.9564 0 75.7592 0H546.67C567.656 0 578.149 0 586.275 5.50185C594.401 11.0037 598.298 20.7461 606.092 40.231L620 75H0L17.7635 36.9353Z"/>
                     </svg>
-                    <h2 className='w-full text-center text-xs lg:text-sm font-semibold uppercase tracking-widest relative z-10'>Bibloteca</h2>
+                    <h2 className='w-full text-center text-xs lg:text-sm font-semibold uppercase tracking-widest relative z-10'>Biblioteca</h2>
                 </div>
             </header>
         </MotionWrapperLayout>
