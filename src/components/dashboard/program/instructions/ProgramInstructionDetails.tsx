@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { CheckIcon, ClockIcon, CompassIcon, CrossIcon, CrownIcon, HourglassIcon, PlayIcon, SpinnerIcon, UploadIcon, ExternalLinkIcon } from "@/icons";
-import { startInstruction, submitInstruction } from "@/services";
+import { startInstruction, submitInstruction, retryGrading } from "@/services";
 import { LessonMiniatureCard } from "@/components";
 import { errorHandler, callToast } from "@/helpers";
 import { useUserStore } from '@/stores/userStore';
@@ -17,7 +17,7 @@ interface Props {
     referencedLessons: Lesson[];
 }
 
-type InstructionStatus = 'PENDING' | 'IN_PROCESS' | 'SUBMITTED' | 'GRADED';
+type InstructionStatus = 'PENDING' | 'IN_PROCESS' | 'SUBMITTED' | 'GRADED' | 'ERROR';
 
 const difficultyLabels: Record<string, string> = {
     LOW: 'Baja',
@@ -124,10 +124,10 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
         }
     };
 
-    const statusColor = status === 'PENDING' ? 'bg-invalid/25' : status === 'GRADED' ? 'bg-stannum/40' : status === 'SUBMITTED' ? 'bg-yellow-400/25' : 'bg-card-light';
-    const statusTextColor = status === 'PENDING' ? 'text-invalid' : status === 'SUBMITTED' ? 'text-yellow-400' : 'text-stannum';
-    const statusLabel = status === 'PENDING' ? 'Pendiente' : status === 'IN_PROCESS' ? 'En proceso' : status === 'SUBMITTED' ? 'En revisión' : 'Completado';
-    const statusIcon = status === 'PENDING' ? <CrossIcon /> : status === 'IN_PROCESS' ? <CompassIcon /> : status === 'SUBMITTED' ? <HourglassIcon /> : <CheckIcon />;
+    const statusColor = status === 'PENDING' ? 'bg-invalid/25' : status === 'GRADED' ? 'bg-stannum/40' : status === 'SUBMITTED' ? 'bg-yellow-400/25' : status === 'ERROR' ? 'bg-invalid/25' : 'bg-card-light';
+    const statusTextColor = status === 'PENDING' || status === 'ERROR' ? 'text-invalid' : status === 'SUBMITTED' ? 'text-yellow-400' : 'text-stannum';
+    const statusLabel = status === 'PENDING' ? 'Pendiente' : status === 'IN_PROCESS' ? 'En proceso' : status === 'SUBMITTED' ? 'En revisión' : status === 'ERROR' ? 'Error' : 'Completado';
+    const statusIcon = status === 'PENDING' ? <CrossIcon /> : status === 'IN_PROCESS' ? <CompassIcon /> : status === 'SUBMITTED' ? <HourglassIcon /> : status === 'ERROR' ? <CrossIcon /> : <CheckIcon />;
 
     return (
         <div className="w-full lg:py-6 lg:bg-card lg:rounded-lg">
@@ -340,6 +340,32 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                     <h3 className="pb-2 title-3 border-b border-white/10">Instrucción en revisión</h3>
                                     <p className="w-full text-center text-sm text-white/75">Próximamente verás aquí reflejado el resultado de tu instrucción.</p>
                                     <p className="text-sm"><b className="title-3 text-sm">Tu tiempo</b> | {formatTime(elapsedSeconds)}</p>
+                                </div>
+                            }
+                            {status === 'ERROR' &&
+                                <div className="size-full p-6 bg-invalid/15 border-2 border-dashed border-invalid rounded-lg flex flex-col justify-center items-center gap-4">
+                                    <CrossIcon className="size-10 text-invalid" />
+                                    <h3 className="pb-2 title-3 border-b border-white/10">Error en la corrección</h3>
+                                    <p className="w-full text-center text-sm text-white/75">Hubo un problema al corregir tu entrega. Podés reintentar la corrección automática.</p>
+                                    <button
+                                        type="button"
+                                        onClick={async () => {
+                                            setIsLoading(true);
+                                            try {
+                                                await retryGrading(programId, id);
+                                                setStatus('SUBMITTED');
+                                                refreshUser();
+                                            } catch (error: unknown) {
+                                                errorHandler(error);
+                                            } finally {
+                                                setIsLoading(false);
+                                            }
+                                        }}
+                                        disabled={isLoading}
+                                        className="w-48 h-10 bg-invalid hover:bg-invalid/80 disabled:opacity-50 rounded-full text-white font-semibold tracking-tighter transition-200 flex justify-center items-center gap-2"
+                                    >
+                                        {isLoading ? <SpinnerIcon className="size-5 animate-spin" /> : 'Reintentar corrección'}
+                                    </button>
                                 </div>
                             }
                             {status === 'GRADED' &&
