@@ -61,7 +61,7 @@ export interface InstructionDetails {
     estimatedTimeSec?: number;
     observations?: string;
     referencedLessons?: string[];
-    status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED";
+    status: "PENDING" | "IN_PROCESS" | "SUBMITTED" | "GRADED" | "ERROR";
 }
 
 export interface LessonDetails {

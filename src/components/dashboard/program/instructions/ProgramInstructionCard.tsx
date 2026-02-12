@@ -22,7 +22,8 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
     const inProcess = status === 'IN_PROCESS';
     const submitted = status === 'SUBMITTED';
     const completed = status === 'GRADED';
-    const active = inProcess || submitted || completed;
+    const hasError = status === 'ERROR';
+    const active = inProcess || submitted || completed || hasError;
 
     if (!isAvailable) {
         return (
@@ -57,7 +58,7 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
     }
 
     return (
-        <Link href={`/dashboard/library/${programName}/instructions/${id}`} className={`w-full lg:h-52 p-4 lg:p-0 bg-card/25 hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : submitted ? 'border-yellow-500/50' : 'border-card hover:border-card-light' } text-start flex flex-col lg:flex-row items-center relative overflow-hidden group cursor-pointer transition-200 `}>
+        <Link href={`/dashboard/library/${programName}/instructions/${id}`} className={`w-full lg:h-52 p-4 lg:p-0 bg-card/25 hover:bg-card-light/40 rounded-lg border-2 ${ completed ? 'border-stannum' : submitted ? 'border-yellow-500/50' : hasError ? 'border-invalid/50' : 'border-card hover:border-card-light' } text-start flex flex-col lg:flex-row items-center relative overflow-hidden group cursor-pointer transition-200 `}>
             <div className='hidden lg:block h-full aspect-square relative shrink-0'>
                 <Image priority src={instruction_logo} alt='Instrucción' className='size-full absolute top-0 left-0 object-[90%_50%] object-cover' />
             </div>
@@ -70,8 +71,8 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                 <div className={`mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 ${styles.diagonal__lines} ${ completed ? `lg:bg-card lg:group-hover:bg-card-light ${styles.completed__diagonal__lines}` : 'lg:bg-card lg:group-hover:bg-card-light' }`}>
                     <div className='w-full lg:w-auto grid grid-cols-2 lg:flex lg:flex-col gap-4'>
                         <div className='flex items-center gap-2 lg:relative lg:left-8'>
-                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
-                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>D</span>
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : hasError ? 'bg-invalid/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : hasError ? 'text-invalid' : active ? 'text-stannum' : 'text-invalid'}`}>D</span>
                             </div>
                             <div className='flex flex-col'>
                                 <span>{difficultyLabels[difficulty] || difficulty}</span>
@@ -79,8 +80,8 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                             </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
-                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : hasError ? 'bg-invalid/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`text-xl ${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : hasError ? 'text-invalid' : active ? 'text-stannum' : 'text-invalid'}`}>
                                     <CrownIcon />
                                 </span>
                             </div>
@@ -90,13 +91,13 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                             </div>
                         </div>
                         <div className='flex items-center gap-2 lg:relative lg:right-8'>
-                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
-                                <span className={`${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : active ? 'text-stannum' : 'text-invalid'}`}>
-                                    {completed ? <CheckIcon className='size-5' /> : submitted ? <HourglassIcon className='size-4' /> : inProcess ? <CompassIcon className='size-4' /> : <CrossIcon className='size-4' />}
+                            <div className={`size-10 rounded-full ${completed ? 'bg-stannum/40' : submitted ? 'bg-yellow-400/25' : hasError ? 'bg-invalid/25' : active ? 'bg-card-light' : 'bg-invalid/25'} flex justify-center items-center`}>
+                                <span className={`${completed ? 'text-stannum' : submitted ? 'text-yellow-400' : hasError ? 'text-invalid' : active ? 'text-stannum' : 'text-invalid'}`}>
+                                    {completed ? <CheckIcon className='size-5' /> : submitted ? <HourglassIcon className='size-4' /> : hasError ? <CrossIcon className='size-4' /> : inProcess ? <CompassIcon className='size-4' /> : <CrossIcon className='size-4' />}
                                 </span>
                             </div>
                             <div className='flex flex-col'>
-                                <span>{completed ? 'Completado' : submitted ? 'En revisión' : inProcess ? 'En proceso' : 'Pendiente'}</span>
+                                <span>{completed ? 'Completado' : submitted ? 'En revisión' : hasError ? 'Error' : inProcess ? 'En proceso' : 'Pendiente'}</span>
                                 <span className='subtitle-1'>Estado</span>
                             </div>
                         </div>
@@ -113,6 +114,16 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                                     <p className='text-3xl font-bold'>{userInstruction.score}<span className='text-lg font-normal opacity-60'>/100</span></p>
                                 )}
                                 <span className='text-xs font-semibold uppercase tracking-wider opacity-75'>Completada</span>
+                            </div>
+                        </Fragment>
+                    : hasError ?
+                        <Fragment>
+                            <div className='size-16 bg-invalid/25 text-invalid rounded-full text-4xl flex justify-center items-center shadow-sm'>
+                                <CrossIcon/>
+                            </div>
+                            <div className='flex flex-col items-center gap-1'>
+                                <p className='pb-1 title-3 text-base whitespace-nowrap border-b border-white/25'>Error</p>
+                                <p className='mt-1 text-sm subtitle-1'>Reintentar corrección</p>
                             </div>
                         </Fragment>
                     : submitted ?
