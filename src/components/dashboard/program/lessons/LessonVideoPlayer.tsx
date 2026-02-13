@@ -7,8 +7,11 @@ import MuxPlayer from '@mux/mux-player-react/lazy';
 import type MuxPlayerElement from "@mux/mux-player";
 import { createBlurUp } from '@mux/blurup';
 import { markLessonAsCompleted, saveLastWatchedLesson } from "@/services";
+import type { LessonCompletionResult } from "@/services/lesson";
 import { AppError, Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
+import { CrownIcon } from "@/icons";
+import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { useUserStore } from '@/stores/userStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
@@ -40,10 +43,11 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const videoRef = useRef<MuxPlayerElement | null>(null);
     const [blurData, setBlurData] = useState<BlurData>({ blurDataURL: "", aspectRatio: 16 / 9 });
 
-    const [markedAsCompleted, setMarkedAsCompleted] = useState(isCompleted);
+    const markedAsCompleted = useRef(isCompleted);
     const [countdown, setCountdown] = useState(NEXT_COUNTDOWN);
     const [showNextOverlay, setShowNextOverlay] = useState(false);
     const [cancelNext, setCancelNext] = useState(false);
+    const [xpResult, setXpResult] = useState<LessonCompletionResult | null>(null);
 
     const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
     const hasStartedRedirect = useRef(false);
@@ -65,8 +69,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         fetchBlurData();
 
         const progressInterval = setInterval(() => {
-            if (lastTimeRef.current > 0 && !markedAsCompleted && !hasStartedRedirect.current) {
-                 saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current);
+            if (lastTimeRef.current > 0 && !markedAsCompleted.current && !hasStartedRedirect.current) {
+                 saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch(() => {});
             }
         }, SAVE_INTERVAL_MS);
 
@@ -79,10 +83,18 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 redirectTimeout.current = null;
             }
             if (progressInterval) clearInterval(progressInterval);
-            if (lastTimeRef.current > 0 && !markedAsCompleted) saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current);
+            if (lastTimeRef.current > 0 && !markedAsCompleted.current) saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch(() => {});
             hasStartedRedirect.current = false;
         };
-    }, [lesson.muxPlaybackId, lesson.id, program, markedAsCompleted]);
+    }, [lesson.muxPlaybackId, lesson.id, program]);
+
+    useEffect(() => {
+        if (showNextOverlay && xpResult && xpResult.totalGain > 0) {
+            import('canvas-confetti').then(({ default: confetti }) => {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            });
+        }
+    }, [showNextOverlay, xpResult]);
 
     const handleTimeUpdate = async () => {
         if (!videoRef.current) return;
@@ -92,10 +104,11 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         lastTimeRef.current = Math.floor(currentTime);
         const remaining = Number.isFinite(duration) ? duration - currentTime : Infinity;
 
-        if (remaining <= END_THRESHOLD && !markedAsCompleted) {
+        if (remaining <= END_THRESHOLD && !markedAsCompleted.current) {
+            markedAsCompleted.current = true;
             try {
-                setMarkedAsCompleted(true);
-                await markLessonAsCompleted(program.toLowerCase(), lesson.id);
+                const result = await markLessonAsCompleted(program.toLowerCase(), lesson.id);
+                setXpResult(result);
                 refreshUser();
             } catch (error:unknown) {
                 const appError: AppError = errorHandler(error);
@@ -105,7 +118,13 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
 
         if (remaining <= END_THRESHOLD && !hasStartedRedirect.current && !cancelNext) {
             hasStartedRedirect.current = true;
+
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
+
             setShowNextOverlay(true);
+
             let counter = NEXT_COUNTDOWN;
             setCountdown(counter);
 
@@ -163,6 +182,21 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         <div className='w-full aspect-video relative rounded-lg border border-card cursor-pointer overflow-hidden'>
             {showNextOverlay && nextLesson && isNextLessonAvailable && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    {xpResult && xpResult.totalGain > 0 && (
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <div className="flex items-center gap-2">
+                                <CrownIcon className="size-8 text-stannum" />
+                                <span className="text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
+                                <span className="text-4xl font-black">XP</span>
+                            </div>
+                            {xpResult.streakBonus > 0 && (
+                                <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                        </div>
+                    )}
+                    {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
                     <p className="text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
                         <Image
@@ -185,6 +219,21 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             )}
             {showNextOverlay && nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    {xpResult && xpResult.totalGain > 0 && (
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <div className="flex items-center gap-2">
+                                <CrownIcon className="size-8 text-stannum" />
+                                <span className="text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
+                                <span className="text-4xl font-black">XP</span>
+                            </div>
+                            {xpResult.streakBonus > 0 && (
+                                <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                        </div>
+                    )}
+                    {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
                     <p className="text-lg font-bold text-center">Completá la instrucción para seguir avanzando ({countdown}s)</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente instrucción</p>
@@ -198,6 +247,21 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && nextModule && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    {xpResult && xpResult.totalGain > 0 && (
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <div className="flex items-center gap-2">
+                                <CrownIcon className="size-8 text-stannum" />
+                                <span className="text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
+                                <span className="text-4xl font-black">XP</span>
+                            </div>
+                            {xpResult.streakBonus > 0 && (
+                                <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                        </div>
+                    )}
+                    {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
                     <p className="text-lg font-bold text-center">Siguiente módulo en {countdown} segundos...</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente módulo</p>
@@ -211,6 +275,21 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && !nextModule && (
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                    {xpResult && xpResult.totalGain > 0 && (
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <div className="flex items-center gap-2">
+                                <CrownIcon className="size-8 text-stannum" />
+                                <span className="text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
+                                <span className="text-4xl font-black">XP</span>
+                            </div>
+                            {xpResult.streakBonus > 0 && (
+                                <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                        </div>
+                    )}
+                    {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
                     <p className="text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
                     <div className="flex gap-4 mt-2">
                         <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>

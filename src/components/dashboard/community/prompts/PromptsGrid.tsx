@@ -26,7 +26,7 @@ export const PromptsGrid = () => {
         setIsLoading(true);
         try {
             const response: PromptsResponse = await getAllPrompts(filters);
-            setPrompts(response.data.prompts);
+            setPrompts(prev => filters.page === 1 ? response.data.prompts : [...prev, ...response.data.prompts]);
             setHasMore(response.data.pagination.hasNextPage);
         } catch (error) {
             errorHandler(error);

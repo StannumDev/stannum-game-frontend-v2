@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Biblioteca | STANNUM Game',
         description: 'Desarrolla las habilidades de tu equipo de venta y marketing con Stannum. Contáctanos y solicita una entrevista con el entrenador, Martín Merlini.',
-        url: 'https://stanumgame.com/dashboard/library',
+        url: 'https://stannumgame.com/dashboard/library',
         siteName: 'STANNUM',
         locale: 'es_AR',
         type: 'website',

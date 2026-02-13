@@ -58,6 +58,7 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
     const isStarted = status !== 'PENDING';
     const score = userInstruction?.score;
     const observations = userInstruction?.observations;
+    const xpGained = userInstruction?.xpGained;
 
     const computeElapsed = useCallback(() => {
         if (!startDate) return 0;
@@ -386,6 +387,14 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                             <span className="text-xs uppercase tracking-wider opacity-60">Tu tiempo</span>
                                             <span className="text-xl font-semibold">{formatTime(elapsedSeconds)}</span>
                                         </div>
+                                        {xpGained !== undefined && xpGained > 0 && (
+                                            <div className="flex flex-col items-center gap-1">
+                                                <span className="text-xs uppercase tracking-wider opacity-60">Experiencia obtenida</span>
+                                                <span className="text-xl font-semibold flex items-center gap-1">
+                                                    <CrownIcon className="size-5" /> +{xpGained} XP
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                     { referencedLessons.length > 0 &&
                                         <div className="w-full flex flex-col gap-3">

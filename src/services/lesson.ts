@@ -15,7 +15,13 @@ const tokenError = {
     },
 };
 
-export const markLessonAsCompleted = async (programName: string, lessonId: string): Promise<boolean> => {
+export interface LessonCompletionResult {
+    gained: number;
+    streakBonus: number;
+    totalGain: number;
+}
+
+export const markLessonAsCompleted = async (programName: string, lessonId: string): Promise<LessonCompletionResult> => {
     try {
         const token = Cookies.get("token");
         if (!token) throw tokenError;
@@ -30,7 +36,8 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         );
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-        return response?.data?.success;
+        const { gained = 0, streakBonus = 0, totalGain = 0 } = response.data;
+        return { gained, streakBonus, totalGain };
     } catch (error:unknown) {
         throw error;
     }

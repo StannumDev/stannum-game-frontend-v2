@@ -57,9 +57,10 @@ export interface PromptCard {
     platforms: PromptPlatform[];
     tags: string[];
     metrics: {
-        copies: number;
-        likes: number;
-        favorites: number;
+        copiesCount: number;
+        likesCount: number;
+        favoritesCount: number;
+        viewsCount: number;
     };
     author: {
         username: string;

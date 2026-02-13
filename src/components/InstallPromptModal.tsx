@@ -28,20 +28,22 @@ export const InstallPromptModal = () => {
       if (!isInstalled) setShowModal(true);
     };
 
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setShowModal(false);
+    };
+
     const HIDE_INSTALLATION = Cookies.get('HIDE_INSTALLATION') === 'true';
     const TUTORIAL_FINISHED = Cookies.get('initial_tutorial') === 'true';
     if(!HIDE_INSTALLATION && TUTORIAL_FINISHED){
       checkInstallationStatus();
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.addEventListener('appinstalled', () => {
-        setIsInstalled(true);
-        setShowModal(false);
-      });
+      window.addEventListener('appinstalled', handleAppInstalled);
     }
-    
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', () => setIsInstalled(true));
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, [isInstalled]);
 

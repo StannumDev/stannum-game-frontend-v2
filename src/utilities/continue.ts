@@ -1,5 +1,5 @@
-import type { FullUserDetails, Program, Lesson, ContinueEntry, ProgramId } from "@/interfaces";
-import { isLessonAvailable } from "./lessons";
+import type { FullUserDetails, Program, Lesson, Instruction, ContinueEntry, ProgramId } from "@/interfaces";
+import { isLessonAvailable, isInstructionAvailable } from "./lessons";
 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
@@ -8,12 +8,45 @@ const flattenLessons = (program: Program): Lesson[] => program.sections.flatMap(
 
 const isLessonCompleted = (user: FullUserDetails, programId: string, lessonId: string) => !!user.programs?.[programId as keyof FullUserDetails["programs"]]?.lessonsCompleted?.some(l => l.lessonId === lessonId);
 
-const nextUncompletedLesson = (program: Program, user: FullUserDetails): Lesson | null => {
+type NextActivity =
+    | { type: 'lesson'; lesson: Lesson }
+    | { type: 'instruction'; instruction: Instruction }
+    | null;
+
+const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextActivity => {
     const programId = program.id as ProgramId;
+    const userInstructions = user.programs?.[programId]?.instructions || [];
+
     for (const section of program.sections) {
         for (const mod of section.modules || []) {
             for (const lesson of mod.lessons) {
-                if (!isLessonCompleted(user, program.id, lesson.id) && isLessonAvailable(user, programId, mod, lesson.id)) return lesson;
+                if (isLessonCompleted(user, program.id, lesson.id)) {
+                    // Lesson completed — check if there are pending instructions after it
+                    const pendingInstructions = mod.instructions.filter(inst => inst.afterLessonId === lesson.id);
+                    for (const inst of pendingInstructions) {
+                        if (!isInstructionAvailable(user, programId, inst)) continue;
+                        const userInstr = userInstructions.find(ui => ui.instructionId === inst.id);
+                        const isDone = userInstr && ["SUBMITTED", "GRADED"].includes(userInstr.status);
+                        if (!isDone) return { type: 'instruction', instruction: inst };
+                    }
+                    continue;
+                }
+
+                // Lesson not completed — is it available?
+                if (isLessonAvailable(user, programId, mod, lesson.id)) {
+                    return { type: 'lesson', lesson };
+                }
+
+                // Lesson blocked — find the blocking instruction
+                for (const inst of mod.instructions) {
+                    if (!isInstructionAvailable(user, programId, inst)) continue;
+                    const userInstr = userInstructions.find(ui => ui.instructionId === inst.id);
+                    const isDone = userInstr && ["SUBMITTED", "GRADED"].includes(userInstr.status);
+                    if (!isDone) return { type: 'instruction', instruction: inst };
+                }
+
+                // Blocked by something else (shouldn't happen in normal flow)
+                return null;
             }
         }
     }
@@ -34,38 +67,54 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
     const last = state.lastWatchedLesson;
     const lessons = flattenLessons(program);
 
-    if (!last?.lessonId) {
-        const next = nextUncompletedLesson(program, user);
+    const userInstructions = state.instructions || [];
+
+    const buildFromActivity = (next: NextActivity): ContinueEntry | null => {
         if (!next) return null;
+        if (next.type === 'instruction') {
+            const userInstr = userInstructions.find(ui => ui.instructionId === next.instruction.id);
+            const label = userInstr?.status === 'IN_PROCESS' ? 'Instrucción en proceso' : 'Instrucción pendiente';
+            return {
+                programId,
+                programName: program.name,
+                programLogo: program.logo,
+                activityTitle: next.instruction.title,
+                href: `/dashboard/library/${programId}/instructions/${next.instruction.id}`,
+                progressPct: 0,
+                type: 'instruction',
+                activityLabel: label,
+            };
+        }
         return {
-            programId: programId,
+            programId,
             programName: program.name,
             programLogo: program.logo,
-            lessonTitle: next.title,
-            href: `/dashboard/library/${programId}/lessons/${next.id}`,
+            activityTitle: next.lesson.title,
+            href: `/dashboard/library/${programId}/lessons/${next.lesson.id}`,
             progressPct: 0,
+            type: 'lesson',
+            activityLabel: 'Siguiente lección',
         };
+    };
+
+    if (!last?.lessonId) {
+        return buildFromActivity(nextUncompletedActivity(program, user));
     }
 
     const currentLesson = lessons.find(l => l.id === last.lessonId);
+    if (!currentLesson) {
+        return buildFromActivity(nextUncompletedActivity(program, user));
+    }
+
     const currentTime = Math.max(0, last.currentTime ?? 0);
-    const duration = Number.isFinite(currentLesson?.duration) ? (currentLesson!.duration) : 0;
+    const duration = Number.isFinite(currentLesson.duration) ? currentLesson.duration : 0;
 
     const progress = pctFrom(currentTime, duration);
     const remaining = duration > 0 ? Math.max(0, duration - currentTime) : Infinity;
     const isCompletedNow = isLessonCompleted(user, programId, last.lessonId);
 
     if (isCompletedNow || remaining <= NEAR_END_SECONDS || progress / 100 >= PROGRESS_HIDE_THRESHOLD) {
-        const next = nextUncompletedLesson(program, user);
-        if (!next) return null;
-        return {
-            programId,
-            programName: program.name,
-            programLogo: program.logo,
-            lessonTitle: next.title,
-            href: `/dashboard/library/${programId}/lessons/${next.id}`,
-            progressPct: 0,
-        };
+        return buildFromActivity(nextUncompletedActivity(program, user));
     }
 
     const progressPct = Math.max(0, Math.min(99, progress));
@@ -73,8 +122,10 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
         programId,
         programName: program.name,
         programLogo: program.logo,
-        lessonTitle: currentLesson?.title ?? "",
+        activityTitle: currentLesson?.title ?? "",
         href: `/dashboard/library/${programId}/lessons/${currentLesson?.id}?t=${currentTime}`,
         progressPct,
+        type: 'lesson',
+        activityLabel: 'Lección en progreso',
     };
 }

@@ -38,11 +38,13 @@ export const achievements: Array<Achievement> = [
         xpReward: 100,
         getProgress: (user: FullUserDetails) => {
             for (const program of programs) {
+                const userProgram = user.programs[program.id];
+                if (!userProgram) continue;
                 for (const section of program.sections) {
-                    if(!section.modules) return 0;
+                    if(!section.modules) continue;
                     for (const program_module of section.modules) {
                         const allLessonsDone = program_module.lessons.every(l =>
-                            (user.programs[program.id].lessonsCompleted || []).some(lc => lc.lessonId === l.id)
+                            (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
                         );
                         if (allLessonsDone) return 100;
                     }
@@ -86,7 +88,7 @@ export const achievements: Array<Achievement> = [
                 const userProgram = user.programs[programCfg.id];
                 if (!userProgram) continue;
                 for (const section of programCfg.sections) {
-                    if(!section.modules) return 0;
+                    if(!section.modules) continue;
                     for (const program_module of section.modules) {
                         if (program_module.instructions.length <= 0) continue;
                         const allInstructionsDone = program_module.instructions.every(inst =>
@@ -110,13 +112,14 @@ export const achievements: Array<Achievement> = [
             for (const programCfg of programs) {
                 const userProgram = user.programs[programCfg.id];
                 if (!userProgram) continue;
-                const allModulesDone = programCfg.sections.every(section =>
-                    section.modules?.every(program_module => {
+                const allModulesDone = programCfg.sections.every(section => {
+                    if (!section.modules || section.modules.length === 0) return true;
+                    return section.modules.every(program_module => {
                         const allLessonsDone = program_module.lessons.every(l => userProgram.lessonsCompleted.some(lc => lc.lessonId === l.id));
                         const allInstructionsDone = program_module.instructions.every(inst => userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED"));
                         return allLessonsDone && allInstructionsDone;
-                    })
-                );
+                    });
+                });
                 if (allModulesDone) return 100;
             }
             return 0;
@@ -228,13 +231,14 @@ export const achievements: Array<Achievement> = [
             const tiaConfig = programs.find(p => p.id === "tia");
             if (!tiaConfig) return 0;
 
-            return tiaConfig.sections.every(section =>
-                section.modules?.every(program_module =>
+            return tiaConfig.sections.every(section => {
+                if (!section.modules || section.modules.length === 0) return true;
+                return section.modules.every(program_module =>
                     program_module.lessons.every(lesson =>
                         tiaProgram.lessonsCompleted.some(lc => lc.lessonId === lesson.id)
                     )
-                )
-            ) ? 100 : 0;
+                );
+            }) ? 100 : 0;
         }
     },
     {

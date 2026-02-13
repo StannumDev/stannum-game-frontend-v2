@@ -46,7 +46,7 @@ export interface ProgramDetails {
     acquiredAt?: string;
     instructions: Array<InstructionDetails>;
     lessonsCompleted: Array<LessonDetails>;
-    lastWatchedLesson?: Array<LessonDetails>;
+    lastWatchedLesson?: { lessonId: string; currentTime: number };
     // tests: Array<TestDetails>;
     productKey?: string;
 }
@@ -58,6 +58,7 @@ export interface InstructionDetails {
     reviewedAt?: string;
     score?: number;
     xpGrantedAt?: string;
+    xpGained?: number;
     estimatedTimeSec?: number;
     observations?: string;
     referencedLessons?: string[];
@@ -153,7 +154,7 @@ export interface FullUserDetails {
         timezone: string;
     };
     xpHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS";
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED";
         xp: number;
         date: string;
         // meta?: string;

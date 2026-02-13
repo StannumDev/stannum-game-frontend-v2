@@ -19,8 +19,8 @@ interface Props {
 export const PromptCard = ({ prompt, onClick }: Props) => {
     const [isLiked, setIsLiked] = useState(prompt.userActions?.hasLiked || false);
     const [isFavorited, setIsFavorited] = useState(prompt.userActions?.hasFavorited || false);
-    const [likesCount, setLikesCount] = useState(prompt.metrics.likes);
-    const [copiesCount, setCopiesCount] = useState(prompt.metrics.copies);
+    const [likesCount, setLikesCount] = useState(prompt.metrics.likesCount);
+    const [copiesCount, setCopiesCount] = useState(prompt.metrics.copiesCount);
     const [isProcessing, setIsProcessing] = useState(false);
     const [showCopiedFeedback, setShowCopiedFeedback] = useState(false);
 

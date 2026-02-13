@@ -35,14 +35,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: longTitle,
             description: instruction.title,
-            url: `https://stanumgame.com/dashboard/library/${program_id}/instructions/${instruction.id}`,
+            url: `https://stannumgame.com/dashboard/library/${program_id}/instructions/${instruction.id}`,
             siteName: 'STANNUM',
             locale: 'es_AR',
             type: 'website',
         },
         twitter: {
             card: 'summary_large_image',
-            site: `https://stanumgame.com/dashboard/library/${program_id}`,
+            site: `https://stannumgame.com/dashboard/library/${program_id}`,
             creator: 'STANNUM',
             title: longTitle,
             description: instruction.title,

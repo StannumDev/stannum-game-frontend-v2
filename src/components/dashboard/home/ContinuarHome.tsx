@@ -26,9 +26,11 @@ export const ContinuarHome = () => {
                                 key={`${e.programId}-${e.href}`}
                                 href={e.href}
                                 programName={e.programName}
-                                lessonTitle={e.lessonTitle}
+                                activityTitle={e.activityTitle}
                                 progressPct={e.progressPct}
                                 programLogo={e.programLogo as StaticImageData}
+                                type={e.type}
+                                activityLabel={e.activityLabel}
                             />
                         ))
                     ) : (
