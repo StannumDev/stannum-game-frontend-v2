@@ -37,7 +37,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
 
     if (isLoading || !user || !checked) return <LoadingScreen />;
 
-    const isCompleted = user.programs?.[programId as keyof typeof user.programs]?.lessonsCompleted.some((ul) => ul.lessonId === lesson.id);
+    const isCompleted = user.programs?.[programId as keyof typeof user.programs]?.lessonsCompleted?.some((ul) => ul.lessonId === lesson.id);
     const currentIndex = program_module.lessons.findIndex(l => l.id === lesson.id);
     const nextLessonObj = program_module.lessons[currentIndex + 1];
     const isNextLessonAvailable = nextLessonObj ? isLessonAvailable(user, typedProgramId, program_module, nextLessonObj.id, [lesson.id]) : false;
@@ -72,7 +72,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
 
     const renderMiniatureList = () => miniatureItems.map((item) => {
         if (item.type === 'lesson') {
-            const lessonCompleted = user.programs?.[programId as keyof typeof user.programs]?.lessonsCompleted.some((ul) => ul.lessonId === item.lesson.id);
+            const lessonCompleted = user.programs?.[programId as keyof typeof user.programs]?.lessonsCompleted?.some((ul) => ul.lessonId === item.lesson.id);
             const available = isLessonAvailable(user, typedProgramId, program_module, item.lesson.id);
             return (
                 <LessonMiniatureCard
@@ -127,7 +127,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                 <p className="subtitle-1"> {section.name} | {program_module.name}</p>
                 <div className="w-full flex justify-between gap-4">
                     <div className="flex flex-col">
-                        <h1 className="title-2">{lesson.title}</h1>
+                        <h2 className="title-2">{lesson.title}</h2>
                     </div>
                 </div>
                 <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>

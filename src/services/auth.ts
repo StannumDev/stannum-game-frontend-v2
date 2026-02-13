@@ -42,7 +42,8 @@ export const authUserByToken = async (token: string | undefined): Promise<AuthUs
             profileStatus: response.data.profileStatus || 'complete'
         };
     } catch (error: unknown) {
-        logout();
+        const status = (error as { response?: { status?: number } })?.response?.status;
+        if (status === 401 || status === 403) logout();
         return { success: false, achievementsUnlocked: [], profileStatus: 'complete' };
     }
 };
@@ -54,13 +55,13 @@ export const requestLogin = async (data: { username: string; password: string })
             cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
         });
         
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
         Cookies.set('token', response.data.token, {
             secure: process.env.NEXT_PUBLIC_ENV === 'production',
             sameSite: 'Strict',
             path: '/',
             expires: 365,
         });
-        if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data.success;
     } catch (error:unknown) {
         throw error;

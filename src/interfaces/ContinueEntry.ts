@@ -5,7 +5,9 @@ export interface ContinueEntry {
     programId: ProgramId;
     programName: string;
     programLogo: StaticImageData;
-    lessonTitle: string;
+    activityTitle: string;
     href: string;
     progressPct: number;
+    type: 'lesson' | 'instruction';
+    activityLabel: string;
 };

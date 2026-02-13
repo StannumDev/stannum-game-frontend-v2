@@ -25,7 +25,7 @@ export const useModuleProgress = ({ program_module, moduleIndex, modules, user, 
     const totalInstructions = instructions.length;
 
     const completedLessons = lessons.filter((lesson) => userLessons.some((ul) => ul.lessonId === lesson.id)).length;
-    const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && ui.status === "GRADED")).length;
+    const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && (ui.status === "SUBMITTED" || ui.status === "GRADED"))).length;
 
     const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 100;
     const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 100;
@@ -36,7 +36,7 @@ export const useModuleProgress = ({ program_module, moduleIndex, modules, user, 
         status = "BLOCKED";
     } else if (lessonsProgress === 100 && instructionsProgress === 100) {
         status = "COMPLETED";
-    } else if (lessonsProgress >= 0 || instructionsProgress >= 0) {
+    } else if (lessonsProgress > 0 || instructionsProgress > 0) {
         status = "IN_PROGRESS";
     } else {
         status = moduleIndex === 0 ? "IN_PROGRESS" : "BLOCKED";
@@ -53,7 +53,7 @@ const calculateModuleStatus = (module: Module, user: FullUserDetails, programId:
     const totalInstructions = instructions.length;
 
     const completedLessons = lessons.filter((lesson) => userLessons.some((ul) => ul.lessonId === lesson.id)).length;
-    const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && ui.status === "GRADED")).length;
+    const completedInstructions = instructions.filter((instruction) => userInstructions.find((ui) => ui.instructionId === instruction.id && (ui.status === "SUBMITTED" || ui.status === "GRADED"))).length;
 
     const lessonsProgress = totalLessons > 0 ? Math.floor((completedLessons / totalLessons) * 100) : 100;
     const instructionsProgress = totalInstructions > 0 ? Math.floor((completedInstructions / totalInstructions) * 100) : 100;
