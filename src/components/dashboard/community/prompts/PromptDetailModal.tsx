@@ -85,16 +85,30 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
     const handleLike = async () => {
         if (!prompt || isProcessing) return;
         setIsProcessing(true);
+
+        // Optimistic update
+        const isLiked = prompt.userActions?.hasLiked || false;
+        const previousLikesCount = prompt.metrics.likesCount;
+        setPrompt(prev => prev ? {
+            ...prev,
+            metrics: { ...prev.metrics, likesCount: isLiked ? prev.metrics.likesCount - 1 : prev.metrics.likesCount + 1 },
+            userActions: { ...prev.userActions!, hasLiked: !isLiked }
+        } : null);
+
         try {
-            const isLiked = prompt.userActions?.hasLiked || false;
             const response = isLiked ? await unlikePrompt(prompt.id) : await likePrompt(prompt.id);
             setPrompt(prev => prev ? {
                 ...prev,
-                metrics: { ...prev.metrics, likesCount: response.likesCount },
-                userActions: { ...prev.userActions!, hasLiked: !isLiked }
+                metrics: { ...prev.metrics, likesCount: response.likesCount }
             } : null);
             onUpdate();
         } catch (error) {
+            // Revert optimistic update on error
+            setPrompt(prev => prev ? {
+                ...prev,
+                metrics: { ...prev.metrics, likesCount: previousLikesCount },
+                userActions: { ...prev.userActions!, hasLiked: isLiked }
+            } : null);
             errorHandler(error);
         } finally {
             setIsProcessing(false);
@@ -104,6 +118,15 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
     const handleFavorite = async () => {
         if (!prompt || isProcessing) return;
         setIsProcessing(true);
+
+        // Optimistic update
+        const previousFavorited = prompt.userActions?.hasFavorited || false;
+        const previousFavoritesCount = prompt.metrics.favoritesCount;
+        setPrompt(prev => prev ? {
+            ...prev,
+            userActions: { ...prev.userActions!, hasFavorited: !previousFavorited }
+        } : null);
+
         try {
             const response = await toggleFavoritePrompt(prompt.id);
             setPrompt(prev => prev ? {
@@ -113,6 +136,12 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
             } : null);
             onUpdate();
         } catch (error) {
+            // Revert optimistic update on error
+            setPrompt(prev => prev ? {
+                ...prev,
+                metrics: { ...prev.metrics, favoritesCount: previousFavoritesCount },
+                userActions: { ...prev.userActions!, hasFavorited: previousFavorited }
+            } : null);
             errorHandler(error);
         } finally {
             setIsProcessing(false);

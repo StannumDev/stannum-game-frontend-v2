@@ -85,17 +85,25 @@ export const AssistantCard = ({ assistant }: Props) => {
         e.stopPropagation();
         if (isProcessing) return;
         setIsProcessing(true);
+
+        // Optimistic update
+        const previousLiked = isLiked;
+        const previousCount = likesCount;
+        setIsLiked(!isLiked);
+        setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+
         try {
-            if (isLiked) {
+            if (previousLiked) {
                 const response = await unlikeAssistant(assistant.id);
                 setLikesCount(response.likesCount);
-                setIsLiked(false);
             } else {
                 const response = await likeAssistant(assistant.id);
                 setLikesCount(response.likesCount);
-                setIsLiked(true);
             }
         } catch (error) {
+            // Revert optimistic update on error
+            setIsLiked(previousLiked);
+            setLikesCount(previousCount);
             errorHandler(error);
         } finally {
             setIsProcessing(false);
@@ -106,10 +114,17 @@ export const AssistantCard = ({ assistant }: Props) => {
         e.stopPropagation();
         if (isProcessing) return;
         setIsProcessing(true);
+
+        // Optimistic update
+        const previousFavorited = isFavorited;
+        setIsFavorited(!isFavorited);
+
         try {
             const response = await toggleFavoriteAssistant(assistant.id);
             setIsFavorited(response.isFavorited);
         } catch (error) {
+            // Revert optimistic update on error
+            setIsFavorited(previousFavorited);
             errorHandler(error);
         } finally {
             setIsProcessing(false);
