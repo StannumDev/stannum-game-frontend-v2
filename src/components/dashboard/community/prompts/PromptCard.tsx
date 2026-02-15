@@ -91,7 +91,6 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
         if (isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const previousLiked = isLiked;
         const previousCount = likesCount;
         setIsLiked(!isLiked);
@@ -106,7 +105,6 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                 setLikesCount(response.likesCount);
             }
         } catch (error) {
-            // Revert optimistic update on error
             setIsLiked(previousLiked);
             setLikesCount(previousCount);
             errorHandler(error);
@@ -120,7 +118,6 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
         if (isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const previousFavorited = isFavorited;
         setIsFavorited(!isFavorited);
 
@@ -128,7 +125,6 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
             const response = await toggleFavoritePrompt(prompt.id);
             setIsFavorited(response.isFavorited);
         } catch (error) {
-            // Revert optimistic update on error
             setIsFavorited(previousFavorited);
             errorHandler(error);
         } finally {

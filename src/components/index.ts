@@ -98,6 +98,7 @@ export { InstructionPageContent } from "./dashboard/program/instructions/Instruc
 export { InstructionMiniatureCard } from "./dashboard/program/instructions/InstructionMiniatureCard";
 
 export { ProgramRankingLayout } from "./dashboard/program/sections/ProgramRankingLayout";
+export { ProgramIndividualRankingLayout } from "./dashboard/program/sections/ProgramIndividualRankingLayout";
 export { ProgramTeamRankingCard } from "./dashboard/program/ranking/ProgramTeamRankingCard";
 export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPlayerRankingCard";
 

@@ -23,7 +23,7 @@ export const CardRankingHome = ({ user, owner }: Props) => {
   };
   
   return (
-      <Link href={`/dashboard/profile/${username}`} className={`w-full ${ owner && "text-stannum" } bg-card hover:bg-card-light/75 px-1 lg:px-4 py-2 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2`}>
+      <Link href={`/dashboard/profile/${username}`} className={`w-full ${ owner ? "text-stannum" : "" } bg-card hover:bg-card-light/75 px-1 lg:px-4 py-2 rounded-lg grid grid-cols-12 lg:grid-cols-8 items-center gap-1 lg:gap-2`}>
           <h3 className="col-span-2 lg:col-span-1 flex justify-center items-center relative">
               <span className="sr-only">
                 {position === 1 ? "Primer puesto" : position === 2 ? "Segundo puesto" : position === 3 ? "Tercer puesto" : `Puesto número ${position}`}

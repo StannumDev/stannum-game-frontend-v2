@@ -86,7 +86,6 @@ export const AssistantCard = ({ assistant }: Props) => {
         if (isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const previousLiked = isLiked;
         const previousCount = likesCount;
         setIsLiked(!isLiked);
@@ -101,7 +100,6 @@ export const AssistantCard = ({ assistant }: Props) => {
                 setLikesCount(response.likesCount);
             }
         } catch (error) {
-            // Revert optimistic update on error
             setIsLiked(previousLiked);
             setLikesCount(previousCount);
             errorHandler(error);
@@ -115,7 +113,6 @@ export const AssistantCard = ({ assistant }: Props) => {
         if (isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const previousFavorited = isFavorited;
         setIsFavorited(!isFavorited);
 
@@ -123,7 +120,6 @@ export const AssistantCard = ({ assistant }: Props) => {
             const response = await toggleFavoriteAssistant(assistant.id);
             setIsFavorited(response.isFavorited);
         } catch (error) {
-            // Revert optimistic update on error
             setIsFavorited(previousFavorited);
             errorHandler(error);
         } finally {

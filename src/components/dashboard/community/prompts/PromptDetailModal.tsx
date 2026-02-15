@@ -86,7 +86,6 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
         if (!prompt || isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const isLiked = prompt.userActions?.hasLiked || false;
         const previousLikesCount = prompt.metrics.likesCount;
         setPrompt(prev => prev ? {
@@ -103,7 +102,6 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
             } : null);
             onUpdate();
         } catch (error) {
-            // Revert optimistic update on error
             setPrompt(prev => prev ? {
                 ...prev,
                 metrics: { ...prev.metrics, likesCount: previousLikesCount },
@@ -119,7 +117,6 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
         if (!prompt || isProcessing) return;
         setIsProcessing(true);
 
-        // Optimistic update
         const previousFavorited = prompt.userActions?.hasFavorited || false;
         const previousFavoritesCount = prompt.metrics.favoritesCount;
         setPrompt(prev => prev ? {
@@ -136,7 +133,6 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
             } : null);
             onUpdate();
         } catch (error) {
-            // Revert optimistic update on error
             setPrompt(prev => prev ? {
                 ...prev,
                 metrics: { ...prev.metrics, favoritesCount: previousFavoritesCount },
