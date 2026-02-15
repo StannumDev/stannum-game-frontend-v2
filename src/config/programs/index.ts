@@ -21,6 +21,7 @@ export const TIA_PROGRAM: Program = {
         {
             id: "preseason",
             name: "Pretemporada",
+
             modules: [
                 {
                     id: "TIAM01",
@@ -127,6 +128,7 @@ export const TIA_PROGRAM: Program = {
         {
             id: "resources",
             name: "Recursos",
+
             resources: [
                 {
                     title: "La esencia del negocio",
@@ -200,6 +202,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
         {
             id: "preseason",
             name: "Pretemporada",
+
             modules: [
                 {
                     id: "TIASM01",
@@ -268,6 +271,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
         {
             id: "resources",
             name: "Recursos",
+
             resources: [
                 {
                     title: "Proceso de contratación: ChatGPT Plus",

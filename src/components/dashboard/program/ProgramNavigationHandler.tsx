@@ -3,19 +3,35 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { notFound, usePathname, useRouter } from "next/navigation";
 import { NavbarSection } from "@/components"
+import { TimerIcon, ToolsIcon, RankingStarIcon } from "@/icons";
+import type { IconType } from "react-icons";
 import type { Program } from "@/interfaces";
 
 interface Props {
     program: Program
 }
 
+const sectionIconMap: Record<string, IconType> = {
+    preseason: TimerIcon,
+    resources: ToolsIcon,
+    ranking: RankingStarIcon,
+};
+
 export const ProgramNavigationHandler = ({ program }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
-    
-    const sectionIds = useMemo(() => {
-        return program.sections.map(section => section.id);
+
+    const sectionsWithRanking = useMemo(() => {
+        const withIcons = program.sections.map(section => ({
+            ...section,
+            Icon: sectionIconMap[section.id],
+        }));
+        return [...withIcons, { id: "ranking", name: "Ranking", Icon: RankingStarIcon }];
     }, [program.sections]);
+
+    const sectionIds = useMemo(() => {
+        return sectionsWithRanking.map(section => section.id);
+    }, [sectionsWithRanking]);
 
     type SectionOptions = typeof sectionIds[number];
 
@@ -24,10 +40,10 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
         const programIndex = pathSegments.findIndex(segment => segment === program.id.toLowerCase());
         if (programIndex === -1 || programIndex === pathSegments.length - 1) return sectionIds[0] as SectionOptions;
         const potentialSectionSegment = pathSegments[programIndex + 1];
-        const matchingSection = program.sections.find(section => section.id === potentialSectionSegment);
+        const matchingSection = sectionsWithRanking.find(section => section.id === potentialSectionSegment);
         if (matchingSection) return matchingSection.id as SectionOptions;
         return sectionIds[0] as SectionOptions;
-    }, [pathname, program.id, program.sections, sectionIds]);
+    }, [pathname, program.id, sectionsWithRanking, sectionIds]);
 
     const [selectedLayout, setSelectedLayout] = useState<SectionOptions>(getCurrentSectionFromUrl());
 
@@ -45,7 +61,7 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
 
     return (
         <NavbarSection<SectionOptions>
-            sections={program.sections}
+            sections={sectionsWithRanking}
             selectedLayout={selectedLayout}
             handleLayoutChange={handleLayoutChange}
         />

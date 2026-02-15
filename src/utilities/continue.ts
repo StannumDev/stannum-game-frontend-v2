@@ -21,7 +21,6 @@ const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextA
         for (const mod of section.modules || []) {
             for (const lesson of mod.lessons) {
                 if (isLessonCompleted(user, program.id, lesson.id)) {
-                    // Lesson completed — check if there are pending instructions after it
                     const pendingInstructions = mod.instructions.filter(inst => inst.afterLessonId === lesson.id);
                     for (const inst of pendingInstructions) {
                         if (!isInstructionAvailable(user, programId, inst)) continue;
@@ -32,12 +31,10 @@ const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextA
                     continue;
                 }
 
-                // Lesson not completed — is it available?
                 if (isLessonAvailable(user, programId, mod, lesson.id)) {
                     return { type: 'lesson', lesson };
                 }
 
-                // Lesson blocked — find the blocking instruction
                 for (const inst of mod.instructions) {
                     if (!isInstructionAvailable(user, programId, inst)) continue;
                     const userInstr = userInstructions.find(ui => ui.instructionId === inst.id);
@@ -45,7 +42,6 @@ const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextA
                     if (!isDone) return { type: 'instruction', instruction: inst };
                 }
 
-                // Blocked by something else (shouldn't happen in normal flow)
                 return null;
             }
         }

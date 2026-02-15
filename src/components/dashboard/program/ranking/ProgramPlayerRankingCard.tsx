@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SimpleRanking } from '@/interfaces';
 import { UserIcon } from '@/icons';
+import { useUserStore } from '@/stores/userStore';
+import default_user from '@/assets/user/default_user.webp';
 
 interface Props{
     player: SimpleRanking;
@@ -13,18 +14,19 @@ interface Props{
 export const ProgramPlayerRankingCard = ({player}:Props) => {
 
     const { position, name, username, photo, enterprise, points  } = player
-    const [isUser] = useState<boolean>( username === 'mateolohezic' )
+    const currentUsername = useUserStore(s => s.user?.username);
+    const isUser = username === currentUsername;
 
     return (
-        <Link href={'/dashboard/profile/mateolohezic'} className={`w-full px-4 py-2 lg:p-4 last:rounded-b-lg odd:bg-card hover:bg-card-light/75 grid grid-cols-8 lg:grid-cols-12 items-center gap-4 lg:gap-2 cursor-pointer group ${ isUser && 'text-stannum' }`}>
+        <Link href={`/dashboard/profile/${username}`} className={`w-full px-4 py-2 lg:p-4 last:rounded-b-lg odd:bg-card hover:bg-card-light/75 grid grid-cols-8 lg:grid-cols-12 items-center gap-4 lg:gap-2 cursor-pointer group ${ isUser ? 'text-stannum' : '' }`}>
             <h3 className="col-span-1 flex justify-center items-center relative">
                 <span className="sr-only">
-                    Segundo puesto
+                    {position === 1 ? "Primer puesto" : position === 2 ? "Segundo puesto" : position === 3 ? "Tercer puesto" : `Puesto número ${position}`}
                 </span>
                 <span className="text-sm lg:text-base font-black">{position}</span>
             </h3>
             <h3 className="col-span-4 flex items-center gap-2 lg:gap-4">
-                <Image src={photo} alt='Primer puesto Mateo Bernabé Lohezic' className="size-7 lg:size-9 rounded-full"/>
+                <Image src={photo || default_user} alt={`Foto de ${name}`} width={36} height={36} className="size-7 lg:size-9 rounded-full"/>
                 <span className="whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
             </h3>
             <h3 className="hidden lg:block col-span-4 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>

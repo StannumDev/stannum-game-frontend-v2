@@ -163,6 +163,7 @@ export interface FullUserDetails {
         coverId: string;
         unlockedDate: string;
     }>;
+    rankingPosition?: number;
 }
 
 export type ProfileStatus = 'complete' | 'needs_username' | 'needs_profile';

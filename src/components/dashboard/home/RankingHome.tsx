@@ -34,12 +34,15 @@ export const RankingHome = () => {
         <MotionWrapperLayoutClient className="grow">
             <section id="top-leaders" className="size-full card flex flex-col">
                 <div className="w-full flex justify-between items-center">
-                    <h2 className="w-fit title-2 flex items-center gap-2">
+                    <div className="w-fit flex items-center gap-2">
                         <div>
                             <RankingStarIcon className="text-2xl lg:text-3xl relative -top-px"/>
                         </div>
-                        Top Líderes
-                    </h2>
+                        <div>
+                            <h2 className="title-2">Top Líderes</h2>
+                            <p className="text-xs lg:text-sm text-card-lightest">Ranking global de todos los programas</p>
+                        </div>
+                    </div>
                     <div className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative transition-200">
                         {/* <InfoCircleIcon className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/> */}
                         Temporada 1

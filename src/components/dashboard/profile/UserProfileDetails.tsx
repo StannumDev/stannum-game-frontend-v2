@@ -14,7 +14,7 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
         <Fragment>
             <MotionWrapperLayout>
                 <section className="w-full flex flex-col relative lg:static">
-                    <UserProfileCover owner={owner}/>
+                    <UserProfileCover rankingPosition={user?.rankingPosition}/>
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
                             <UserProfilePhoto owner={owner} user={user}/>

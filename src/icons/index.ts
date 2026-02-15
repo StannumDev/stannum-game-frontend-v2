@@ -19,7 +19,8 @@ export {
     FaYoutube as YouTubeIcon,
     FaGithub as GitHubIcon,
     FaLink as LinkIcon,
-    FaPlus as PlusIcon
+    FaPlus as PlusIcon,
+    FaDumbbell as DumbbellIcon
 } from "react-icons/fa6";
 
 export {
@@ -80,6 +81,7 @@ export {
     MdOutlineVpnKey as KeyIcon,
     MdShowChart as AnalysisIcon,
     MdOutlineTimer as AutomationIcon,
+    MdOutlineTimer as TimerIcon,
     MdTrendingUp as GrowthIcon,
     MdLightbulb as InnovationIcon,
     MdGroups as LeadershipIcon,
