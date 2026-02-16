@@ -9,12 +9,12 @@ import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
 import type { AppError } from '@/interfaces';
-import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
+import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import { useUserStore } from '@/stores/userStore';
 import background from "@/assets/background/the_game.webp";
 import "driver.js/dist/driver.css";
 
-const steps:Array<number> = [1,2,3,4,5];
+const steps:Array<number> = [1,2,3,4,5,6];
 
 export const PresentacionHome = () => {
     const user = useUserStore(s => s.user);
@@ -25,7 +25,7 @@ export const PresentacionHome = () => {
     const pathname = usePathname();
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [selectedStep, setSelectedStep] = useState<1|2|3|4|5>(1);
+    const [selectedStep, setSelectedStep] = useState<1|2|3|4|5|6>(1);
     const [direction, setDirection] = useState<"prev"|"next">("next");
 
     const [isTutorialCompleted, setIsTutorialCompleted] = useState<boolean>(false);
@@ -241,7 +241,7 @@ export const PresentacionHome = () => {
                                     aria-hidden
                                     layout
                                     transition={{ duration: 0.125 }}
-                                    className={`h-0.5 bg-stannum rounded-full ${ selectedStep <= 1 ? 'w-0' : selectedStep <= 2 ? 'w-1/4' : selectedStep <= 3 ? 'w-2/4' : selectedStep <= 4 ? 'w-3/4' : 'w-full' }`}
+                                    className={`h-0.5 bg-stannum rounded-full ${ selectedStep <= 1 ? 'w-0' : selectedStep <= 2 ? 'w-1/5' : selectedStep <= 3 ? 'w-2/5' : selectedStep <= 4 ? 'w-3/5' : selectedStep <= 5 ? 'w-4/5' : 'w-full' }`}
                                 ></motion.div>
                             </div>
                         </div>
@@ -273,6 +273,7 @@ export const PresentacionHome = () => {
                             selectedStep === 3 ? <StepThreeTutorial direction={direction} key='step_three_tutorial' /> :
                             selectedStep === 4 ? <StepFourTutorial direction={direction} key='step_four_tutorial' /> :
                             selectedStep === 5 ? <StepFiveTutorial direction={direction} key='step_five_tutorial' /> :
+                            selectedStep === 6 ? <StepSixTutorial direction={direction} key='step_six_tutorial' /> :
                             <div className='grow'></div>
                         }
                     </AnimatePresence>

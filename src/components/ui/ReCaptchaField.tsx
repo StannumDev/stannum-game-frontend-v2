@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, type ReactNode } from 'react';
 import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox, useGoogleReCaptcha } from '@google-recaptcha/react';
 
 export interface ReCaptchaFieldHandle {
@@ -13,7 +13,13 @@ interface Props {
     onExpired: () => void;
 }
 
-const ReCaptchaCheckboxInner = forwardRef<ReCaptchaFieldHandle, Props>(({ onChange, onError, onExpired }, ref) => {
+export const ReCaptchaProvider = ({ children }: { children: ReactNode }) => (
+    <GoogleReCaptchaProvider type="v2-checkbox" siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''} language="es-419" theme="dark">
+        {children}
+    </GoogleReCaptchaProvider>
+);
+
+export const ReCaptchaField = forwardRef<ReCaptchaFieldHandle, Props>(({ onChange, onError, onExpired }, ref) => {
     const { reset } = useGoogleReCaptcha();
 
     useImperativeHandle(ref, () => ({
@@ -27,16 +33,6 @@ const ReCaptchaCheckboxInner = forwardRef<ReCaptchaFieldHandle, Props>(({ onChan
             onError={onError}
             onExpired={onExpired}
         />
-    );
-});
-
-ReCaptchaCheckboxInner.displayName = 'ReCaptchaCheckboxInner';
-
-export const ReCaptchaField = forwardRef<ReCaptchaFieldHandle, Props>((props, ref) => {
-    return (
-        <GoogleReCaptchaProvider type="v2-checkbox" siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''} language="es-419" theme="dark">
-            <ReCaptchaCheckboxInner ref={ref} {...props} />
-        </GoogleReCaptchaProvider>
     );
 });
 

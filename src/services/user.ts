@@ -1,36 +1,14 @@
 'use client';
 
-import axios from "axios";
 import Cookies from "js-cookie";
 import type { AchievementDetails, FullUserDetails, UserSearchResult } from "@/interfaces";
+import api from "@/lib/api";
 
 type GetUserOpts = { force?: boolean };
 
-const tokenError = {
-    response: {
-        data: {
-            success: false,
-            code: "AUTH_TOKEN_MISSING",
-            type: "error",
-            showAlert: true,
-            title: "Token no encontrado",
-            techMessage: "The authentication token is missing from cookies.",
-            friendlyMessage: "No se encontró el token de sesión. Por favor, inicia sesión nuevamente.",
-        },
-    },
-}
-
 export const getUserByTokenClient = async (): Promise<FullUserDetails> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
+        const response = await api.get(`${process.env.NEXT_PUBLIC_API_USER_URL}/`);
         if (!response?.data?.success || !response.data?.data) {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
@@ -43,14 +21,9 @@ export const getUserByTokenClient = async (): Promise<FullUserDetails> => {
 export const getUserDetailsByUsername = async (username: string, opts: GetUserOpts = {}): Promise<FullUserDetails | null> => {
     try {
         const { force = false } = opts;
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
+        const response = await api.get(`${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {
             params: force ? { _: Date.now() } : undefined,
             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
                 "Cache-Control": "no-cache",
                 Pragma: "no-cache",
             },
@@ -70,13 +43,7 @@ export const getTutorialStatus = async (tutorialName: string): Promise<boolean> 
     const cookieValue = Cookies.get(cookieKey);
     if (cookieValue !== undefined) return cookieValue === "true";
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.get(`${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}`);
         const isCompleted = response.data?.tutorial?.isCompleted || false;
         Cookies.set(cookieKey, String(isCompleted), { expires: 365 });
         return isCompleted;
@@ -88,13 +55,7 @@ export const getTutorialStatus = async (tutorialName: string): Promise<boolean> 
 export const markTutorialAsCompleted = async (tutorialName: string): Promise<void> => {
     const cookieKey = `tutorial_${tutorialName}`;
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}/complete`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        await api.post(`${process.env.NEXT_PUBLIC_API_USER_URL}/tutorial/${tutorialName}/complete`, {});
         Cookies.set(cookieKey, "true", { expires: 365 });
     } catch (error:unknown) {
         throw error;
@@ -103,13 +64,7 @@ export const markTutorialAsCompleted = async (tutorialName: string): Promise<voi
 
 export const updateUserProfile = async (data:{name:string, birthdate:string, country:string, region:string, enterprise:string, enterpriseRole:string, aboutme:string}): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[] }> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/edit`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const response = await api.put(`${process.env.NEXT_PUBLIC_API_USER_URL}/edit`, data);
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return response.data;
     } catch (error:unknown) {
@@ -119,13 +74,7 @@ export const updateUserProfile = async (data:{name:string, birthdate:string, cou
 
 export const searchUsers = async (query: string): Promise<Array<UserSearchResult>> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/search-users`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+        const response = await api.get(`${process.env.NEXT_PUBLIC_API_USER_URL}/search-users`, {
             params: { query },
         });
         if (!response?.data?.success || !response.data?.data) throw new Error("Unexpected response structure");

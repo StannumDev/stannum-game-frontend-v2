@@ -171,7 +171,7 @@ export type ProfileStatus = 'complete' | 'needs_username' | 'needs_profile';
 export interface AuthUserResponse {
   success: boolean;
   achievementsUnlocked: AchievementDetails[];
-  profileStatus: ProfileStatus;
+  profileStatus?: ProfileStatus;
 }
 
 export interface UpdateUsernameResponse {
