@@ -1,31 +1,9 @@
-import axios from "axios";
-import Cookies from "js-cookie";
 import { SimpleRanking, TeamRanking } from "@/interfaces";
-
-const tokenError = {
-  response: {
-    data: {
-      success: false,
-      code: "AUTH_TOKEN_MISSING",
-      type: "error",
-      showAlert: true,
-      title: "Token no encontrado",
-      techMessage: "The authentication token is missing from cookies.",
-      friendlyMessage: "No se encontró el token de sesión. Por favor, inicia sesión nuevamente.",
-    },
-  },
-};
+import api from "@/lib/api";
 
 export const getIndividualRanking = async (limit: number = 10): Promise<SimpleRanking[]> => {
   try {
-    const token = Cookies.get("token");
-    if (!token) throw tokenError;
-
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual?limit=${limit}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(`${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual?limit=${limit}`);
 
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
@@ -36,14 +14,7 @@ export const getIndividualRanking = async (limit: number = 10): Promise<SimpleRa
 
 export const getTeamRanking = async (programName: string): Promise<Array<TeamRanking>> => {
   try {
-    const token = Cookies.get("token");
-    if (!token) throw tokenError;
-
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/team/${programName}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(`${process.env.NEXT_PUBLIC_API_RANKING_URL}/team/${programName}`);
 
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;
@@ -54,14 +25,7 @@ export const getTeamRanking = async (programName: string): Promise<Array<TeamRan
 
 export const getProgramIndividualRanking = async (programName: string, limit: number = 100): Promise<SimpleRanking[]> => {
   try {
-    const token = Cookies.get("token");
-    if (!token) throw tokenError;
-
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual/${programName}?limit=${limit}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(`${process.env.NEXT_PUBLIC_API_RANKING_URL}/individual/${programName}?limit=${limit}`);
 
     if (!response?.data?.success || !Array.isArray(response.data.data)) throw new Error("Unexpected response structure");
     return response.data.data;

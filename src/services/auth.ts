@@ -4,63 +4,35 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
 import { AuthUserResponse, RegisterState, UpdateUsernameResponse } from '@/interfaces';
+import api from '@/lib/api';
+import { setTokens, clearTokens } from '@/lib/tokenStorage';
 
-const tokenError = {
-    response: {
-        data: {
-            success: false,
-            code: "AUTH_TOKEN_MISSING",
-            type: "error",
-            showAlert: true,
-            title: "Token no encontrado",
-            techMessage: "The authentication token is missing from cookies.",
-            friendlyMessage: "No se encontró el token de sesión. Por favor, inicia sesión nuevamente.",
-        },
-    },
-}
-
-export const authUserByToken = async (token: string | undefined): Promise<AuthUserResponse> => {
+export const authUserByToken = async (): Promise<AuthUserResponse> => {
     try {
-        if (!token) throw tokenError;
-
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/auth-user`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
+        const response = await api.get(`${process.env.NEXT_PUBLIC_API_AUTH_URL}/auth-user`);
 
         if (!response?.data?.success) {
-            logout();
-            throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
+            return { success: false, achievementsUnlocked: [], profileStatus: undefined };
         }
 
         return {
-            success: response.data.success, 
+            success: response.data.success,
             achievementsUnlocked: response.data.achievementsUnlocked || [],
             profileStatus: response.data.profileStatus || 'complete'
         };
     } catch (error: unknown) {
-        const status = (error as { response?: { status?: number } })?.response?.status;
-        if (status === 401 || status === 403) logout();
-        return { success: false, achievementsUnlocked: [], profileStatus: 'complete' };
+        return { success: false, achievementsUnlocked: [], profileStatus: undefined };
     }
 };
 
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data);
+
+        if (!response?.data?.success || !response.data.token || !response.data.refreshToken) throw new Error("Unexpected response structure");
+        setTokens(response.data.token, response.data.refreshToken);
         Object.keys(Cookies.get()).forEach((cookie) => {
             cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
-        });
-        
-        if (!response?.data?.success) throw new Error("Unexpected response structure");
-        Cookies.set('token', response.data.token, {
-            secure: process.env.NEXT_PUBLIC_ENV === 'production',
-            sameSite: 'Strict',
-            path: '/',
-            expires: 365,
         });
         return response.data.success;
     } catch (error:unknown) {
@@ -101,14 +73,9 @@ export const validateReCAPTCHA = async (token: string | null): Promise<boolean> 
 export const createUser = async (userData: RegisterState): Promise<boolean> => {
     try {
         const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/register`, userData);
-        if (!data?.success || !data?.token) throw new Error("Unexpected response structure");
+        if (!data?.success || !data?.token || !data?.refreshToken) throw new Error("Unexpected response structure");
 
-        Cookies.set('token', data.token, {
-            secure: process.env.NEXT_PUBLIC_ENV === 'production',
-            sameSite: 'Strict',
-            path: '/',
-            expires: 365,
-        });
+        setTokens(data.token, data.refreshToken);
 
         return data.success;
     } catch (error:unknown) {
@@ -118,12 +85,14 @@ export const createUser = async (userData: RegisterState): Promise<boolean> => {
 
 export const logout = async (): Promise<void> => {
     try {
-        await googleLogout();
-        Cookies.remove('token', { path: '/' });
-        Object.keys(Cookies.get()).map((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' }));
-        window.location.href = '/';
+        await api.post(`${process.env.NEXT_PUBLIC_API_AUTH_URL}/logout`).catch(() => {});
+        googleLogout();
+        clearTokens();
+        Object.keys(Cookies.get()).forEach((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' }));
+        if (typeof window !== 'undefined') window.location.href = '/';
     } catch (error:unknown) {
-        throw error;
+        clearTokens();
+        if (typeof window !== 'undefined') window.location.href = '/';
     }
 };
 
@@ -157,15 +126,10 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
 export const googleLogin = async (googleToken: string): Promise<string> => {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken });
-        const { token, success, username } = response.data;
-        if (!success || !token || !username) throw new Error("Unexpected response structure");
+        const { token, refreshToken, success, username } = response.data;
+        if (!success || !token || !refreshToken || !username) throw new Error("Unexpected response structure");
 
-        Cookies.set('token', token, {
-            secure: process.env.NEXT_PUBLIC_ENV === 'production',
-            sameSite: 'Strict',
-            path: '/',
-            expires: 365,
-        });
+        setTokens(token, refreshToken);
 
         return username;
     } catch (error:unknown) {
@@ -175,13 +139,7 @@ export const googleLogin = async (googleToken: string): Promise<string> => {
 
 export const updateUsername = async (username: string): Promise<UpdateUsernameResponse> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) throw tokenError;
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/update-username`, { username },
-            { headers: {
-                Authorization: `Bearer ${token}`,
-            }}
-        );
+        const response = await api.put(`${process.env.NEXT_PUBLIC_API_AUTH_URL}/update-username`, { username });
         if (!response?.data?.success) throw new Error("Unexpected response structure");
         return { success: response.data.success, profileStatus: response.data.profileStatus || 'complete' };
     } catch (error: unknown) {

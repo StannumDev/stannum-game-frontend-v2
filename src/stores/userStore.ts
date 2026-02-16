@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import Cookies from 'js-cookie';
 import type { AppError, FullUserDetails, ProfileStatus } from '@/interfaces';
 import { authUserByToken, logout as authLogout } from '@/services/auth';
+import { getAccessToken, getRefreshToken } from '@/lib/tokenStorage';
 import { getUserByTokenClient } from '@/services/user';
 import { achievementHandler, errorHandler } from '@/helpers';
 
@@ -14,7 +14,7 @@ interface UserStore {
     _refreshCount: number;
     _isRefreshing: boolean;
 
-    initUser: () => Promise<ProfileStatus | null>;
+    initUser: () => Promise<ProfileStatus | null | undefined>;
     refreshUser: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -32,14 +32,15 @@ export const useUserStore = create<UserStore>((set, get) => ({
         if (get()._initStarted) return null;
         set({ _initStarted: true });
 
-        const token = Cookies.get('token');
-        if (!token) {
+        const token = getAccessToken();
+        const refreshToken = getRefreshToken();
+        if (!token && !refreshToken) {
             set({ isLoading: false, isAuthenticated: false });
             return null;
         }
 
         try {
-            const { success, achievementsUnlocked, profileStatus } = await authUserByToken(token);
+            const { success, achievementsUnlocked, profileStatus } = await authUserByToken();
 
             if (!success) {
                 set({ isLoading: false, isAuthenticated: false });
@@ -60,7 +61,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
             return profileStatus;
         } catch (err: unknown) {
             const appError = errorHandler(err);
-            set({ user: null, isLoading: false, isAuthenticated: false, error: appError });
+            set({ user: null, isLoading: false, isAuthenticated: false, error: appError, _initStarted: false });
             return null;
         }
     },
@@ -74,7 +75,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
 
             if (currentUser && (user.achievements?.length ?? 0) > (currentUser.achievements?.length ?? 0)) {
                 const oldIds = new Set(currentUser.achievements?.map(a => a.achievementId) ?? []);
-                const newAchievements = user.achievements.filter(a => !oldIds.has(a.achievementId));
+                const newAchievements = (user.achievements ?? []).filter(a => !oldIds.has(a.achievementId));
                 if (newAchievements.length > 0) {
                     achievementHandler(newAchievements);
                 }

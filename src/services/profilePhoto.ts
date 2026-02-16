@@ -1,6 +1,6 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import type { Area } from "react-easy-crop";
+import api from "@/lib/api";
 
 const createImage = (url: string): Promise<HTMLImageElement> =>
     new Promise((resolve, reject) => {
@@ -71,22 +71,16 @@ export const getCroppedImage = async ( imageSrc: string, pixelCrop: Area, rotati
 
 export const uploadProfilePhoto = async (imageBlob: Blob): Promise<void> => {
     try {
-        const token = Cookies.get("token");
-        if (!token) {
-            throw new Error("Token is missing. Please log in again.");
-        }
+        const baseUrl = `${process.env.NEXT_PUBLIC_API_PHOTO_URL}`;
 
-        const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_PHOTO_URL}`;
-        const authHeaders = { Authorization: `Bearer ${token}` };
-
-        const presignRes = await axios.post(`${baseUrl}/presign-photo`, {}, { headers: authHeaders });
+        const presignRes = await api.post(`${baseUrl}/presign-photo`, {});
         if (!presignRes?.data?.success) throw new Error("Unexpected response structure");
 
         const { presignedUrl } = presignRes.data;
 
         await axios.put(presignedUrl, imageBlob, { headers: { "Content-Type": "image/jpeg" } });
 
-        await axios.post(`${baseUrl}/confirm-photo`, {}, { headers: authHeaders });
+        await api.post(`${baseUrl}/confirm-photo`, {});
     } catch (error:unknown) {
         throw error;
     }

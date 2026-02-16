@@ -133,6 +133,7 @@ export { StepTwoTutorial } from "./dashboard/tutorial/intro/StepTwoTutorial";
 export { StepThreeTutorial } from "./dashboard/tutorial/intro/StepThreeTutorial";
 export { StepFourTutorial } from "./dashboard/tutorial/intro/StepFourTutorial";
 export { StepFiveTutorial } from "./dashboard/tutorial/intro/StepFiveTutorial";
+export { StepSixTutorial } from "./dashboard/tutorial/intro/StepSixTutorial";
 
 // COMMUNITY
 export { CommunityLanding } from "./dashboard/community/CommunityLanding";
