@@ -20,7 +20,7 @@ const tokenError = {
 
 export const getUserDetailsByUsernameServer = async (username: string): Promise<FullUserDetails | null> => {
     try {
-        const token = (await cookies()).get("token")
+        const token = (await cookies()).get("access_token")
         if (!token) throw tokenError
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_USER_URL}/profile/${username}`, {

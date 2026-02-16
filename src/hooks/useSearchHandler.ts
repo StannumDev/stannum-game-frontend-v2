@@ -22,7 +22,7 @@ export const useSearchHandler = () => {
             router.push(`/dashboard/search?query=${encodeURIComponent(search)}`);
             reset();
         } catch (error) {
-            console.error("Error en la búsqueda:", error);
+            if(process.env.NEXT_PUBLIC_ENV === 'development') console.error("Error en la búsqueda:", error);
         }
     };
 

@@ -4,7 +4,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { getUserDetailsByUsername } from "@/services";
 import { errorHandler } from "@/helpers";
 import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
-import { AppError, FullUserDetails } from "@/interfaces";
+import { FullUserDetails } from "@/interfaces";
 import { PowerIcon } from "@/icons";
 import { useUserStore } from "@/stores/userStore";
 
@@ -24,8 +24,7 @@ export const UserProfileWrapper = ({username}:Props) => {
         try {
             setUserData(await getUserDetailsByUsername(username, { force }));
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

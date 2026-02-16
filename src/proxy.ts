@@ -1,20 +1,27 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const token = request.cookies.get('token')?.value
-  const refreshToken = request.cookies.get('refreshToken')?.value
-  const isLoggedIn = !!token || !!refreshToken
-  const isAuthPage = pathname === '/login' || pathname === '/register'
-  const isRoot = pathname === '/'
+const PROTECTED_ROUTES = ['/dashboard'];
+const GUEST_ONLY_ROUTES = ['/login', '/password-recovery'];
 
-  if (isLoggedIn && (isAuthPage || isRoot)) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const hasAuth = request.cookies.has('access_token') || request.cookies.has('refresh_token');
+
+  if (PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
+    if (!hasAuth) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
   }
 
-  return NextResponse.next()
+  if (GUEST_ONLY_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/')) || pathname === '/register') {
+    if (hasAuth) {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)', '/dashboard/:path*'],
-}
+  matcher: ['/dashboard/:path*', '/login', '/register', '/password-recovery'],
+};

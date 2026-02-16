@@ -25,8 +25,7 @@ export const PasswordRecoveryHandler = () => {
                 setStep('otp');
             }
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }
@@ -44,8 +43,7 @@ export const PasswordRecoveryHandler = () => {
                 }
             }
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }
@@ -59,8 +57,7 @@ export const PasswordRecoveryHandler = () => {
                 if (success) router.push('/login');
             }
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

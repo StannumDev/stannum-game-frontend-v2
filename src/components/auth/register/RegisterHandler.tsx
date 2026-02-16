@@ -31,8 +31,7 @@ export const RegisterHandler = () => {
                 try {
                     await createUser(updatedState);
                 } catch (error:unknown) {
-                    const appError:AppError = errorHandler(error);
-                    console.error(appError);
+                    errorHandler(error);
                     return;
                 }
             }

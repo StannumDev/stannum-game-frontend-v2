@@ -42,8 +42,7 @@ export const RegisterPhotoStep = () => {
             await uploadProfilePhoto(imageBlob);
             navigateToDashboard();
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

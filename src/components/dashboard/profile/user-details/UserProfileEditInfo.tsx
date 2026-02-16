@@ -10,7 +10,7 @@ import { EditIcon, PlusIcon, SelectorIcon, TrashIcon } from "@/icons";
 import { updateUserProfile } from "@/services";
 import { Modal, FormErrorMessage, SubmitButtonLoading } from "@/components";
 import { errorHandler } from "@/helpers";
-import { AppError, FullUserDetails } from "@/interfaces";
+import { FullUserDetails } from "@/interfaces";
 import { useUserStore } from "@/stores/userStore";
 
 interface Props{
@@ -62,8 +62,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
             await refreshUser();
             setShowModal(false);
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

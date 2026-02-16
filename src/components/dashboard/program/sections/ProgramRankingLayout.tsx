@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getTeamRanking } from "@/services";
 import { RankingStarIcon } from "@/icons";
-import { AppError, TeamRanking } from "@/interfaces";
+import { TeamRanking } from "@/interfaces";
 import { ProgramTeamRankingCard } from "@/components";
 import { errorHandler } from "@/helpers";
 
@@ -18,8 +18,7 @@ export const ProgramRankingLayout = () => {
                 const data = await getTeamRanking("TMD");
                 setTeams(data);
             } catch (error:unknown) {
-                const appError:AppError = errorHandler(error);
-                console.error(appError);
+                errorHandler(error);
             } finally {
                 setIsLoading(false);
             }

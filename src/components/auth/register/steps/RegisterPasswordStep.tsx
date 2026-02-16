@@ -34,14 +34,12 @@ export const RegisterPasswordStep = ({handleNextStep}:Props) => {
         try {
             const usernameAvailable = await checkUsernameExists(username);
             if (!usernameAvailable) {
-                console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
             await handleNextStep({ username, password });
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }
