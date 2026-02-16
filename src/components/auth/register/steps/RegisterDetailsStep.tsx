@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { PlusIcon, SelectorIcon, TrashIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading } from "@/components";
+import { errorHandler } from "@/helpers";
 import { RegisterState } from "@/interfaces";
 
 interface Props{
@@ -53,7 +54,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
         try {
             await handleNextStep(data);
         } catch (error:unknown) {
-            console.error("Error durante el envío:", error);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

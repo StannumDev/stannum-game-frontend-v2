@@ -8,7 +8,7 @@ import type MuxPlayerElement from "@mux/mux-player";
 import { createBlurUp } from '@mux/blurup';
 import { markLessonAsCompleted, saveLastWatchedLesson } from "@/services";
 import type { LessonCompletionResult } from "@/services/lesson";
-import { AppError, Lesson } from '@/interfaces';
+import { Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
 import { CrownIcon } from "@/icons";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
@@ -111,8 +111,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 setXpResult(result);
                 refreshUser();
             } catch (error:unknown) {
-                const appError: AppError = errorHandler(error);
-                console.error(appError);
+                errorHandler(error);
             }
         }
 
@@ -174,7 +173,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             lastTimeRef.current = Math.floor(safeTarget);
             initialSeekApplied.current = true;
         } catch (error:unknown) {
-            console.error("Error seeking video:", error);
+            if(process.env.NEXT_PUBLIC_ENV === 'development') console.error("Error seeking video:", error);
         }
     };
 

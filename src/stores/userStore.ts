@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AppError, FullUserDetails, ProfileStatus } from '@/interfaces';
 import { authUserByToken, logout as authLogout } from '@/services/auth';
-import { getAccessToken, getRefreshToken } from '@/lib/tokenStorage';
+import { isLoggedIn } from '@/lib/tokenStorage';
 import { getUserByTokenClient } from '@/services/user';
 import { achievementHandler, errorHandler } from '@/helpers';
 
@@ -32,9 +32,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
         if (get()._initStarted) return null;
         set({ _initStarted: true });
 
-        const token = getAccessToken();
-        const refreshToken = getRefreshToken();
-        if (!token && !refreshToken) {
+        if (!isLoggedIn()) {
             set({ isLoading: false, isAuthenticated: false });
             return null;
         }

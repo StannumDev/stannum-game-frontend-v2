@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
 import { AuthUserResponse, RegisterState, UpdateUsernameResponse } from '@/interfaces';
 import api from '@/lib/api';
-import { setTokens, clearTokens } from '@/lib/tokenStorage';
+import { clearLoginFlag } from '@/lib/tokenStorage';
 
 export const authUserByToken = async (): Promise<AuthUserResponse> => {
     try {
@@ -27,10 +27,9 @@ export const authUserByToken = async (): Promise<AuthUserResponse> => {
 
 export const requestLogin = async (data: { username: string; password: string }): Promise<boolean> => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/`, data, { withCredentials: true });
 
-        if (!response?.data?.success || !response.data.token || !response.data.refreshToken) throw new Error("Unexpected response structure");
-        setTokens(response.data.token, response.data.refreshToken);
+        if (!response?.data?.success) throw new Error("Unexpected response structure");
         Object.keys(Cookies.get()).forEach((cookie) => {
             cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' });
         });
@@ -72,10 +71,8 @@ export const validateReCAPTCHA = async (token: string | null): Promise<boolean> 
 
 export const createUser = async (userData: RegisterState): Promise<boolean> => {
     try {
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/register`, userData);
-        if (!data?.success || !data?.token || !data?.refreshToken) throw new Error("Unexpected response structure");
-
-        setTokens(data.token, data.refreshToken);
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/register`, userData, { withCredentials: true });
+        if (!data?.success) throw new Error("Unexpected response structure");
 
         return data.success;
     } catch (error:unknown) {
@@ -87,11 +84,11 @@ export const logout = async (): Promise<void> => {
     try {
         await api.post(`${process.env.NEXT_PUBLIC_API_AUTH_URL}/logout`).catch(() => {});
         googleLogout();
-        clearTokens();
+        clearLoginFlag();
         Object.keys(Cookies.get()).forEach((cookie) => cookie.startsWith('tutorial_') && Cookies.remove(cookie, { path: '/' }));
         if (typeof window !== 'undefined') window.location.href = '/';
     } catch (error:unknown) {
-        clearTokens();
+        clearLoginFlag();
         if (typeof window !== 'undefined') window.location.href = '/';
     }
 };
@@ -125,11 +122,9 @@ export const changePasswordWithOTP = async (username: string, otp: string, passw
 
 export const googleLogin = async (googleToken: string): Promise<string> => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken });
-        const { token, refreshToken, success, username } = response.data;
-        if (!success || !token || !refreshToken || !username) throw new Error("Unexpected response structure");
-
-        setTokens(token, refreshToken);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/google`, { token: googleToken }, { withCredentials: true });
+        const { success, username } = response.data;
+        if (!success || !username) throw new Error("Unexpected response structure");
 
         return username;
     } catch (error:unknown) {

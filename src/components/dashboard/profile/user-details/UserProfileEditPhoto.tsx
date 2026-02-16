@@ -6,7 +6,6 @@ import type { Area } from "react-easy-crop";
 import { getCroppedImage, uploadProfilePhoto } from "@/services";
 import { errorHandler } from "@/helpers";
 import { RotateRightIcon, SpinnerIcon } from "@/icons";
-import { AppError } from "@/interfaces";
 import { Modal } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 import styles from "@/components/styles/photoEditor.module.css";
@@ -43,8 +42,7 @@ export const UserProfileEditPhoto = ({showModal, setShowModal, imageSrc, onClose
             onPhotoUploaded?.();
             setShowModal(false);
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

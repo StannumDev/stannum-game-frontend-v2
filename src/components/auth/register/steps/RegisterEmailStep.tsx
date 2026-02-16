@@ -62,15 +62,13 @@ export const RegisterEmailStep = ({ handleNextStep }: Props) => {
 
             const emailAvailable = await checkEmailExists(email);
             if (!emailAvailable) {
-                console.error("El correo electrónico ya está en uso.");
                 setIsLoading(false);
                 return;
             }
 
             await handleNextStep({ email });
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

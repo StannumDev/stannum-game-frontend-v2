@@ -8,7 +8,6 @@ import { driver, type Driver } from "driver.js";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
 import { PlayIcon } from '@/icons';
-import type { AppError } from '@/interfaces';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import { useUserStore } from '@/stores/userStore';
 import background from "@/assets/background/the_game.webp";
@@ -36,8 +35,7 @@ export const PresentacionHome = () => {
             await markTutorialAsCompleted("initial_tutorial");
             setIsTutorialCompleted(true);
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error(appError)
+            errorHandler(error);
         }
     };
   
@@ -90,8 +88,7 @@ export const PresentacionHome = () => {
                 setIsTutorialCompleted(completed);
                 setCanStartTutorial(true);
             } catch (error:unknown) {
-                const appError:AppError = errorHandler(error);
-                console.error(appError);
+                errorHandler(error);
             }
         };
 

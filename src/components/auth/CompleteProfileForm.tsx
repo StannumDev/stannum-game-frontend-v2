@@ -59,8 +59,7 @@ export const CompleteProfileForm = () => {
                 if (user.enterprise?.jobPosition) setValue('enterpriseRole', user.enterprise.jobPosition);
                 if (user.profile?.aboutMe) setValue('aboutme', user.profile.aboutMe);
             } catch (error: unknown) {
-                const appError: AppError = errorHandler(error);
-                console.error("Error fetching user data:", appError);
+                errorHandler(error);
             } finally {
                 setIsFetching(false);
             }
@@ -77,8 +76,7 @@ export const CompleteProfileForm = () => {
                 window.location.replace('/dashboard');
             }
         } catch (error: unknown) {
-            const appError: AppError = errorHandler(error);
-            console.error("Error completando perfil:", appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

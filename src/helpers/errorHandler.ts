@@ -36,6 +36,6 @@ export const errorHandler = (error:unknown): AppError => {
         };
         callToast(toastData);
     }
-    console.error(appError)
+    if(process.env.NEXT_PUBLIC_ENV === 'development') console.error(appError);
     return appError;
 };

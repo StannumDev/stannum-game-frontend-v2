@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getIndividualRanking  } from "@/services";
 import { errorHandler } from "@/helpers";
-import type { AppError, SimpleRanking } from "@/interfaces";
+import type { SimpleRanking } from "@/interfaces";
 import { RankingStarIcon, SpinnerIcon } from "@/icons";
 import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
 import { useUserStore } from "@/stores/userStore";
@@ -21,8 +21,7 @@ export const RankingHome = () => {
                 const data = await getIndividualRanking(100);
                 setRankings(data);
             } catch (error:unknown) {
-                const appError:AppError = errorHandler(error);
-                console.error(appError);
+                errorHandler(error);
             } finally {
                 setIsLoading(false);
             }

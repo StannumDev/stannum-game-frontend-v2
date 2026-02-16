@@ -26,7 +26,6 @@ export const GoogleAuthUsername = () => {
         try {
             const usernameAvailable = await checkUsernameExists(username);
             if (!usernameAvailable) {
-                console.error("El nombre de usuario ya está en uso.");
                 setIsLoading(false);
                 return;
             }
@@ -39,8 +38,7 @@ export const GoogleAuthUsername = () => {
                 }
             }
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
-            console.error("Error en el registro:", appError);
+            errorHandler(error);
         } finally {
             setIsLoading(false);
         }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getProgramIndividualRanking } from "@/services";
 import { errorHandler } from "@/helpers";
-import type { AppError, SimpleRanking } from "@/interfaces";
+import type { SimpleRanking } from "@/interfaces";
 import { RankingStarIcon, SpinnerIcon } from "@/icons";
 import { CardRankingHome } from "@/components";
 import { useUserStore } from "@/stores/userStore";
@@ -29,8 +29,7 @@ export const ProgramIndividualRankingLayout = ({ programId }: Props) => {
                 if (!cancelled) setRankings(data);
             } catch (error:unknown) {
                 if (!cancelled) {
-                    const appError:AppError = errorHandler(error);
-                    console.error(appError);
+                    errorHandler(error);
                     setHasError(true);
                 }
             } finally {
