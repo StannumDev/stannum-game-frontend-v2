@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkUsernameExists } from "@/services";
 import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
-import { AppError, RegisterState } from "@/interfaces";
+import { RegisterState } from "@/interfaces";
 import { errorHandler } from "@/helpers";
 
 interface Props{

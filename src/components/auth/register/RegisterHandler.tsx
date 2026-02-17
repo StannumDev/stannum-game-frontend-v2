@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createUser } from "@/services";
 import { errorHandler } from "@/helpers";
-import { AppError, RegisterState } from "@/interfaces";
+import { RegisterState } from "@/interfaces";
 import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 import { ReCaptchaProvider } from "@/components/ui/ReCaptchaField";
 

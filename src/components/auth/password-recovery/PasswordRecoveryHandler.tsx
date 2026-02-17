@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { sendPasswordRecoveryEmail, verifyPasswordRecoveryOTP, changePasswordWithOTP } from "@/services";
 import { errorHandler } from "@/helpers";
-import { AppError } from "@/interfaces";
 import { STANNUMLogo, GoBackButton, PasswordRecoveryOTP, PasswordRecoveryEmail, PasswordRecoveryNewPassword } from "@/components";
 import { ReCaptchaProvider } from "@/components/ui/ReCaptchaField";
 
