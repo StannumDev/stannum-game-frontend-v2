@@ -9,7 +9,6 @@ import { SelectorIcon } from "@/icons";
 import { getUserByTokenClient, updateUserProfile } from "@/services";
 import { achievementHandler, errorHandler } from "@/helpers";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo, LoadingScreen } from "@/components";
-import { AppError } from "@/interfaces";
 
 const schema = z.object({
     name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
