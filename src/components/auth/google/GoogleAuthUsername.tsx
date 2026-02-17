@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkUsernameExists, updateUsername } from "@/services";
 import { errorHandler } from "@/helpers";
 import { AtIcon } from "@/icons";
-import { AppError } from "@/interfaces";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo } from "@/components";
 
 const schema = z.object({

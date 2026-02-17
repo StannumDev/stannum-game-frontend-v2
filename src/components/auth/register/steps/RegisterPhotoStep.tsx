@@ -6,7 +6,6 @@ import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { getCroppedImage, uploadProfilePhoto } from "@/services";
 import { AddPhotoIcon, RotateRightIcon, SpinnerIcon } from "@/icons";
-import { AppError } from "@/interfaces";
 import { errorHandler } from "@/helpers";
 import styles from "@/components/styles/photoEditor.module.css";
 
