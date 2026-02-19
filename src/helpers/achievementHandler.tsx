@@ -6,6 +6,6 @@ export const achievementHandler = (unlockedAchievements: Array<AchievementDetail
     unlockedAchievements.forEach(achievement => {
         const achievementDetails = achievements.find(a => a.id === achievement.achievementId);
         if(!achievementDetails) return;
-        callToast({ message:{ title: achievementDetails?.title, description: '¡Logro desbloqueado!' }, type: 'achievement' });
+        callToast({ message: { title: achievementDetails.title, description: '¡Logro desbloqueado!' }, type: 'achievement' });
     });
 };

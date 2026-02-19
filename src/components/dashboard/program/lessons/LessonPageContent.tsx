@@ -103,7 +103,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
     return (
         <main className="main-container min-h-0 p-0 flex flex-col items-start">
             <h1 className="sr-only">{lesson.longTitle}</h1>
-            <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' />
+            <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' href={`/dashboard/library/${programId}/${section.id}/${program_module.id}`} />
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 <div className="col-span-1 lg:col-span-3">
                     <LessonVideoPlayer

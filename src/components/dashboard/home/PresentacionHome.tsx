@@ -130,7 +130,6 @@ export const PresentacionHome = () => {
                 prevBtnText: 'Volver',
                 doneBtnText: '¡Empezar!',
                 onPopoverRender: (popover: PopoverDOM, { state }) => {
-                    // Barra de acento superior
                     const existingBar = popover.wrapper.querySelector('.tutorial-accent-bar');
                     if (!existingBar) {
                         const accentBar = document.createElement('div');
@@ -138,7 +137,6 @@ export const PresentacionHome = () => {
                         popover.wrapper.prepend(accentBar);
                     }
 
-                    // Progress dots custom
                     const activeIndex = state.activeIndex ?? 0;
                     const dotsContainer = document.createElement('div');
                     dotsContainer.className = 'tutorial-progress-dots';

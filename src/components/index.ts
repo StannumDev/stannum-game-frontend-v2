@@ -84,6 +84,7 @@ export { ProgramModuleContent } from "./dashboard/program/modules/ProgramModuleC
 export { ProgramPendingModuleCard } from "./dashboard/program/modules/ProgramPendingModuleCard";
 export { ProgramCompletedModuleCard } from "./dashboard/program/modules/ProgramCompletedModuleCard";
 export { ProgramBlockedModuleCard } from "./dashboard/program/modules/ProgramBlockedModuleCard";
+export { PathMap } from "./dashboard/program/modules/path-map/PathMap";
 export { ProgramLessonCard } from "./dashboard/program/lessons/ProgramLessonCard";
 export { LessonDetails } from "./dashboard/program/lessons/LessonDetails";
 export { ChangeLessonsButtons } from "./dashboard/program/lessons/ChangeLessonsButtons";
