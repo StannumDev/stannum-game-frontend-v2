@@ -523,24 +523,17 @@ const buttonVariants = cva(
 Todos los services siguen el patrón:
 
 ```typescript
-import axios from 'axios';
+import api from '@/lib/api';
 
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+// api instance (src/lib/api.ts) includes:
+// - baseURL from NEXT_PUBLIC_API_URL
+// - withCredentials: true (cookies automáticos)
+// - timeout: 15000ms
+// - Interceptor de refresh token automático
+// - Toast de "Sesión expirada" + redirect en caso de fallo
 
 export const someAction = async (params) => {
-  const token = Cookies.get('token');
-
-  const response = await axios.post(
-    `${API_URL}/endpoint`,
-    { ...params },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-
+  const response = await api.post('/endpoint', { ...params });
   return response.data;
 };
 ```
@@ -549,9 +542,9 @@ export const someAction = async (params) => {
 
 | Service | Endpoints Principales |
 |---------|----------------------|
-| `auth.ts` | login, register, authUserByToken, logout |
+| `auth.ts` | login, register, Google OAuth, authUserByToken, logout, password recovery, updateUsername |
 | `user.ts` | getUserByTokenClient, editUser, uploadProfilePhoto |
-| `lesson.ts` | completeLesson, saveLastWatchedLesson |
+| `lesson.ts` | completeLesson (returns achievementsUnlocked), saveLastWatchedLesson |
 | `instruction.ts` | startInstruction, submitInstruction, retryGrading |
 | `prompt.ts` | getPrompts, createPrompt, updatePrompt, deletePrompt |
 | `assistant.ts` | getAssistants, createAssistant, updateAssistant |
