@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { DumbbellIcon } from '@/icons';
 import photo from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props{
@@ -27,10 +28,11 @@ export const StepThreeTutorial = ({direction}:Props) => {
                 <div className='size-full text-center flex flex-col lg:flex-row px-4 lg:px-0 gap-8 justify-center items-center lg:absolute lg:top-0 lg:left-0'>
                     <Image priority src={photo} alt='Tutorial STANNUM Game' className='w-full max-w-md aspect-square object-cover object-[90%_50%] rounded-2xl shrink-0 shadow-md' />
                     <div className='grow max-w-lg text-pretty flex flex-col items-center'>
+                        <DumbbellIcon className="size-8 lg:size-10 text-stannum mb-3" />
                         <h2 className='title-3 font-semibold text-lg lg:text-2xl'>
-                            ¡Acepta el desafío y potencia tu crecimiento!
+                            Desafíos que te transforman
                         </h2>
-                        <p className='mt-2 w-full max-w-2xl font-thin lg:text-lg text-white/50'>Cada desafío ha sido creado para que avances de manera <b className='text-stannum font-semibold'>estructurada y lógica.</b> A través de competencias, pruebas individuales y misiones, irás ganando confianza, conocimiento y habilidades para superar los retos más complejos de tu negocio.</p>
+                        <p className='mt-2 w-full max-w-2xl font-thin lg:text-lg text-white/50'>Cada programa está diseñado con lecciones <b className='text-stannum font-semibold'>estructuradas y progresivas.</b> Avanzá a tu ritmo mientras ganás confianza y habilidades reales para tu negocio.</p>
                     </div>
                 </div>
             </div>

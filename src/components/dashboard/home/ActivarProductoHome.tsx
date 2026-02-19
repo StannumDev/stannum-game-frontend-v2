@@ -2,7 +2,7 @@
 
 import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from 'framer-motion';
 import { useUserStore } from '@/stores/userStore';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -34,6 +34,7 @@ interface ProductInfo {
 
 export const ActivarProductoHome = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
 
     const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
@@ -105,6 +106,18 @@ export const ActivarProductoHome = () => {
     };
 
     useEffect(() => {
+        const key = searchParams.get('key');
+        if (key) {
+            setShowModal(true);
+            setValue('code', key.toUpperCase());
+            router.replace('/dashboard', { scroll: false });
+        } else if (searchParams.get('activar') === 'true') {
+            setShowModal(true);
+            router.replace('/dashboard', { scroll: false });
+        }
+    }, [searchParams, router, setValue]);
+
+    useEffect(() => {
         reset();
         setIsLoading(false);
         setIsSubmitted(false);
@@ -116,6 +129,7 @@ export const ActivarProductoHome = () => {
         <Fragment>
             <MotionWrapperLayoutClient className="order-3 lg:order-none">
                 <button
+                    id="activate-product"
                     onClick={ () => setShowModal(true) }
                     type="button"
                     className="w-full card card-link relative overflow-hidden group text-start">

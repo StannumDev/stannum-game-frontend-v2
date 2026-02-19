@@ -93,7 +93,7 @@ export const achievements: Array<Achievement> = [
                     for (const program_module of section.modules) {
                         if (program_module.instructions.length <= 0) continue;
                         const allInstructionsDone = program_module.instructions.every(inst =>
-                            userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED")
+                            (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
                         );
                         if (allInstructionsDone) return 100;
                     }
@@ -116,8 +116,8 @@ export const achievements: Array<Achievement> = [
                 const allModulesDone = programCfg.sections.every(section => {
                     if (!section.modules || section.modules.length === 0) return true;
                     return section.modules.every(program_module => {
-                        const allLessonsDone = program_module.lessons.every(l => userProgram.lessonsCompleted.some(lc => lc.lessonId === l.id));
-                        const allInstructionsDone = program_module.instructions.every(inst => userProgram.instructions.some(i => i.instructionId === inst.id && i.status === "GRADED"));
+                        const allLessonsDone = program_module.lessons.every(l => (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id));
+                        const allInstructionsDone = program_module.instructions.every(inst => (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED"));
                         return allLessonsDone && allInstructionsDone;
                     });
                 });
@@ -133,7 +133,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
-        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 5 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 5 ? 100 : 0
     },
     {
         id: "level_10",
@@ -142,7 +142,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
-        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 10 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 10 ? 100 : 0
     },
     {
         id: "level_20",
@@ -151,7 +151,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
-        getProgress: (user: FullUserDetails) => user.level.currentLevel >= 20 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 20 ? 100 : 0
     },
     {
         id: "streak_3_days",
@@ -160,7 +160,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
-        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 3 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 3 ? 100 : 0
     },
     {
         id: "streak_7_days",
@@ -169,7 +169,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
-        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 7 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 7 ? 100 : 0
     },
     {
         id: "streak_30_days",
@@ -178,7 +178,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
-        getProgress: (user: FullUserDetails) => user.dailyStreak.count >= 30 ? 100 : 0
+        getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 30 ? 100 : 0
     },
     {
         id: "trenno_ia_joined",
@@ -212,7 +212,7 @@ export const achievements: Array<Achievement> = [
             const firstModule = firstSection.modules[0];
 
             const allLessonsDone = firstModule.lessons.every(l =>
-                tiaProgram.lessonsCompleted.some(lc => lc.lessonId === l.id)
+                (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
             );
 
             return allLessonsDone ? 100 : 0;
@@ -236,7 +236,7 @@ export const achievements: Array<Achievement> = [
                 if (!section.modules || section.modules.length === 0) return true;
                 return section.modules.every(program_module =>
                     program_module.lessons.every(lesson =>
-                        tiaProgram.lessonsCompleted.some(lc => lc.lessonId === lesson.id)
+                        (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === lesson.id)
                     )
                 );
             }) ? 100 : 0;

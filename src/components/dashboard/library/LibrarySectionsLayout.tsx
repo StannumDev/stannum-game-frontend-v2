@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { FullUserDetails, NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { MotionWrapperLayoutClient, NavbarSection, LibraryCard } from "@/components";
-import { AppsIcon } from "@/icons";
+import { AppsIcon, KeyIcon } from "@/icons";
 import { calculateProgramProgress } from "@/utilities";
 import { programs } from "@/config/programs";
 import { useUserStore } from "@/stores/userStore";
@@ -54,9 +55,13 @@ export const LibrarySectionsLayout = () => {
                 />
                 <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
                 {filteredPrograms.length === 0 ? (
-                    <div className="w-full grow flex flex-col justify-center items-center text-center">
+                    <div className="w-full grow flex flex-col justify-center items-center text-center gap-4">
                         <h2 className="text-2xl font-semibold text-stannum tracking-widest uppercase">¡Aún no te has unido a ningún programa!</h2>
-                        <p className="mt-2 text-lg text-card-lightest">Cuando compres tu primer programa, aparecerá en esta sección.</p>
+                        <p className="text-lg text-card-lightest">Cuando actives tu primer programa, aparecerá en esta sección.</p>
+                        <Link href="/dashboard?activar=true" className="mt-2 px-4 py-2 bg-stannum hover:bg-stannum-light text-card text-sm font-semibold rounded-lg flex items-center gap-2 transition-200">
+                            <KeyIcon className="size-4" />
+                            Activar clave de producto
+                        </Link>
                     </div>
                 ) : 
                 <div className="px-4 lg:px-6 overflow-x-hidden grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">

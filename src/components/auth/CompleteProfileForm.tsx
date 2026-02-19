@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,8 +17,11 @@ const schema = z.object({
         .refine(date => {
             const today = new Date();
             const birthDate = new Date(date);
-            const age = today.getFullYear() - birthDate.getFullYear();
-            return age >= 18 && birthDate <= today;
+            if (birthDate > today) return false;
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+            return age >= 18;
     }, { message: "Debes tener al menos 18 años." }),
     country: z.string().min(1, { message: "Campo requerido." }),
     region: z.string().min(1, { message: "Campo requerido." }),
@@ -29,6 +33,7 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 export const CompleteProfileForm = () => {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [country, setCountry] = useState<string>('');
@@ -72,7 +77,7 @@ export const CompleteProfileForm = () => {
             const { success, achievementsUnlocked } = await updateUserProfile(data);
             if (success) {
                 achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
-                window.location.replace('/dashboard');
+                router.replace('/dashboard');
             }
         } catch (error: unknown) {
             errorHandler(error);
@@ -169,8 +174,9 @@ export const CompleteProfileForm = () => {
                                     maxLength={100}
                                     id="enterprise"
                                     autoComplete="organization"
+                                    autoCapitalize="characters"
                                     disabled={isLoading}
-                                    className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
+                                    className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 uppercase transition-200"
                                     {...register("enterprise")}
                                 />
                             </div>

@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import type { SimpleRanking } from "@/interfaces"
 import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
+import { getRankByLevel } from "@/config/ranks"
 import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
@@ -13,7 +14,8 @@ interface Props{
 
 export const CardRankingHome = ({ user, owner }: Props) => {
 
-  const { position, name, username, photo, enterprise, level, points } = user;
+  const { position, name, username, photo, enterprise, level } = user;
+  const rank = getRankByLevel(level);
 
   const renderPositionIcon = () => {
     if (position === 1) return <FirstPlaceIcon />;
@@ -36,7 +38,14 @@ export const CardRankingHome = ({ user, owner }: Props) => {
           </h3>
           <h3 className="hidden lg:block lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise||"-"}</h3>
           <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{level}</h3>
-          <h3 className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{points}</h3>
+          <h3 className="col-span-2 lg:col-span-1 flex justify-center">
+              <span
+                  className="text-[10px] lg:text-xs font-bold uppercase tracking-wider bg-clip-text text-transparent"
+                  style={{ backgroundImage: `linear-gradient(135deg, ${rank.color}, ${rank.colorSecondary})` }}
+              >
+                  {rank.name}
+              </span>
+          </h3>
       </Link>
   )
 }

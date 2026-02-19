@@ -182,48 +182,121 @@
   background-color: #4fffdc;
 }
 
-.driver-popover{
-  @apply !p-3 !rounded-lg !bg-gradient-to-br !from-background-sidebar !to-card !border-none
+/* ========== DRIVER.JS TUTORIAL ========== */
+
+.driver-popover {
+  @apply !p-0 !rounded-xl !bg-gradient-to-br !from-background-sidebar !to-card !border !border-card-light/50 !min-w-[280px] !max-w-[340px];
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.08), 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden !important;
 }
 
-.driver-popover-arrow-side-bottom{
-  @apply !border-b-card
+/* Barra de acento superior */
+.tutorial-accent-bar {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #00FFCC, #4fffdc, #00FFCC);
+  flex-shrink: 0;
 }
 
-.driver-popover-arrow-side-top{
-  @apply !border-t-card
+/* Variantes de acento por step */
+.tutorial-step-streak .tutorial-accent-bar {
+  background: linear-gradient(90deg, #ff6b35, #00FFCC, #ff6b35);
 }
 
-.driver-popover-arrow-side-left{
-  @apply !border-l-card
+.tutorial-step-ranking .tutorial-accent-bar {
+  background: linear-gradient(90deg, #ffd700, #00FFCC, #ffd700);
 }
 
-.driver-popover-arrow-side-right{
-  @apply !border-e-card
+/* Glow más intenso para welcome y ready */
+.tutorial-step-welcome.driver-popover,
+.tutorial-step-ready.driver-popover {
+  box-shadow: 0 0 40px rgba(0, 255, 204, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5) !important;
 }
 
-.driver-popover-title{
-  @apply !text-xl !font-satoshi !text-pretty text-white !leading-tight
+/* Flechas */
+.driver-popover-arrow-side-bottom { @apply !border-b-card }
+.driver-popover-arrow-side-top { @apply !border-t-card }
+.driver-popover-arrow-side-left { @apply !border-l-card }
+.driver-popover-arrow-side-right { @apply !border-e-card }
+
+/* Título y descripción */
+.driver-popover-title {
+  @apply !text-lg !font-satoshi !text-pretty text-white !leading-tight !px-5 !pt-4 !pb-0;
 }
 
-.driver-popover-description{
-  @apply !font-satoshi text-white !text-sm !mt-2
+.driver-popover-description {
+  @apply !font-satoshi !text-white/70 !text-sm !mt-2 !px-5 !leading-relaxed;
 }
 
+/* Footer */
+.driver-popover-footer {
+  @apply !px-5 !pb-4 !pt-3 !mt-2;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Botones */
 .driver-popover-prev-btn {
   text-shadow: none !important;
-  @apply !px-2 !py-1 !rounded-md !bg-transparent hover:!bg-white/10 !text-white !font-satoshi !border-none transition-200 !filter-none
+  @apply !px-3 !py-1.5 !rounded-lg !bg-white/5 hover:!bg-white/10 !text-white/70 hover:!text-white !font-satoshi !text-xs !font-medium !border-none transition-200 !filter-none;
 }
 
 .driver-popover-next-btn {
   text-shadow: none !important;
-  @apply !px-2 !py-1 !rounded-md !bg-stannum hover:!bg-stannum-light !text-card !font-satoshi !border-none transition-200 !filter-none
+  @apply !px-4 !py-1.5 !rounded-lg !bg-stannum hover:!bg-stannum-light !text-card !font-satoshi !text-xs !font-semibold !border-none transition-200 !filter-none;
 }
 
-.driver-overlay{
+/* Botón de cerrar */
+.driver-popover-close-btn {
+  @apply !text-white/30 hover:!text-white/60;
+}
+
+/* Progress dots */
+.driver-popover-progress-text {
+  @apply !text-xs !text-card-lightest !font-satoshi;
+}
+
+.tutorial-progress-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tutorial-progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.tutorial-progress-dot.active {
+  width: 18px;
+  border-radius: 3px;
+  background: #00FFCC;
+}
+
+.tutorial-progress-dot.completed {
+  background: rgba(0, 255, 204, 0.4);
+}
+
+/* Iconos inline en popovers */
+.tutorial-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 6px;
+  position: relative;
+  top: -1px;
+}
+
+/* Overlay */
+.driver-overlay {
   z-index: 100000000 !important;
 }
 
-.driver-overlay path{
-  opacity: 0.9 !important;
+.driver-overlay path {
+  opacity: 0.85 !important;
 }

@@ -1,7 +1,6 @@
 export * from './auth';
 export * from './profilePhoto';
 export * from './user';
-export * from './userServer';
 export * from './lesson';
 export * from './instruction';
 export * from './productKey';

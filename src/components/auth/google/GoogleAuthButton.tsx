@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { googleLogin } from '@/services';
-import { errorHandler } from '@/helpers';
+import { achievementHandler, errorHandler } from '@/helpers';
 import { GoogleColourIcon, SpinnerIcon } from '@/icons';
 import { FormErrorMessage } from '@/components';
 import { AppError } from '@/interfaces';
@@ -23,7 +23,7 @@ export const GoogleAuthButton = () => {
                 const { access_token } = tokenResponse;
                 if (!access_token) throw new Error('Google credential is missing');
 
-                const username = await googleLogin(access_token);
+                const { username, achievementsUnlocked } = await googleLogin(access_token);
                 if(!username){
                     setErrorMessage("Google login failed. Please try again.");
                     return;
@@ -32,6 +32,7 @@ export const GoogleAuthButton = () => {
                 if (username.startsWith("google_")) {
                     router.push('/register/google');
                 } else {
+                    achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
                     router.push('/dashboard');
                 }
             } catch (error:unknown) {

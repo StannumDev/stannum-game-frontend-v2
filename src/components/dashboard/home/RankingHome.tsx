@@ -53,7 +53,7 @@ export const RankingHome = () => {
                         <h3 className="col-span-6 lg:col-span-3 lg:pl-2 text-xs lg:text-base">Jugador</h3>
                         <h3 className="hidden lg:block lg:col-span-2 lg:pl-2 text-xs lg:text-base">Empresa</h3>
                         <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Nivel</h3>
-                        <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">XP</h3>
+                        <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Rango</h3>
                     </div>
                     <div className="mt-2 w-[calc(100%+9px)] lg:w-[calc(100%+13px)] grow min-h-72 xl:min-h-48 overflow-y-auto overflow-x-hidden relative">
                         { isLoading ?
@@ -64,7 +64,7 @@ export const RankingHome = () => {
                             <div className="size-full bg-card flex justify-center items-center"><p className="max-w-sm text-center text-card-lightest">En breve veras reflejado tu puntaje y del resto de jugadores aquí.</p></div>
                         ) : (
                             <div className="w-full pr-1 lg:pr-2 grow flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
-                                {rankings.map((player, i) => <CardRankingHome user={player} owner={username === player.username} key={`ranking_home_${i}`} />)}
+                                {rankings.map((player) => <CardRankingHome user={player} owner={username === player.username} key={`ranking_home_${player.username}`} />)}
                             </div>
                         )}
                     </div>

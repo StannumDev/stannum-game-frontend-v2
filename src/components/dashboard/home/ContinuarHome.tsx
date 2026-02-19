@@ -1,7 +1,8 @@
 'use client';
 
 import { StaticImageData } from "next/image";
-import { PlayCircleIcon } from "@/icons";
+import Link from "next/link";
+import { PlayCircleIcon, KeyIcon } from "@/icons";
 import { buildContinueEntryForProgram } from "@/utilities";
 import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
 import { ContinueEntry } from "@/interfaces";
@@ -34,7 +35,13 @@ export const ContinuarHome = () => {
                             />
                         ))
                     ) : (
-                        <p className="text-card-lightest max-w-xl">Desde aquí podrás acceder rápidamente a tus programas adquiridos y retomar tus entrenamientos justo donde los dejaste.</p>
+                        <div className="max-w-xl flex flex-col gap-2">
+                            <p className="text-card-lightest">Desde aquí podrás retomar tus entrenamientos justo donde los dejaste.</p>
+                            <Link href="/dashboard?activar=true" className="w-fit text-sm text-stannum hover:text-stannum-light font-semibold flex items-center gap-1.5 transition-200">
+                                <KeyIcon className="size-4" />
+                                ¿Tenés una clave de producto? Activala acá
+                            </Link>
+                        </div>
                     )}
                 </div>
             </section>
