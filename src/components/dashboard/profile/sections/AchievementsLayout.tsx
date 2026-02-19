@@ -13,7 +13,7 @@ export const AchievementsLayout = ({user, owner}:Props) => {
             <header>
                 <div className="w-full lg:w-fit flex flex-row justify-between lg:justify-start items-center gap-4 lg:gap-4">
                     <h2 className="w-fit title-2">Logros y trofeos</h2>
-                    <div className="w-fit text-stannum text-sm py-1 px-3 rounded-xl bg-stannum/40">{user.achievements.length}/{achievements.length}<span className="hidden lg:inline"> conseguidos</span></div>
+                    <div className="w-fit text-stannum text-sm py-1 px-3 rounded-xl bg-stannum/40">{user.achievements?.length ?? 0}/{achievements.length}<span className="hidden lg:inline"> conseguidos</span></div>
                 </div>
                 <p className="mt-2">Da un vistazo a todos los <b className="text-stannum">objetivos alcanzados</b> durante el entrenamiento.</p>
             </header>

@@ -1,9 +1,11 @@
 import api from "@/lib/api";
+import type { AchievementDetails } from "@/interfaces";
 
 export interface LessonCompletionResult {
     gained: number;
     streakBonus: number;
     totalGain: number;
+    achievementsUnlocked: AchievementDetails[];
 }
 
 export const markLessonAsCompleted = async (programName: string, lessonId: string): Promise<LessonCompletionResult> => {
@@ -13,9 +15,9 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         );
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-        const { gained = 0, streakBonus = 0, totalGain = 0 } = response.data;
-        return { gained, streakBonus, totalGain };
-    } catch (error:unknown) {
+        const { gained = 0, streakBonus = 0, totalGain = 0, achievementsUnlocked = [] } = response.data;
+        return { gained, streakBonus, totalGain, achievementsUnlocked };
+    } catch (error: unknown) {
         throw error;
     }
 };

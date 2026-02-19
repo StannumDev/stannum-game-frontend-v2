@@ -21,8 +21,11 @@ const schema = z.object({
     birthdate: z.string().min(1, { message: "Campo requerido." }).refine(date => {
         const today = new Date();
         const birthDate = new Date(date);
-        const age = today.getFullYear() - birthDate.getFullYear();
-        return age >= 18 && birthDate <= today;
+        if (birthDate > today) return false;
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+        return age >= 18;
     }, { message: "Debes tener al menos 18 años y la fecha no puede estar en el futuro." }),
     country: z.string().min(1, { message: "Campo requerido." }),
     region: z.string().min(1, { message: "Campo requerido." }),
@@ -137,12 +140,12 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                         <input
                             type='text'
                             enterKeyHint="next"
-                            maxLength={50}
+                            maxLength={100}
                             id="enterprise"
                             autoComplete="organization"
-                            autoCapitalize="true"
+                            autoCapitalize="characters"
                             disabled={isLoading}
-                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
+                            className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 uppercase transition-200"
                             {...register("enterprise")}
                             />
                     </div>
@@ -157,7 +160,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                             maxLength={50}
                             id="enterpriseRole"
                             autoComplete="organization-title"
-                            autoCapitalize="true"
+                            autoCapitalize="words"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("enterpriseRole")}
@@ -173,7 +176,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                         maxLength={2600}
                         id="aboutme"
                         autoComplete="off"
-                        autoCapitalize="true"
+                        autoCapitalize="sentences"
                         placeholder='Cuéntanos un poco sobre ti...'
                         disabled={isLoading}
                         className="w-full h-72 md:h-52 p-2 bg-card-light/40 border border-transparent focus-visible:border-stannum rounded resize-none placeholder:text-neutral-400 disabled:text-white/75 transition-200"

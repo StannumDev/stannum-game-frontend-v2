@@ -8,7 +8,7 @@ export interface RankTier {
 }
 
 export const RANK_TIERS: RankTier[] = [
-    { id: 'hierro',    name: 'Hierro',    minLevel: 1,  maxLevel: 4,  color: '#a0a0a0', colorSecondary: '#6b6b6b' },
+    { id: 'hierro',    name: 'Hierro',    minLevel: 1,  maxLevel: 4,  color: '#787878', colorSecondary: '#4a4a4a' },
     { id: 'bronce',    name: 'Bronce',    minLevel: 5,  maxLevel: 9,  color: '#cd7f32', colorSecondary: '#8b5a2b' },
     { id: 'plata',     name: 'Plata',     minLevel: 10, maxLevel: 14, color: '#e8e8e8', colorSecondary: '#a0a0a0' },
     { id: 'oro',       name: 'Oro',       minLevel: 15, maxLevel: 19, color: '#ffd700', colorSecondary: '#ffaa00' },

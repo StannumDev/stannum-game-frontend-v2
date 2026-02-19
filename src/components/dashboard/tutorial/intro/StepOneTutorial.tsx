@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { IoGameController } from 'react-icons/io5';
 
 interface Props{
     direction: 'prev'|'next'
@@ -21,12 +22,12 @@ export const StepOneTutorial = ({direction}:Props) => {
             variants={variants}
             className="w-full lg:grow py-12 lg:py-4 text-center text-pretty flex flex-col justify-center items-center"
         >
+            <IoGameController className="size-12 lg:size-16 text-stannum mb-4" />
             <h2 className='w-fit max-w-full px-4 pb-2 text-2xl lg:text-5xl font-thin uppercase border-b-2 border-white/25'>
                 <span className='text-stannum'>Bienvenido a</span>
                 <b className='text-4xl lg:text-8xl font-black block'>STANNUM Game</b>
             </h2>
-            <h3 className='mt-8 title-3 font-semibold text-lg lg:text-2xl'>Preparate para transformar tu entrenamiento.</h3>
-            <p className='mt-2 w-full max-w-2xl font-thin lg:text-lg text-white/50'>En STANNUM Game, llevarás tus habilidades al siguiente nivel mientras superas desafíos y mejoras tu desempeño. Esta plataforma ha sido <b className='text-stannum font-semibold'>diseñada para lideres como tú,</b> que buscan evolucionar continuamente y desbloquear su <b className='text-stannum font-semibold'>máximo potencial.</b></p>
+            <p className='mt-8 w-full max-w-xl font-thin lg:text-lg text-white/50'>Tu plataforma de entrenamiento gamificado, diseñada para <b className='text-stannum font-semibold'>líderes que buscan evolucionar.</b></p>
         </motion.main>
     )
 }

@@ -2,12 +2,14 @@
 
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { clearLoginFlag } from './tokenStorage';
+import { callToast } from '@/helpers/callToast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
+  timeout: 15000,
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
@@ -15,33 +17,24 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (value: unknown) => void;
-  reject: (reason: unknown) => void;
-  config: InternalAxiosRequestConfig;
-}> = [];
-
-const processQueue = (error: AxiosError | null) => {
-  failedQueue.forEach(({ resolve, reject, config }) => {
-    if (error) {
-      reject(error);
-    } else {
-      (config as InternalAxiosRequestConfig & { _retry?: boolean })._retry = true;
-      resolve(api(config));
-    }
-  });
-  failedQueue = [];
-};
+let refreshPromise: Promise<void> | null = null;
+let isLoggingOut = false;
 
 const forceLogout = () => {
+  if (isLoggingOut) return;
+  isLoggingOut = true;
   clearLoginFlag();
-  if (typeof window !== 'undefined') window.location.href = '/';
+  if (typeof window !== 'undefined') {
+    callToast({ type: 'warning', message: { title: 'Sesión expirada', description: 'Tu sesión expiró. Volvé a iniciar sesión.' } });
+    setTimeout(() => { window.location.href = '/'; }, 1500);
+  }
 };
 
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
+    if (isLoggingOut) return Promise.reject(error);
+
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
     const isRefreshEndpoint = originalRequest?.url?.includes('/auth/refresh-token');
@@ -51,25 +44,25 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (isRefreshing) {
-      return new Promise((resolve, reject) => {
-        failedQueue.push({ resolve, reject, config: originalRequest });
-      });
+    originalRequest._retry = true;
+
+    if (!refreshPromise) {
+      refreshPromise = axios.post(`${API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/refresh-token`, {}, { withCredentials: true })
+        .then(() => {})
+        .catch(() => {
+          forceLogout();
+          throw error;
+        })
+        .finally(() => {
+          refreshPromise = null;
+        });
     }
 
-    originalRequest._retry = true;
-    isRefreshing = true;
-
     try {
-      await axios.post(`${API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/refresh-token`, {}, { withCredentials: true });
-      processQueue(null);
+      await refreshPromise;
       return api(originalRequest);
-    } catch (refreshError) {
-      processQueue(refreshError as AxiosError);
-      forceLogout();
-      return Promise.reject(refreshError);
-    } finally {
-      isRefreshing = false;
+    } catch {
+      return Promise.reject(error);
     }
   }
 );

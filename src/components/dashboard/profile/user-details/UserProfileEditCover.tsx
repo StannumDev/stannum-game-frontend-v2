@@ -31,7 +31,7 @@ export const UserProfileEditCover = ({showModal, setShowModal}:Props) => {
 
     const changeBackground = () => {
         setIsLoading(true);
-        setInterval(() => {
+        setTimeout(() => {
             setIsLoading(false);
         }, 1000);
     }

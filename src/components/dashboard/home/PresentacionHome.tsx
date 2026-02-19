@@ -1,19 +1,36 @@
 'use client'
 
 import { Fragment, useState, useEffect, useCallback, useRef } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import Image from "next/image";
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { driver, type Driver } from "driver.js";
+import { driver, type Driver, type PopoverDOM } from "driver.js";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
-import { PlayIcon } from '@/icons';
+import { PlayIcon, FireIcon, RankingStarIcon, CompassIcon, KeyIcon } from '@/icons';
+import { IoGameController, IoRocket } from 'react-icons/io5';
 import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import { useUserStore } from '@/stores/userStore';
 import background from "@/assets/background/the_game.webp";
 import "driver.js/dist/driver.css";
 
 const steps:Array<number> = [1,2,3,4,5,6];
+
+const icon = (Icon: React.ComponentType<{ size?: number; color?: string }>) =>
+    `<span class="tutorial-icon">${renderToStaticMarkup(<Icon size={20} color="#00FFCC" />)}</span>`;
+
+const TUTORIAL_ICONS = {
+    gamepad: icon(IoGameController),
+    play: icon(PlayIcon),
+    fire: icon(FireIcon),
+    ranking: icon(RankingStarIcon),
+    key: icon(KeyIcon),
+    compass: icon(CompassIcon),
+    rocket: icon(IoRocket),
+};
+
+const TOTAL_TUTORIAL_STEPS = 7;
 
 export const PresentacionHome = () => {
     const user = useUserStore(s => s.user);
@@ -102,39 +119,59 @@ export const PresentacionHome = () => {
 
             const driverInstance = driver({
                 animate: true,
+                smoothScroll: true,
                 allowClose: false,
-                stageRadius: 8,
-                stagePadding: 0,
+                stageRadius: 12,
+                stagePadding: 6,
+                popoverOffset: 12,
                 showButtons: ["next", "previous", "close"],
+                showProgress: true,
                 nextBtnText: 'Siguiente',
                 prevBtnText: 'Volver',
-                doneBtnText: 'Listo',
+                doneBtnText: '¡Empezar!',
+                onPopoverRender: (popover: PopoverDOM, { state }) => {
+                    // Barra de acento superior
+                    const existingBar = popover.wrapper.querySelector('.tutorial-accent-bar');
+                    if (!existingBar) {
+                        const accentBar = document.createElement('div');
+                        accentBar.className = 'tutorial-accent-bar';
+                        popover.wrapper.prepend(accentBar);
+                    }
+
+                    // Progress dots custom
+                    const activeIndex = state.activeIndex ?? 0;
+                    const dotsContainer = document.createElement('div');
+                    dotsContainer.className = 'tutorial-progress-dots';
+
+                    for (let i = 0; i < TOTAL_TUTORIAL_STEPS; i++) {
+                        const dot = document.createElement('div');
+                        dot.className = `tutorial-progress-dot${i === activeIndex ? ' active' : i < activeIndex ? ' completed' : ''}`;
+                        dotsContainer.appendChild(dot);
+                    }
+
+                    popover.progress.innerHTML = '';
+                    popover.progress.style.display = 'flex';
+                    popover.progress.appendChild(dotsContainer);
+                },
                 onDestroyed: completeTutorial,
                 steps: [
                     {
                         element: "#highlight-me",
                         popover: {
-                            title: "Bienvenido a <b class='text-stannum font-semibold'>STANNUM Game</b>",
-                            description: "Descubre cómo aprovechar al máximo la plataforma con este breve tutorial introductorio.",
+                            popoverClass: "tutorial-step-welcome",
+                            title: `${TUTORIAL_ICONS.gamepad} Bienvenido a <b class='text-stannum font-semibold'>STANNUM Game</b>`,
+                            description: "Tu plataforma de entrenamiento gamificado. En <span class='text-stannum font-semibold'>30 segundos</span> vas a conocer todo lo que necesitás.",
                             side: "bottom",
                             align: "center",
-                            showButtons: ["next"]
+                            showButtons: ["next"],
                         },
                     },
-                    // {
-                    //     element: '#goals-section',
-                    //     popover: {
-                    //         title: "Tus Objetivos",
-                    //         description: "Establece metas personales para mantenerte motivado y seguir avanzando.",
-                    //         side: "right",
-                    //         align: "start",
-                    //     },
-                    // },
                     {
                         element: '#continue-training',
                         popover: {
-                            title: "Continúa tu Entrenamiento",
-                            description: "Accede a tus programas activos y sigue mejorando tus habilidades. ¡Empieza ahora!",
+                            popoverClass: "tutorial-step-training",
+                            title: `${TUTORIAL_ICONS.play} Tus Misiones`,
+                            description: "Retomá tus entrenamientos donde los dejaste. Cada lección completada te acerca al <span class='text-stannum font-semibold'>siguiente nivel.</span>",
                             side: "top",
                             align: "end",
                         },
@@ -142,8 +179,9 @@ export const PresentacionHome = () => {
                     {
                         element: '#streak-section',
                         popover: {
-                            title: "Tu Racha de Entrenamiento",
-                            description: "Consulta tu progreso diario. Mantén tu racha activa para obtener mejores resultados.",
+                            popoverClass: "tutorial-step-streak",
+                            title: `${TUTORIAL_ICONS.fire} Racha Diaria`,
+                            description: "Entrená todos los días y mantené tu racha activa. <span class='text-stannum font-semibold'>7 días seguidos</span> y vas a ver la diferencia.",
                             side: "left",
                             align: "center",
                         },
@@ -151,35 +189,39 @@ export const PresentacionHome = () => {
                     {
                         element: '#top-leaders',
                         popover: {
-                            title: "Ranking de Líderes",
-                            description: "Descubre los jugadores más destacados y compite para subir en la clasificación.",
+                            popoverClass: "tutorial-step-ranking",
+                            title: `${TUTORIAL_ICONS.ranking} Tabla de Líderes`,
+                            description: "Competí con otros jugadores y escalá posiciones. Tu <span class='text-stannum font-semibold'>XP y nivel</span> definen tu lugar en el ranking.",
                             side: "top",
                             align: "start",
                         },
                     },
-                    // {
-                    //     element: '#stan-help',
-                    //     popover: {
-                    //         title: "Ayuda de STAN",
-                    //         description: "¿Necesitas ayuda? Haz clic aquí para hablar con nuestra inteligencia artificial y resolver tus dudas.",
-                    //         side: "top",
-                    //         align: "start",
-                    //     },
-                    // },
                     {
                         element: '#sidebar-buttons',
                         popover: {
-                            title: "Navegación",
-                            description: "Desde aquí puedes acceder a las principales secciones: Inicio, Biblioteca, Comunidad, Tienda y Perfil.",
+                            popoverClass: "tutorial-step-nav",
+                            title: `${TUTORIAL_ICONS.compass} Explorá la Plataforma`,
+                            description: "Biblioteca, Comunidad, Tienda y tu Perfil. Todo lo que necesitás está <span class='text-stannum font-semibold'>a un click.</span>",
                             side: "right",
                             align: "start",
                         },
                     },
                     {
+                        element: '#activate-product',
+                        popover: {
+                            popoverClass: "tutorial-step-activate",
+                            title: `${TUTORIAL_ICONS.key} Activar Producto`,
+                            description: "¿Tenés una <span class='text-stannum font-semibold'>clave de producto</span>? Ingresala acá para desbloquear tu programa y empezar a entrenar.",
+                            side: "left",
+                            align: "center",
+                        },
+                    },
+                    {
                         element: introRef.current,
                         popover: {
-                            title: "¡Estás Listo!",
-                            description: "Ya conoces lo básico de la plataforma. Para más detalles, consulta nuestros videos introductorios.",
+                            popoverClass: "tutorial-step-ready",
+                            title: `${TUTORIAL_ICONS.rocket} ¡A Jugar!`,
+                            description: "Ya conocés el terreno. Completá lecciones, subí de nivel y dominá el <span class='text-stannum font-semibold'>ranking.</span>",
                             side: "bottom",
                             align: "center",
                         },

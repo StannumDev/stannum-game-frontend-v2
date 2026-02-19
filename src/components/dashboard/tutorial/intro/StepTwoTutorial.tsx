@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import MuxPlayer from '@mux/mux-player-react';
 import { FullUserDetails } from '@/interfaces';
+import { VideosIcon } from '@/icons';
 
 const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
 const playbackId = muxPlaybackIds["WELCOME"] || "";
@@ -18,7 +19,6 @@ export const StepTwoTutorial = ({direction, user}:Props) => {
         exit: { x: direction === "next" ? "-50%" : "50%", opacity: 0, transition: { duration: 0.1 } }
     };
 
-
     return (
         <motion.main
             custom={direction}
@@ -26,9 +26,13 @@ export const StepTwoTutorial = ({direction, user}:Props) => {
             animate="center"
             exit="exit"
             variants={variants}
-            className="w-full aspect-video lg:aspect-auto lg:grow my-12 lg:my-8 relative lg:overflow-y-auto"
+            className="w-full aspect-video lg:aspect-auto lg:grow my-8 lg:my-6 flex flex-col"
         >
-            <div className='w-full lg:w-auto lg:h-full aspect-video absolute top-0 right-0 mx-auto left-0 flex flex-col justify-center items-center'>
+            <div className="flex items-center gap-2 mb-5 justify-center">
+                <VideosIcon className="size-5 text-stannum" />
+                <p className="text-sm text-white/50">Mirá este video introductorio</p>
+            </div>
+            <div className='w-full lg:w-auto lg:h-full aspect-video relative mx-auto flex flex-col justify-center items-center grow'>
                 <div className='w-full lg:w-auto lg:h-full aspect-video relative rounded-lg border border-card overflow-hidden'>
                     <MuxPlayer
                         className="size-full absolute top-0 left-0"
