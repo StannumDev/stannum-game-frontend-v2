@@ -8,8 +8,7 @@ import "@/components/styles/toast.css";
 export const ToastLayout = () => {
   return (
     <ToastContainer
-      autoClose={3000}
-      // stacked
+      autoClose={4500}
       limit={5}
       hideProgressBar
       transition={Slide}

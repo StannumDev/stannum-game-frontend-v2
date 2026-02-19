@@ -3,7 +3,8 @@ import type { AppError, FullUserDetails, ProfileStatus } from '@/interfaces';
 import { authUserByToken, logout as authLogout } from '@/services/auth';
 import { isLoggedIn } from '@/lib/tokenStorage';
 import { getUserByTokenClient } from '@/services/user';
-import { achievementHandler, errorHandler } from '@/helpers';
+import { achievementHandler, callToast, errorHandler } from '@/helpers';
+import { getRankByLevel } from '@/config/ranks';
 
 interface UserStore {
     user: FullUserDetails | null;
@@ -71,11 +72,26 @@ export const useUserStore = create<UserStore>((set, get) => ({
             const currentUser = get().user;
             const user = await getUserByTokenClient();
 
-            if (currentUser && (user.achievements?.length ?? 0) > (currentUser.achievements?.length ?? 0)) {
-                const oldIds = new Set(currentUser.achievements?.map(a => a.achievementId) ?? []);
-                const newAchievements = (user.achievements ?? []).filter(a => !oldIds.has(a.achievementId));
-                if (newAchievements.length > 0) {
-                    achievementHandler(newAchievements);
+            if (currentUser) {
+                if ((user.achievements?.length ?? 0) > (currentUser.achievements?.length ?? 0)) {
+                    const oldIds = new Set(currentUser.achievements?.map(a => a.achievementId) ?? []);
+                    const newAchievements = (user.achievements ?? []).filter(a => !oldIds.has(a.achievementId));
+                    if (newAchievements.length > 0) {
+                        achievementHandler(newAchievements);
+                    }
+                }
+
+                if (user.level.currentLevel > currentUser.level.currentLevel) {
+                    const oldRank = getRankByLevel(currentUser.level.currentLevel);
+                    const newRank = getRankByLevel(user.level.currentLevel);
+                    const rankChanged = oldRank.id !== newRank.id;
+
+                    callToast({
+                        message: rankChanged
+                            ? { title: `¡Rango ${newRank.name}!`, description: `Alcanzaste el nivel ${user.level.currentLevel}` }
+                            : { title: `¡Nivel ${user.level.currentLevel}!`, description: '¡Subiste de nivel!' },
+                        type: 'levelUp',
+                    });
                 }
             }
 

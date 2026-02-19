@@ -13,6 +13,8 @@ const formatLocalDate = (tz: string, d: Date = new Date()) => {
     return `${year}-${month}-${day}`;
 };
 
+const STREAK_XP_PER_DAY = [25, 38, 57, 86, 129, 194, 291];
+
 export const RachaHome = () => {
     const user = useUserStore(s => s.user);
     const [streakStatus, setStreakStatus] = useState({missedToday: false, streakCount: 0, maxStreak: false});
@@ -72,7 +74,7 @@ export const RachaHome = () => {
                                         <div className={`w-full aspect-square rounded-lg lg:rounded-xl border-2 flex justify-center items-center ${streakStatus.missedToday ? "bg-invalid/25 border-invalid/75" : "bg-stannum/25 border-stannum/75"}`}>
                                             <StarIcon className="size-5 2xl:size-6"/>
                                         </div>
-                                        <p className="text-xs">Día {index + 1}</p>
+                                        <p className="text-[10px] lg:text-xs font-bold">+{STREAK_XP_PER_DAY[index]} XP</p>
                                         { !streakStatus.missedToday && <div className="size-2 lg:size-3 rounded-full bg-stannum animate-ping absolute -top-0.5 -right-0.5"/>}
                                     </div>
                                 ) : day === "today" && streakStatus.missedToday ? (
@@ -80,14 +82,14 @@ export const RachaHome = () => {
                                         <div className="w-full aspect-square rounded-lg lg:rounded-xl bg-card border-2 border-invalid/75 border-dashed flex justify-center items-center">
                                             <ClockIcon className="size-5 2xl:size-6"/>
                                         </div>
-                                        <p className="text-xs">Día {index + 1}</p>
+                                        <p className="text-[10px] lg:text-xs font-bold">+{STREAK_XP_PER_DAY[index]} XP</p>
                                     </div>
                                 ) : day === "locked" && (
                                     <div key={index} className="w-full flex flex-col items-center gap-1 text-card-lighter">
                                         <div className="w-full aspect-square rounded-lg lg:rounded-xl bg-card border border-card-lighter flex justify-center items-center">
                                             <LockIcon className="size-5 2xl:size-6"/>
                                         </div>
-                                        <p className="text-xs">Día {index + 1}</p>
+                                        <p className="text-[10px] lg:text-xs font-bold">+{STREAK_XP_PER_DAY[index]} XP</p>
                                     </div>
                                 )
                             ))}
