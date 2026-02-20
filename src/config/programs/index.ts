@@ -6,7 +6,12 @@ import background_tia from '@/assets/background/stannum_game_trophy.webp';
 import background_tmd from '@/assets/background/stannum_game_trophy.webp';
 import background_tia_summer from '@/assets/background/background_tia_summer.webp';
 
-const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+let muxPlaybackIds: Record<string, string> = {};
+try {
+    muxPlaybackIds = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+} catch {
+    muxPlaybackIds = {};
+}
 
 export const TIA_PROGRAM: Program = {
     id: "tia",

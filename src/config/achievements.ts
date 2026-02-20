@@ -14,7 +14,7 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 50,
         getProgress: (user: FullUserDetails) => {
-            return Object.values(user.programs).some(p => p.isPurchased) ? 100 : 0;
+            return Object.values(user.programs ?? {}).some(p => p.isPurchased) ? 100 : 0;
         }
     },
     {

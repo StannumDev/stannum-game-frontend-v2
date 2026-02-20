@@ -10,6 +10,7 @@ import { useUserStore } from "@/stores/userStore";
 
 export const RankingHome = () => {
     const username = useUserStore(s => s.user?.username);
+    const _refreshCount = useUserStore(s => s._refreshCount);
 
     const [rankings, setRankings] = useState<Array<SimpleRanking>>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,7 +28,7 @@ export const RankingHome = () => {
             }
         };
         fetchRanking();
-    }, []);
+    }, [_refreshCount]);
 
     return (
         <MotionWrapperLayoutClient className="grow">

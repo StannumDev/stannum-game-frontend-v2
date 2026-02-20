@@ -42,10 +42,12 @@ export const CompleteProfileForm = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<Schema>({ resolver: zodResolver(schema) });
 
     useEffect(() => {
+        let isMounted = true;
         const fetchUserData = async () => {
-            setIsFetching(true);
+            if (isMounted) setIsFetching(true);
             try {
                 const user = await getUserByTokenClient();
+                if (!isMounted) return;
                 if (user.profile?.name) setValue('name', user.profile.name);
                 if (user.profile?.birthdate) {
                     const dateOnly = new Date(user.profile.birthdate).toISOString().split("T")[0];
@@ -63,12 +65,13 @@ export const CompleteProfileForm = () => {
                 if (user.enterprise?.jobPosition) setValue('enterpriseRole', user.enterprise.jobPosition);
                 if (user.profile?.aboutMe) setValue('aboutme', user.profile.aboutMe);
             } catch (error: unknown) {
-                errorHandler(error);
+                if (isMounted) errorHandler(error);
             } finally {
-                setIsFetching(false);
+                if (isMounted) setIsFetching(false);
             }
         };
         fetchUserData();
+        return () => { isMounted = false; };
     }, [setValue]);
 
     const onSubmit: SubmitHandler<Schema> = async (data) => {
