@@ -8,7 +8,12 @@ import background_tia_summer from '@/assets/background/background_tia_summer.web
 import tia_pool_logo from '@/assets/programs/trenno_ia_pool_logo.webp';
 import background_tia_pool from '@/assets/background/stannum_game_trophy.webp';
 
-const muxPlaybackIds: Record<string, string> = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+let muxPlaybackIds: Record<string, string> = {};
+try {
+    muxPlaybackIds = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+} catch {
+    muxPlaybackIds = {};
+}
 
 export const TIA_PROGRAM: Program = {
     id: "tia",

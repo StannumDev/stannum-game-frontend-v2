@@ -33,6 +33,7 @@ export const submitInstruction = async (programName: string, instructionId: stri
 
             await axios.put(presignedUrl, deliverable.file, {
                 headers: { "Content-Type": deliverable.file.type },
+                timeout: 120000,
             });
         }
 
@@ -54,14 +55,3 @@ export const retryGrading = async (programName: string, instructionId: string): 
     }
 };
 
-export const gradeInstruction = async (userId: string, programName: string, instructionId: string, score: number, observations?: string): Promise<boolean> => {
-    try {
-        const response = await api.post(`${process.env.NEXT_PUBLIC_API_INSTRUCTION_URL}/grade/${userId}/${programName}/${instructionId}`,
-            { score, observations }
-        );
-        if (!response?.data?.success) throw new Error("Unexpected response structure");
-        return true;
-    } catch (error:unknown) {
-        throw error;
-    }
-};

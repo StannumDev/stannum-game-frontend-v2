@@ -52,7 +52,9 @@ export {
     TbExternalLink as ExternalLinkIcon,
     TbDots as OptionsIcon,
     TbCopy as CopyIcon,
-    TbArrowBigUpLinesFilled as LevelUpIcon
+    TbArrowBigUpLinesFilled as LevelUpIcon,
+    TbList as ListIcon,
+    TbRoute as RouteIcon
 } from "react-icons/tb";
 
 export {
