@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { CommunityIcon } from '@/icons';
 
 interface Props{
@@ -14,7 +14,7 @@ export const StepFiveTutorial = ({direction}:Props) => {
     };
 
     return (
-        <motion.main
+        <m.main
             custom={direction}
             initial="enter"
             animate="center"
@@ -34,6 +34,6 @@ export const StepFiveTutorial = ({direction}:Props) => {
                     <CommunityIcon className='size-24 lg:size-48 text-stannum/10 lg:absolute lg:bottom-0 lg:left-8'/>
                 </div>
             </div>
-        </motion.main>
+        </m.main>
     )
 }

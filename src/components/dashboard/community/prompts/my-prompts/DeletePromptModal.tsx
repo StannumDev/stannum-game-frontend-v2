@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { CrossIcon, SpinnerIcon, TrashIcon } from '@/icons';
 import { deletePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -34,7 +34,7 @@ export const DeletePromptModal = ({ isOpen, onClose, promptId, promptTitle, onDe
         <AnimatePresence>
             {isOpen && (
                 <>
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -42,7 +42,7 @@ export const DeletePromptModal = ({ isOpen, onClose, promptId, promptTitle, onDe
                         className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
                     />
                     <div className="size-full fixed top-0 left-0 z-50 flex items-center justify-center p-4">
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
@@ -106,7 +106,7 @@ export const DeletePromptModal = ({ isOpen, onClose, promptId, promptTitle, onDe
                                     )}
                                 </button>
                             </div>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </>
             )}

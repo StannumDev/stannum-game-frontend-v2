@@ -1,35 +1,19 @@
 'use client'
 
-import { useEffect, useState } from "react";
 import Link from "next/link"
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import type { SidebarLink } from "@/interfaces";
 import { useSidebarStore } from "@/stores/sidebarStore";
 
 interface Props{
     link: SidebarLink
     pathname: string;
+    isActive: boolean;
 }
 
-export const SidebarDesktopLink = ({link, pathname}:Props) => {
+export const SidebarDesktopLink = ({link, isActive}:Props) => {
     const isExpanded = useSidebarStore(s => s.isExpanded);
     const { label, href, Icon } = link
-    const [isActive, setIsActive] = useState<boolean>(false)
-
-    useEffect(() => {
-        const checkActive = () => {
-            if(href === '/dashboard' && pathname === href){
-                setIsActive(true);
-                return;
-            } else if(href !== '/dashboard' && pathname.startsWith(href)){
-                setIsActive(true);
-                return
-            } else {
-                setIsActive(false);
-            }
-        }
-        checkActive()
-    }, [pathname, href])
 
     return (
         <Link
@@ -37,18 +21,10 @@ export const SidebarDesktopLink = ({link, pathname}:Props) => {
             aria-label={`Navegar a ${label}`}
             className={`w-full h-14 px-8 flex items-center transition-200 relative ${ !isActive ? 'hover:bg-card-hover text-neutral-400 hover:text-neutral-200' : 'text-card' } ${!isExpanded && 'justify-center'}`}
         >
-            {
-                isActive &&
-                <motion.div
-                    layoutId="activeSidebar"
-                    transition={{ duration: 0.125, type: 'spring', bounce: 0 }}
-                    className="size-full bg-gradient-to-br from-stannum to-stannum-light absolute top-0 left-0 z-0"
-                ></motion.div>
-            }
             <AnimatePresence mode="popLayout" initial={false}>
                 {
                     isExpanded ?
-                    <motion.div
+                    <m.div
                         initial={{ x: -150, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -150, opacity: 0 }}
@@ -60,9 +36,9 @@ export const SidebarDesktopLink = ({link, pathname}:Props) => {
                         <span className="font-semibold">
                             {label}
                         </span>
-                    </motion.div>
+                    </m.div>
                     :
-                    <motion.div
+                    <m.div
                         initial={{ x: 150, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: 150, opacity: 0 }}
@@ -70,7 +46,7 @@ export const SidebarDesktopLink = ({link, pathname}:Props) => {
                         key='iconSidebarLinkDesktop'
                     >
                         <Icon className='size-7 relative z-10'/>
-                    </motion.div>
+                    </m.div>
                 }
             </AnimatePresence>
         </Link>

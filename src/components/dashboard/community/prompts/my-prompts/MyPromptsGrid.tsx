@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { getMyPrompts } from '@/services';
 import { errorHandler } from '@/helpers';
 import { MyPromptCard, CreatePromptModal, LoadingScreen, GoBackButton } from '@/components';
@@ -81,7 +81,7 @@ export const MyPromptsGrid = () => {
                 {isLoading && prompts.length === 0 && <LoadingScreen />}
 
                 {!isLoading && prompts.length === 0 && (
-                    <motion.div
+                    <m.div
                         className="card grow flex flex-col justify-center items-center text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -99,12 +99,12 @@ export const MyPromptsGrid = () => {
                             <PlusIcon className="text-lg" />
                             Añadir mi primer prompt
                         </button>
-                    </motion.div>
+                    </m.div>
                 )}
 
                 {!isLoading && prompts.length > 0 && (
                     <AnimatePresence mode="wait">
-                        <motion.div
+                        <m.div
                             key={`my-prompts-${filters.page}`}
                             className="columns-1 md:columns-2 xl:columns-3"
                             initial={{ opacity: 0 }}
@@ -120,7 +120,7 @@ export const MyPromptsGrid = () => {
                                     onVisibilityChanged={handleVisibilityChanged}
                                 />
                             ))}
-                        </motion.div>
+                        </m.div>
                     </AnimatePresence>
                 )}
 

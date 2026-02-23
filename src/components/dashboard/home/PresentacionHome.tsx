@@ -1,36 +1,22 @@
 'use client'
 
 import { Fragment, useState, useEffect, useCallback, useRef } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 import Image from "next/image";
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { driver, type Driver, type PopoverDOM } from "driver.js";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from '@/helpers';
-import { PlayIcon, FireIcon, RankingStarIcon, CompassIcon, KeyIcon } from '@/icons';
-import { IoGameController, IoRocket } from 'react-icons/io5';
-import { Modal, MotionWrapperLayoutClient, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
+import { TUTORIAL_ICONS } from '@/helpers/tutorialIcons';
+import { PlayIcon } from '@/icons';
+import { Modal, MotionWrapperLayout, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import { useUserStore } from '@/stores/userStore';
 import background from "@/assets/background/the_game.webp";
 import "driver.js/dist/driver.css";
 
 const steps:Array<number> = [1,2,3,4,5,6];
 
-const icon = (Icon: React.ComponentType<{ size?: number; color?: string }>) =>
-    `<span class="tutorial-icon">${renderToStaticMarkup(<Icon size={20} color="#00FFCC" />)}</span>`;
-
-const TUTORIAL_ICONS = {
-    gamepad: icon(IoGameController),
-    play: icon(PlayIcon),
-    fire: icon(FireIcon),
-    ranking: icon(RankingStarIcon),
-    key: icon(KeyIcon),
-    compass: icon(CompassIcon),
-    rocket: icon(IoRocket),
-};
-
-const TOTAL_TUTORIAL_STEPS = 7;
+const TOTAL_TUTORIAL_STEPS = 8;
 
 export const PresentacionHome = () => {
     const user = useUserStore(s => s.user);
@@ -58,12 +44,9 @@ export const PresentacionHome = () => {
   
     const showTutorial = () => {
         driverRef.current && driverRef.current.destroy();
+        setSelectedStep(1);
         setShowModal(true);
     };
-
-    useEffect(() => {
-        setSelectedStep(1);
-    }, [showModal]);
 
     const previousStep = useCallback(() => {
         if (!steps.includes(selectedStep - 1)) return;
@@ -165,13 +148,33 @@ export const PresentacionHome = () => {
                         },
                     },
                     {
+                        element: '#sidebar-buttons',
+                        popover: {
+                            popoverClass: "tutorial-step-nav",
+                            title: `${TUTORIAL_ICONS.compass} Explorá la Plataforma`,
+                            description: "Biblioteca, Comunidad, Tienda y tu Perfil. Todo lo que necesitás está <span class='text-stannum font-semibold'>a un click.</span>",
+                            side: "right",
+                            align: "start",
+                        },
+                    },
+                    {
                         element: '#continue-training',
                         popover: {
                             popoverClass: "tutorial-step-training",
                             title: `${TUTORIAL_ICONS.play} Tus Misiones`,
-                            description: "Retomá tus entrenamientos donde los dejaste. Cada lección completada te acerca al <span class='text-stannum font-semibold'>siguiente nivel.</span>",
+                            description: "Retomá tus entrenamientos donde los dejaste. Cada lección completada te da <span class='text-stannum font-semibold'>XP</span> para subir de nivel y <span class='text-amber-400 font-semibold'>Tins</span>.",
                             side: "top",
                             align: "end",
+                        },
+                    },
+                    {
+                        element: '#tins-display',
+                        popover: {
+                            popoverClass: "tutorial-step-tins",
+                            title: `${TUTORIAL_ICONS.coin} Tus Tins`,
+                            description: "Los <span class='text-amber-400 font-semibold'>Tins</span> son la moneda de <span class='text-stannum font-semibold'>STANNUM Game</span>. Los ganás completando lecciones, manteniendo tu racha y desbloqueando logros. Usalos en la <span class='text-stannum font-semibold'>Tienda</span> para canjear recompensas.",
+                            side: "bottom",
+                            align: "start",
                         },
                     },
                     {
@@ -179,7 +182,7 @@ export const PresentacionHome = () => {
                         popover: {
                             popoverClass: "tutorial-step-streak",
                             title: `${TUTORIAL_ICONS.fire} Racha Diaria`,
-                            description: "Entrená todos los días y mantené tu racha activa. <span class='text-stannum font-semibold'>7 días seguidos</span> y vas a ver la diferencia.",
+                            description: "Entrená todos los días para ganar <span class='text-amber-400 font-semibold'>Tins</span> extra y mantener tu racha. <span class='text-stannum font-semibold'>7 días seguidos</span> y vas a ver la diferencia.",
                             side: "left",
                             align: "center",
                         },
@@ -191,16 +194,6 @@ export const PresentacionHome = () => {
                             title: `${TUTORIAL_ICONS.ranking} Tabla de Líderes`,
                             description: "Competí con otros jugadores y escalá posiciones. Tu <span class='text-stannum font-semibold'>XP y nivel</span> definen tu lugar en el ranking.",
                             side: "top",
-                            align: "start",
-                        },
-                    },
-                    {
-                        element: '#sidebar-buttons',
-                        popover: {
-                            popoverClass: "tutorial-step-nav",
-                            title: `${TUTORIAL_ICONS.compass} Explorá la Plataforma`,
-                            description: "Biblioteca, Comunidad, Tienda y tu Perfil. Todo lo que necesitás está <span class='text-stannum font-semibold'>a un click.</span>",
-                            side: "right",
                             align: "start",
                         },
                     },
@@ -219,7 +212,7 @@ export const PresentacionHome = () => {
                         popover: {
                             popoverClass: "tutorial-step-ready",
                             title: `${TUTORIAL_ICONS.rocket} ¡A Jugar!`,
-                            description: "Ya conocés el terreno. Completá lecciones, subí de nivel y dominá el <span class='text-stannum font-semibold'>ranking.</span>",
+                            description: "Ya conocés el terreno. Completá lecciones, juntá <span class='text-amber-400 font-semibold'>Tins</span>, subí de nivel y dominá el <span class='text-stannum font-semibold'>ranking.</span>",
                             side: "bottom",
                             align: "center",
                         },
@@ -241,7 +234,7 @@ export const PresentacionHome = () => {
     return (
         <Fragment>
             <div ref={introRef} className='w-full'>
-                <MotionWrapperLayoutClient>
+                <MotionWrapperLayout>
                     <section
                         onClick={showTutorial}
                         className="w-full card card-link aspect-video flex justify-center items-start lg:items-center relative overflow-hidden group cursor-pointer"
@@ -263,7 +256,7 @@ export const PresentacionHome = () => {
                             <p className="hidden lg:block mt-2 w-full max-w-xl">Adentrate con nuestros <b className="text-stannum">videos introductorios</b> para comprender el funcionamiento de la plataforma y empezar a entrenar!</p>
                         </div>
                     </section>
-                </MotionWrapperLayoutClient>
+                </MotionWrapperLayout>
             </div>
             <Modal
                 className="max-w-7xl h-auto lg:aspect-video"
@@ -274,12 +267,12 @@ export const PresentacionHome = () => {
                     <div className="w-full max-w-sm lg:max-w-3xl relative">
                         <div className="size-full bg-transparent flex items-center absolute top-0 left-0">
                             <div className="w-full h-0.5 bg bg-card-light">
-                                <motion.div
+                                <m.div
                                     aria-hidden
                                     layout
                                     transition={{ duration: 0.125 }}
                                     className={`h-0.5 bg-stannum rounded-full ${ selectedStep <= 1 ? 'w-0' : selectedStep <= 2 ? 'w-1/5' : selectedStep <= 3 ? 'w-2/5' : selectedStep <= 4 ? 'w-3/5' : selectedStep <= 5 ? 'w-4/5' : 'w-full' }`}
-                                ></motion.div>
+                                ></m.div>
                             </div>
                         </div>
                         <header className="w-full flex justify-between items-center font-black text-lg lg:text-2xl relative">
@@ -289,12 +282,12 @@ export const PresentacionHome = () => {
                                         <AnimatePresence>
                                             {
                                                 step <= selectedStep &&
-                                                <motion.div
+                                                <m.div
                                                     initial={{ scale: 0, x: '-100%' }}
                                                     animate={{ scale: 3, transition: { duration: 0.125, delay: 0.075 } }}
                                                     exit={{ scale: 0, x:0, transition: { delay: 0, scale: { duration: 0.25 }, x: { duration: 0 } } }}
                                                     className="size-full rounded-full bg-gradient-to-r from-stannum from-75% to-teal-500 absolute top-0 left-0 z-0"
-                                                ></motion.div>
+                                                ></m.div>
                                             }
                                         </AnimatePresence>
                                         <span className={`relative z-10 ${ step <= selectedStep && 'text-card' }`}>{step}</span>

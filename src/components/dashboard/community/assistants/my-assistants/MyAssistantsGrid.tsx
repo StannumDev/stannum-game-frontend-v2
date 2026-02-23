@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { InfoCircleIcon, PlusIcon } from '@/icons';
 import { getMyAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -65,7 +65,7 @@ export const MyAssistantsGrid = () => {
                             <h1 className="title-2">Mis Asistentes</h1>
                             <p className="subtitle-1">Administra tus asistentes de IA creados para la comunidad STANNUM</p>
                         </div>
-                        <button onClick={() => setIsCreateModalOpen(true)} className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2">
+                        <button type="button" onClick={() => setIsCreateModalOpen(true)} className="shrink-0 px-4 py-2 bg-stannum rounded-lg font-semibold hover:bg-stannum/90 text-card transition-200 flex items-center gap-2">
                             <PlusIcon className="text-lg" />
                             <span className="hidden sm:inline">Añadir Asistente</span>
                         </button>
@@ -73,7 +73,7 @@ export const MyAssistantsGrid = () => {
                 </section>
                 {isLoading && assistants.length === 0 && <LoadingScreen />}
                 {!isLoading && assistants.length === 0 &&
-                    <motion.div
+                    <m.div
                         className="card grow flex flex-col justify-center items-center text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -89,11 +89,11 @@ export const MyAssistantsGrid = () => {
                             <PlusIcon className="text-lg" />
                             Añadir mi primer asistente
                         </button>
-                    </motion.div>
+                    </m.div>
                 }
                 {!isLoading && assistants.length > 0 &&
                     <AnimatePresence mode="wait">
-                        <motion.div
+                        <m.div
                             key={`my-assistants-${filters.page}`}
                             className="columns-1 md:columns-2 xl:columns-3"
                             initial={{ opacity: 0 }}
@@ -109,7 +109,7 @@ export const MyAssistantsGrid = () => {
                                     onVisibilityChanged={handleVisibilityChanged}
                                 />
                             ))}
-                        </motion.div>
+                        </m.div>
                     </AnimatePresence>
                 }
                 {hasMore && !isLoading && (

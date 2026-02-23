@@ -1,7 +1,7 @@
 'use client'
 
 import { SetStateAction } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { HidePasswordIcon, ShowPasswordIcon } from "@/icons";
 
 interface Props{
@@ -13,7 +13,7 @@ interface Props{
 
 export const ButtonShowPassword = ({status, changeStatus, className, iconClassName='text-white size-4'}:Props) => {
     return (
-        <motion.button
+        <m.button
             type="button"
             initial={{opacity: 0.5}}
             whileHover={{opacity: 1}}
@@ -24,6 +24,6 @@ export const ButtonShowPassword = ({status, changeStatus, className, iconClassNa
             {
                 status ? <ShowPasswordIcon className={iconClassName}/> : <HidePasswordIcon className={iconClassName}/>
             }
-        </motion.button>
+        </m.button>
     )
 }

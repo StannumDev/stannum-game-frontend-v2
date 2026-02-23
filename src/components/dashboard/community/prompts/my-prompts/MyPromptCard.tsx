@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { BookmarkIcon, CopyIcon, HidePasswordIcon, LikeIcon, TrashIcon } from '@/icons';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
 import { DeletePromptModal, MyPromptCardOptionsMenu, EditPromptModal } from '@/components';
@@ -46,7 +46,7 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
 
     return (
         <>
-            <motion.article
+            <m.article
                 className="card group break-inside-avoid mb-4 border-card-light hover:border-stannum/50 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export const MyPromptCard = ({ prompt, onDeleted, onVisibilityChanged, onUpdated
                         <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye Asistente personalizado</span>
                     </div>
                 }
-            </motion.article>
+            </m.article>
             {prompt.visibility === 'draft' &&
                 <EditPromptModal
                     isOpen={isEditModalOpen}

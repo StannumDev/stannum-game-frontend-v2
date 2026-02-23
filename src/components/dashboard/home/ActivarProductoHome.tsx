@@ -3,7 +3,7 @@
 import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useUserStore } from '@/stores/userStore';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,7 @@ import { activateProductKey, verifyProductKey } from "@/services";
 import { callToast, errorHandler } from "@/helpers";   
 import { KeyIcon, AlertHexagonIcon, SpinnerIcon } from '@/icons';
 import { AppError } from "@/interfaces";
-import { FormErrorMessage, Modal, MotionWrapperLayoutClient, SubmitButtonLoading } from "@/components";
+import { FormErrorMessage, Modal, MotionWrapperLayout, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
 import redeem_code from "@/assets/background/stannum_game_trophy.webp";
 import { programs } from "@/config/programs";
@@ -94,7 +94,8 @@ export const ActivarProductoHome = () => {
         setError(null);
         try {
             await activateProductKey(watch("code"));
-            callToast({ message: { title: "Producto activado", description: `Ya puedes acceder a ${productInfo?.product} desde tu biblioteca.`}})
+            const productName = productInfo?.product ?? 'tu producto';
+            callToast({ message: { title: "Producto activado", description: `Ya puedes acceder a ${productName} desde tu biblioteca.`}})
             await refreshUser();
             router.push("/dashboard/library");
         } catch (error:unknown) {
@@ -127,7 +128,7 @@ export const ActivarProductoHome = () => {
     
     return (
         <Fragment>
-            <MotionWrapperLayoutClient className="order-3 lg:order-none">
+            <MotionWrapperLayout className="order-3 lg:order-none">
                 <button
                     id="activate-product"
                     onClick={ () => setShowModal(true) }
@@ -142,7 +143,7 @@ export const ActivarProductoHome = () => {
                         <Image priority src={activar_producto} alt="Activar producto STANNUM Game" className="size-full object-cover"/>
                     </div>
                 </button>
-            </MotionWrapperLayoutClient>
+            </MotionWrapperLayout>
             <Modal
                 className="max-w-5xl lg:aspect-video h-auto p-0"
                 showModal={showModal}
@@ -182,13 +183,13 @@ export const ActivarProductoHome = () => {
                             <FormErrorMessage condition={errors?.code} message={errors?.code?.message}/>
                         </form>
                         { isSubmitted && productInfo && !productInfo.used && (
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 w-full">
+                            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-6 w-full">
                                 <p className="hidden lg:block w-full max-w-xs">Esta clave de producto corresponde a:</p>
                                 <div className="mt-0 lg:mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
                                     <AlertHexagonIcon className="size-8 lg:size-6" />
                                     <div className="flex flex-col">
                                         <p className="subtitle-1 text-white">Programa</p>
-                                        <h3 className="text-xl font-semibold uppercase tracking-widest">{productInfo.product}</h3>
+                                        <h3 className="text-xl font-semibold">{productInfo.product}</h3>
                                     </div>
                                 </div>
                                 {/* <div className="mt-4 flex flex-col lg:flex-row items-center gap-3 text-stannum">
@@ -198,7 +199,7 @@ export const ActivarProductoHome = () => {
                                         <h3 className="text-xl font-semibold uppercase tracking-widest">{productInfo.team}</h3>
                                     </div>
                                 </div> */}
-                            </motion.div>
+                            </m.div>
                         )}
                         {error && <FormErrorMessage condition={!!error} message={error.friendlyMessage} className="mt-4"/> }
                         <div className="mt-6 lg:mt-4 w-full grow flex justify-end items-end gap-4">

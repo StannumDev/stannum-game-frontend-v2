@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { CrossIcon, SearchIcon } from "@/icons";
 import { useSearchHandler } from "@/hooks";
 import { useSidebarStore } from "@/stores/sidebarStore";
@@ -18,7 +18,7 @@ export const BuscadorSidebar = () => {
     };
 
     return (
-        <motion.div
+        <m.div
             onClick={ () => { !isExpanded && openSearchSidebar() }}
             className={`w-full ${ isExpanded ? 'px-4 mt-8' : 'mt-0 hover:bg-card-hover group cursor-pointer'}`}
             initial={{ x: '-100%', opacity: 0 }}
@@ -46,18 +46,18 @@ export const BuscadorSidebar = () => {
                         />
                     </Fragment>
                 }
-                <motion.button
+                <m.button
                     type='submit'
                     whileTap={{ scale: isExpanded ? 1.25 : 1, color: 'white' }}
                     className={`${isExpanded ? 'size-9 text-card-lighter peer-focus-visible:text-card-lightest' : 'w-full h-14 text-neutral-400 group-hover:text-neutral-200'} flex justify-center items-center`}
                 >
                     <SearchIcon className={`${ isExpanded ? 'size-5' : 'size-7' } transition-200`}/>
-                </motion.button>
+                </m.button>
                 <div className="h-9 w-4 absolute right-0 bottom-0 opacity-0 peer-focus-visible:opacity-100 transition-200">
                     <AnimatePresence>
                         {
                             watch("search") !== "" &&
-                            <motion.button
+                            <m.button
                                 type="button"
                                 onClick={() => reset()}
                                 initial={{ scale: 0, opacity: 0 }}
@@ -68,12 +68,12 @@ export const BuscadorSidebar = () => {
                             >
                                 <span className="sr-only">Limpiar buscador</span>
                                 <CrossIcon className="relative top-[2px] text-card-lighter transition-200"/>
-                            </motion.button>
+                            </m.button>
                         }
                     </AnimatePresence>
                 </div>
                 <div className={`w-full h-9 border-b ${ isExpanded ? 'border-card peer-focus-visible:border-card-light' : 'border-transparent' } absolute top-0 left-0 pointer-events-none transition-200`}></div>
             </form>
-        </motion.div>
+        </m.div>
     )
 }

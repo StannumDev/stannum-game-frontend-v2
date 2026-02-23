@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,13 +24,11 @@ export const LoginForm = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string|null>();
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
-    const router = useRouter();
 
     const onSubmit: SubmitHandler<Schema> = async (data: Schema) => {
         setIsLoading(true);
         setErrorMessage(null);
         try {
-            router.prefetch('/dashboard');
             const success = await requestLogin(data);
             if (success) window.location.replace('/dashboard');
         } catch (error:unknown) {
@@ -71,6 +68,7 @@ export const LoginForm = () => {
                         type={ showPassword ? 'text' : 'password'}
                         enterKeyHint="done"
                         maxLength={50}
+                        id="password"
                         autoComplete="password"
                         disabled={isLoading}
                         className="peer order-2 w-full h-10 pl-2 pr-10 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
@@ -81,7 +79,7 @@ export const LoginForm = () => {
                     />
                     <div className="order-1 w-full flex items-center gap-1 peer-focus-visible:text-stannum">
                         <UnlockIcon className="w-5 h-4 relative transition-200"/>
-                        <label htmlFor="username" className="text-lg transition-200">Contraseña</label>
+                        <label htmlFor="password" className="text-lg transition-200">Contraseña</label>
                     </div>
                     <ButtonShowPassword status={showPassword} changeStatus={setShowPassword} className="absolute bottom-0 right-0 size-10"/>
                 </div>
@@ -91,7 +89,7 @@ export const LoginForm = () => {
                 </div>
             </div>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||''} className="mt-4 w-fit"/>
-            <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-12 bg-stannum hover:bg-stannum-light rounded text-card lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200"/>
+            <SubmitButtonLoading isLoading={isLoading} text="Iniciar sesión" className="mt-8 w-full h-12 bg-stannum hover:bg-stannum-light rounded text-card lg:text-lg font-semibold flex justify-center items-center transition-200"/>
         </form>
     )
 }

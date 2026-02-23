@@ -1,7 +1,7 @@
 'use client'
 
 import type { NavbarSection } from "@/interfaces";
-import { NavbarSectionIndicator } from '@/components';
+import { NavbarSectionIndicator, Tooltip } from '@/components';
 
 interface Props<T>{
     section: NavbarSection;
@@ -13,13 +13,13 @@ export const NavbarSectionButton = <T extends string>({section, selectedLayout, 
 
     const {name, id, Icon, disabled} = section;
 
-    return (
+    const button = (
         <button
             data-layout={id}
             type="button"
             disabled={disabled}
             onClick={() => !disabled && handleLayoutChange(id as T)}
-            className={`${ disabled ? "opacity-10" : selectedLayout !== id ? 'hover:bg-white/10' : 'text-stannum'} text-sm lg:text-base px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200`}
+            className={`${ disabled ? "opacity-40 cursor-default pointer-events-none" : selectedLayout !== id ? 'hover:bg-white/10' : 'text-stannum'} text-sm lg:text-base px-4 py-1.5 rounded-xl font-semibold relative flex justify-center items-center gap-1 whitespace-nowrap transition-200`}
         >
             {
                 selectedLayout === id &&
@@ -31,5 +31,11 @@ export const NavbarSectionButton = <T extends string>({section, selectedLayout, 
             }
             <span className="relative z-10">{name}</span>
         </button>
-    )
+    );
+
+    if (disabled) {
+        return <Tooltip text="Próximamente">{button}</Tooltip>;
+    }
+
+    return button;
 }

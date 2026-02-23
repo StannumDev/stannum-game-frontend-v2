@@ -1,5 +1,6 @@
 import type { FullUserDetails, Program, Lesson, Instruction, ContinueEntry, ProgramId } from "@/interfaces";
 import { isLessonAvailable, isInstructionAvailable } from "./lessons";
+import { calculateProgramProgress } from "./progress";
 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
@@ -60,6 +61,7 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
 
     if (!state?.isPurchased) return null;
 
+    const programProgress = calculateProgramProgress(program, user);
     const last = state.lastWatchedLesson;
     const lessons = flattenLessons(program);
 
@@ -79,6 +81,7 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
                 progressPct: 0,
                 type: 'instruction',
                 activityLabel: label,
+                programProgress,
             };
         }
         return {
@@ -90,6 +93,7 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
             progressPct: 0,
             type: 'lesson',
             activityLabel: 'Siguiente lección',
+            programProgress,
         };
     };
 
@@ -123,5 +127,6 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
         progressPct,
         type: 'lesson',
         activityLabel: 'Lección en progreso',
+        programProgress,
     };
 }

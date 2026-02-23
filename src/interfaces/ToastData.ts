@@ -5,5 +5,5 @@ interface Message {
 
 export interface ToastData {
   message: Message;
-  type?: "error"|"warning"|"success"|"achievement"|"levelUp";
+  type?: "error"|"warning"|"success"|"achievement"|"levelUp"|"streak";
 }

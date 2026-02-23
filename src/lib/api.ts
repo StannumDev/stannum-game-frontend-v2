@@ -5,6 +5,22 @@ import { clearLoginFlag } from './tokenStorage';
 import { callToast } from '@/helpers/callToast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const REFRESH_TIMEOUT_MS = 10_000;
+
+const SKIP_REFRESH_ENDPOINTS = [
+  '/auth/login',
+  '/auth/register',
+  '/auth/google',
+  '/auth/refresh-token',
+  '/auth/recovery-password',
+  '/auth/verify-recovery-otp',
+  '/auth/reset-password',
+];
+
+const shouldSkipRefresh = (url?: string): boolean => {
+  if (!url) return false;
+  return SKIP_REFRESH_ENDPOINTS.some(endpoint => url.includes(endpoint));
+};
 
 const api = axios.create({
   baseURL: API_URL,
@@ -23,7 +39,11 @@ let isLoggingOut = false;
 const forceLogout = () => {
   if (isLoggingOut) return;
   isLoggingOut = true;
-  clearLoginFlag();
+  try {
+    clearLoginFlag();
+  } catch (e) {
+    if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('clearLoginFlag failed:', e);
+  }
   if (typeof window !== 'undefined') {
     callToast({ type: 'warning', message: { title: 'Sesión expirada', description: 'Tu sesión expiró. Volvé a iniciar sesión.' } });
     setTimeout(() => { window.location.href = '/'; }, 1500);
@@ -37,21 +57,22 @@ api.interceptors.response.use(
 
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    const isRefreshEndpoint = originalRequest?.url?.includes('/auth/refresh-token');
-    const isAuthEndpoint = originalRequest?.url?.includes('/auth/') && !originalRequest?.url?.includes('/auth/auth-user') && !originalRequest?.url?.includes('/auth/logout') && !originalRequest?.url?.includes('/auth/update-username');
-
-    if (error.response?.status !== 401 || originalRequest?._retry || isRefreshEndpoint || isAuthEndpoint) {
+    if (error.response?.status !== 401 || originalRequest?._retry || shouldSkipRefresh(originalRequest?.url)) {
       return Promise.reject(error);
     }
 
     originalRequest._retry = true;
 
     if (!refreshPromise) {
-      refreshPromise = axios.post(`${API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/refresh-token`, {}, { withCredentials: true })
+      refreshPromise = axios.post(
+        `${API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/refresh-token`,
+        {},
+        { withCredentials: true, timeout: REFRESH_TIMEOUT_MS }
+      )
         .then(() => {})
-        .catch(() => {
+        .catch((refreshError) => {
           forceLogout();
-          throw error;
+          throw refreshError;
         })
         .finally(() => {
           refreshPromise = null;

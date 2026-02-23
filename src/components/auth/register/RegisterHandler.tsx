@@ -1,15 +1,17 @@
 'use client'
 
 import { useState, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { createUser } from "@/services";
 import { errorHandler } from "@/helpers";
 import { RegisterState } from "@/interfaces";
 import { STANNUMLogo, RegisterEmailStep, GoBackButton, RegisterPasswordStep, RegisterDetailsStep, RegisterPhotoStep } from "@/components";
 import { ReCaptchaProvider } from "@/components/ui/ReCaptchaField";
 
+const steps = ['email', 'password', 'details', 'photo'] as const;
+
 export const RegisterHandler = () => {
-    
+
     const [step, setStep] = useState<'email'|'password'|'details'|'photo'>('email')
     const [registerState, setRegisterState] = useState<RegisterState>({
         email: "",
@@ -36,7 +38,7 @@ export const RegisterHandler = () => {
                 }
             }
             setRegisterState(updatedState);
-            setStep(step === 'email' ? 'password' : step === 'password' ? 'details' : step === 'details' ? 'photo' : 'email');
+            setStep(prev => prev === 'email' ? 'password' : prev === 'password' ? 'details' : prev === 'details' ? 'photo' : 'email');
         },
         [registerState, step]
     );
@@ -44,15 +46,25 @@ export const RegisterHandler = () => {
     return (
         <ReCaptchaProvider>
             <section className="w-full min-h-svh px-4 md:px-0 py-12 lg:py-24 flex justify-center items-center">
-                <motion.div layout className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
+                <m.div layout className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
                     <GoBackButton className="absolute -top-4 lg:-top-4 left-0 -translate-y-full"/>
                     <div className="w-full flex flex-col justify-center items-center gap-4">
                         <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
-                        <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
+                        <h2 className="text-3xl md:text-5xl font-black"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
+                    </div>
+                    <div className="mt-4 md:mt-6 w-full flex flex-col items-center gap-1">
+                        <div className="flex items-center gap-2">
+                            {steps.map((s, i) => (
+                                <div key={s} className={`h-1.5 rounded-full transition-all duration-300 ${s === step ? 'w-8 bg-stannum' : steps.indexOf(step) > i ? 'w-4 bg-stannum/50' : 'w-4 bg-card-light'}`} />
+                            ))}
+                        </div>
+                        <p className="text-sm text-card-lightest">
+                            {step === 'email' ? 'Tu correo electrónico' : step === 'password' ? 'Elegí tu contraseña' : step === 'details' ? 'Tus datos personales' : '¡Tu foto de perfil!'}
+                        </p>
                     </div>
                     <div className="w-full overflow-x-hidden">
                         <AnimatePresence mode="wait" initial={false}>
-                            <motion.div
+                            <m.div
                                 key={step}
                                 initial={{ height: 0, opacity: 0, }}
                                 animate={{ height: 'auto', opacity: 1, }}
@@ -66,10 +78,10 @@ export const RegisterHandler = () => {
                                     step === 'details' ? <RegisterDetailsStep handleNextStep={handleNextStep} /> :
                                     step === 'photo' && <RegisterPhotoStep />
                                 }
-                            </motion.div>
+                            </m.div>
                         </AnimatePresence>
                     </div>
-                </motion.div>
+                </m.div>
             </section>
         </ReCaptchaProvider>
     )

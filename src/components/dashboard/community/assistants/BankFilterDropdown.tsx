@@ -1,7 +1,7 @@
 'use client';
 
 import { createElement, useEffect, useMemo, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import type { IconType } from 'react-icons';
 import { ArrowDownIcon } from '@/icons';
 
@@ -88,7 +88,7 @@ export const BankFilterDropdown = ({ label, placeholder, options, value, onChang
             </button>
             <AnimatePresence>
                 {open &&
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
@@ -133,7 +133,7 @@ export const BankFilterDropdown = ({ label, placeholder, options, value, onChang
                                 );
                             })}
                         </ul>
-                    </motion.div>
+                    </m.div>
                 }
             </AnimatePresence>
         </div>

@@ -5,7 +5,7 @@ import { LoadingScreen, LessonVideoPlayer, LessonMiniatureCard, InstructionMinia
 import { useUserStore } from '@/stores/userStore';
 import { isLessonAvailable, isInstructionAvailable, isModuleComplete } from '@/utilities';
 import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 interface Props {
     lesson: Lesson;
@@ -106,16 +106,18 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' href={`/dashboard/library/${programId}/${section.id}/${program_module.id}`} />
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
                 <div className="col-span-1 lg:col-span-3">
-                    <LessonVideoPlayer
-                        program={programId}
-                        lesson={lesson}
-                        moduleLessons={program_module.lessons}
-                        isCompleted={isCompleted}
-                        isNextLessonAvailable={isNextLessonAvailable}
-                        nextInstruction={nextInstruction}
-                        nextModule={nextModule}
-                        userId={user.username}
-                    />
+                    <Suspense>
+                        <LessonVideoPlayer
+                            program={programId}
+                            lesson={lesson}
+                            moduleLessons={program_module.lessons}
+                            isCompleted={isCompleted}
+                            isNextLessonAvailable={isNextLessonAvailable}
+                            nextInstruction={nextInstruction}
+                            nextModule={nextModule}
+                            userId={user.username}
+                        />
+                    </Suspense>
                 </div>
                 <div className="hidden lg:block content-visibility-hidden lg:content-visibility-visible col-span-1 w-full max-h-none relative overflow-y-auto">
                     <div className="size-full pr-4 flex flex-col gap-2 absolute top-0 left-0">

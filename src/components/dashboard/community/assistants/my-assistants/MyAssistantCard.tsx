@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { BookmarkIcon, ExternalLinkIcon, HidePasswordIcon, LikeIcon, TrashIcon } from '@/icons';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
 import { DeleteAssistantModal, MyAssistantCardOptionsMenu, EditAssistantModal } from '@/components';
@@ -49,7 +49,7 @@ export const MyAssistantCard = ({ assistant, onDeleted, onVisibilityChanged, onU
 
     return (
         <>
-            <motion.article
+            <m.article
                 className="card group break-inside-avoid mb-4 border-card-light hover:border-stannum/50 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -126,7 +126,7 @@ export const MyAssistantCard = ({ assistant, onDeleted, onVisibilityChanged, onU
                     <ExternalLinkIcon />
                     Abrir asistente
                 </Link>
-            </motion.article>
+            </m.article>
             {assistant.visibility === 'draft' &&
                 <EditAssistantModal
                     isOpen={isEditModalOpen}

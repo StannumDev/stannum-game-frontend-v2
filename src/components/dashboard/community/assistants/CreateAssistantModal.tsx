@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,7 +35,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [tagInput, setTagInput] = useState('');
 
-    const { register, handleSubmit, formState: { errors }, watch, setValue, reset } = useForm<Schema>({ resolver: zodResolver(schema), defaultValues: { difficulty: 'basic', platform: 'chatgpt', tags: [] } });
+    const { register, handleSubmit, formState: { errors, isDirty }, watch, setValue, reset } = useForm<Schema>({ resolver: zodResolver(schema), defaultValues: { difficulty: 'basic', platform: 'chatgpt', tags: [] } });
 
     const watchedPlatform = watch('platform');
     const watchedTags = watch('tags') || [];
@@ -43,6 +43,10 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
     const watchedDifficulty = watch('difficulty');
 
     const handleClose = () => {
+        if (isLoading) return;
+        if (isDirty || tagInput.trim()) {
+            if (!window.confirm('Tenés cambios sin guardar. ¿Estás seguro de que querés cerrar?')) return;
+        }
         reset();
         setTagInput('');
         onClose();
@@ -104,14 +108,14 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
         <AnimatePresence>
             {isOpen && (
                 <>
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={handleClose}
                         className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
                     />
-                    <motion.div
+                    <m.div
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
@@ -328,7 +332,7 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                 </button>
                             </div>
                         </form>
-                    </motion.div>
+                    </m.div>
                 </>
             )}
         </AnimatePresence>

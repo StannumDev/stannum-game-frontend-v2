@@ -51,7 +51,7 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
                         {
                             price === 0 ? (
                                 <div className='flex justify-center items-end gap-1'>
-                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter uppercase'>Gratis</b>
+                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>Gratis</b>
                                 </div>
                             )
                             : (

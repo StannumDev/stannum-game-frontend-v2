@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { DumbbellIcon } from '@/icons';
 import photo from '@/assets/background/stannum_game_trophy.webp';
 
@@ -16,7 +16,7 @@ export const StepThreeTutorial = ({direction}:Props) => {
     };
 
     return (
-        <motion.main
+        <m.main
             custom={direction}
             initial="enter"
             animate="center"
@@ -36,6 +36,6 @@ export const StepThreeTutorial = ({direction}:Props) => {
                     </div>
                 </div>
             </div>
-        </motion.main>
+        </m.main>
     )
 }

@@ -7,11 +7,20 @@ import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 
+const SKELETON_LINKS: Array<SidebarLink> = [
+    { label: 'Inicio', href: '/dashboard', Icon: HomeIcon },
+    { label: 'Biblioteca', href: '/dashboard/library', Icon: AppsIcon },
+    { label: 'Comunidad', href: '/dashboard/community', Icon: CommunityIcon },
+    { label: 'Tienda', href: '/dashboard/store', Icon: StoreIcon },
+    { label: 'Mi perfil', href: '/dashboard', Icon: UserCircleIcon },
+];
+
 export const Sidebar = () => {
     const pathname = usePathname();
 
     const user = useUserStore(s => s.user);
     const isLoading = useUserStore(s => s.isLoading);
+    const isAuthenticated = useUserStore(s => s.isAuthenticated);
     const refreshCount = useUserStore(s => s._refreshCount);
 
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
@@ -30,10 +39,10 @@ export const Sidebar = () => {
     const userData = useMemo(() => {
         if (!user) return null;
         const photoUrl = user.profilePhoto ? `${user.profilePhoto}?v=${refreshCount}` : undefined;
-        return { id: user.id, username: user.username, profilePhoto: photoUrl };
-    }, [user?.id, user?.username, user?.profilePhoto, refreshCount]);
+        return { id: user.id, username: user.username, profilePhoto: photoUrl, currentLevel: user.level?.currentLevel ?? 1, coins: user.coins ?? 0 };
+    }, [user?.id, user?.username, user?.profilePhoto, user?.level?.currentLevel, user?.coins, refreshCount]);
 
-    const links: Array<SidebarLink> = [
+    const links: Array<SidebarLink> = userData ? [
         {
             label: 'Inicio',
             href: '/dashboard',
@@ -56,17 +65,17 @@ export const Sidebar = () => {
         },
         {
             label: 'Mi perfil',
-            href: `${userData?.username ? `/dashboard/profile/${userData?.username}` : '/dashboard'}`,
+            href: `/dashboard/profile/${userData.username}`,
             Icon: UserCircleIcon,
         },
-    ];
+    ] : SKELETON_LINKS;
 
-    if(!userData) return;
+    const showLoading = isLoading || (isAuthenticated && !userData);
 
     return (
     isLargeScreen ?
-        <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={isLoading} />
+        <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={showLoading} />
     :
-        <SidebarMobile user={userData} links={links} pathname={pathname} isLoading={isLoading} />
+        <SidebarMobile key={pathname} user={userData} links={links} pathname={pathname} isLoading={showLoading} />
     )
 };

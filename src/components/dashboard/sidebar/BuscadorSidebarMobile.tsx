@@ -1,7 +1,7 @@
 'use client'
 
 import { Dispatch, Fragment, SetStateAction, useEffect } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { CrossIcon, SearchIcon } from "@/icons";
 import { useSearchHandler } from "@/hooks";
 import { SidebarMobileIndicator } from "@/components";
@@ -24,7 +24,7 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
 
     return (
     <Fragment>
-        <motion.li
+        <m.li
             key={'search'}
             className="w-full"
             initial={{ y: 100, opacity: 0 }}
@@ -41,12 +41,12 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                 <span className="sr-only">Buscar</span>
                 { isSearching && <SidebarMobileIndicator/> }
             </button>
-        </motion.li>
+        </m.li>
         <AnimatePresence>
             {
                 isSearching &&
                 <Fragment>
-                    <motion.div
+                    <m.div
                         className={`w-full pl-3 pb-3 bg-background flex justify-center items-end fixed top-0 left-0 z-[99999999] pointer-events-auto ${styles.sidebar__search}`}
                         initial={{ y: '-100%' }}
                         animate={{ y: 0 }}
@@ -70,15 +70,15 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                                         maxLength: 50
                                     })}
                                 />
-                                <motion.button
+                                <m.button
                                     type="submit"
                                     whileTap={{ scale: 1.25, color: 'white' }}
                                     className="px-2 h-10 text-card-lighter peer-focus-visible:text-card-lightest flex justify-center items-center"
                                 >
                                     <SearchIcon className="size-5 transition-200"/>
-                                </motion.button>
+                                </m.button>
                             </form>
-                            <motion.button
+                            <m.button
                                 type="button"
                                 onClick={() => {
                                     reset();
@@ -91,10 +91,10 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                             >
                                 <span className="sr-only">Limpiar buscador</span>
                                 <CrossIcon className="size-6 text-card-lighter"/>
-                            </motion.button>
+                            </m.button>
                         </div>
-                    </motion.div>
-                    <motion.div
+                    </m.div>
+                    <m.div
                         className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[9999999]"
                         onClick={() => {
                             reset();
@@ -103,7 +103,7 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                    ></motion.div>
+                    ></m.div>
                 </Fragment>
             }
         </AnimatePresence>

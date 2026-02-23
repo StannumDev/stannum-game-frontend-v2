@@ -28,10 +28,10 @@ export const ContinuarHome = () => {
                                 href={e.href}
                                 programName={e.programName}
                                 activityTitle={e.activityTitle}
-                                progressPct={e.progressPct}
                                 programLogo={e.programLogo as StaticImageData}
                                 type={e.type}
                                 activityLabel={e.activityLabel}
+                                programProgress={e.programProgress}
                             />
                         ))
                     ) : (

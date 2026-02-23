@@ -58,7 +58,7 @@ La app estará disponible en `http://localhost:3000`.
 
 ### UI/UX
 
-- **Framer Motion 12** - Animaciones fluidas
+- **Framer Motion 12** - Animaciones fluidas con LazyMotion (`MotionProvider` global, componentes `m.*`)
 - **Lucide React** - Iconografía moderna
 - **driver.js** - Onboarding y tutorials interactivos
 - **canvas-confetti** - Efectos de celebración (achievements, level up)
@@ -245,31 +245,31 @@ set({ user, isAuthenticated: true })
 
 ### Middleware de Protección
 
-Archivos que requieren autenticación usan:
+La protección de rutas está implementada en `src/proxy.ts` (Next.js 16 lo reconoce como middleware):
 
 ```typescript
-"use client";
+// src/proxy.ts
+export async function proxy(request: NextRequest) {
+  const token = request.cookies.get('token')?.value;
+  const { pathname } = request.nextUrl;
 
-import { useUserStore } from '@/stores/userStore';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+  const isGuestOnlyRoute = pathname === '/login' || pathname === '/register' || pathname === '/';
+  const isDashboardRoute = pathname.startsWith('/dashboard');
 
-export default function ProtectedPage() {
-  const { isAuthenticated, isLoading } = useUserStore();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, isLoading, router]);
-
-  if (isLoading) return <LoadingSpinner />;
-  if (!isAuthenticated) return null;
-
-  return <YourContent />;
+  if (isDashboardRoute && !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+  if (isGuestOnlyRoute && token) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
 }
+
+export const config = {
+  matcher: ['/', '/dashboard/:path*', '/login', '/register', '/password-recovery'],
+};
 ```
+
+> **Nota:** En Next.js 16 el archivo de middleware se llama `proxy.ts` y la función exportada se llama `proxy` (no `middleware`).
 
 ## 📊 State Management - Zustand
 

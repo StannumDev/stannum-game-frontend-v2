@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +22,9 @@ const socialEnum = z.enum(["LinkedIn", "Instagram", "Twitter", "TikTok", "Facebo
 const schema = z.object({
     name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
     birthdate: z.string().min(1, { message: "Campo requerido." }).refine(date => {
+        const birthDate = new Date(date);
+        return birthDate.getFullYear() >= 1900;
+    }, { message: "La fecha debe ser posterior a 1900." }).refine(date => {
         const today = new Date();
         const birthDate = new Date(date);
         const age = today.getFullYear() - birthDate.getFullYear();
@@ -48,7 +51,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const { register, handleSubmit, setValue, reset, control, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, setValue, watch, reset, control, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) });
     const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
 
     const [country, setCountry] = useState<string|undefined>('');
@@ -58,8 +61,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
         setIsLoading(true);
         try {
             await updateUserProfile(data);
-            await fetchUserData(true);
-            await refreshUser();
+            await Promise.all([fetchUserData(true), refreshUser()]);
             setShowModal(false);
         } catch (error:unknown) {
             errorHandler(error);
@@ -88,6 +90,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
     return (
         <Fragment>
             <button
+                id="profile-edit-btn"
                 type="button"
                 onClick={() => setShowModal(true)}
                 className="size-8 bg-transparent lg:hover:bg-card-light rounded-lg lg:flex justify-center items-center group absolute top-2 right-2 z-10 transition-200"
@@ -129,6 +132,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                     enterKeyHint="next"
                                     id="birthdate"
                                     autoComplete="bday"
+                                    min="1900-01-01"
                                     disabled={isLoading}
                                     className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                                     {...register("birthdate")}
@@ -219,7 +223,10 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                 {...register("aboutme")}
                             />
                         </div>
-                        <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
+                        <div className="mt-1 flex justify-between items-start">
+                            <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message}/>
+                            <span className="text-xs text-card-lightest shrink-0 ml-auto">{(watch('aboutme') || '').length}/2600</span>
+                        </div>
                     </div>
                     <div className="mt-6 w-full">
                         <label className="md:text-lg mb-3 block font-semibold">Redes Sociales</label>
@@ -227,7 +234,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                         <div className="space-y-3">
                             <AnimatePresence mode="popLayout">
                                 {fields.map((field, index) => (
-                                    <motion.div 
+                                    <m.div 
                                         key={field.id}
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
@@ -262,7 +269,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                             </button>
                                         </div>
                                         {errors.socialLinks?.[index]?.url && <FormErrorMessage condition={true} message={errors.socialLinks[index]?.url?.message} className="mt-1"/>}
-                                    </motion.div>
+                                    </m.div>
                                 ))}
                             </AnimatePresence>
                         </div>

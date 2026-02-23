@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import MuxPlayer from '@mux/mux-player-react';
 import { FullUserDetails } from '@/interfaces';
 import { VideosIcon } from '@/icons';
@@ -20,7 +20,7 @@ export const StepTwoTutorial = ({direction, user}:Props) => {
     };
 
     return (
-        <motion.main
+        <m.main
             custom={direction}
             initial="enter"
             animate="center"
@@ -60,6 +60,6 @@ export const StepTwoTutorial = ({direction, user}:Props) => {
                     />
                 </div>
             </div>
-        </motion.main>
+        </m.main>
     )
 }

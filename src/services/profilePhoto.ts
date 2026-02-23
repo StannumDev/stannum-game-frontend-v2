@@ -77,10 +77,17 @@ export const uploadProfilePhoto = async (imageBlob: Blob): Promise<void> => {
         if (!presignRes?.data?.success) throw new Error("Unexpected response structure");
 
         const { presignedUrl } = presignRes.data;
+        if (!presignedUrl) throw new Error("No se recibió la URL de subida.");
 
-        await axios.put(presignedUrl, imageBlob, { headers: { "Content-Type": "image/jpeg" } });
+        try {
+            await axios.put(presignedUrl, imageBlob, { headers: { "Content-Type": "image/jpeg" }, timeout: 120000 });
+        } catch (uploadError) {
+            if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('S3 upload failed:', uploadError);
+            throw new Error("Error al subir la foto. Intentá nuevamente.");
+        }
 
-        await api.post(`${baseUrl}/confirm-photo`, {});
+        const confirmRes = await api.post(`${baseUrl}/confirm-photo`, {});
+        if (!confirmRes?.data?.success) throw new Error("Error al confirmar la foto.");
     } catch (error:unknown) {
         throw error;
     }

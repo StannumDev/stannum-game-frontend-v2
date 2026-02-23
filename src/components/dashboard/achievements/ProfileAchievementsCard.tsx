@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import type { Achievement, FullUserDetails } from '@/interfaces';
+import stannum_coin from '@/assets/tins_coin.svg';
 
 interface Props{
     owner: boolean;
@@ -12,7 +13,7 @@ interface Props{
 }
 
 export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => {
-    const { title, description, background, categories, getProgress, id, xpReward } = achievement
+    const { title, description, background, categories, getProgress, id, xpReward, coinsReward } = achievement
     const achieved = (user.achievements ?? []).some(a => a.achievementId === id);
     const progress = getProgress(user)
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -20,7 +21,7 @@ export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => 
     if(!achieved && !owner) return null;
 
     return (
-        <motion.article
+        <m.article
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
             className='w-full aspect-video px-6 py-4 rounded-2xl flex items-end group relative overflow-hidden'
@@ -35,20 +36,25 @@ export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => 
                 ))}
                 { categories.length > 1 && <span>+{categories.length - 1}</span>}
             </div>
-            { achieved && <div className="bg-white/10 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-4 right-6 z-10">{xpReward} XP</div>}
+            { achieved && owner && (
+                <div className="flex items-center gap-1.5 absolute top-4 right-6 z-10">
+                    <span className="bg-white/10 text-stannum text-xs font-semibold py-1 px-2 rounded-lg">{xpReward} XP</span>
+                    <span className="bg-white/10 text-amber-400 text-xs font-semibold py-1 px-2 rounded-lg flex items-center gap-1">{coinsReward} <Image src={stannum_coin} alt="Tins" width={12} height={12} /></span>
+                </div>
+            )}
             <div className='w-full relative z-20 overflow-hidden'>
                 <div className='overflow-hidden'>
                     <h3 className='w-full title-3 text-balance'>{title}</h3>
                     <AnimatePresence>
                         { isHovered &&
-                            <motion.p
+                            <m.p
                                 className='line-clamp-3 overflow-hidden'
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                             >
                                 {description}
-                            </motion.p>
+                            </m.p>
                         }
                     </AnimatePresence>
                 </div>
@@ -62,6 +68,6 @@ export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => 
                     </div>
                 }
             </div>
-        </motion.article>
+        </m.article>
     );
 };

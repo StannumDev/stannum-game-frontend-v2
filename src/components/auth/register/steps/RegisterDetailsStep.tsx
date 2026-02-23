@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,9 @@ const socialEnum = z.enum(["LinkedIn", "Instagram", "Twitter", "TikTok", "Facebo
 const schema = z.object({
     name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
     birthdate: z.string().min(1, { message: "Campo requerido." }).refine(date => {
+        const birthDate = new Date(date);
+        return birthDate.getFullYear() >= 1900;
+    }, { message: "La fecha debe ser posterior a 1900." }).refine(date => {
         const today = new Date();
         const birthDate = new Date(date);
         if (birthDate > today) return false;
@@ -46,7 +49,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const { register, handleSubmit, setValue, control, formState: { errors }} = useForm<Schema>({resolver: zodResolver(schema)});
+    const { register, handleSubmit, setValue, watch, control, formState: { errors }} = useForm<Schema>({resolver: zodResolver(schema)});
     const { fields, append, remove } = useFieldArray({ control, name: "socialLinks" });
     
     const [country, setCountry] = useState<string|undefined>('');
@@ -87,12 +90,13 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1'>
-                        <label htmlFor="name" className="md:text-lg required">Fecha de nacimiento</label>
+                        <label htmlFor="birthdate" className="md:text-lg required">Fecha de nacimiento</label>
                         <input
                             type='date'
                             enterKeyHint="next"
                             id="birthdate"
                             autoComplete="bday"
+                            min="1900-01-01"
                             disabled={isLoading}
                             className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
                             {...register("birthdate")}
@@ -102,7 +106,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="md:text-lg required">País</label>
+                        <label htmlFor="country" className="md:text-lg required">País</label>
                         <CountryDropdown
                             value={country||""}
                             onChange={(val) => { setCountry(val); setValue("country", val) }}
@@ -118,7 +122,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 </div>
                 <div className="w-full">
                     <div className='w-full flex flex-col gap-1 relative'>
-                        <label htmlFor="name" className="md:text-lg required">Región</label>
+                        <label htmlFor="region" className="md:text-lg required">Región</label>
                         <RegionDropdown
                             country={country||""}
                             value={region||""}
@@ -183,7 +187,10 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                         {...register("aboutme")}
                     />
                 </div>
-                <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
+                <div className="mt-1 flex justify-between items-start">
+                    <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message}/>
+                    <span className="text-xs text-card-lightest shrink-0 ml-auto">{(watch('aboutme') || '').length}/2600</span>
+                </div>
             </div>
             <div className="mt-6 w-full">
                 <label className="md:text-lg mb-3 block font-semibold">Redes Sociales</label>
@@ -191,7 +198,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                 <div className="space-y-3">
                     <AnimatePresence mode="popLayout">
                         {fields.map((field, index) => (
-                            <motion.div 
+                            <m.div 
                                 key={field.id}
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -234,7 +241,7 @@ export const RegisterDetailsStep = ({handleNextStep}:Props) => {
                                         className="mt-1"
                                     />
                                 )}
-                            </motion.div>
+                            </m.div>
                         ))}
                     </AnimatePresence>
                 </div>

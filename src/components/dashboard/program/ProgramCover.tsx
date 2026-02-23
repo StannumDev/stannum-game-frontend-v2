@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowBackIcon } from '@/icons';
-import { MotionWrapperLayoutClient } from '@/components';
+import { MotionWrapperLayout } from '@/components';
 import styles from '@/components/styles/ProgramCover.module.css';
 import texture from '@/assets/background/dotted_texture.svg';
 import type { Program } from '@/interfaces';
@@ -21,8 +21,8 @@ export const ProgramCover = ({ program }: Props) => {
     const progress = calculateProgramProgress(program, user);
 
     return (
-    <MotionWrapperLayoutClient>
-        <header className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
+    <MotionWrapperLayout>
+        <header id="program-cover" className='w-full card pb-0 flex flex-col justify-center items-center relative overflow-hidden'>
             <div className='content-visibility-hidden lg:content-visibility-visible'>
                 <Link
                     href={'/dashboard/library'}
@@ -89,6 +89,6 @@ export const ProgramCover = ({ program }: Props) => {
                 </div>
             </div>
         </header>
-    </MotionWrapperLayoutClient>
+    </MotionWrapperLayout>
   )
 }

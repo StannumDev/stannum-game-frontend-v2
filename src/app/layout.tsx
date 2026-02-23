@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { STANNUMLogo, ToastLayout } from "@/components";
+import { STANNUMLogo, MotionProvider, ToastLayout } from "@/components";
 import { ToolsIcon } from "@/icons";
 import "./globals.css";
 
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     locale: 'es_AR',
     type: 'website',
   },
-  robots: { 
+  robots: {
     index: true,
     follow: true,
     nocache: false,
@@ -91,7 +91,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   viewportFit: "cover",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
   userScalable: true,
   interactiveWidget: 'resizes-visual',
 }
@@ -112,11 +112,11 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
               <div className="w-12 h-1 rounded-full bg-stannum animate-pulse" />
             </main>
           ) : (
-            <>
+            <MotionProvider>
               {children}
-              <ToastLayout/>
-            </>
+            </MotionProvider>
           )}
+          <ToastLayout/>
         </body>
       </html>
     </GoogleOAuthProvider>

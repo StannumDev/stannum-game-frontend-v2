@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import { LibraryCover, LibrarySectionsLayout } from "@/components";
 
@@ -27,7 +28,9 @@ export default function LibraryPage() {
         <main className="main-container">
             <h1 className="sr-only">Biblioteca STANNUM Game</h1>
             <LibraryCover/>
-            <LibrarySectionsLayout/>
+            <Suspense fallback={null}>
+                <LibrarySectionsLayout/>
+            </Suspense>
         </main>
     );
 }

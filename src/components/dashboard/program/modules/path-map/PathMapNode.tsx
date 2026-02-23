@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { CheckIcon, PlayIcon, CompassIcon, LockIcon, CrownIcon } from '@/icons';
 import type { PathMapItem, NodePosition } from './pathMapUtils';
 import { getLabelSide } from './pathMapUtils';
@@ -29,7 +29,7 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
     const isActive = item.state === 'active';
 
     const nodeContent = (
-        <motion.div
+        <m.div
             id={`path-node-${item.id}`}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -46,7 +46,7 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             style={{ width: nodeSize, height: nodeSize }}
         >
             <NodeIcon state={item.state} type={item.type} />
-        </motion.div>
+        </m.div>
     );
 
     const labelContent = (
@@ -72,7 +72,7 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
     const labelStyleClass = 'w-max bg-card/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-card-light/15';
 
     const label = isActive ? (
-        <motion.div
+        <m.div
             initial={{ opacity: 0, x: labelSide === 'left' ? 10 : -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: 'spring', bounce: 0, delay: nodeIndex * 0.05 + 0.1 }}
@@ -80,13 +80,20 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             style={{ maxWidth: isMobile ? 200 : 280 }}
         >
             {labelContent}
-        </motion.div>
+        </m.div>
     ) : item.state === 'completed' ? (
         <div
             className={`${labelPositionClass} ${labelStyleClass} opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none`}
             style={{ maxWidth: isMobile ? 200 : 280 }}
         >
             {labelContent}
+        </div>
+    ) : item.state === 'blocked' ? (
+        <div
+            className={`${labelPositionClass} ${labelStyleClass} opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none`}
+            style={{ maxWidth: isMobile ? 200 : 280 }}
+        >
+            <p className="text-xs text-card-lightest">Completá las actividades anteriores</p>
         </div>
     ) : null;
 

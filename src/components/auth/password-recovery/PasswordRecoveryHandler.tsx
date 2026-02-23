@@ -69,7 +69,7 @@ export const PasswordRecoveryHandler = () => {
                     <GoBackButton className="absolute -top-4 lg:-top-4 left-0 -translate-y-full"/>
                     <div className="w-full text-center flex flex-col justify-center items-center gap-4">
                         <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
-                        <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black block">RECUPERA</b> TU CONTRASEÑA</h2>
+                        <h2 className="text-3xl md:text-5xl font-black"><b className="text-stannum font-black block">Recuperá</b> tu contraseña</h2>
                     </div>
                     <div className="w-full mt-4 md:mt-6 overflow-hidden md:min-h-48 flex flex-col justify-center items-center">
                         {step === 'email' && <PasswordRecoveryEmail onSubmit={handleSendEmail} isLoading={isLoading}/>}

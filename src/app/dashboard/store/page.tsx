@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { StoreCover, StoreSectionsLayout } from "@/components";
 import { Metadata } from "next";
 
@@ -27,7 +28,9 @@ export default function StorePage() {
         <main className="main-container">
             <h1 className="sr-only">Tienda STANNUM Game</h1>
             <StoreCover/>
-            <StoreSectionsLayout/>
+            <Suspense fallback={null}>
+                <StoreSectionsLayout/>
+            </Suspense>
         </main>
     );
 }

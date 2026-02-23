@@ -206,7 +206,7 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                             >
                                 {isLoading ? <SpinnerIcon className="size-6 animate-spin" /> :
                                     <>
-                                        <span className="text-sm lg:text-lg font-bold uppercase tracking-wider">Comenzar instrucción</span>
+                                        <span className="text-sm lg:text-lg font-bold">Comenzar instrucción</span>
                                         <PlayIcon className="size-6" />
                                     </>
                                 }

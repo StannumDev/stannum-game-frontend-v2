@@ -6,13 +6,13 @@ type Props = {
     href: string;
     programName: string;
     activityTitle: string;
-    progressPct: number;
     programLogo: StaticImageData;
     type: 'lesson' | 'instruction';
     activityLabel: string;
+    programProgress: number;
 };
 
-export const ContinuarCardHome = ({ href, programName, activityTitle, progressPct, programLogo, type, activityLabel }: Props) => {
+export const ContinuarCardHome = ({ href, programName, activityTitle, programLogo, type, activityLabel, programProgress }: Props) => {
     return (
         <Link
             href={href}
@@ -28,26 +28,21 @@ export const ContinuarCardHome = ({ href, programName, activityTitle, progressPc
                         className="w-40 h-auto object-contain"
                     />
                 </div>
-                <h4 className="mt-4 subtitle-1">{activityLabel}</h4>
-                <p className="hidden lg:block text-sm opacity-80 line-clamp-2">{activityTitle}</p>
-                <div className="mt-1 lg:mt-4 w-full flex items-center gap-2">
+                <h4 className="mt-4 subtitle-1 flex items-center gap-1.5">
                     {type === 'instruction'
-                        ? <CompassIcon className="subtitle-1 group-hover:text-white transition-200"/>
-                        : <PlayIcon className="subtitle-1 group-hover:text-white transition-200"/>
+                        ? <CompassIcon className="shrink-0"/>
+                        : <PlayIcon className="shrink-0"/>
                     }
-                    <div
-                        className="w-full h-1.5 bg-card-light rounded-lg overflow-hidden"
-                        role="progressbar"
-                        aria-valuenow={progressPct}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-valuetext={progressPct === 0 ? "Sin progreso" : progressPct === 100 ? "Completado" : `${progressPct}% completado`}
-                        title={`Progreso: ${progressPct}%`}
-                    >
-                        <div
-                            className="h-full bg-stannum transition-[width] duration-300"
-                            style={{ width: `${progressPct}%` }}
-                        />
+                    {activityLabel}
+                </h4>
+                <p className="hidden lg:block text-sm opacity-80 line-clamp-2">{activityTitle}</p>
+                <div className="mt-2 lg:mt-4 w-full">
+                    <p className="text-[10px] lg:text-xs text-card-lightest mb-1">Progreso del programa</p>
+                    <div className="w-full flex items-center gap-2">
+                        <div className="grow h-1 bg-card-light rounded-full overflow-hidden">
+                            <div className="h-full bg-stannum/60 rounded-full transition-[width] duration-300" style={{ width: `${programProgress}%` }} />
+                        </div>
+                        <span className="text-[10px] lg:text-xs text-card-lightest font-semibold shrink-0">{programProgress}%</span>
                     </div>
                 </div>
             </article>

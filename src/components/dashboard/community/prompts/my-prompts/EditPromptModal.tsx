@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -127,14 +127,14 @@ export const EditPromptModal = ({ isOpen, onClose, onSuccess, prompt }: Props) =
         <AnimatePresence>
             {isOpen && (
                 <>
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={() => { if (!isLoading) onClose(); }}
                         className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
                     />
-                    <motion.div
+                    <m.div
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
@@ -376,7 +376,7 @@ export const EditPromptModal = ({ isOpen, onClose, onSuccess, prompt }: Props) =
                                 </button>
                             </div>
                         </form>
-                    </motion.div>
+                    </m.div>
                 </>
             )}
         </AnimatePresence>

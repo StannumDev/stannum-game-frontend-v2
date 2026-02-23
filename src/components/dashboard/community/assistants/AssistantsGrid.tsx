@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -115,7 +115,7 @@ export const AssistantsGrid = () => {
                 />
                 {isLoading && assistants.length === 0 && <LoadingScreen />}
                 {!isLoading && assistants.length === 0 &&
-                    <motion.div
+                    <m.div
                         className="grow flex flex-col justify-center items-center text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -130,11 +130,11 @@ export const AssistantsGrid = () => {
                             <PlusIcon className="text-lg" />
                             Añadir asistente
                         </button>
-                    </motion.div>
+                    </m.div>
                 }
                 {!isLoading && assistants.length > 0 &&
                     <AnimatePresence mode="wait">
-                        <motion.div
+                        <m.div
                             key={`assistants-${filters.page}-${filters.sortBy}`}
                             className="columns-1 md:columns-2 xl:columns-3"
                             initial={{ opacity: 0 }}
@@ -147,7 +147,7 @@ export const AssistantsGrid = () => {
                                     assistant={assistant}
                                 />
                             ))}
-                        </motion.div>
+                        </m.div>
                     </AnimatePresence>
                 }
                 {hasMore && !isLoading &&
@@ -157,7 +157,7 @@ export const AssistantsGrid = () => {
                             onClick={handleLoadMore}
                             className="px-6 py-3 bg-stannum/20 border border-stannum text-stannum rounded-lg font-semibold hover:bg-stannum/30 transition-200"
                         >
-                            Añadir más asistentes
+                            Cargar más asistentes
                         </button>
                     </div>
                 }

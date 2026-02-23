@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { m, useMotionValue, useTransform, animate } from 'framer-motion';
 
 interface Props {
     target: number;
@@ -18,5 +18,5 @@ export const AnimatedCounter = ({ target, duration = 1.5, className }: Props) =>
         return () => controls.stop();
     }, [target, duration, count]);
 
-    return <motion.span className={className}>{rounded}</motion.span>;
+    return <m.span className={className}>{rounded}</m.span>;
 };

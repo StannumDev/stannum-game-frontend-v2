@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { BookmarkIcon, BookmarkedIcon, CopyIcon, LikeIcon, LikedIcon } from '@/icons';
 import { copyPrompt, likePrompt, unlikePrompt, toggleFavoritePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -21,6 +21,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
     const [isFavorited, setIsFavorited] = useState(prompt.userActions?.hasFavorited || false);
     const [likesCount, setLikesCount] = useState(prompt.metrics.likesCount);
     const [copiesCount, setCopiesCount] = useState(prompt.metrics.copiesCount);
+    const [favoritesCount, setFavoritesCount] = useState(prompt.metrics.favoritesCount);
     const [isProcessing, setIsProcessing] = useState(false);
     const [showCopiedFeedback, setShowCopiedFeedback] = useState(false);
 
@@ -119,13 +120,17 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
         setIsProcessing(true);
 
         const previousFavorited = isFavorited;
+        const previousFavCount = favoritesCount;
         setIsFavorited(!isFavorited);
+        setFavoritesCount(isFavorited ? favoritesCount - 1 : favoritesCount + 1);
 
         try {
             const response = await toggleFavoritePrompt(prompt.id);
             setIsFavorited(response.isFavorited);
+            setFavoritesCount(response.favoritesCount);
         } catch (error) {
             setIsFavorited(previousFavorited);
+            setFavoritesCount(previousFavCount);
             errorHandler(error);
         } finally {
             setIsProcessing(false);
@@ -133,7 +138,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
     };
 
     return (
-        <motion.article
+        <m.article
             onClick={onClick}
             className="card group cursor-pointer break-inside-avoid mb-4 hover:border-stannum/50 transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
@@ -152,24 +157,25 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                     type="button"
                     onClick={handleFavorite}
                     disabled={isProcessing}
-                    className={`p-1.5 rounded-lg border ${ isFavorited ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50' : 'bg-card border-card-light text-card-lighter hover:text-stannum'} transition-200`}
+                    className={`p-1.5 rounded-lg border flex items-center gap-1 ${ isFavorited ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50' : 'bg-card border-card-light text-card-lighter hover:text-stannum'} transition-200`}
                 >
                     {isFavorited ? <BookmarkedIcon /> : <BookmarkIcon />}
+                    {favoritesCount > 0 && <span className="text-xs font-semibold">{favoritesCount}</span>}
                 </button>
             </div>
             <h3 className="text-lg font-bold group-hover:text-stannum transition-colors">{prompt.title}</h3>
             <div className="mt-2 mb-4">
-                <motion.div
+                <m.div
                     ref={visibleRef}
                     animate={{ 
                         height: isExpanded ? (expandedHeight ?? "auto") : "auto",
-                        maxHeight: isExpanded ? (expandedHeight ?? "none") : (collapsedHeight ?? "none")
+                        maxHeight: isExpanded ? (expandedHeight ?? 9999) : (collapsedHeight ?? 9999)
                     }}
                     transition={{ duration: 0.28 }}
                     className="overflow-hidden"
                 >
                     <p className="text-sm opacity-75">{prompt.description}</p>
-                </motion.div>
+                </m.div>
                 <div ref={measureRef} aria-hidden="true" className="invisible absolute -z-10 w-full pointer-events-none">
                     <p className="text-sm opacity-75">{prompt.description}</p>
                 </div>
@@ -218,14 +224,14 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                             <CopyIcon className="text-sm" />
                             {copiesCount}
                             {showCopiedFeedback &&
-                                <motion.span
+                                <m.span
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
                                     className="absolute -top-6 left-0 text-xs bg-stannum text-card px-2 py-0.5 rounded font-bold whitespace-nowrap"
                                 >
                                     ¡Copiado!
-                                </motion.span>
+                                </m.span>
                             }
                         </button>
                         <button
@@ -249,6 +255,6 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                     <span className="text-xs text-stannum font-semibold flex items-center gap-1">Incluye Asistente personalizado</span>
                 </div>
             }
-        </motion.article>
+        </m.article>
     );
 };

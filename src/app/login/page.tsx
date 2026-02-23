@@ -43,7 +43,7 @@ export default function LoginPage() {
                             <p className="shrink-0 subtitle-1">¿Aún no tienes una cuenta?</p>
                             <div className="grow h-px bg-card-lightest"></div>
                         </div>
-                        <Link href={'/register'} className="lg:mt-6 w-full h-12 bg-card-light lg:bg-card hover:bg-card-lighter lg:hover:bg-card-light rounded lg:text-lg uppercase font-semibold tracking-widest flex justify-center items-center transition-200">Registrarse gratis</Link>
+                        <Link href={'/register'} className="lg:mt-6 w-full h-12 bg-card-light lg:bg-card hover:bg-card-lighter lg:hover:bg-card-light rounded lg:text-lg font-semibold flex justify-center items-center transition-200">Registrarse gratis</Link>
                     </div>
                 </div>
             </section>

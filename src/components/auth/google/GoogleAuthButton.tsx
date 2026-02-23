@@ -19,7 +19,6 @@ export const GoogleAuthButton = () => {
             setIsLoading(true);
             setErrorMessage(null);
             try {
-                router.prefetch('/dashboard');
                 const { access_token } = tokenResponse;
                 if (!access_token) throw new Error('Google credential is missing');
 
@@ -59,7 +58,7 @@ export const GoogleAuthButton = () => {
                 <div className='h-full aspect-square flex justify-center items-center absolute top-0 left-0'>
                     { !isLoading ? <GoogleColourIcon className='size-6'/> : <SpinnerIcon className="animate-spin size-6"/> }
                 </div>
-                <span className='grow p-2 lg:text-lg uppercase font-semibold tracking-widest'>Iniciar sesión con Google</span>
+                <span className='grow p-2 lg:text-lg font-semibold'>Iniciar sesión con Google</span>
                 <span className='sr-only'>Iniciar sesión con Google</span>
             </button>
             <FormErrorMessage condition={!!errorMessage} message={errorMessage||"Ocurrio un error inesperado."} className="mt-2"/>

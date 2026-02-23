@@ -40,7 +40,7 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                     <div className='mt-4 lg:mt-0 w-full lg:w-[21.5rem] h-full flex flex-col justify-center items-center shrink-0 relative transition-200 lg:bg-card/25'>
                         <div className='hidden lg:flex w-fit items-center gap-4 shrink-0 relative z-10'>
                             <div className='subtitle-1 text-white/25'>Completa las actividades anteriores</div>
-                            <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 tracking-widest font-semibold uppercase flex justify-center items-center gap-2'>
+                            <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 font-semibold flex justify-center items-center gap-2'>
                                 Bloqueado
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                             </div>
                         </Fragment>
                     :
-                        <div className='w-full h-12 bg-card-light rounded-full text-lg tracking-widest font-semibold uppercase flex justify-center items-center relative z-10'>Ver más</div>
+                        <div className='w-full h-12 bg-card-light rounded-full text-lg font-semibold flex justify-center items-center relative z-10'>Ver más</div>
                     }
                 </div>
                 <div className='hidden w-4 group-hover:w-12 lg:flex justify-center items-center relative z-10 transition-200 shrink-0'>

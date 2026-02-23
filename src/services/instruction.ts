@@ -31,10 +31,15 @@ export const submitInstruction = async (programName: string, instructionId: stri
             const { presignedUrl, s3Key: key } = presignRes.data;
             s3Key = key;
 
-            await axios.put(presignedUrl, deliverable.file, {
-                headers: { "Content-Type": deliverable.file.type },
-                timeout: 120000,
-            });
+            try {
+                await axios.put(presignedUrl, deliverable.file, {
+                    headers: { "Content-Type": deliverable.file.type },
+                    timeout: 120000,
+                });
+            } catch (uploadError) {
+                if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('S3 upload failed:', uploadError);
+                throw new Error("Error al subir el archivo. Verificá tu conexión e intentá de nuevo.");
+            }
         }
 
         const response = await api.post(`${baseUrl}/submit/${programName}/${instructionId}`, { s3Key, submittedText: deliverable?.text || undefined });
