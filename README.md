@@ -1,21 +1,21 @@
 # STANNUM Game - Frontend
 
-**Plataforma educativa gamificada** construida con Next.js 16, React 19 y TypeScript. Interfaz de usuario moderna con gamificación completa: XP, niveles, logros, daily streaks, rankings y comunidad.
+**Plataforma educativa gamificada** construida con Next.js 16, React 19 y TypeScript. Interfaz de usuario moderna con gamificacion completa: XP, niveles, logros, daily streaks, rankings y comunidad.
 
 Este es un **repositorio privado**.
 
-## 🎮 ¿Qué es STANNUM Game?
+## Que es STANNUM Game?
 
-STANNUM Game es una plataforma educativa gamificada que combina contenido de alta calidad con mecánicas de juego para maximizar el engagement y la retención del aprendizaje. Los estudiantes completan lecciones (videos), realizan instrucciones prácticas calificadas por IA, ganan XP, suben de nivel, desbloquean logros y compiten en rankings.
+STANNUM Game es una plataforma educativa gamificada que combina contenido de alta calidad con mecanicas de juego para maximizar el engagement y la retencion del aprendizaje. Los estudiantes completan lecciones (videos), realizan instrucciones practicas calificadas por IA, ganan XP, suben de nivel, desbloquean logros y compiten en rankings.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisitos
 
 - Node.js 18+
 - Backend API corriendo (ver `stannum-game-backend-v2`)
 
-### Instalación
+### Instalacion
 
 ```bash
 # Instalar dependencias
@@ -25,17 +25,17 @@ npm install
 cp .env.example .env.local
 # Editar .env.local con tus credenciales
 
-# Iniciar en desarrollo
+# Iniciar en desarrollo (usa Turbopack)
 npm run dev
 
-# Build para producción
+# Build para produccion
 npm run build
 npm start
 ```
 
-La app estará disponible en `http://localhost:3000`.
+La app estara disponible en `http://localhost:3000`.
 
-## 🏗️ Stack Tecnológico
+## Stack Tecnologico
 
 ### Core
 
@@ -47,10 +47,10 @@ La app estará disponible en `http://localhost:3000`.
 ### State Management
 
 - **Zustand 5.0.11** - State management global
-  - `userStore` - Usuario, autenticación, achievements
-  - `sidebarStore` - Estado del sidebar móvil
+  - `userStore` - Usuario, autenticacion, achievements
+  - `sidebarStore` - Estado del sidebar movil
 
-### Autenticación
+### Autenticacion
 
 - **js-cookie** - Manejo de JWT tokens
 - **@react-oauth/google** - Google OAuth login
@@ -59,25 +59,27 @@ La app estará disponible en `http://localhost:3000`.
 ### UI/UX
 
 - **Framer Motion 12** - Animaciones fluidas con LazyMotion (`MotionProvider` global, componentes `m.*`)
-- **Lucide React** - Iconografía moderna
+- **Lucide React** - Iconografia
+- **react-icons** - Iconos adicionales
 - **driver.js** - Onboarding y tutorials interactivos
-- **canvas-confetti** - Efectos de celebración (achievements, level up)
+- **canvas-confetti** - Efectos de celebracion (achievements, level up)
 - **react-toastify** - Notificaciones toast
 - **class-variance-authority** - Variantes de componentes
 - **tailwind-merge** - Merge de clases Tailwind
+- **clsx** - Concatenacion condicional de clases
 
 ### Formularios
 
 - **React Hook Form 7.71** - Manejo de formularios
-- **Zod 3.25** - Validación de schemas
-- **@hookform/resolvers** - Integración Zod + RHF
-- **input-otp** - Input de códigos OTP
+- **Zod 3.25** - Validacion de schemas
+- **@hookform/resolvers** - Integracion Zod + RHF
+- **input-otp** - Input de codigos OTP
 
 ### Multimedia
 
 - **@mux/mux-player-react** - Reproductor de video Mux
 - **@mux/blurup** - Placeholder blur de videos
-- **react-easy-crop** - Crop de imágenes de perfil
+- **react-easy-crop** - Crop de imagenes de perfil
 
 ### HTTP Client
 
@@ -85,93 +87,151 @@ La app estará disponible en `http://localhost:3000`.
 
 ### Utils
 
-- **react-country-region-selector** - Selector de país/región
-- **sharp** - Optimización de imágenes
+- **react-country-region-selector** - Selector de pais/region
+- **sharp** - Optimizacion de imagenes
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
 ├── app/                          # Next.js App Router
 │   ├── page.tsx                  # Landing page
+│   ├── layout.tsx                # Root layout (GoogleOAuth, MotionProvider, Toastify)
 │   ├── login/                    # Login page
 │   ├── register/                 # Registro y Google OAuth
-│   ├── password-recovery/        # Recuperación de contraseña
+│   ├── password-recovery/        # Recuperacion de contrasena
 │   └── dashboard/                # App principal (protegida)
 │       ├── page.tsx              # Home dashboard
+│       ├── layout.tsx            # Dashboard layout (sidebar, navbar, tutorial)
 │       ├── library/              # Biblioteca de programas
 │       │   ├── page.tsx          # Lista de programas
 │       │   └── [program_id]/     # Detalles de programa
-│       │       ├── page.tsx      # Overview del programa
+│       │       ├── page.tsx      # Overview del programa (path map)
+│       │       ├── layout.tsx    # Layout del programa
 │       │       ├── [section]/    # Secciones del programa
-│       │       │   └── [program_module]/ # Módulos con lecciones
-│       │       ├── lessons/      # Páginas de lecciones
+│       │       │   └── [program_module]/ # Modulos con lecciones
+│       │       ├── lessons/      # Paginas de lecciones
 │       │       │   └── [lessonId]/
-│       │       └── instructions/ # Páginas de instrucciones
+│       │       └── instructions/ # Paginas de instrucciones
 │       │           └── [instructionId]/
 │       ├── community/            # Comunidad (prompts/assistants)
 │       │   ├── prompts/
 │       │   └── assistants/
-│       ├── store/                # Tienda de programas
+│       ├── store/                # Tienda de programas (activar product keys)
 │       ├── profile/[username]/   # Perfil de usuario
-│       └── search/               # Búsqueda de usuarios
+│       └── search/               # Busqueda de usuarios
 │
 ├── components/                   # Componentes React
+│   ├── index.ts                  # Barrel exports
 │   ├── ui/                       # Componentes base reutilizables
-│   │   ├── button.tsx
-│   │   ├── input.tsx
-│   │   ├── card.tsx
-│   │   ├── AnimatedCounter.tsx
-│   │   └── ...
-│   └── dashboard/                # Componentes específicos del dashboard
-│       ├── home/                 # Home dashboard
-│       ├── program/              # Lecciones e instrucciones
-│       ├── community/            # Prompts y assistants
-│       └── ...
+│   │   ├── button.tsx            # Button con variantes CVA
+│   │   ├── input.tsx             # Input con validacion visual
+│   │   ├── card.tsx              # Card container
+│   │   ├── Modal.tsx             # Modal generico con backdrop
+│   │   ├── AnimatedCounter.tsx   # Contador animado para XP/Tins
+│   │   ├── MotionProvider.tsx    # LazyMotion provider global
+│   │   ├── MotionWrapperLayout.tsx # Wrapper de animacion fade-in
+│   │   ├── Tooltip.tsx           # Tooltip reutilizable
+│   │   ├── WhatsNewModal.tsx     # Modal de novedades
+│   │   ├── FormErrorMessage.tsx  # Mensaje de error en formularios
+│   │   └── ReCaptchaField.tsx    # Campo reCAPTCHA
+│   ├── auth/                     # Componentes de autenticacion
+│   │   ├── login/                # Login form, background
+│   │   ├── register/             # Registro multi-step
+│   │   ├── google/               # Google OAuth flow
+│   │   ├── password-recovery/    # Recuperacion de contrasena
+│   │   ├── CompleteProfileForm.tsx
+│   │   └── UserInitializer.tsx   # Inicializacion del usuario
+│   ├── dashboard/                # Componentes del dashboard
+│   │   ├── home/                 # Home: continuar, ranking, racha, metas
+│   │   ├── program/              # Programa: cover, modulos, lecciones, instrucciones
+│   │   │   ├── lessons/          # LessonVideoPlayer, LessonDetails, etc.
+│   │   │   ├── instructions/     # InstructionCard, InstructionDetails
+│   │   │   ├── modules/          # ModuleContent, BlockedModule, PathMap
+│   │   │   │   └── path-map/     # PathMap visual de modulos
+│   │   │   └── ranking/          # Ranking por equipo del programa
+│   │   ├── community/            # Prompts y assistants
+│   │   │   ├── prompts/          # Grid, cards, CRUD, favoritos
+│   │   │   └── assistants/       # Grid, cards, CRUD, favoritos
+│   │   ├── sidebar/              # Sidebar desktop y mobile
+│   │   ├── section-navbar/       # Navegacion por secciones
+│   │   ├── profile/              # Perfil: info, foto, nivel, achievements
+│   │   ├── achievements/         # Cards de logros
+│   │   ├── goals/                # Metas diarias
+│   │   ├── store/                # Tienda: cards, tutorial
+│   │   ├── library/              # Biblioteca con secciones
+│   │   ├── tutorial/             # Tutorial de onboarding (6 steps)
+│   │   └── SearchResultsList.tsx # Resultados de busqueda
+│   ├── VideoIntro.tsx            # Video intro landing
+│   └── ButtonShowPassword.tsx    # Toggle mostrar contrasena
 │
 ├── services/                     # API calls al backend
-│   ├── auth.ts                   # Login, register, Google OAuth
-│   ├── user.ts                   # CRUD de usuario
-│   ├── lesson.ts                 # Completar lecciones
-│   ├── instruction.ts            # CRUD de instrucciones
-│   ├── prompt.ts                 # CRUD de prompts
-│   ├── assistant.ts              # CRUD de assistants
-│   ├── ranking.ts                # Rankings
-│   └── productKey.ts             # Activación de códigos
+│   ├── auth.ts                   # Login, register, Google OAuth, password recovery
+│   ├── user.ts                   # getUserByToken, editUser, searchUsers, tutorials
+│   ├── lesson.ts                 # completeLesson, saveLastWatchedLesson
+│   ├── instruction.ts            # startInstruction, submitInstruction, retryGrading
+│   ├── prompt.ts                 # CRUD prompts, like, favorite, copy, stats
+│   ├── assistant.ts              # CRUD assistants, like, favorite, click, stats
+│   ├── ranking.ts                # Ranking individual, por equipo, por programa
+│   ├── productKey.ts             # getProductKey, activateProductKey
+│   └── profilePhoto.ts          # Upload y delete foto de perfil (S3 presigned)
 │
 ├── stores/                       # Zustand stores
-│   ├── userStore.ts              # Usuario y autenticación
+│   ├── userStore.ts              # Usuario, autenticacion, achievements
 │   └── sidebarStore.ts           # Estado del sidebar
 │
 ├── interfaces/                   # TypeScript interfaces
-│   ├── user/                     # User, Level, Achievement
-│   ├── program/                  # Program, Lesson, Instruction
-│   ├── prompt/                   # Prompt
-│   ├── assistant/                # Assistant
-│   └── ...
+│   ├── user/                     # User, FullUserDetails, Level, Achievement
+│   ├── program/                  # Program, Lesson, Instruction, Module
+│   ├── prompt/                   # Prompt, PromptsResponse
+│   ├── assistant/                # Assistant, AssistantsResponse
+│   ├── ContinueEntry.ts         # Entrada de "Continuar viendo"
+│   └── index.ts                  # Barrel exports
 │
 ├── helpers/                      # Funciones utilitarias
-│   ├── errorHandler.ts           # Manejo de errores
-│   ├── achievementHandler.ts     # Confetti de achievements
-│   └── ...
+│   ├── errorHandler.ts           # Manejo centralizado de errores → toast
+│   ├── achievementHandler.ts     # Confetti + toast de achievements
+│   └── tutorialIcons.tsx         # Iconos para tutorial steps
 │
 ├── hooks/                        # Custom React hooks
-│   ├── useModuleProgress.ts      # Cálculo de progreso
-│   └── ...
+│   ├── useModuleProgress.ts      # Calculo de progreso de modulo
+│   └── useSearchHandler.ts       # Logica de busqueda con debounce
 │
 ├── config/                       # Configuraciones
-│   ├── achievements.ts           # Metadata de achievements
-│   └── ...
+│   ├── achievements.ts           # 34 achievements con metadata y getProgress()
+│   ├── ranks.ts                  # Tiers: Hierro → Bronce → Plata → Oro → Diamante → STANNUM
+│   └── programs/                 # Programas educativos (TIA, TMD, TIA_SUMMER)
+│       └── index.ts              # Configuracion de modulos, lecciones, instrucciones
 │
-└── utilities/                    # Helpers adicionales
-    └── continue.ts               # Lógica de "Continuar viendo"
+├── utilities/                    # Helpers adicionales
+│   └── continue.ts               # Logica de "Continuar viendo"
+│
+├── assets/                       # Imagenes estaticas
+│   ├── tins_coin.svg             # Icono de moneda Tins
+│   └── ...                       # Backgrounds, iconos, etc.
+│
+├── lib/                          # Configuraciones core
+│   └── api.ts                    # Axios instance con interceptors (refresh token)
+│
+└── proxy.ts                      # Next.js 16 middleware (proteccion de rutas)
 ```
 
-## 🌍 Variables de Entorno
+## Variables de Entorno
 
 ```env
-# API Backend
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
+# API Backend - URL base
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+
+# API Endpoints (rutas individuales)
+NEXT_PUBLIC_API_AUTH_URL=/auth
+NEXT_PUBLIC_API_USER_URL=/user
+NEXT_PUBLIC_API_LESSON_URL=/lesson
+NEXT_PUBLIC_API_INSTRUCTION_URL=/instruction
+NEXT_PUBLIC_API_PROMPT_URL=/prompt
+NEXT_PUBLIC_API_ASSISTANT_URL=/assistant
+NEXT_PUBLIC_API_RANKING_URL=/ranking
+NEXT_PUBLIC_API_PRODUCT_KEY_URL=/product-key
+NEXT_PUBLIC_API_PHOTO_URL=/profile-photo
 
 # Google OAuth
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_client_id.apps.googleusercontent.com
@@ -179,73 +239,74 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_client_id.apps.googleusercontent.com
 # Google reCAPTCHA
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=tu_site_key
 
-# AWS S3 (imágenes)
-NEXT_PUBLIC_AWS_S3_BASE_URL=https://yourdomain.s3.region.amazonaws.com
-NEXT_PUBLIC_AWS_S3_FOLDER_NAME=...
+# Mux Video
+NEXT_PUBLIC_MUX_IDS={"tutorial":"playback_id_1","TIAM01L01":"playback_id_2",...}
+NEXT_PUBLIC_MUX_TOKEN_DATA=token_data_para_signed_urls
+
+# Environment
+NEXT_PUBLIC_ENV=development
 ```
 
-## 🎨 Páginas Principales
+> **Nota:** Las variables `NEXT_PUBLIC_AWS_S3_*` ya no se usan en el frontend. El upload a S3 se hace via presigned URLs del backend.
 
-### Páginas Públicas
+## Paginas Principales
 
-| Ruta | Descripción |
+### Paginas Publicas
+
+| Ruta | Descripcion |
 |------|-------------|
-| `/` | Landing page |
+| `/` | Landing page con video intro |
 | `/login` | Login con email/password o Google |
-| `/register` | Registro de cuenta nueva |
-| `/register/google` | Callback de Google OAuth |
-| `/password-recovery` | Recuperación de contraseña con OTP |
+| `/register` | Registro de cuenta nueva (multi-step) |
+| `/register/google` | Completar perfil post Google OAuth |
+| `/password-recovery` | Recuperacion de contrasena con OTP |
 
 ### Dashboard (Autenticado)
 
-| Ruta | Descripción |
+| Ruta | Descripcion |
 |------|-------------|
-| `/dashboard` | Home con continuar viendo, rankings, achievements |
+| `/dashboard` | Home: continuar viendo, ranking, racha, metas |
 | `/dashboard/library` | Biblioteca de programas |
-| `/dashboard/library/[program_id]` | Detalles del programa |
-| `/dashboard/library/[program_id]/lessons/[lessonId]` | Reproducir lección (video) |
-| `/dashboard/library/[program_id]/instructions/[instructionId]` | Realizar instrucción práctica |
-| `/dashboard/community` | Hub de comunidad |
+| `/dashboard/library/[program_id]` | Path map del programa (modulos visuales) |
+| `/dashboard/library/[program_id]/[section]/[module]` | Contenido del modulo |
+| `/dashboard/library/[program_id]/lessons/[lessonId]` | Reproducir leccion (video Mux) |
+| `/dashboard/library/[program_id]/instructions/[instructionId]` | Realizar instruccion practica |
 | `/dashboard/community/prompts` | Explorar prompts compartidos |
 | `/dashboard/community/assistants` | Explorar GPTs/assistants |
-| `/dashboard/store` | Tienda para activar códigos |
-| `/dashboard/profile/[username]` | Perfil público de usuario |
-| `/dashboard/search` | Búsqueda de usuarios |
+| `/dashboard/store` | Tienda para activar codigos de producto |
+| `/dashboard/profile/[username]` | Perfil publico de usuario |
+| `/dashboard/search` | Busqueda de usuarios |
 
-## 🔐 Autenticación
+## Autenticacion
 
 ### Sistema de JWT
 
-Tokens almacenados en cookies:
+El sistema usa access token (JWT, 15 min) + refresh token (opaco, 7 dias) con rotacion automatica.
 
-```typescript
-// Login exitoso
-Cookies.set('token', jwtToken, {
-  expires: 365,  // 1 año
-  secure: true,
-  sameSite: 'strict'
-});
-```
+- **Access token:** Almacenado en cookie `token`, se renueva automaticamente via interceptor de Axios
+- **Refresh token:** Almacenado en cookie `refreshToken`, se rota en cada refresh
 
-### Flujo de Autenticación
+### Flujo de Autenticacion
 
 ```
 Usuario ingresa a la app
-  ↓
-useUserStore.initUser()
-  ├─ Leer cookie 'token'
-  ├─ Si no existe → isAuthenticated = false
-  └─ Si existe → POST /api/auth/auth-user
-      ├─ Verificar token
-      ├─ Retornar achievementsUnlocked + profileStatus
-      └─ GET /api/user para obtener usuario completo
-  ↓
+  |
+proxy.ts (middleware Next.js 16)
+  ├─ Sin token + ruta /dashboard → redirect /login
+  └─ Con token + ruta /login → redirect /dashboard
+  |
+UserInitializer (client component)
+  └─ useUserStore.initUser()
+      ├─ POST /api/auth/auth-user (verifica token)
+      ├─ Retorna achievementsUnlocked + profileStatus
+      └─ GET /api/user (datos completos)
+  |
 set({ user, isAuthenticated: true })
 ```
 
-### Middleware de Protección
+### Middleware de Proteccion
 
-La protección de rutas está implementada en `src/proxy.ts` (Next.js 16 lo reconoce como middleware):
+La proteccion de rutas esta implementada en `src/proxy.ts` (Next.js 16 lo reconoce como middleware):
 
 ```typescript
 // src/proxy.ts
@@ -269,9 +330,9 @@ export const config = {
 };
 ```
 
-> **Nota:** En Next.js 16 el archivo de middleware se llama `proxy.ts` y la función exportada se llama `proxy` (no `middleware`).
+> **Nota:** En Next.js 16 el archivo de middleware se llama `proxy.ts` y la funcion exportada se llama `proxy` (no `middleware`).
 
-## 📊 State Management - Zustand
+## State Management - Zustand
 
 ### userStore
 
@@ -295,18 +356,18 @@ interface UserStore {
 ```typescript
 const { user, isAuthenticated, refreshUser } = useUserStore();
 
-// Después de completar lección
+// Despues de completar leccion
 await completeLessonService(...);
 await refreshUser();  // Actualiza XP, level, achievements
 ```
 
-**Detección de Achievements:**
+**Deteccion de Achievements:**
 
 ```typescript
 // En refreshUser():
 if (user.achievements.length > previousLength) {
   const newAchievements = getNewAchievements();
-  achievementHandler(newAchievements);  // 🎉 Confetti + toast
+  achievementHandler(newAchievements);  // Confetti + toast
 }
 ```
 
@@ -314,7 +375,7 @@ if (user.achievements.length > previousLength) {
 
 **Archivo:** `src/stores/sidebarStore.ts`
 
-Maneja estado del sidebar móvil:
+Maneja estado del sidebar movil:
 
 ```typescript
 interface SidebarStore {
@@ -324,7 +385,7 @@ interface SidebarStore {
 }
 ```
 
-## 🎬 Lecciones (Videos)
+## Lecciones (Videos)
 
 ### Reproductor de Video
 
@@ -335,374 +396,146 @@ interface SidebarStore {
 - **Blurup** para placeholders blur
 - **Auto-save** de progreso cada 5 segundos
 
-### Guardar Progreso
+### Completar Leccion
 
-```typescript
-useEffect(() => {
-  const interval = setInterval(async () => {
-    if (playerRef.current?.currentTime) {
-      await saveLastWatchedLesson(
-        programId,
-        lessonId,
-        playerRef.current.currentTime
-      ).catch(() => {});  // Silent fail
-    }
-  }, 5000);
+Al completar una leccion, el backend retorna:
+- XP ganado (base + streak bonus)
+- Achievements desbloqueados
+- Nuevo nivel (si aplica)
+- Tins ganados
 
-  return () => clearInterval(interval);
-}, []);
-```
+El frontend muestra confetti + toast para achievements y actualiza el store via `refreshUser()`.
 
-### Completar Lección
+## Instrucciones (Tareas Practicas)
 
-```typescript
-const handleComplete = async () => {
-  try {
-    const response = await completeLesson(programId, lessonId);
+### Estados de Instruccion
 
-    // Mostrar XP ganado
-    toast.success(`¡+${response.totalGain} XP!`);
+| Estado | Descripcion |
+|--------|-------------|
+| **PENDING** | No iniciada |
+| **IN_PROCESS** | Iniciada pero no enviada |
+| **SUBMITTED** | Enviada, esperando calificacion AI |
+| **GRADED** | Calificada por AI (muestra score + observaciones) |
+| **ERROR** | Error en AI grading (permite reintentar) |
 
-    // Mostrar achievements desbloqueados
-    if (response.achievementsUnlocked?.length) {
-      achievementHandler(response.achievementsUnlocked);
-    }
+### Flujo
 
-    // Actualizar usuario
-    await refreshUser();
-  } catch (error) {
-    errorHandler(error);
-  }
-};
-```
+1. **Iniciar** instruccion (`startInstruction`)
+2. **Subir archivo** a S3 via presigned URL (si el deliverable es archivo)
+3. **Enviar** instruccion (`submitInstruction`) con s3Key o submittedText
+4. **Polling** cada 3 segundos mientras status = SUBMITTED
+5. **Resultado**: Score 0-100, observaciones de AI, XP + Tins ganados
 
-## 📝 Instrucciones (Tareas Prácticas)
+## Sistema de Gamificacion
 
-### Estados de Instrucción
+### XP y Niveles
+- **30 niveles** con curva exponencial
+- XP por leccion: base + streak bonus (hasta 7 dias)
+- XP por instruccion: variable segun score (10-25 XP)
+- XP por modulo completado: 30 XP
+- XP por programa completado: 100 XP
 
-| Estado | Descripción | Clase CSS |
-|--------|-------------|-----------|
-| **PENDING** | No iniciada | `text-gray-500` |
-| **IN_PROCESS** | Iniciada pero no enviada | `text-yellow-500` |
-| **SUBMITTED** | Enviada, esperando AI | `text-blue-500` |
-| **GRADED** | Calificada por AI | `text-green-500` |
-| **ERROR** | Error en AI grading | `text-red-500` |
+### Tins (Moneda Virtual)
+- Moneda interna de la plataforma (icono amber-400)
+- Se ganan al completar lecciones (5), instrucciones (10-25), modulos (30), programas (100)
 
-### Flujo de Instrucción
+### Daily Streaks
+- Racha de dias consecutivos con actividad
+- Bonus de XP creciente (capped a 7 dias)
+- Se muestra en Home y perfil
 
-```typescript
-// 1. Iniciar instrucción
-await startInstruction(programId, instructionId);
+### Achievements
+- **34 logros** definidos en `src/config/achievements.ts`
+- Cada uno tiene `getProgress(user)` para calcular % de progreso
+- Al desbloquear: confetti (`canvas-confetti`) + toast con info
+- Recompensas en XP y Tins
 
-// 2. Subir archivo (si deliverable = file)
-const { presignedUrl } = await getPresignedUrl(programId, instructionId, {
-  fileName: file.name,
-  contentType: file.type
-});
+### Ranks (Tiers por nivel)
+- Hierro (1-4) → Bronce (5-9) → Plata (10-14) → Oro (15-19) → Diamante (20-24) → STANNUM (25-30)
+- Definidos en `src/config/ranks.ts`
+- Se muestra frame decorativo en perfil
 
-await axios.put(presignedUrl, file, {
-  headers: { 'Content-Type': file.type }
-});
+## Comunidad
 
-// 3. Enviar instrucción
-await submitInstruction(programId, instructionId, {
-  s3Key: s3Key,  // O submittedText si es texto
-});
+### Prompts
+- CRUD completo: crear, editar, eliminar, toggle visibilidad
+- Like, favorite, copy con contadores
+- Filtros: categoria, dificultad, plataforma, busqueda
+- SortBy: popular, newest, mostCopied, mostLiked, mostViewed, verified
+- Verificados por STANNUM (badge especial)
 
-// 4. Polling para detectar cuando AI termina
-useEffect(() => {
-  if (instruction?.status === "SUBMITTED") {
-    const interval = setInterval(async () => {
-      await refreshUser();
-      // Si cambió a GRADED o ERROR, mostrar resultado
-    }, 3000);
-    return () => clearInterval(interval);
-  }
-}, [instruction?.status]);
+### Assistants (GPTs)
+- CRUD completo similar a Prompts
+- Link externo a GPTs en ChatGPT, Claude, Gemini, etc.
+- Click tracking, likes, favorites
 
-// 5. Mostrar resultado
-if (instruction.status === "GRADED") {
-  // Mostrar score, observations, XP ganado
-}
-```
+## API Services
 
-## 🏆 Sistema de Gamificación
+### Axios Instance
 
-### Componentes Clave
+**Archivo:** `src/lib/api.ts`
 
-**AnimatedCounter**
-```typescript
-<AnimatedCounter value={user.level.experienceTotal} duration={1000} />
-```
-
-**Achievement Badge**
-```typescript
-{user.achievements.map(a => (
-  <AchievementBadge
-    key={a.achievementId}
-    achievement={achievementConfig[a.achievementId]}
-    unlockedAt={a.unlockedAt}
-  />
-))}
-```
-
-**Level Progress Bar**
-```typescript
-<ProgressBar
-  current={user.level.experienceTotal - user.level.experienceCurrentLevel}
-  max={user.level.experienceNextLevel - user.level.experienceCurrentLevel}
-/>
-```
-
-### Confetti de Achievements
-
-**Helper:** `src/helpers/achievementHandler.ts`
-
-```typescript
-export const achievementHandler = (achievements: Achievement[]) => {
-  achievements.forEach((a) => {
-    const config = achievementConfig[a.achievementId];
-
-    // Confetti
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-
-    // Toast con achievement
-    toast.success(
-      <AchievementToast title={config.name} description={config.description} />,
-      { duration: 5000 }
-    );
-  });
-};
-```
-
-## 🎨 Componentes UI
-
-### Componentes Base
-
-| Componente | Ubicación | Descripción |
-|------------|-----------|-------------|
-| `Button` | `src/components/ui/button.tsx` | Botón con variantes (primary, secondary, ghost, etc.) |
-| `Input` | `src/components/ui/input.tsx` | Input con validación visual |
-| `Card` | `src/components/ui/card.tsx` | Card container con variantes |
-| `AnimatedCounter` | `src/components/ui/AnimatedCounter.tsx` | Contador animado para XP |
-
-### Variantes con CVA
-
-```typescript
-const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-white hover:bg-primary/90",
-        secondary: "bg-secondary text-white hover:bg-secondary/90",
-        ghost: "hover:bg-gray-100",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 px-3",
-        lg: "h-11 px-8",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-);
-```
-
-## 🌐 API Services
-
-### Estructura de Services
-
-Todos los services siguen el patrón:
-
-```typescript
-import api from '@/lib/api';
-
-// api instance (src/lib/api.ts) includes:
-// - baseURL from NEXT_PUBLIC_API_URL
-// - withCredentials: true (cookies automáticos)
-// - timeout: 15000ms
-// - Interceptor de refresh token automático
-// - Toast de "Sesión expirada" + redirect en caso de fallo
-
-export const someAction = async (params) => {
-  const response = await api.post('/endpoint', { ...params });
-  return response.data;
-};
-```
+- baseURL: `NEXT_PUBLIC_API_URL`
+- withCredentials: true (cookies automaticos)
+- timeout: 15000ms
+- Interceptor de refresh token automatico (renueva access token en 401)
+- Redirect a /login en caso de fallo total
 
 ### Services Disponibles
 
 | Service | Endpoints Principales |
 |---------|----------------------|
 | `auth.ts` | login, register, Google OAuth, authUserByToken, logout, password recovery, updateUsername |
-| `user.ts` | getUserByTokenClient, editUser, uploadProfilePhoto |
-| `lesson.ts` | completeLesson (returns achievementsUnlocked), saveLastWatchedLesson |
-| `instruction.ts` | startInstruction, submitInstruction, retryGrading |
-| `prompt.ts` | getPrompts, createPrompt, updatePrompt, deletePrompt |
-| `assistant.ts` | getAssistants, createAssistant, updateAssistant |
-| `ranking.ts` | getRanking |
-| `productKey.ts` | activateProductKey |
+| `user.ts` | getUserByToken, editUser, searchUsers, getTutorialStatus, completeTutorial |
+| `lesson.ts` | completeLesson, saveLastWatchedLesson |
+| `instruction.ts` | startInstruction, submitInstruction (con upload S3), retryGrading |
+| `prompt.ts` | getPrompts, getPromptById, createPrompt, updatePrompt, deletePrompt, toggleVisibility, copy, like, unlike, favorite, getMyPrompts, getFavorites, getUserPrompts, getStats, getTopPrompts |
+| `assistant.ts` | getAssistants, getAssistantById, createAssistant, deleteAssistant, toggleVisibility, click, like, unlike, favorite, getMyAssistants, getFavorites, getUserAssistants, getStats, getTopAssistants, editAssistant |
+| `ranking.ts` | getIndividualRanking, getTeamRanking, getProgramIndividualRanking |
+| `productKey.ts` | getProductKey, activateProductKey |
+| `profilePhoto.ts` | uploadProfilePhoto (S3 presigned), deleteProfilePhoto |
 
-## 🔍 Búsqueda y Filtros
+## Onboarding
 
-### Comunidad (Prompts/Assistants)
+Tutorial interactivo de 6 pasos usando **driver.js**:
 
-**Filtros disponibles:**
-- Category (Productividad, Marketing, Programación, etc.)
-- Difficulty (Fácil, Intermedio, Avanzado)
-- SortBy (Más recientes, Más vistos, Más copiados)
+1. Bienvenida a STANNUM Game
+2. Video introductorio (Mux)
+3. Navegacion (sidebar)
+4. XP y niveles
+5. Tins (moneda virtual)
+6. Comenzar
 
-**Búsqueda:**
-```typescript
-const [filters, setFilters] = useState({
-  search: '',
-  category: '',
-  difficulty: '',
-  sortBy: 'recent'
-});
+Estado del tutorial se persiste en backend (`/user/tutorial/:name/complete`).
 
-const prompts = await getPrompts(filters);
-```
-
-## 📱 PWA (Progressive Web App)
-
-### Install Prompt Modal
-
-**Componente:** `src/components/InstallPromptModal.tsx`
-
-Detecta soporte de PWA y muestra modal de instalación:
-
-```typescript
-useEffect(() => {
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    setDeferredPrompt(e);
-    setShowModal(true);
-  });
-}, []);
-
-const handleInstall = () => {
-  deferredPrompt?.prompt();
-  deferredPrompt?.userChoice.then((choice) => {
-    if (choice.outcome === 'accepted') {
-      toast.success('¡App instalada!');
-    }
-  });
-};
-```
-
-## 🎓 Onboarding
-
-**Driver.js** para tours interactivos:
-
-```typescript
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-
-const driverObj = driver({
-  showProgress: true,
-  steps: [
-    {
-      element: '#sidebar',
-      popover: {
-        title: 'Navegación',
-        description: 'Aquí puedes navegar...'
-      }
-    },
-    {
-      element: '#xp-display',
-      popover: {
-        title: 'Tu XP',
-        description: 'Gana XP completando...'
-      }
-    }
-  ]
-});
-
-driverObj.drive();
-```
-
-## 🚦 Manejo de Errores
-
-### errorHandler Helper
+## Manejo de Errores
 
 **Archivo:** `src/helpers/errorHandler.ts`
 
-```typescript
-export const errorHandler = (error: unknown): AppError => {
-  if (axios.isAxiosError(error)) {
-    const message = error.response?.data?.msg || 'Error de conexión';
-    const code = error.response?.data?.code || 'SERVER_ERROR';
-    return { message, code };
-  }
+- Intercepta errores de Axios y los convierte a `AppError`
+- Muestra `toast.error()` con mensaje descriptivo
+- En desarrollo (`NEXT_PUBLIC_ENV=development`): logs en consola
 
-  return {
-    message: 'Error inesperado',
-    code: 'UNKNOWN_ERROR'
-  };
-};
-```
+## Animaciones
 
-**Uso:**
+### MotionProvider
+
+**Archivo:** `src/components/ui/MotionProvider.tsx`
+
+Provider global de Framer Motion con `LazyMotion` para tree-shaking:
 
 ```typescript
-try {
-  await someAction();
-} catch (err) {
-  const appError = errorHandler(err);
-  toast.error(appError.message);
-}
+<LazyMotion features={domAnimation}>
+  {children}
+</LazyMotion>
 ```
 
-## 🎯 Hooks Personalizados
+Todos los componentes animados usan `m.*` (no `motion.*`) para reducir bundle size.
 
-### useModuleProgress
+### MotionWrapperLayout
 
-**Archivo:** `src/hooks/useModuleProgress.ts`
-
-Calcula progreso de módulo basado en lecciones completadas:
-
-```typescript
-export const useModuleProgress = (
-  moduleId: string,
-  programId: string
-) => {
-  const { user } = useUserStore();
-
-  const module = getModuleById(moduleId);
-  const completed = user?.programs[programId]?.lessonsCompleted.filter(
-    l => module.lessons.some(ml => ml.id === l.lessonId)
-  ).length ?? 0;
-
-  return {
-    completed,
-    total: module.lessons.length,
-    percentage: (completed / module.lessons.length) * 100
-  };
-};
-```
-
-## 🔗 Comunicación con Backend
-
-**Base URL:** Configurada en `.env.local`
-
-```typescript
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-// Ej: http://localhost:8000/api
-```
-
-**Autenticación:** JWT token en header `Authorization: Bearer {token}`
-
-**Cookies:** Token almacenado en cookie `token` con 365 días de expiración
+Wrapper reutilizable para paginas con fade-in + slide-up al montar.
 
 ---
 
-**© STANNUM 2025 - Repositorio Privado**
+**STANNUM 2025 - Repositorio Privado**
