@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ArrowRightIcon } from '@/icons';
 import { PathMapSVG } from './PathMapSVG';
 import { PathMapNode } from './PathMapNode';
@@ -89,7 +89,7 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                     isMobile={isMobile}
                 />
             ))}
-            {nextModuleHref && (
+            {nextModuleHref && positions[items.length] && (
                 <div
                     className="absolute z-10"
                     style={{
@@ -100,7 +100,7 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                     <div className="relative">
                         {isNextModuleAvailable ? (
                             <Link href={nextModuleHref}>
-                                <motion.div
+                                <m.div
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
@@ -110,10 +110,10 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                                     style={{ width: nodeSize, height: nodeSize }}
                                 >
                                     <ArrowRightIcon className="size-5 lg:size-6" />
-                                </motion.div>
+                                </m.div>
                             </Link>
                         ) : (
-                            <motion.div
+                            <m.div
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ type: 'spring', bounce: 0, delay: items.length * 0.05 }}
@@ -121,9 +121,9 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                                 style={{ width: nodeSize, height: nodeSize }}
                             >
                                 <ArrowRightIcon className="size-5 lg:size-6" />
-                            </motion.div>
+                            </m.div>
                         )}
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ type: 'spring', bounce: 0, delay: items.length * 0.05 + 0.1 }}
@@ -137,7 +137,7 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                                     {nextModuleName}
                                 </p>
                             )}
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             )}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Modal } from '@/components';
 import { RobotIcon, ToolsIcon, CheckIcon } from '@/icons';
 
@@ -26,6 +26,11 @@ export const WhatsNewModal = () => {
         setShowModal(false);
     };
 
+    const handleRemindLater = () => {
+        Cookies.set(COOKIE_KEY, '1', { expires: 3 });
+        setShowModal(false);
+    };
+
     const handleNavigate = (path: string) => {
         handleClose();
         router.push(path);
@@ -34,7 +39,7 @@ export const WhatsNewModal = () => {
     return (
         <Modal showModal={showModal} setShowModal={handleClose} className="max-w-5xl p-0">
             <div className="p-4 sm:p-6 flex-1 overflow-y-auto">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -42,9 +47,9 @@ export const WhatsNewModal = () => {
                 >
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-black">Nuevos Bancos de <br/> <span className="text-stannum">Inteligencia Artificial</span></h2>
                     <p className="mt-4 text-lg md:text-xl">Potenciá tu entrenamiento con herramientas profesionales</p>
-                </motion.div>
+                </m.div>
                 <div className="mt-8 grid md:grid-cols-2 gap-4">
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4 }}
@@ -64,8 +69,8 @@ export const WhatsNewModal = () => {
                         </div>
                         <div className="absolute top-4 right-4 w-20 h-20 bg-stannum/10 rounded-full blur-2xl" />
                         <div className="absolute bottom-4 left-4 w-24 h-24 bg-stannum/10 rounded-full blur-2xl" />
-                    </motion.div>
-                    <motion.div
+                    </m.div>
+                    <m.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 }}
@@ -85,9 +90,9 @@ export const WhatsNewModal = () => {
                         </div>
                         <div className="absolute top-4 left-4 w-20 h-20 bg-stannum/10 rounded-full blur-2xl" />
                         <div className="absolute bottom-4 right-4 w-24 h-24 bg-stannum/10 rounded-full blur-2xl" />
-                    </motion.div>
+                    </m.div>
                 </div>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
@@ -102,12 +107,12 @@ export const WhatsNewModal = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={handleClose}
+                        onClick={handleRemindLater}
                         className="text-sm subtitle-1 hover:text-white transition-200"
                     >
                         Recordármelo después
                     </button>
-                </motion.div>
+                </m.div>
             </div>
         </Modal>
     );

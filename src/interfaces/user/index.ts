@@ -38,7 +38,8 @@ export interface LevelDetails {
 export interface AchievementDetails {
     achievementId: string;
     unlockedAt: Date;
-    xpReward: number
+    xpReward: number;
+    coinsReward: number;
 }
 
 export interface ProgramDetails {
@@ -77,7 +78,10 @@ export interface TestDetails {
     status: "pending" | "completed";
 }
 
-export interface UserSidebarDetails extends Pick<BaseUser, "id" | "username" | "profilePhoto"> {}
+export interface UserSidebarDetails extends Pick<BaseUser, "id" | "username" | "profilePhoto"> {
+    currentLevel: number;
+    coins: number;
+}
 
 export interface RankingUserDetails extends Pick<BaseUser, "id" | "username" | "profilePhoto"> {
     team: string | null;
@@ -153,11 +157,17 @@ export interface FullUserDetails {
         lastActivityLocalDate?: string;
         timezone: string;
     };
+    coins: number;
     xpHistory: Array<{
         type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED";
         xp: number;
         date: string;
         // meta?: string;
+    }>;
+    coinsHistory: Array<{
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED";
+        coins: number;
+        date: string;
     }>;
     unlockedCovers?: Array<{
         coverId: string;

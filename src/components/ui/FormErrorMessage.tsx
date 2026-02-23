@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { FieldError } from "react-hook-form";
 
 interface Props{
@@ -14,7 +14,7 @@ export const FormErrorMessage = ({condition, message="Campo requerido.", classNa
         <AnimatePresence>
             {
                 condition && (
-                    <motion.p
+                    <m.p
                         initial={{x:50, opacity: 0, height: 0}}
                         animate={{x:0, opacity:1, height: 16}}
                         exit={{x:50, opacity: 0, height: 0, margin: 0}}
@@ -22,7 +22,7 @@ export const FormErrorMessage = ({condition, message="Campo requerido.", classNa
                         className={`w-full text-invalid text-xs ${className}`}
                     >
                         {message}
-                    </motion.p>
+                    </m.p>
                 )
             }
         </AnimatePresence>

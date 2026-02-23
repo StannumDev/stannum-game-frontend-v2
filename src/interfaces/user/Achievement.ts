@@ -12,9 +12,18 @@ export type AchievementId =
     | "level_5"
     | "level_10"
     | "level_20"
+    | "level_25"
     | "streak_3_days"
     | "streak_7_days"
+    | "streak_15_days"
     | "streak_30_days"
+    | "perfect_score"
+    | "triple_perfect"
+    | "marathon_day"
+    | "prompt_creator"
+    | "assistant_creator"
+    | "community_favorite"
+    | "collector"
     | "trenno_ia_joined"
     | "trenno_ia_first_module_completed"
     | "trenno_ia_completed"
@@ -30,4 +39,5 @@ export interface Achievement {
     categories: Array<"stannum"|"tmd"|"tia"|"summer">;
     getProgress: (user: FullUserDetails) => number;
     xpReward: number;
+    coinsReward: number;
 }

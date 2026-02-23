@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useCallback, useState } from "react";
 import Image from "next/image";
+import { callToast } from "@/helpers";
 import { AddPhotoIcon } from "@/icons";
 import { FullUserDetails } from "@/interfaces";
 import { UserProfileEditPhoto } from "@/components";
@@ -23,7 +24,10 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
         const selectedFile = event.target.files?.[0];
         if (!selectedFile) return;
         const fileSizeInMB = selectedFile.size / (1024 * 1024);
-        if (fileSizeInMB > 20) return;
+        if (fileSizeInMB > 20) {
+            callToast({ type: 'error', message: { title: 'Archivo muy grande', description: 'La imagen no puede superar los 20 MB.' } });
+            return;
+        }
         setImageSrc(URL.createObjectURL(selectedFile));
         setShowEditModal(true);
         event.target.value = '';

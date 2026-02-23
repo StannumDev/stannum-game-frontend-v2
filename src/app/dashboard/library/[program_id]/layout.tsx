@@ -54,7 +54,7 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
                     <h2 className="mb-4 title-2 px-4 lg:px-6">Explora las posibilidades</h2>
                     <ProgramNavigationHandler program={foundProgram}/>
                     <span className="mt-4 mb-6 block w-full h-px bg-card-light"></span>
-                    <div className="px-4 lg:px-6 overflow-x-hidden">
+                    <div id="program-modules" className="px-4 lg:px-6 overflow-x-hidden">
                         {children}
                     </div>
                 </section>

@@ -5,6 +5,7 @@ export interface LessonCompletionResult {
     gained: number;
     streakBonus: number;
     totalGain: number;
+    coinsGained: number;
     achievementsUnlocked: AchievementDetails[];
 }
 
@@ -15,8 +16,8 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
         );
 
         if (!response?.data?.success) throw new Error("Unexpected response structure");
-        const { gained = 0, streakBonus = 0, totalGain = 0, achievementsUnlocked = [] } = response.data;
-        return { gained, streakBonus, totalGain, achievementsUnlocked };
+        const { gained = 0, streakBonus = 0, totalGain = 0, coinsGained = 0, achievementsUnlocked = [] } = response.data;
+        return { gained, streakBonus, totalGain, coinsGained, achievementsUnlocked };
     } catch (error: unknown) {
         throw error;
     }

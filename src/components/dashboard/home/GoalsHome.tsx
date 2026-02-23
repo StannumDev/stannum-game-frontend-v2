@@ -6,7 +6,7 @@ export const GoalsHome = () => {
         <MotionWrapperLayout>
             <section id="goals-section" className="w-full grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <div className="hidden col-span-1 card aspect-square lg:flex flex-col justify-center items-center">
-                    <p className="grow text-3xl font-thin uppercase">Monitorea tus <b className="text-stannum font-semibold">goals</b> diariamente</p>
+                    <p className="grow text-3xl font-thin">Monitorea tus <b className="text-stannum font-semibold">goals</b> diariamente</p>
                     <p className="w-full px-3 flex justify-center items-center gap-3">
                         <InfoHexagonIcon className="text-2xl shrink-0 text-stannum"/>
                         <span className="leading-tight">Ver más detalles acerca de mis goals</span>

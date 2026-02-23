@@ -12,6 +12,7 @@ import { Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
 import { CrownIcon } from "@/icons";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import stannum_coin from "@/assets/tins_coin.svg";
 import { useUserStore } from '@/stores/userStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
@@ -70,7 +71,9 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
 
         const progressInterval = setInterval(() => {
             if (lastTimeRef.current > 0 && !markedAsCompleted.current && !hasStartedRedirect.current) {
-                 saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch(() => {});
+                 saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch((e) => {
+                    if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('Failed to save lesson progress:', e);
+                 });
             }
         }, SAVE_INTERVAL_MS);
 
@@ -83,7 +86,11 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 redirectTimeout.current = null;
             }
             if (progressInterval) clearInterval(progressInterval);
-            if (lastTimeRef.current > 0 && !markedAsCompleted.current) saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch(() => {});
+            if (lastTimeRef.current > 0 && !markedAsCompleted.current) {
+                saveLastWatchedLesson(program.toLowerCase(), lesson.id, lastTimeRef.current).catch((e) => {
+                    if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('Failed to save lesson progress on cleanup:', e);
+                });
+            }
             hasStartedRedirect.current = false;
         };
     }, [lesson.muxPlaybackId, lesson.id, program]);
@@ -183,7 +190,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
-                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
                                 <CrownIcon className="size-8 text-stannum" />
                                 <span className="text-4xl font-black">+</span>
@@ -192,6 +199,12 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                            {xpResult.coinsGained > 0 && (
+                                <div className="flex items-center gap-1.5 mt-1">
+                                    <Image src={stannum_coin} alt="Tins" width={16} height={16} />
+                                    <span className="text-sm font-bold text-amber-400">+{xpResult.coinsGained} Tins</span>
+                                </div>
                             )}
                         </div>
                     )}
@@ -211,8 +224,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Siguiente lección</button>
+                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente lección</button>
                     </div>
                 </div>
             )}
@@ -220,7 +233,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
-                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
                                 <CrownIcon className="size-8 text-stannum" />
                                 <span className="text-4xl font-black">+</span>
@@ -229,6 +242,12 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                            {xpResult.coinsGained > 0 && (
+                                <div className="flex items-center gap-1.5 mt-1">
+                                    <Image src={stannum_coin} alt="Tins" width={16} height={16} />
+                                    <span className="text-sm font-bold text-amber-400">+{xpResult.coinsGained} Tins</span>
+                                </div>
                             )}
                         </div>
                     )}
@@ -239,8 +258,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <p className="font-semibold">{nextInstruction.title}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir a la instrucción</button>
+                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir a la instrucción</button>
                     </div>
                 </div>
             )}
@@ -248,7 +267,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
-                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
                                 <CrownIcon className="size-8 text-stannum" />
                                 <span className="text-4xl font-black">+</span>
@@ -257,6 +276,12 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
+                            )}
+                            {xpResult.coinsGained > 0 && (
+                                <div className="flex items-center gap-1.5 mt-1">
+                                    <Image src={stannum_coin} alt="Tins" width={16} height={16} />
+                                    <span className="text-sm font-bold text-amber-400">+{xpResult.coinsGained} Tins</span>
+                                </div>
                             )}
                         </div>
                     )}
@@ -267,8 +292,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <p className="font-semibold">{nextModule.name}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Siguiente módulo</button>
+                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente módulo</button>
                     </div>
                 </div>
             )}
@@ -276,7 +301,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
-                            <p className="text-sm font-semibold uppercase tracking-wider text-stannum">¡Lección completada!</p>
+                            <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
                                 <CrownIcon className="size-8 text-stannum" />
                                 <span className="text-4xl font-black">+</span>
@@ -286,13 +311,19 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
                             )}
+                            {xpResult.coinsGained > 0 && (
+                                <div className="flex items-center gap-1.5 mt-1">
+                                    <Image src={stannum_coin} alt="Tins" width={16} height={16} />
+                                    <span className="text-sm font-bold text-amber-400">+{xpResult.coinsGained} Tins</span>
+                                </div>
+                            )}
                         </div>
                     )}
                     {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
                     <p className="text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
                     <div className="flex gap-4 mt-2">
-                        <button onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg uppercase tracking-wider transition-200">Ir al programa</button>
+                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir al programa</button>
                     </div>
                 </div>
             )}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { BookmarkIcon, BookmarkedIcon, ExternalLinkIcon, LikeIcon, LikedIcon } from '@/icons';
 import { clickAssistant, likeAssistant, unlikeAssistant, toggleFavoriteAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -20,6 +20,7 @@ export const AssistantCard = ({ assistant }: Props) => {
     const [isFavorited, setIsFavorited] = useState(assistant.userActions?.hasFavorited || false);
     const [likesCount, setLikesCount] = useState(assistant.metrics.likesCount);
     const [clicksCount, setClicksCount] = useState(assistant.metrics.clicksCount);
+    const [favoritesCount, setFavoritesCount] = useState(assistant.metrics.favoritesCount);
     const [isProcessing, setIsProcessing] = useState(false);
 
     const [isExpanded, setIsExpanded] = useState(false);
@@ -114,13 +115,17 @@ export const AssistantCard = ({ assistant }: Props) => {
         setIsProcessing(true);
 
         const previousFavorited = isFavorited;
+        const previousFavCount = favoritesCount;
         setIsFavorited(!isFavorited);
+        setFavoritesCount(isFavorited ? favoritesCount - 1 : favoritesCount + 1);
 
         try {
             const response = await toggleFavoriteAssistant(assistant.id);
             setIsFavorited(response.isFavorited);
+            setFavoritesCount(response.favoritesCount);
         } catch (error) {
             setIsFavorited(previousFavorited);
+            setFavoritesCount(previousFavCount);
             errorHandler(error);
         } finally {
             setIsProcessing(false);
@@ -128,7 +133,7 @@ export const AssistantCard = ({ assistant }: Props) => {
     };
 
     return (
-        <motion.article
+        <m.article
             className="card group cursor-pointer break-inside-avoid mb-4 hover:border-stannum/50 transition-all duration-300"
             onClick={handleClick}
             initial={{ opacity: 0, y: 20 }}
@@ -147,24 +152,25 @@ export const AssistantCard = ({ assistant }: Props) => {
                     type='button'
                     disabled={isProcessing}
                     onClick={handleFavorite}
-                    className={`p-1.5 rounded-lg border ${isFavorited ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50' : 'bg-card border-card-light text-card-lighter hover:text-stannum'} transition-200`}
+                    className={`p-1.5 rounded-lg border flex items-center gap-1 ${isFavorited ? 'bg-stannum/20 border-stannum text-stannum hover:opacity-50' : 'bg-card border-card-light text-card-lighter hover:text-stannum'} transition-200`}
                 >
                     {isFavorited ? <BookmarkedIcon /> : <BookmarkIcon />}
+                    {favoritesCount > 0 && <span className="text-xs font-semibold">{favoritesCount}</span>}
                 </button>
             </div>
             <h3 className="text-lg font-bold group-hover:text-stannum transition-colors">{assistant.title}</h3>
             <div className="mt-2 mb-4">
-                <motion.div
+                <m.div
                     ref={visibleRef}
                     animate={{ 
                         height: isExpanded ? (expandedHeight ?? "auto") : "auto",
-                        maxHeight: isExpanded ? (expandedHeight ?? "none") : (collapsedHeight ?? "none")
+                        maxHeight: isExpanded ? (expandedHeight ?? 9999) : (collapsedHeight ?? 9999)
                     }}
                     transition={{ duration: 0.28 }}
                     className="overflow-hidden"
                 >
                     <p className="text-sm opacity-75">{assistant.description}</p>
-                </motion.div>
+                </m.div>
                 <div ref={measureRef} aria-hidden="true" className="invisible absolute -z-10 w-full pointer-events-none">
                     <p className="text-sm opacity-75">{assistant.description}</p>
                 </div>
@@ -212,6 +218,6 @@ export const AssistantCard = ({ assistant }: Props) => {
                     <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{assistant.author.username}</span>
                 </Link>
             </div>
-        </motion.article>
+        </m.article>
     );
 };

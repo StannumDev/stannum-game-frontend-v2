@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,15 +36,15 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [tagInput, setTagInput] = useState('');
 
-    const { register, handleSubmit, formState: { errors }, watch, setValue, reset } = useForm<Schema>({ 
-        resolver: zodResolver(schema), 
-        defaultValues: { 
-            difficulty: 'basic', 
-            platforms: [], 
+    const { register, handleSubmit, formState: { errors, isDirty }, watch, setValue, reset } = useForm<Schema>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            difficulty: 'basic',
+            platforms: [],
             tags: [],
             customGptUrl: '',
             exampleOutput: ''
-        } 
+        }
     });
 
     const watchedPlatforms = watch('platforms') || [];
@@ -53,6 +53,10 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
     const watchedDifficulty = watch('difficulty');
 
     const handleClose = () => {
+        if (isLoading) return;
+        if (isDirty || tagInput.trim()) {
+            if (!window.confirm('Tenés cambios sin guardar. ¿Estás seguro de que querés cerrar?')) return;
+        }
         reset();
         setTagInput('');
         onClose();
@@ -118,14 +122,14 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
     return (
         <AnimatePresence>
             {isOpen && <>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleClose}
                     className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
                 />
-                <motion.div
+                <m.div
                     initial={{ x: '100%' }}
                     animate={{ x: 0 }}
                     exit={{ x: '100%' }}
@@ -192,7 +196,10 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                                         className="w-full px-4 py-2.5 bg-card border border-card-light rounded-lg text-sm focus:outline-none focus:border-stannum disabled:opacity-50 resize-none transition-colors font-mono"
                                     />
                                 </div>
-                                <FormErrorMessage condition={errors.content} message={errors?.content?.message} className="mt-2"/>
+                                <div className="mt-1 flex justify-between items-start">
+                                    <FormErrorMessage condition={errors.content} message={errors?.content?.message}/>
+                                    <span className="text-xs text-card-lightest shrink-0 ml-auto">{(watch('content') || '').length}/8000</span>
+                                </div>
                             </div>
                             <div className="w-full">
                                 <label className="block text-sm font-semibold mb-2 required">Categoría</label>
@@ -358,7 +365,7 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                             </button>
                         </div>
                     </form>
-                </motion.div>
+                </m.div>
             </> }
         </AnimatePresence>
     );

@@ -1,3 +1,6 @@
 export { calculateProgramProgress, calculateProgramTotals } from './progress';
 export { buildContinueEntryForProgram } from './continue';
 export { isLessonAvailable, isInstructionAvailable, isModuleComplete } from './lessons';
+
+export const formatCoins = (n: number): string =>
+    n >= 10000 ? `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}K` : String(n);

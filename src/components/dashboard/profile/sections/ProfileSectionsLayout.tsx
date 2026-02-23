@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { FullUserDetails, NavbarSection as NavbarSectionType } from "@/interfaces";
 import { MedalIcon } from "@/icons";
-import { AchievementsLayout, MotionWrapperLayoutClient, NavbarSection } from "@/components";
+import { AchievementsLayout, MotionWrapperLayout, NavbarSection } from "@/components";
 
 interface Props {
     owner: boolean;
@@ -42,8 +42,8 @@ export const ProfileSectionsLayout = ({owner, user}:Props) => {
     }, [pathname, router, searchParams]);
 
     return (
-        <MotionWrapperLayoutClient>
-            <section className="w-full card px-0">
+        <MotionWrapperLayout>
+            <section id="profile-achievements" className="w-full card px-0">
                 <NavbarSection<SectionOptions>
                     sections={sections}
                     selectedLayout={selectedLayout}
@@ -54,6 +54,6 @@ export const ProfileSectionsLayout = ({owner, user}:Props) => {
                     { selectedLayout === 'achievements' && <AchievementsLayout owner={owner} user={user}/>}
                 </div>
             </section>
-        </MotionWrapperLayoutClient>
+        </MotionWrapperLayout>
     );
 };

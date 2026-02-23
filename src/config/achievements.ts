@@ -13,6 +13,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 10,
         getProgress: (user: FullUserDetails) => {
             return Object.values(user.programs ?? {}).some(p => p.isPurchased) ? 100 : 0;
         }
@@ -24,9 +25,10 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 10,
         getProgress: (user: FullUserDetails) => {
-            const { profile } = user;
-            return profile.name && profile.country && profile.region && profile.birthdate ? 100 : 0;
+            const { profile, enterprise } = user;
+            return profile.name && profile.country && profile.region && profile.birthdate && profile.aboutMe && enterprise?.name && enterprise?.jobPosition ? 100 : 0;
         }
     },
     {
@@ -36,6 +38,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             for (const program of programs) {
                 const userProgram = user.programs[program.id];
@@ -46,7 +49,10 @@ export const achievements: Array<Achievement> = [
                         const allLessonsDone = program_module.lessons.every(l =>
                             (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
                         );
-                        if (allLessonsDone) return 100;
+                        const allInstructionsDone = program_module.instructions.every(inst =>
+                            (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
+                        );
+                        if (allLessonsDone && allInstructionsDone) return 100;
                     }
                 }
             }
@@ -60,8 +66,9 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 5,
         getProgress: (user: FullUserDetails) => {
-            const total = Object.values(user.programs).flatMap(p => p.lessonsCompleted || []).length;
+            const total = Object.values(user.programs ?? {}).flatMap(p => p.lessonsCompleted || []).length;
             return total >= 1 ? 100 : 0;
         }
     },
@@ -72,8 +79,9 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 5,
         getProgress: (user: FullUserDetails) => {
-            return Object.values(user.programs).some(p => (p.instructions || []).some(i => i.status === "GRADED")) ? 100 : 0;
+            return Object.values(user.programs ?? {}).some(p => (p.instructions || []).some(i => i.status === "GRADED")) ? 100 : 0;
         }
     },
     {
@@ -83,6 +91,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             for (const programCfg of programs) {
                 const userProgram = user.programs[programCfg.id];
@@ -108,6 +117,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
+        coinsReward: 25,
         getProgress: (user: FullUserDetails) => {
             for (const programCfg of programs) {
                 const userProgram = user.programs[programCfg.id];
@@ -132,6 +142,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 10,
         getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 5 ? 100 : 0
     },
     {
@@ -141,6 +152,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 10 ? 100 : 0
     },
     {
@@ -150,7 +162,18 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 200,
+        coinsReward: 25,
         getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 20 ? 100 : 0
+    },
+    {
+        id: "level_25",
+        title: "Diamante",
+        description: "Alcanza el nivel 25 acumulando XP",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 250,
+        coinsReward: 30,
+        getProgress: (user: FullUserDetails) => (user.level?.currentLevel ?? 0) >= 25 ? 100 : 0
     },
     {
         id: "streak_3_days",
@@ -159,6 +182,7 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 50,
+        coinsReward: 5,
         getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 3 ? 100 : 0
     },
     {
@@ -168,7 +192,18 @@ export const achievements: Array<Achievement> = [
         background: stannum_achievement_background,
         categories: ["stannum"],
         xpReward: 100,
+        coinsReward: 10,
         getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 7 ? 100 : 0
+    },
+    {
+        id: "streak_15_days",
+        title: "Constancia de acero",
+        description: "Mantén tu streak 15 días consecutivos",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 200,
+        coinsReward: 20,
+        getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 15 ? 100 : 0
     },
     {
         id: "streak_30_days",
@@ -176,8 +211,103 @@ export const achievements: Array<Achievement> = [
         description: "Mantén tu streak un mes entero",
         background: stannum_achievement_background,
         categories: ["stannum"],
-        xpReward: 200,
+        xpReward: 300,
+        coinsReward: 30,
         getProgress: (user: FullUserDetails) => (user.dailyStreak?.count ?? 0) >= 30 ? 100 : 0
+    },
+    {
+        id: "perfect_score",
+        title: "Puntería perfecta",
+        description: "Obtené 100% en una instrucción",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 100,
+        coinsReward: 15,
+        getProgress: (user: FullUserDetails) => {
+            return Object.values(user.programs ?? {}).some(p =>
+                (p.instructions || []).some(i => i.status === "GRADED" && i.score === 100)
+            ) ? 100 : 0;
+        }
+    },
+    {
+        id: "triple_perfect",
+        title: "Eficiencia total",
+        description: "Obtené 100% en 3 instrucciones distintas",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 200,
+        coinsReward: 25,
+        getProgress: (user: FullUserDetails) => {
+            const count = Object.values(user.programs ?? {}).reduce((sum, p) =>
+                sum + (p.instructions || []).filter(i => i.status === "GRADED" && i.score === 100).length, 0
+            );
+            return count >= 3 ? 100 : Math.floor((count / 3) * 100);
+        }
+    },
+    {
+        id: "marathon_day",
+        title: "Maratonista",
+        description: "Completá 5 lecciones en un mismo día",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 100,
+        coinsReward: 15,
+        getProgress: (user: FullUserDetails) => {
+            const tz = user.dailyStreak?.timezone || "America/Argentina/Buenos_Aires";
+            const dates: Record<string, number> = {};
+            for (const p of Object.values(user.programs ?? {})) {
+                for (const lc of (p.lessonsCompleted || [])) {
+                    if (!lc.viewedAt) continue;
+                    const day = new Date(lc.viewedAt).toLocaleDateString("en-CA", { timeZone: tz });
+                    dates[day] = (dates[day] || 0) + 1;
+                }
+            }
+            const max = Math.max(0, ...Object.values(dates));
+            return max >= 5 ? 100 : Math.floor((max / 5) * 100);
+        }
+    },
+    {
+        id: "prompt_creator",
+        title: "Creador de prompts",
+        description: "Publicá tu primer prompt en la comunidad",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 50,
+        coinsReward: 10,
+        getProgress: () => 0
+    },
+    {
+        id: "assistant_creator",
+        title: "Creador de asistentes",
+        description: "Publicá tu primer asistente en la comunidad",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 50,
+        coinsReward: 10,
+        getProgress: () => 0
+    },
+    {
+        id: "community_favorite",
+        title: "Favorito de la comunidad",
+        description: "Recibí 5 favoritos en tus publicaciones",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 150,
+        coinsReward: 20,
+        getProgress: () => 0
+    },
+    {
+        id: "collector",
+        title: "Coleccionista",
+        description: "Guardá 10 prompts o asistentes en favoritos",
+        background: stannum_achievement_background,
+        categories: ["stannum"],
+        xpReward: 50,
+        coinsReward: 10,
+        getProgress: (user: FullUserDetails) => {
+            const total = (user.favorites?.prompts?.length ?? 0) + (user.favorites?.assistants?.length ?? 0);
+            return total >= 10 ? 100 : Math.floor((total / 10) * 100);
+        }
     },
     {
         id: "trenno_ia_joined",
@@ -186,6 +316,7 @@ export const achievements: Array<Achievement> = [
         background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             const tia = user.programs?.tia;
             return tia?.isPurchased ? 100 : 0;
@@ -198,6 +329,7 @@ export const achievements: Array<Achievement> = [
         background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 150,
+        coinsReward: 20,
         getProgress: (user: FullUserDetails) => {
             const tiaProgram = user.programs?.tia;
             if (!tiaProgram) return 0;
@@ -224,6 +356,7 @@ export const achievements: Array<Achievement> = [
         background: tia_achievement_background,
         categories: ["tia"],
         xpReward: 300,
+        coinsReward: 40,
         getProgress: (user: FullUserDetails) => {
             const tiaProgram = user.programs?.tia;
             if (!tiaProgram) return 0;
@@ -248,6 +381,7 @@ export const achievements: Array<Achievement> = [
         background: tia_summer_achievement_background,
         categories: ["summer"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             const tiaSummer = user.programs?.tia_summer;
             return tiaSummer?.isPurchased ? 100 : 0;
@@ -260,6 +394,7 @@ export const achievements: Array<Achievement> = [
         background: tia_summer_achievement_background,
         categories: ["summer"],
         xpReward: 150,
+        coinsReward: 20,
         getProgress: (user: FullUserDetails) => {
             const tiaSummer = user.programs?.tia_summer;
             if (!tiaSummer) return 0;
@@ -274,6 +409,7 @@ export const achievements: Array<Achievement> = [
         background: tia_summer_achievement_background,
         categories: ["summer"],
         xpReward: 500,
+        coinsReward: 60,
         getProgress: (user: FullUserDetails) => {
             const tiaSummer = user.programs?.tia_summer;
             if (!tiaSummer) return 0;

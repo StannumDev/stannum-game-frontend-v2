@@ -9,11 +9,12 @@ export { STANNUMIcon } from "./ui/STANNUMIcon";
 export { FormErrorMessage } from "./ui/FormErrorMessage";
 export { SubmitButtonLoading } from "./ui/SubmitButtonLoading";
 export { GoBackButton } from "./ui/GoBackButton";
+export { MotionProvider } from "./ui/MotionProvider";
 export { MotionWrapperLayout } from "./ui/MotionWrapperLayout";
-export { MotionWrapperLayoutClient } from "./ui/MotionWrapperLayoutClient";
 export { Modal } from "./ui/Modal";
 export { LoadingScreen } from "./ui/LoadingScreen";
 export { WhatsNewModal } from "./ui/WhatsNewModal";
+export { Tooltip } from "./ui/Tooltip";
 
 // SIDEBAR
 export { Sidebar } from "./dashboard/sidebar/Sidebar";
@@ -75,6 +76,7 @@ export { StoreCover } from "./dashboard/store/StoreCover";
 export { StoreTutorial } from "./dashboard/store/StoreTutorial";
 export { StoreSectionsLayout } from "./dashboard/store/StoreSectionsLayout";
 export { StoreCard } from "./dashboard/store/StoreCard";
+export { StoreTinsBalance } from "./dashboard/store/StoreTinsBalance";
 
 // PROGRAMS
 export { ProgramCover } from "./dashboard/program/ProgramCover";

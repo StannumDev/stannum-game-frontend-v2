@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { searchUsers } from "@/services";
 import { ArrowRightIcon } from "@/icons";
 import { errorHandler } from "@/helpers";
@@ -44,7 +44,7 @@ export const SearchResultsList = ({ query }: Props) => {
             { isLoading ? <div className="size-full"><LoadingScreen/></div> :
               error ? <p className="text-center lg:text-left text-invalid">{error.friendlyMessage}</p> :
               results.length === 0 ? <p className="text-center lg:text-left">No se encontraron resultados.</p> :
-                <motion.ul 
+                <m.ul 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
@@ -66,14 +66,14 @@ export const SearchResultsList = ({ query }: Props) => {
                                     <div className="grow min-w-0 relative">
                                         <p className="w-full title-3 text-lg truncate">{user.name}</p>
                                         <p className="w-full subtitle-1">@{user.username}</p>
-                                        { user.enterprise && <p className="mt-2 w-full text-sm text-stannum truncate">{user.jobPosition} en {user.enterprise}</p> }
+                                        { user.enterprise && user.jobPosition && <p className="mt-2 w-full text-sm text-stannum truncate">{user.jobPosition} en {user.enterprise}</p> }
                                     </div>
                                     <ArrowRightIcon className="size-4 text-card-lightest shrink-0"/>
                                 </div>
                             </Link>
                         </li>
                     ))}
-                </motion.ul>
+                </m.ul>
             }
         </section>
     );

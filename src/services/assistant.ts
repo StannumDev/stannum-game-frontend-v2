@@ -11,7 +11,7 @@ export const getAllAssistants = async (filters?: AssistantFilters): Promise<Assi
         if (filters?.category) params.append('category', filters.category);
         if (filters?.difficulty) params.append('difficulty', filters.difficulty);
         if (filters?.tags) params.append('tags', filters.tags);
-        if (filters?.platforms) params.append('platform', filters.platforms);
+        if (filters?.platforms) params.append('platforms', filters.platforms);
         if (filters?.sortBy) params.append('sortBy', filters.sortBy);
         if (filters?.favoritesOnly) params.append('favoritesOnly', 'true');
         if (filters?.stannumVerifiedOnly) params.append('stannumVerifiedOnly', 'true');

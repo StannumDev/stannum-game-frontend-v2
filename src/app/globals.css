@@ -10,7 +10,7 @@
 @layer components {
 
   .title-2{
-    @apply text-xl lg:text-2xl font-black uppercase text-pretty
+    @apply text-xl lg:text-2xl font-black text-pretty
   }
 
   .title-3{

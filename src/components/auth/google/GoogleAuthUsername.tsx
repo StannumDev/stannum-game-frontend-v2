@@ -48,7 +48,7 @@ export const GoogleAuthUsername = () => {
         <div className="w-full max-w-xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
             <div className="w-full flex flex-col justify-center items-center gap-4">
                 <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
-                <h2 className="text-3xl md:text-5xl font-black uppercase"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
+                <h2 className="text-3xl md:text-5xl font-black"><b className="text-stannum font-black">Crea</b> tu cuenta</h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="mt-8 w-full">
                 <div className='w-full flex flex-col gap-1'>

@@ -10,4 +10,5 @@ export interface ContinueEntry {
     progressPct: number;
     type: 'lesson' | 'instruction';
     activityLabel: string;
+    programProgress: number;
 };

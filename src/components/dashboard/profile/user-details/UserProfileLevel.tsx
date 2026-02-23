@@ -5,9 +5,10 @@ import { getRankByLevel } from '@/config/ranks';
 
 interface Props {
     user: FullUserDetails
+    id?: string
 }
 
-export const UserProfileLevel = ({ user }: Props) => {
+export const UserProfileLevel = ({ user, id }: Props) => {
 
     const rank = getRankByLevel(user.level?.currentLevel ?? 1);
     const nextLevelXP: number = Math.max(1, (user.level?.experienceNextLevel || 1) - (user.level?.experienceCurrentLevel || 0));
@@ -15,7 +16,7 @@ export const UserProfileLevel = ({ user }: Props) => {
     const progress: number = Math.min(100, Math.max(0, (actualXP / nextLevelXP) * 100));
 
     return (
-        <div className="mt-4 xl:mt-0 w-full md:w-auto relative xl:absolute xl:bottom-3 xl:left-3">
+        <div id={id} className="mt-4 xl:mt-0 w-full md:w-auto relative xl:absolute xl:bottom-3 xl:left-3">
             <div
                 className="absolute z-20 -top-2.5 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-black"
                 style={{ background: `linear-gradient(135deg, ${rank.color}, ${rank.colorSecondary})` }}

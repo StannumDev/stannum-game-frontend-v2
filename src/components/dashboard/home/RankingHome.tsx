@@ -5,7 +5,7 @@ import { getIndividualRanking  } from "@/services";
 import { errorHandler } from "@/helpers";
 import type { SimpleRanking } from "@/interfaces";
 import { RankingStarIcon, SpinnerIcon } from "@/icons";
-import { CardRankingHome, MotionWrapperLayoutClient } from "@/components";
+import { CardRankingHome, MotionWrapperLayout } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 
 export const RankingHome = () => {
@@ -31,9 +31,9 @@ export const RankingHome = () => {
     }, [_refreshCount]);
 
     return (
-        <MotionWrapperLayoutClient className="grow">
+        <MotionWrapperLayout className="grow">
             <section id="top-leaders" className="size-full card flex flex-col">
-                <div className="w-full flex justify-between items-center">
+                <div className="w-full flex justify-between items-start">
                     <div className="w-fit flex items-center gap-2">
                         <div>
                             <RankingStarIcon className="text-2xl lg:text-3xl relative -top-px"/>
@@ -43,9 +43,8 @@ export const RankingHome = () => {
                             <p className="text-xs lg:text-sm text-card-lightest">Ranking global de todos los programas</p>
                         </div>
                     </div>
-                    <div className="w-fit px-2.5 lg:px-4 py-1 text-sm lg:text-lg rounded-lg border border-card relative transition-200">
-                        {/* <InfoCircleIcon className="text-xs lg:text-base text-stannum absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 rounded-full bg-card scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-200"/> */}
-                        Temporada 1
+                    <div className="w-fit px-2.5 lg:px-4 py-1 text-xs lg:text-lg rounded-lg border border-card relative whitespace-nowrap transition-200">
+                        Pretemporada 2026
                     </div>
                 </div>
                 <div className="mt-4 lg:mt-8 w-full grow flex flex-col">
@@ -71,6 +70,6 @@ export const RankingHome = () => {
                     </div>
                 </div>
             </section>
-        </MotionWrapperLayoutClient>
+        </MotionWrapperLayout>
     )
 }

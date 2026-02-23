@@ -1,7 +1,7 @@
 'use client';
 
 // import { useState } from "react";
-// import { AnimatePresence, motion } from 'framer-motion';
+// import { AnimatePresence, m } from 'framer-motion';
 // import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
 // import { ChangeLessonsButtons } from "@/components";
 import type { Lesson } from "@/interfaces";
@@ -23,7 +23,7 @@ export const LessonDetails = ({ lesson }: Props) => {
                 </div>
                 {/* <AnimatePresence mode="wait" initial={false}>
                     {isSaved ? (
-                        <motion.button
+                        <m.button
                             key="isSaved"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -34,9 +34,9 @@ export const LessonDetails = ({ lesson }: Props) => {
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
                             <BookmarkedIcon className="size-5 text-stannum group-hover:text-stannum/75 transition-200" />
-                        </motion.button>
+                        </m.button>
                     ) : (
-                        <motion.button
+                        <m.button
                             key="isNotSaved"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -47,7 +47,7 @@ export const LessonDetails = ({ lesson }: Props) => {
                             className="size-6 flex justify-center items-center shrink-0 group"
                         >
                             <BookmarkIcon className="size-5 text-white/75 group-hover:text-white transition-200" />
-                        </motion.button>
+                        </m.button>
                     )}
                 </AnimatePresence> */}
             </div>

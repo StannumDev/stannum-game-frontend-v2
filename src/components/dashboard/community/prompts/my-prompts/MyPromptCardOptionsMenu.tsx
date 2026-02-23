@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { EditIcon, HidePasswordIcon, OptionsIcon, ShowPasswordIcon } from '@/icons';
 import { togglePromptVisibility } from '@/services';
 import { errorHandler } from '@/helpers';
@@ -104,7 +104,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
             
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
@@ -133,7 +133,7 @@ export const MyPromptCardOptionsMenu = ({ promptId, currentVisibility, onVisibil
                                 );
                             })}
                         </ul>
-                    </motion.div>
+                    </m.div>
                 )}
             </AnimatePresence>
         </div>

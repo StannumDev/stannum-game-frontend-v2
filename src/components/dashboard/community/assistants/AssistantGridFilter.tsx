@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { CrossIcon, BookmarkedIcon, SearchIcon, FilterIcon } from '@/icons';
 import { BankFilterDropdown, STANNUMIcon } from '@/components';
 import { categoryOptions, difficultyOptions, platformOptions, sortByOptions } from '@/helpers/assistants';
@@ -139,14 +139,14 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
             </section>
             <AnimatePresence>
                 {isFiltersOpen && <>
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsFiltersOpen(false)}
                         className="md:hidden fixed inset-0 bg-black/60 z-[99999999] backdrop-blur-sm"
                     />
-                    <motion.div
+                    <m.div
                         initial={{ y: '100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
@@ -231,7 +231,7 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                                 </button>
                             </div>
                         </div>
-                    </motion.div>
+                    </m.div>
                 </> }
             </AnimatePresence>
         </>

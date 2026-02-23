@@ -1,7 +1,7 @@
 'use client'
 
 import { toast, ToastOptions } from 'react-toastify';
-import { CheckIcon, LevelUpIcon, MedalIcon, WarningOctagonIcon } from '@/icons';
+import { CheckIcon, FireIcon, LevelUpIcon, MedalIcon, WarningOctagonIcon } from '@/icons';
 import type { ToastData } from '@/interfaces';
 
 export const callToast = ({ message, type = "success" }: ToastData): null => {
@@ -11,7 +11,8 @@ export const callToast = ({ message, type = "success" }: ToastData): null => {
       type === 'error' ? <WarningOctagonIcon className='size-full text-invalid' /> :
       type === 'warning' ? <WarningOctagonIcon className='size-full text-invalid' /> :
       type === 'achievement' ? <MedalIcon className='size-full text-stannum' /> :
-      type === 'levelUp' && <LevelUpIcon className='size-full text-stannum' />,
+      type === 'levelUp' ? <LevelUpIcon className='size-full text-stannum' /> :
+      type === 'streak' && <FireIcon className='size-full text-amber-400' />,
     type: 'default',
     className: "contenedorToast",
   };

@@ -1,12 +1,12 @@
 'use client';
 
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { getCroppedImage, uploadProfilePhoto } from "@/services";
 import { AddPhotoIcon, RotateRightIcon, SpinnerIcon } from "@/icons";
-import { errorHandler } from "@/helpers";
+import { callToast, errorHandler } from "@/helpers";
 import styles from "@/components/styles/photoEditor.module.css";
 
 export const RegisterPhotoStep = () => {
@@ -23,6 +23,7 @@ export const RegisterPhotoStep = () => {
         if (!selectedFile) return;
         const fileSizeInMB = selectedFile.size / (1024 * 1024);
         if (fileSizeInMB > 20) {
+            callToast({ type: 'error', message: { title: 'Archivo muy grande', description: 'La imagen no puede superar los 20 MB.' } });
             return;
         }
         setFile(selectedFile);
@@ -140,7 +141,7 @@ export const RegisterPhotoStep = () => {
                 </div>
             }
             <div className="mt-8 w-full flex justify-center items-center gap-4">
-                <motion.button
+                <m.button
                     whileTap={{ scale: !isLoading ? 1.05 : 1 }}
                     whileHover={{ backgroundColor: '#515151' }}
                     disabled={isLoading}
@@ -149,8 +150,8 @@ export const RegisterPhotoStep = () => {
                     onClick={navigateToDashboard}
                 >
                     Omitir
-                </motion.button>
-                <motion.button
+                </m.button>
+                <m.button
                     whileTap={{ scale: !isLoading ? 1.05 : 1 }}
                     whileHover={{ backgroundColor: '#4fffdc' }}
                     disabled={isLoading}
@@ -159,7 +160,7 @@ export const RegisterPhotoStep = () => {
                     onClick={handleUpload}
                 >
                     {isLoading ? <SpinnerIcon className="animate-spin size-6" /> : "Guardar foto"}
-                </motion.button>
+                </m.button>
             </div>
         </div>
     );

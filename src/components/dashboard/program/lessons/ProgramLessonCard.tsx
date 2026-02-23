@@ -26,14 +26,14 @@ export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, 
                 </div>
                 { isCompleted ?
                     <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 bg-stannum text-card rounded-full flex justify-center items-center lg:gap-2 shrink-0 relative z-10'>
-                        <span className='sr-only lg:not-sr-only text-lg tracking-widest font-semibold uppercase'>Completado</span>
+                        <span className='sr-only lg:not-sr-only text-lg font-semibold'>Completado</span>
                         <CheckIcon className='size-6 lg:size-5'/>
                     </div>
                     :
                     <div className='w-fit flex items-center lg:gap-4 shrink-0 relative z-10'>
                         <div className='sr-only lg:not-sr-only subtitle-1'>Pendiente</div>
                         <div className='w-8 lg:w-auto lg:px-8 h-8 lg:h-12 lg:bg-card lg:border-2 lg:border-card-light rounded-full flex justify-center items-center gap-2 transition-200'>
-                            <span className='sr-only lg:not-sr-only text-lg tracking-widest font-semibold uppercase'>Reproducir</span>
+                            <span className='sr-only lg:not-sr-only text-lg font-semibold'>Reproducir</span>
                             <PlayIcon className='size-6 lg:size-5'/>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, 
                 </div>
                 <div className='hidden lg:flex w-fit mr-[7.5rem] items-center gap-4 shrink-0 relative z-10'>
                     <div className='subtitle-1 text-white/25'>{ isBlocked ? "Disponible luego de la sesión" : "Completa la lección anterior" }</div>
-                    <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 tracking-widest font-semibold uppercase flex justify-center items-center gap-2 transition-200'>
+                    <div className='px-8 h-12 bg-card border-2 border-card-light rounded-full text-lg text-white/50 font-semibold flex justify-center items-center gap-2 transition-200'>
                         Bloqueado
                     </div>
                 </div>

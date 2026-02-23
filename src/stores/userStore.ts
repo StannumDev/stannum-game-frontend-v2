@@ -93,6 +93,17 @@ export const useUserStore = create<UserStore>((set, get) => ({
                         type: 'levelUp',
                     });
                 }
+
+                if (user.dailyStreak?.lastActivityLocalDate && user.dailyStreak.lastActivityLocalDate !== currentUser.dailyStreak?.lastActivityLocalDate) {
+                    const streakCount = user.dailyStreak.count;
+                    callToast({
+                        message: {
+                            title: `¡Racha de ${streakCount} ${streakCount === 1 ? 'día' : 'días'}!`,
+                            description: streakCount === 1 ? '¡Empezaste una nueva racha!' : '¡Seguí así!',
+                        },
+                        type: 'streak',
+                    });
+                }
             }
 
             set({ user, error: null, _refreshCount: get()._refreshCount + 1 });

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { IoRocket } from 'react-icons/io5';
 
 interface Props{
@@ -14,7 +14,7 @@ export const StepSixTutorial = ({direction}:Props) => {
     };
 
     return (
-        <motion.main
+        <m.main
             custom={direction}
             initial="enter"
             animate="center"
@@ -23,10 +23,10 @@ export const StepSixTutorial = ({direction}:Props) => {
             className="w-full lg:grow py-12 lg:py-4 text-center flex flex-col justify-center items-center"
         >
             <IoRocket className="size-12 lg:size-16 text-stannum mb-4" />
-            <h2 className='w-full text-2xl lg:text-5xl font-black uppercase'>
+            <h2 className='w-full text-2xl lg:text-5xl font-black'>
                 ¡A Jugar!
             </h2>
             <p className='mt-4 w-full max-w-xl font-thin lg:text-lg text-white/50'>Ya conocés el terreno. Completá lecciones, subí de nivel y dominá el <b className='text-stannum font-semibold'>ranking.</b> Tu progreso está en tus manos.</p>
-        </motion.main>
+        </m.main>
     )
 }

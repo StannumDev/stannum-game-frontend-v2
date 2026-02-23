@@ -6,7 +6,7 @@ import { SoundOnIcon, SoundOffIcon, PlayIcon, PauseIcon } from "@/icons";
 import { LoadingScreen } from "@/components";
 import Image from "next/image";
 import background from '@/assets/background/the_game.webp';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 
 const INTRO_SEEN = 'stannum_intro_v1';
 
@@ -72,7 +72,7 @@ export const VideoIntro = () => {
             { !isEnded && <div className="size-full bg-black absolute top-0 left-0"></div>}
             <AnimatePresence mode="wait">
                 { !start ?
-                    <motion.div
+                    <m.div
                         key="video-intro"
                         exit={{ opacity: 0 }}
                         transition={{ duration: 2 }}
@@ -89,9 +89,9 @@ export const VideoIntro = () => {
                                 Comenzar
                             </button>
                         </div>
-                    </motion.div>
+                    </m.div>
                 : !isEnded &&
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -137,7 +137,7 @@ export const VideoIntro = () => {
                                     Tu navegador no soporta este video.
                                 </video>
                            </div>
-                    </motion.div>
+                    </m.div>
                 }
             </AnimatePresence>
         </div>

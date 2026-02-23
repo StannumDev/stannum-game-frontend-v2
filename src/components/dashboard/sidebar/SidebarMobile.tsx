@@ -1,16 +1,18 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
+import { formatCoins } from '@/utilities';
 import styles from '@/components/styles/sidebar.module.css';
 import default_user from "@/assets/user/default_user.webp";
+import stannum_coin from "@/assets/tins_coin.svg";
 
 interface Props{
-    user: UserSidebarDetails;
+    user: UserSidebarDetails | null;
     links: Array<SidebarLink>;
     pathname: string;
     isLoading: boolean;
@@ -35,17 +37,12 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
         setLastScroll(scrollYPosition);
     });
 
-    useEffect(() => {
-      setIsSearching(false);
-    }, [pathname])
-    
-
     return (
         <>
             <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
                 <AnimatePresence>
                     { isShow &&
-                        <motion.div
+                        <m.div
                             initial={{ y: '-100%' }}
                             animate={{ y: 0 }}
                             exit={{ y: '-100%' }}
@@ -55,25 +52,40 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                             <Link href={'/dashboard'} aria-label="Inicio STANNUM Game">
                                 <STANNUMIcon className="fill-white h-8"/>
                             </Link>
-                            <Link href={`/dashboard/profile/${user?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden">
-                                { isLoading ?
-                                    <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
-                                :
-                                    <Image
-                                        priority
-                                        width={32}
-                                        height={32}
-                                        src={ profilePhotoError || !user.profilePhoto ? default_user : user.profilePhoto}
-                                        alt='Foto de perfil Usuario STANNUM Game'
-                                        className="size-full object-cover absolute top-0 left-0 z-10"
-                                        onError={() => setProfilePhotoError(true)}
-                                    />
-                                }
-                            </Link>
-                        </motion.div>
+                            <div className="flex items-center gap-2">
+                                {!isLoading && user && (
+                                    <div id="tins-display" className="flex items-center gap-1">
+                                        <Image src={stannum_coin} alt="Tins" width={12} height={12} className="shrink-0" />
+                                        <span className="text-[11px] text-amber-400 font-bold">{formatCoins(user.coins ?? 0)}</span>
+                                    </div>
+                                )}
+                                <div className="relative">
+                                    <Link href={`/dashboard/profile/${user?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden block">
+                                        { isLoading ?
+                                            <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
+                                        :
+                                            <Image
+                                                priority
+                                                width={32}
+                                                height={32}
+                                                src={ profilePhotoError || !user?.profilePhoto ? default_user : user.profilePhoto}
+                                                alt='Foto de perfil Usuario STANNUM Game'
+                                                className="size-full object-cover absolute top-0 left-0 z-10"
+                                                onError={() => setProfilePhotoError(true)}
+                                            />
+                                        }
+                                    </Link>
+                                    {!isLoading && user && (
+                                        <span className="absolute -bottom-1 -right-1 z-20 min-w-4 h-4 px-0.5 rounded-full bg-stannum text-[8px] font-black text-card flex justify-center items-center border-2 border-background">
+                                            {user.currentLevel}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        </m.div>
                     }
                 </AnimatePresence>
-                <motion.nav
+                <m.nav
                     className={`w-full bg-background pointer-events-auto absolute bottom-0 left-0 ${styles.sidebar__links}`}
                     initial={{ y: '100%' }}
                     animate={{ y: 0 }}
@@ -86,7 +98,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                     {i === 1 && (
                                         <BuscadorSidebarMobile pathname={pathname} isSearching={isSearching} setIsSearching={setIsSearching}/>
                                     )}
-                                    <motion.li
+                                    <m.li
                                         key={i}
                                         className="w-full"
                                         initial={{ y: 100, opacity: 0 }}
@@ -94,12 +106,12 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         transition={{ type: 'spring', delay: i === 0 ? 0.125 : 0.125 + (i*0.125 + 0.125), bounce: 0}}
                                     >
                                         <SidebarMobileLink link={link} pathname={pathname} isSearching={isSearching}/>
-                                    </motion.li>
+                                    </m.li>
                                 </Fragment>
                             )
                         }
                     </ul>
-                </motion.nav>
+                </m.nav>
             </div>
         </>
     )
