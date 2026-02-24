@@ -15,9 +15,10 @@ interface Props {
     nextModuleName?: string;
     nextModuleHref?: string;
     isNextModuleAvailable?: boolean;
+    onChestClick?: (chestId: string) => void;
 }
 
-export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAvailable }: Props) => {
+export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAvailable, onChestClick }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerWidth, setContainerWidth] = useState(0);
     const [isMobile, setIsMobile] = useState(true);
@@ -68,7 +69,10 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
         }
     }
 
-    const firstActiveId = items.find(i => i.state === 'active')?.id;
+    const firstActiveLessonOrInstruction = items.find(i => i.state === 'active' && i.type !== 'chest');
+    const firstActiveChest = items.find(i => i.state === 'active' && i.type === 'chest');
+    const firstActiveId = firstActiveLessonOrInstruction?.id;
+    const firstActiveChestId = firstActiveChest?.id;
 
     return (
         <div ref={containerRef} className="relative w-full mx-auto" style={{ height: totalHeight }}>
@@ -85,8 +89,9 @@ export const PathMap = ({ items, nextModuleName, nextModuleHref, isNextModuleAva
                     position={positions[i]}
                     nodeIndex={i}
                     nodeSize={nodeSize}
-                    isFirstActive={item.id === firstActiveId}
+                    isFirstActive={item.id === firstActiveId || item.id === firstActiveChestId}
                     isMobile={isMobile}
+                    onChestClick={onChestClick}
                 />
             ))}
             {nextModuleHref && positions[items.length] && (

@@ -2,12 +2,13 @@ export type NodeState = 'completed' | 'active' | 'blocked';
 
 export interface PathMapItem {
     id: string;
-    type: 'lesson' | 'instruction';
+    type: 'lesson' | 'instruction' | 'chest';
     index: number;
     title: string;
     href: string;
     state: NodeState;
     rewardXP?: number;
+    chestRarity?: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 }
 
 export interface NodePosition {

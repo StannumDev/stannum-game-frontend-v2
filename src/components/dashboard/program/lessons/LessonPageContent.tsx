@@ -5,6 +5,8 @@ import { LoadingScreen, LessonVideoPlayer, LessonMiniatureCard, InstructionMinia
 import { useUserStore } from '@/stores/userStore';
 import { isLessonAvailable, isInstructionAvailable, isModuleComplete } from '@/utilities';
 import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
+import { getModuleChests, type ChestConfig } from '@/config/chests';
+import { ChestMiniatureCard } from '@/components/dashboard/program/modules/path-map/ChestMiniatureCard';
 import { Suspense, useEffect, useState } from 'react';
 
 interface Props {
@@ -61,12 +63,33 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
     const isCurrentModuleComplete = isModuleComplete(user, typedProgramId, program_module, [lesson.id]);
     const nextModule = nextModuleEntry && nextModuleFirstLesson && isCurrentModuleComplete ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
 
-    const miniatureItems: Array<{ type: 'lesson'; lesson: Lesson; index: number } | { type: 'instruction'; instruction: Instruction }> = [];
+    const chestAfterLesson = getModuleChests(program_module.id).find(c => c.afterItemId === lesson.id);
+    const nextChest = chestAfterLesson ? {
+        id: chestAfterLesson.id,
+        name: chestAfterLesson.name,
+        moduleHref: `/dashboard/library/${programId}/${section.id}/${program_module.id}`,
+    } : undefined;
+
+    const chests = getModuleChests(program_module.id);
+    const userChestsOpened = user.programs?.[typedProgramId]?.chestsOpened || [];
+    const moduleHref = `/dashboard/library/${programId}/${section.id}/${program_module.id}`;
+
+    const miniatureItems: Array<
+        | { type: 'lesson'; lesson: Lesson; index: number }
+        | { type: 'instruction'; instruction: Instruction }
+        | { type: 'chest'; chest: ChestConfig }
+    > = [];
     program_module.lessons.forEach((l, i) => {
         miniatureItems.push({ type: 'lesson', lesson: l, index: i + 1 });
+        for (const chest of chests.filter(c => c.afterItemId === l.id)) {
+            miniatureItems.push({ type: 'chest', chest });
+        }
         const instructionsAfter = program_module.instructions.filter(inst => inst.afterLessonId === l.id);
         for (const inst of instructionsAfter) {
             miniatureItems.push({ type: 'instruction', instruction: inst });
+            for (const chest of chests.filter(c => c.afterItemId === inst.id)) {
+                miniatureItems.push({ type: 'chest', chest });
+            }
         }
     });
 
@@ -85,7 +108,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     isAvailable={available}
                 />
             );
-        } else {
+        } else if (item.type === 'instruction') {
             const userInstr = userInstructions.find(ui => ui.instructionId === item.instruction.id);
             const available = isInstructionAvailable(user, typedProgramId, item.instruction);
             return (
@@ -95,6 +118,19 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     programId={programId}
                     isAvailable={available}
                     userInstruction={userInstr}
+                />
+            );
+        } else {
+            const isOpened = userChestsOpened.some(c => c.chestId === item.chest.id);
+            const prereqIsLesson = user.programs?.[typedProgramId]?.lessonsCompleted?.some(ul => ul.lessonId === item.chest.afterItemId);
+            const prereqIsInstruction = userInstructions.some(ui => ui.instructionId === item.chest.afterItemId && ['SUBMITTED', 'GRADED'].includes(ui.status));
+            const prereqCompleted = prereqIsLesson || prereqIsInstruction;
+            const state = isOpened ? 'completed' : prereqCompleted ? 'active' : 'blocked';
+            return (
+                <ChestMiniatureCard
+                    key={item.chest.id}
+                    state={state}
+                    moduleHref={moduleHref}
                 />
             );
         }
@@ -115,6 +151,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                             isNextLessonAvailable={isNextLessonAvailable}
                             nextInstruction={nextInstruction}
                             nextModule={nextModule}
+                            nextChest={nextChest}
                             userId={user.username}
                         />
                     </Suspense>

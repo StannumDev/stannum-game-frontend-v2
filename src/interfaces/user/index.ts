@@ -107,6 +107,10 @@ export interface UserProgram {
         lessonId: string;
         viewedAt: string;
     }[];
+    chestsOpened?: {
+        chestId: string;
+        openedAt: string;
+    }[];
     lastWatchedLesson?: {
         lessonId: string;
         viewedAt: string;
@@ -118,6 +122,9 @@ export interface UserProgram {
     //     totalScore: number;
     // }[];
     productKey?: string;
+    coinsRewardedModules?: string[];
+    coinsRewardedProgram?: boolean;
+    totalXp?: number;
 }
 
 export interface UserPreferences {
@@ -130,6 +137,19 @@ export interface UserPreferences {
     hasProfilePhoto: boolean;
     isGoogleAccount: boolean;
     allowPasswordLogin: boolean;
+}
+
+export type CoverRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+
+export interface StoreCoverItem {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    rarity: CoverRarity;
+    imageKey: string;
+    owned: boolean;
+    equipped: boolean;
 }
 
 export interface FullUserDetails {
@@ -159,16 +179,17 @@ export interface FullUserDetails {
     };
     coins: number;
     xpHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED";
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "CHEST_OPENED";
         xp: number;
         date: string;
         // meta?: string;
     }>;
     coinsHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED";
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED" | "STORE_PURCHASE" | "CHEST_OPENED";
         coins: number;
         date: string;
     }>;
+    equippedCoverId?: string;
     unlockedCovers?: Array<{
         coverId: string;
         unlockedDate: string;

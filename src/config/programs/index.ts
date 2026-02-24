@@ -8,7 +8,8 @@ import background_tia_summer from '@/assets/background/background_tia_summer.web
 
 let muxPlaybackIds: Record<string, string> = {};
 try {
-    muxPlaybackIds = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+    const parsed = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+    muxPlaybackIds = (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) ? parsed : {};
 } catch {
     muxPlaybackIds = {};
 }

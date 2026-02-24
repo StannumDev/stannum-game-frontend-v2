@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { NewAppsIcon } from "@/icons";
-import { MotionWrapperLayout, NavbarSection, StoreCard, StoreTinsBalance, StoreTutorial } from "@/components";
+import { MotionWrapperLayout, NavbarSection, StoreCard, StoreTutorial } from "@/components";
 import { programs } from "@/config/programs";
 import { useUserStore } from "@/stores/userStore";
 
@@ -43,12 +43,9 @@ export const StoreSectionsLayout = () => {
     return (
         <MotionWrapperLayout>
             <section className="w-full card px-0">
-                <div className="mb-4 w-full px-4 lg:px-6 flex justify-between items-center gap-2">
-                    <div className="flex items-center gap-2">
-                        <h2 className="title-2">Programas</h2>
-                        <StoreTutorial/>
-                    </div>
-                    <StoreTinsBalance/>
+                <div className="mb-4 px-4 lg:px-6 flex items-center gap-2">
+                    <h2 className="title-2">Programas</h2>
+                    <StoreTutorial/>
                 </div>
                 <NavbarSection<ProgramCategory>
                     sections={sections}

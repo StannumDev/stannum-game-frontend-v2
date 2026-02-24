@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import {
     PlayIcon, FireIcon, RankingStarIcon, CompassIcon, KeyIcon,
     CheckIcon, LockIcon, CrownIcon, RouteIcon, ToolsIcon,
-    UserCircleIcon, EditIcon, MedalIcon,
+    UserCircleIcon, EditIcon, MedalIcon, ChestIcon,
 } from '@/icons';
 import { IoGameController, IoRocket } from 'react-icons/io5';
 import tinsCoin from '@/assets/tins_coin.svg';
@@ -29,4 +29,5 @@ export const TUTORIAL_ICONS = {
     gamepad: toHtml(IoGameController),
     rocket: toHtml(IoRocket),
     coin: coinIconHtml,
+    chest: toHtml(ChestIcon),
 } as const;

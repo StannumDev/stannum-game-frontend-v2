@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { MotionProvider, ToastLayout } from "@/components";
+import { GlobalErrorListener } from "@/components/shared/GlobalErrorListener";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -102,6 +103,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
             {children}
           </MotionProvider>
           <ToastLayout/>
+          <GlobalErrorListener/>
         </body>
       </html>
     </GoogleOAuthProvider>

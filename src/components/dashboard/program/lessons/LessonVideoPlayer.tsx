@@ -10,7 +10,7 @@ import { markLessonAsCompleted, saveLastWatchedLesson } from "@/services";
 import type { LessonCompletionResult } from "@/services/lesson";
 import { Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
-import { CrownIcon } from "@/icons";
+import { CrownIcon, ChestIcon } from "@/icons";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import stannum_coin from "@/assets/tins_coin.svg";
 import { useUserStore } from '@/stores/userStore';
@@ -24,6 +24,7 @@ interface Props {
     isNextLessonAvailable: boolean;
     nextInstruction?: { id: string; title: string };
     nextModule?: { name: string; firstLessonId: string };
+    nextChest?: { id: string; name: string; moduleHref: string };
     userId: string;
 }
 
@@ -36,7 +37,7 @@ const END_THRESHOLD = 10;
 const NEXT_COUNTDOWN = 15;
 const SAVE_INTERVAL_MS = 10_000;
 
-export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, nextModule, userId }: Props) => {
+export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted, isNextLessonAvailable, nextInstruction, nextModule, nextChest, userId }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
@@ -99,7 +100,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         if (showNextOverlay && xpResult && xpResult.totalGain > 0) {
             import('canvas-confetti').then(({ default: confetti }) => {
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            });
+            }).catch(() => {});
         }
     }, [showNextOverlay, xpResult]);
 
@@ -209,6 +210,16 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     )}
                     {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
+                    {nextChest && (
+                        <button
+                            type="button"
+                            onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                        >
+                            <ChestIcon className="size-4" />
+                            <span>¡Cofre desbloqueado! Reclamalo</span>
+                        </button>
+                    )}
                     <p className="text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
                         <Image
@@ -217,6 +228,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                             alt="Miniatura"
                             src={`https://image.mux.com/${nextLesson.muxPlaybackId}/thumbnail.png?width=160&height=90&time=5`}
                             className="rounded-lg"
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
                         <div className="flex-1">
                             <p className="text-sm opacity-80">Siguiente lección</p>
@@ -252,6 +264,16 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     )}
                     {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
+                    {nextChest && (
+                        <button
+                            type="button"
+                            onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                        >
+                            <ChestIcon className="size-4" />
+                            <span>¡Cofre desbloqueado! Reclamalo</span>
+                        </button>
+                    )}
                     <p className="text-lg font-bold text-center">Completá la instrucción para seguir avanzando ({countdown}s)</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente instrucción</p>
@@ -286,6 +308,16 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     )}
                     {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
+                    {nextChest && (
+                        <button
+                            type="button"
+                            onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                        >
+                            <ChestIcon className="size-4" />
+                            <span>¡Cofre desbloqueado! Reclamalo</span>
+                        </button>
+                    )}
                     <p className="text-lg font-bold text-center">Siguiente módulo en {countdown} segundos...</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente módulo</p>
@@ -320,6 +352,16 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         </div>
                     )}
                     {xpResult && xpResult.totalGain > 0 && <div className="w-32 border-t border-white/20" />}
+                    {nextChest && (
+                        <button
+                            type="button"
+                            onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
+                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                        >
+                            <ChestIcon className="size-4" />
+                            <span>¡Cofre desbloqueado! Reclamalo</span>
+                        </button>
+                    )}
                     <p className="text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
                     <div className="flex gap-4 mt-2">
                         <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>

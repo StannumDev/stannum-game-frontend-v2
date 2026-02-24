@@ -5,14 +5,14 @@ import { clearLoginFlag } from './tokenStorage';
 import { callToast } from '@/helpers/callToast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const REFRESH_TIMEOUT_MS = 10_000;
+const REFRESH_TIMEOUT_MS = 20_000;
 
 const SKIP_REFRESH_ENDPOINTS = [
   '/auth/login',
   '/auth/register',
   '/auth/google',
   '/auth/refresh-token',
-  '/auth/recovery-password',
+  '/auth/password-recovery',
   '/auth/verify-recovery-otp',
   '/auth/reset-password',
 ];
@@ -50,9 +50,24 @@ const forceLogout = () => {
   }
 };
 
+const MAX_RETRIES = 2;
+const RETRY_DELAY_MS = 1000;
+const isRetryable = (error: AxiosError) =>
+  error.config?.method === 'get' && (!error.response || error.response.status >= 500);
+
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
+    const config = error.config as InternalAxiosRequestConfig & { _retryCount?: number };
+    if (config && isRetryable(error)) {
+      config._retryCount = config._retryCount ?? 0;
+      if (config._retryCount < MAX_RETRIES) {
+        config._retryCount++;
+        const delay = RETRY_DELAY_MS * Math.pow(2, config._retryCount - 1);
+        await new Promise(r => setTimeout(r, delay));
+        return api(config);
+      }
+    }
     if (isLoggingOut) return Promise.reject(error);
 
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };

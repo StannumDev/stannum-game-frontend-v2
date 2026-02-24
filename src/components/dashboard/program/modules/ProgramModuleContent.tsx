@@ -10,15 +10,21 @@ import { getTutorialStatus, markTutorialAsCompleted } from '@/services';
 import { errorHandler } from '@/helpers';
 import { TUTORIAL_ICONS } from '@/helpers/tutorialIcons';
 import type { Instruction, Lesson, Module, ProgramId } from '@/interfaces';
-import { ListIcon, RouteIcon } from '@/icons';
+import { ListIcon, RouteIcon, ChestIcon } from '@/icons';
 import { PathMap } from './path-map/PathMap';
 import { computeLessonXP } from './path-map/pathMapUtils';
 import type { PathMapItem, NodeState } from './path-map/pathMapUtils';
+import { getModuleChests } from '@/config/chests';
+import type { ChestConfig } from '@/config/chests';
+import { ChestOpenModal } from './path-map/ChestOpenModal';
 import 'driver.js/dist/driver.css';
 
-type ModuleItem = { type: 'lesson'; lesson: Lesson; index: number } | { type: 'instruction'; instruction: Instruction; index: number };
+type ModuleItem =
+    | { type: 'lesson'; lesson: Lesson; index: number }
+    | { type: 'instruction'; instruction: Instruction; index: number }
+    | { type: 'chest'; chest: ChestConfig };
 
-function buildModuleItems(module: Module): ModuleItem[] {
+function buildModuleItems(module: Module, chests: ChestConfig[]): ModuleItem[] {
     const items: ModuleItem[] = [];
     let lessonIndex = 0;
     let instructionIndex = 0;
@@ -26,10 +32,18 @@ function buildModuleItems(module: Module): ModuleItem[] {
         lessonIndex++;
         items.push({ type: 'lesson', lesson, index: lessonIndex });
 
+        for (const chest of chests.filter(c => c.afterItemId === lesson.id)) {
+            items.push({ type: 'chest', chest });
+        }
+
         const instructionsAfter = module.instructions.filter(i => i.afterLessonId === lesson.id);
         for (const instr of instructionsAfter) {
             instructionIndex++;
             items.push({ type: 'instruction', instruction: instr, index: instructionIndex });
+
+            for (const chest of chests.filter(c => c.afterItemId === instr.id)) {
+                items.push({ type: 'chest', chest });
+            }
         }
     }
     return items;
@@ -52,6 +66,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
     const driverRef = useRef<Driver | null>(null);
 
     const [view, setView] = useState<'map' | 'list'>('map');
+    const [openChestId, setOpenChestId] = useState<string | null>(null);
 
     useEffect(() => {
         try {
@@ -172,6 +187,19 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                 });
             }
 
+            const firstChest = pathMapItems.find(i => i.type === 'chest');
+            if (firstChest && document.getElementById(`path-node-${firstChest.id}`)) {
+                steps.push({
+                    element: `#path-node-${firstChest.id}`,
+                    popover: {
+                        title: `${TUTORIAL_ICONS.chest} Cofres de Recompensa`,
+                        description: "Al completar ciertas actividades desbloqueás <span class='text-amber-400 font-semibold'>cofres</span> con recompensas: <span class='text-stannum font-semibold'>XP</span>, <span class='text-amber-400 font-semibold'>Tins</span> y más.",
+                        side: 'right',
+                        align: 'center',
+                    },
+                });
+            }
+
             if (document.getElementById('view-toggle')) {
                 steps.push({
                     element: '#view-toggle',
@@ -254,7 +282,9 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
 
     const userLessons = user.programs?.[typedProgramId]?.lessonsCompleted || [];
     const userInstructions = user.programs?.[typedProgramId]?.instructions || [];
-    const items = buildModuleItems(foundModule);
+    const userChestsOpened = user.programs?.[typedProgramId]?.chestsOpened || [];
+    const chests = getModuleChests(foundModule.id);
+    const items = buildModuleItems(foundModule, chests);
 
     const pathMapItems: PathMapItem[] = items.map((item) => {
         if (item.type === 'lesson') {
@@ -276,7 +306,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                 state,
                 rewardXP: computeLessonXP(moduleIndex, item.lesson.duration),
             };
-        } else {
+        } else if (item.type === 'instruction') {
             const userInstruction = userInstructions.find((ui) => ui.instructionId === item.instruction.id);
             const isAvailable = isInstructionAvailable(user, typedProgramId, item.instruction);
             const isCompleted = userInstruction && ['SUBMITTED', 'GRADED'].includes(userInstruction.status);
@@ -294,6 +324,34 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                 href: `/dashboard/library/${programId}/instructions/${item.instruction.id}`,
                 state,
                 rewardXP: item.instruction.rewardXP,
+            };
+        } else {
+            const isOpened = userChestsOpened.some(c => c.chestId === item.chest.id);
+            const prereqItem = items.find(i =>
+                (i.type === 'lesson' && i.lesson.id === item.chest.afterItemId) ||
+                (i.type === 'instruction' && i.instruction.id === item.chest.afterItemId)
+            );
+            let prereqCompleted = false;
+            if (prereqItem?.type === 'lesson') {
+                prereqCompleted = userLessons.some(ul => ul.lessonId === prereqItem.lesson.id);
+            } else if (prereqItem?.type === 'instruction') {
+                const ui = userInstructions.find(u => u.instructionId === prereqItem.instruction.id);
+                prereqCompleted = !!ui && ['SUBMITTED', 'GRADED'].includes(ui.status);
+            }
+
+            let state: NodeState;
+            if (isOpened) state = 'completed';
+            else if (prereqCompleted) state = 'active';
+            else state = 'blocked';
+
+            return {
+                id: item.chest.id,
+                type: 'chest' as const,
+                index: 0,
+                title: item.chest.name,
+                href: '',
+                state,
+                chestRarity: item.chest.rarity,
             };
         }
     });
@@ -330,6 +388,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                         nextModuleName={nextModuleName}
                         nextModuleHref={nextModuleHref}
                         isNextModuleAvailable={isModuleComplete(user, typedProgramId, foundModule)}
+                        onChestClick={(chestId) => setOpenChestId(chestId)}
                     />
                 ) : (
                     <div className="flex flex-col gap-4">
@@ -349,7 +408,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                                         isBlocked={item.lesson.blocked}
                                     />
                                 );
-                            } else {
+                            } else if (item.type === 'instruction') {
                                 const userInstruction = userInstructions.find((ui) => ui.instructionId === item.instruction.id);
                                 const isAvailable = isInstructionAvailable(user, typedProgramId, item.instruction);
                                 return (
@@ -362,11 +421,66 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                                         userInstruction={userInstruction}
                                     />
                                 );
+                            } else {
+                                const isOpened = userChestsOpened.some(c => c.chestId === item.chest.id);
+                                const prereqPathItem = pathMapItems.find(p => p.id === item.chest.afterItemId);
+                                const isActive = !isOpened && prereqPathItem?.state === 'completed';
+                                return (
+                                    <button
+                                        key={item.chest.id}
+                                        type="button"
+                                        onClick={() => isActive && setOpenChestId(item.chest.id)}
+                                        disabled={!isActive && !isOpened}
+                                        className={`flex items-center gap-4 p-4 rounded-xl border transition-colors duration-150 ${
+                                            isOpened
+                                                ? 'bg-amber-500/5 border-amber-500/20 opacity-60'
+                                                : isActive
+                                                    ? 'bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20 cursor-pointer'
+                                                    : 'bg-card border-card-light opacity-40 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        <div className={`size-10 rounded-full flex items-center justify-center ${
+                                            isOpened
+                                                ? 'bg-amber-500/20 text-amber-400/50'
+                                                : isActive
+                                                    ? 'bg-gradient-to-br from-amber-400 to-amber-600 text-amber-950'
+                                                    : 'bg-card-light text-card-lightest'
+                                        }`}>
+                                            <ChestIcon className="size-5" />
+                                        </div>
+                                        <div className="flex flex-col items-start">
+                                            <span className="text-xs font-semibold uppercase tracking-widest text-amber-400">Cofre</span>
+                                            {isActive && <span className="text-sm font-semibold text-white">Reclamá tu recompensa</span>}
+                                        </div>
+                                        <span className={`ml-auto text-xs font-bold px-3 py-1 rounded-full ${
+                                            isOpened
+                                                ? 'bg-amber-500/10 text-amber-400/50'
+                                                : isActive
+                                                    ? 'bg-amber-500 text-amber-950'
+                                                    : 'bg-card-light text-card-lightest'
+                                        }`}>
+                                            {isOpened ? 'Abierto' : isActive ? 'Abrir' : 'Bloqueado'}
+                                        </span>
+                                    </button>
+                                );
                             }
                         })}
                     </div>
                 )}
             </div>
+            {openChestId && (() => {
+                const chestConfig = chests.find(c => c.id === openChestId);
+                if (!chestConfig) return null;
+                return (
+                    <ChestOpenModal
+                        chestId={openChestId}
+                        programId={programId}
+                        showModal={true}
+                        setShowModal={(show) => { if (!show) setOpenChestId(null); }}
+                        onOpened={() => setOpenChestId(null)}
+                    />
+                );
+            })()}
         </section>
     );
 };
