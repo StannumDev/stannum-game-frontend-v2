@@ -62,7 +62,7 @@ export const markTutorialAsCompleted = async (tutorialName: string): Promise<voi
     }
 };
 
-export const updateUserProfile = async (data:{name:string, birthdate:string, country:string, region:string, enterprise:string, enterpriseRole:string, aboutme:string}): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[] }> => {
+export const updateUserProfile = async (data:{name:string, birthdate:string, country:string, region:string, enterprise:string, enterpriseRole:string, aboutme:string}): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[]; data?: FullUserDetails }> => {
     try {
         const response = await api.put(`${process.env.NEXT_PUBLIC_API_USER_URL}/edit`, data);
         if (!response?.data?.success) throw new Error("Unexpected response structure");

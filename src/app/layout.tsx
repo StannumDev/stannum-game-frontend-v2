@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { STANNUMLogo, MotionProvider, ToastLayout } from "@/components";
 import { ToolsIcon } from "@/icons";
+import { GlobalErrorListener } from "@/components/shared/GlobalErrorListener";
 import "./globals.css";
 
 const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
@@ -117,6 +118,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
             </MotionProvider>
           )}
           <ToastLayout/>
+          <GlobalErrorListener/>
         </body>
       </html>
     </GoogleOAuthProvider>

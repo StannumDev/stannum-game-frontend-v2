@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { StoreCover, StoreSectionsLayout } from "@/components";
+import { StoreTinsBalance, StoreTinsSection, StoreSectionsLayout } from "@/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,9 +26,14 @@ export const metadata: Metadata = {
 export default function StorePage() {
     return (
         <main className="main-container">
-            <h1 className="sr-only">Tienda STANNUM Game</h1>
-            <StoreCover/>
-            <Suspense fallback={null}>
+            <header className="w-full flex justify-between items-center gap-2">
+                <h1 className="title-1">Tienda</h1>
+                <StoreTinsBalance/>
+            </header>
+            <Suspense fallback={<div className="w-full card animate-pulse h-64 bg-card-light rounded-xl" />}>
+                <StoreTinsSection/>
+            </Suspense>
+            <Suspense fallback={<div className="w-full card animate-pulse h-40 bg-card-light rounded-xl" />}>
                 <StoreSectionsLayout/>
             </Suspense>
         </main>

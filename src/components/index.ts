@@ -77,6 +77,8 @@ export { StoreTutorial } from "./dashboard/store/StoreTutorial";
 export { StoreSectionsLayout } from "./dashboard/store/StoreSectionsLayout";
 export { StoreCard } from "./dashboard/store/StoreCard";
 export { StoreTinsBalance } from "./dashboard/store/StoreTinsBalance";
+export { StoreTinsSection } from "./dashboard/store/StoreTinsSection";
+export { StoreCoverCard } from "./dashboard/store/StoreCoverCard";
 
 // PROGRAMS
 export { ProgramCover } from "./dashboard/program/ProgramCover";

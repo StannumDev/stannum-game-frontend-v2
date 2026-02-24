@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { m } from 'framer-motion';
-import { CheckIcon, PlayIcon, CompassIcon, LockIcon, CrownIcon } from '@/icons';
+import { CheckIcon, PlayIcon, CompassIcon, LockIcon, CrownIcon, ChestIcon } from '@/icons';
 import type { PathMapItem, NodePosition } from './pathMapUtils';
 import { getLabelSide } from './pathMapUtils';
 import styles from '@/components/styles/PathMap.module.css';
@@ -12,10 +12,12 @@ interface Props {
     nodeSize: number;
     isFirstActive: boolean;
     isMobile: boolean;
+    onChestClick?: (chestId: string) => void;
 }
 
 function NodeIcon({ state, type }: { state: PathMapItem['state']; type: PathMapItem['type'] }) {
     const size = 'size-6 lg:size-7';
+    if (type === 'chest') return <ChestIcon className={size} />;
     if (state === 'completed') return <CheckIcon className={size} />;
     if (state === 'blocked') return <LockIcon className={size} />;
     return type === 'lesson'
@@ -23,10 +25,23 @@ function NodeIcon({ state, type }: { state: PathMapItem['state']; type: PathMapI
         : <CompassIcon className={size} />;
 }
 
-export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive, isMobile }: Props) => {
+function getNodeStyleClass(item: PathMapItem, isFirstActive: boolean): string {
+    if (item.type === 'chest') {
+        if (item.state === 'completed') return styles.nodeChestOpened;
+        if (item.state === 'active') return `${styles.nodeChest} ${isFirstActive ? styles.chestGlow : ''}`;
+        return styles.nodeBlocked;
+    }
+    if (item.state === 'completed') return styles.nodeCompleted;
+    if (item.state === 'active') return `${styles.nodeActive} ${isFirstActive ? styles.activeGlow : ''}`;
+    return styles.nodeBlocked;
+}
+
+export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive, isMobile, onChestClick }: Props) => {
     const labelSide = getLabelSide(nodeIndex);
-    const isClickable = item.state !== 'blocked';
+    const isChest = item.type === 'chest';
     const isActive = item.state === 'active';
+    const isChestOpened = isChest && item.state === 'completed';
+    const isClickable = item.state !== 'blocked' && !isChestOpened;
 
     const nodeContent = (
         <m.div
@@ -36,20 +51,23 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             whileHover={isClickable ? { scale: 1.1, transition: { duration: 0.15 } } : undefined}
             whileTap={isClickable ? { scale: 0.95, transition: { duration: 0.1 } } : undefined}
             transition={{ type: 'spring', bounce: 0, delay: nodeIndex * 0.05 }}
-            className={`rounded-full flex justify-center items-center ${isFirstActive ? styles.activeGlow : ''} ${styles.node3d} ${
-                item.state === 'completed'
-                    ? styles.nodeCompleted
-                    : item.state === 'active'
-                        ? styles.nodeActive
-                        : styles.nodeBlocked
-            }`}
+            className={`rounded-full flex justify-center items-center ${styles.node3d} ${getNodeStyleClass(item, isFirstActive)}`}
             style={{ width: nodeSize, height: nodeSize }}
         >
             <NodeIcon state={item.state} type={item.type} />
         </m.div>
     );
 
-    const labelContent = (
+    const labelContent = isChest ? (
+        <>
+            <span className="text-[11px] lg:text-xs font-semibold uppercase tracking-widest whitespace-nowrap text-amber-400">
+                {item.title}
+            </span>
+            {item.state === 'active' && (
+                <p className="text-xs lg:text-sm font-semibold leading-tight text-white">Reclamá tu recompensa</p>
+            )}
+        </>
+    ) : (
         <>
             <div className="flex items-center justify-between gap-2">
                 <span className="text-[11px] lg:text-xs font-semibold uppercase tracking-widest whitespace-nowrap text-stannum">
@@ -71,7 +89,7 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
     const labelPositionClass = `absolute top-1/2 -translate-y-1/2 ${labelSide === 'left' ? 'right-full mr-3' : 'left-full ml-3'}`;
     const labelStyleClass = 'w-max bg-card/90 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-card-light/15';
 
-    const label = isActive ? (
+    const label = isChestOpened ? null : isActive ? (
         <m.div
             initial={{ opacity: 0, x: labelSide === 'left' ? 10 : -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -97,6 +115,12 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
         </div>
     ) : null;
 
+    const handleChestClick = () => {
+        if (isChest && isClickable && onChestClick) {
+            onChestClick(item.id);
+        }
+    };
+
     return (
         <div
             className={`absolute ${isActive ? 'z-20' : 'z-10'}`}
@@ -106,7 +130,15 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             }}
         >
             <div className="relative group">
-                {isClickable ? (
+                {isChest ? (
+                    isActive ? (
+                        <button type="button" onClick={handleChestClick} className="block cursor-pointer">
+                            {nodeContent}
+                        </button>
+                    ) : (
+                        <div className={isChestOpened ? 'cursor-default' : 'cursor-not-allowed'}>{nodeContent}</div>
+                    )
+                ) : isClickable ? (
                     <Link href={item.href} className="block cursor-pointer">
                         {nodeContent}
                     </Link>

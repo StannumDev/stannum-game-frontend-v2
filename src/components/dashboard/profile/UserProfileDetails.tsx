@@ -14,7 +14,12 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
         <Fragment>
             <MotionWrapperLayout>
                 <section id="profile-card" className="w-full flex flex-col relative lg:static">
-                    <UserProfileCover rankingPosition={user?.rankingPosition}/>
+                    <UserProfileCover
+                        rankingPosition={user?.rankingPosition}
+                        equippedCoverId={user?.equippedCoverId ? `cover_${user.equippedCoverId}` : 'cover_default'}
+                        owner={owner}
+                        unlockedCoverIds={['default', ...(user?.unlockedCovers?.map(c => c.coverId) || [])]}
+                    />
                     <div className="w-full card pt-0 rounded-t-none relative">
                         <div className="w-full flex flex-col justify-center items-center -mt-16 lg:-mt-44">
                             <UserProfilePhoto owner={owner} user={user}/>

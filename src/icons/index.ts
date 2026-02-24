@@ -60,7 +60,8 @@ export {
 export {
     PiWarningOctagonThin as WarningOctagonIcon,
     PiUserCircleFill as UserCircleIcon,
-    PiUsersThreeFill as CommunityIcon
+    PiUsersThreeFill as CommunityIcon,
+    PiTreasureChestFill as ChestIcon
 } from "react-icons/pi";
 
 export {

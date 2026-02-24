@@ -1,4 +1,5 @@
 export interface SimpleRanking {
+    id: string;
     position: number;
     name: string;
     username: string;

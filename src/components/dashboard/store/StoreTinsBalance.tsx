@@ -61,7 +61,7 @@ export const StoreTinsBalance = () => {
                     </div>
                     <div className="mt-6 w-full p-4 bg-card-light rounded-xl flex flex-col lg:flex-row items-center gap-3 text-center lg:text-start">
                         <IoGift className="size-10 text-stannum shrink-0" />
-                        <p>Muy pronto vas a poder usar tus <b className="text-amber-400 font-semibold">Tins</b> para canjear contenido exclusivo dentro de la plataforma y recompensas en la vida real.</p>
+                        <p>Los <b className="text-amber-400 font-semibold">Tins</b> son exclusivos y limitados. Gastalos con criterio en la tienda para desbloquear contenido único como portadas de perfil, cajas misteriosas y más.</p>
                     </div>
                 </div>
             </Modal>

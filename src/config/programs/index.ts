@@ -10,7 +10,8 @@ import background_tia_pool from '@/assets/background/stannum_game_trophy.webp';
 
 let muxPlaybackIds: Record<string, string> = {};
 try {
-    muxPlaybackIds = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+    const parsed = JSON.parse(process.env.NEXT_PUBLIC_MUX_IDS || "{}");
+    muxPlaybackIds = (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) ? parsed : {};
 } catch {
     muxPlaybackIds = {};
 }
