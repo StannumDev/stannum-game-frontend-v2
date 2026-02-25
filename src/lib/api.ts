@@ -3,6 +3,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { clearLoginFlag } from './tokenStorage';
 import { callToast } from '@/helpers/callToast';
+import { buildRedirectParam } from '@/helpers/redirect';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const REFRESH_TIMEOUT_MS = 20_000;
@@ -46,7 +47,7 @@ const forceLogout = () => {
   }
   if (typeof window !== 'undefined') {
     callToast({ type: 'warning', message: { title: 'Sesión expirada', description: 'Tu sesión expiró. Volvé a iniciar sesión.' } });
-    setTimeout(() => { window.location.href = '/'; }, 1500);
+    setTimeout(() => { window.location.href = `/login${buildRedirectParam(window.location.pathname)}`; }, 1500);
   }
 };
 

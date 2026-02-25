@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useUserStore } from '@/stores/userStore';
 import { clearLoginFlag } from '@/lib/tokenStorage';
+import { buildRedirectParam } from '@/helpers';
 
 export const UserInitializer = () => {
     const router = useRouter();
+    const pathname = usePathname();
     const initUser = useUserStore(s => s.initUser);
 
     useEffect(() => {
@@ -22,13 +24,13 @@ export const UserInitializer = () => {
                 const { isAuthenticated, isLoading } = useUserStore.getState();
                 if (!isAuthenticated && !isLoading) {
                     clearLoginFlag();
-                    router.replace('/');
+                    router.replace(`/login${buildRedirectParam(pathname)}`);
                 }
             }
         };
         init();
         return () => { cancelled = true; };
-    }, [initUser, router]);
+    }, [initUser, router, pathname]);
 
     return null;
 };

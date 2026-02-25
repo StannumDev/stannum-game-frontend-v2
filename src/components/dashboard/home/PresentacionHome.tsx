@@ -172,7 +172,7 @@ export const PresentacionHome = () => {
                         popover: {
                             popoverClass: "tutorial-step-tins",
                             title: `${TUTORIAL_ICONS.coin} Tus Tins`,
-                            description: "Los <span class='text-amber-400 font-semibold'>Tins</span> son la moneda de <span class='text-stannum font-semibold'>STANNUM Game</span>. Los ganás completando lecciones, manteniendo tu racha y desbloqueando logros. Usalos en la <span class='text-stannum font-semibold'>Tienda</span> para canjear recompensas.",
+                            description: "Los <span class='text-amber-400 font-semibold'>Tins</span> son la moneda de <span class='text-stannum font-semibold'>STANNUM Game</span>. Los ganás completando lecciones, abriendo <span class='text-amber-400 font-semibold'>cofres</span>, manteniendo tu racha y desbloqueando logros. Usalos en la <span class='text-stannum font-semibold'>Tienda</span> para canjear recompensas.",
                             side: "bottom",
                             align: "start",
                         },

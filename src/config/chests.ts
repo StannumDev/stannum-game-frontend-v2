@@ -15,6 +15,7 @@ const moduleChests: Record<string, ChestConfig[]> = {
     ],
     'TIAM02': [
         { id: 'TIAM02C01', moduleId: 'TIAM02', afterItemId: 'TIAM02L10', name: 'Cofre', rarity: 'uncommon' },
+        { id: 'TIAM02C02', moduleId: 'TIAM02', afterItemId: 'TIAM02L11', name: 'Cofre', rarity: 'uncommon' },
     ],
 };
 

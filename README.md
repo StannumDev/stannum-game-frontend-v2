@@ -117,7 +117,7 @@ src/
 │       ├── community/            # Comunidad (prompts/assistants)
 │       │   ├── prompts/
 │       │   └── assistants/
-│       ├── store/                # Tienda de programas (activar product keys)
+│       ├── store/                # Tienda: portadas (Tins), programas (product keys)
 │       ├── profile/[username]/   # Perfil de usuario
 │       └── search/               # Busqueda de usuarios
 │
@@ -158,9 +158,9 @@ src/
 │   │   ├── profile/              # Perfil: info, foto, nivel, achievements
 │   │   ├── achievements/         # Cards de logros
 │   │   ├── goals/                # Metas diarias
-│   │   ├── store/                # Tienda: cards, tutorial
+│   │   ├── store/                # Tienda: portadas (Tins), programas (product keys)
 │   │   ├── library/              # Biblioteca con secciones
-│   │   ├── tutorial/             # Tutorial de onboarding (6 steps)
+│   │   ├── tutorial/             # Tutorials de onboarding (modales de bienvenida)
 │   │   └── SearchResultsList.tsx # Resultados de busqueda
 │   ├── VideoIntro.tsx            # Video intro landing
 │   └── ButtonShowPassword.tsx    # Toggle mostrar contrasena
@@ -174,7 +174,9 @@ src/
 │   ├── assistant.ts              # CRUD assistants, like, favorite, click, stats
 │   ├── ranking.ts                # Ranking individual, por equipo, por programa
 │   ├── productKey.ts             # getProductKey, activateProductKey
-│   └── profilePhoto.ts          # Upload y delete foto de perfil (S3 presigned)
+│   ├── profilePhoto.ts          # Upload y delete foto de perfil (S3 presigned)
+│   ├── chest.ts                 # openChest (abrir cofre, obtener recompensas)
+│   └── store.ts                 # getStoreCovers, purchaseCover, equipCover
 │
 ├── stores/                       # Zustand stores
 │   ├── userStore.ts              # Usuario, autenticacion, achievements
@@ -191,6 +193,7 @@ src/
 ├── helpers/                      # Funciones utilitarias
 │   ├── errorHandler.ts           # Manejo centralizado de errores → toast
 │   ├── achievementHandler.ts     # Confetti + toast de achievements
+│   ├── redirect.ts               # getRedirectUrl, buildRedirectParam (post-login redirect)
 │   └── tutorialIcons.tsx         # Iconos para tutorial steps
 │
 ├── hooks/                        # Custom React hooks
@@ -200,6 +203,8 @@ src/
 ├── config/                       # Configuraciones
 │   ├── achievements.ts           # 34 achievements con metadata y getProgress()
 │   ├── ranks.ts                  # Tiers: Hierro → Bronce → Plata → Oro → Diamante → STANNUM
+│   ├── chests.ts                 # Cofres por modulo (posicion, rareza)
+│   ├── covers.ts                 # Portadas de perfil (nombre, rareza, imagen)
 │   └── programs/                 # Programas educativos (TIA, TMD, TIA_SUMMER)
 │       └── index.ts              # Configuracion de modulos, lecciones, instrucciones
 │
@@ -232,6 +237,8 @@ NEXT_PUBLIC_API_ASSISTANT_URL=/assistant
 NEXT_PUBLIC_API_RANKING_URL=/ranking
 NEXT_PUBLIC_API_PRODUCT_KEY_URL=/product-key
 NEXT_PUBLIC_API_PHOTO_URL=/profile-photo
+NEXT_PUBLIC_API_CHEST_URL=/chest
+NEXT_PUBLIC_API_STORE_URL=/store
 
 # Google OAuth
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_client_id.apps.googleusercontent.com
@@ -273,7 +280,7 @@ NEXT_PUBLIC_ENV=development
 | `/dashboard/library/[program_id]/instructions/[instructionId]` | Realizar instruccion practica |
 | `/dashboard/community/prompts` | Explorar prompts compartidos |
 | `/dashboard/community/assistants` | Explorar GPTs/assistants |
-| `/dashboard/store` | Tienda para activar codigos de producto |
+| `/dashboard/store` | Tienda: portadas de perfil (Tins) + activar codigos de producto |
 | `/dashboard/profile/[username]` | Perfil publico de usuario |
 | `/dashboard/search` | Busqueda de usuarios |
 
@@ -292,7 +299,7 @@ El sistema usa access token (JWT, 15 min) + refresh token (opaco, 7 dias) con ro
 Usuario ingresa a la app
   |
 proxy.ts (middleware Next.js 16)
-  ├─ Sin token + ruta /dashboard → redirect /login
+  ├─ Sin token + ruta /dashboard → redirect /login?redirect={ruta_original}
   └─ Con token + ruta /login → redirect /dashboard
   |
 UserInitializer (client component)
@@ -437,7 +444,23 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 
 ### Tins (Moneda Virtual)
 - Moneda interna de la plataforma (icono amber-400)
-- Se ganan al completar lecciones (5), instrucciones (10-25), modulos (30), programas (100)
+- Se ganan al completar lecciones (5), instrucciones (10-25), modulos (30), programas (100), y abriendo cofres
+- Se gastan en la Tienda para comprar portadas de perfil
+
+### Cofres (Chests)
+- Nodos de recompensa dentro del PathMap de cada modulo
+- Aparecen despues de ciertas lecciones/instrucciones (`afterItemId` en config)
+- Se desbloquean al completar la actividad previa
+- Al abrir: revelan XP, Tins y opcionalmente una portada de perfil (animacion stagger con framer-motion)
+- 3 estados: bloqueado, disponible (glow animado), reclamado (verde como completado)
+- Config frontend: `src/config/chests.ts` (visual, posicion, rareza)
+- Config backend: `src/config/chestsConfig.js` (recompensas)
+
+### Tienda de Portadas
+- Portadas de perfil comprables con Tins
+- Scroll horizontal en mobile (snap), grilla responsive en desktop
+- Modal de detalle con preview, rareza y precio
+- Config: `src/config/covers.ts`
 
 ### Daily Streaks
 - Racha de dias consecutivos con actividad
@@ -494,19 +517,19 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 | `ranking.ts` | getIndividualRanking, getTeamRanking, getProgramIndividualRanking |
 | `productKey.ts` | getProductKey, activateProductKey |
 | `profilePhoto.ts` | uploadProfilePhoto (S3 presigned), deleteProfilePhoto |
+| `chest.ts` | openChest |
+| `store.ts` | getStoreCovers, purchaseCover, equipCover |
 
 ## Onboarding
 
-Tutorial interactivo de 6 pasos usando **driver.js**:
+Tutoriales interactivos usando **driver.js** con estado persistido en backend (`/user/tutorial/:name/complete`):
 
-1. Bienvenida a STANNUM Game
-2. Video introductorio (Mux)
-3. Navegacion (sidebar)
-4. XP y niveles
-5. Tins (moneda virtual)
-6. Comenzar
+- **Home** (`initial_tutorial`): 6 modales de bienvenida (intro, video, programas, ranking, comunidad, comenzar) + 8 pasos driver.js (bienvenida, sidebar, misiones, Tins, racha diaria, ranking, activar producto, a jugar)
+- **Path Map** (`path_map_tutorial`): 5-8 pasos driver.js (modulo, mapa, nodo completado, nodo activo, nodo bloqueado, cofre, cambiar vista, a entrenar). Se construyen dinamicamente segun los nodos existentes en el DOM.
+- **Programa** (`program_library_tutorial`): 4-5 pasos driver.js (programa, modulos, recursos, ranking, a entrenar). Tabs opcionales segun habilitacion.
+- **Perfil** (`profile_tutorial`): 6-7 pasos driver.js (perfil, nivel/XP, info, editar, bio, logros, seguir creciendo). Solo para el owner del perfil. Responsive (adapta posicion en mobile/desktop).
 
-Estado del tutorial se persiste en backend (`/user/tutorial/:name/complete`).
+Cada tutorial se verifica via cookie (`tutorial_{name}`) y API antes de mostrarse. Al completarse se persiste en ambos.
 
 ## Manejo de Errores
 
