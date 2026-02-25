@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PROTECTED_ROUTES = ['/dashboard'];
 const GUEST_ONLY_ROUTES = ['/login', '/password-recovery'];
+const SKIP_REDIRECT_PATHS = ['/dashboard', '/login', '/register', '/password-recovery'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -10,7 +11,11 @@ export function proxy(request: NextRequest) {
 
   if (PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
     if (!hasTokens && !hasLoginFlag) {
-      return NextResponse.redirect(new URL('/', request.url));
+      const loginUrl = new URL('/login', request.url);
+      if (!SKIP_REDIRECT_PATHS.some(p => pathname === p)) {
+        loginUrl.searchParams.set('redirect', pathname);
+      }
+      return NextResponse.redirect(loginUrl);
     }
   }
 

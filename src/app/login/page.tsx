@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { GoBackButton, LoginForm, BackgroundLogin, GoogleAuthButton } from "@/components";
@@ -34,9 +35,13 @@ export default function LoginPage() {
                         <GoBackButton className=" absolute -top-4 lg:-top-8 left-0 -translate-y-full"/>
                         <p className="w-full text-3xl font-light">Ingresa a <b className="text-stannum font-semibold block sm:inline">STANNUM Game</b></p>
                         <p className="mt-2 lg:mt-0 w-full text-neutral-400">Completa tus datos para iniciar sesión en la plataforma.</p>
-                        <LoginForm/>
+                        <Suspense>
+                            <LoginForm/>
+                        </Suspense>
                         <div className="mt-4 w-full max-w-lg flex justify-center">
-                            <GoogleAuthButton/>
+                            <Suspense>
+                                <GoogleAuthButton/>
+                            </Suspense>
                         </div>
                         <div className="mt-8 w-full max-w-lg flex justify-center items-center gap-4">
                             <div className="grow h-px bg-card-lightest"></div>

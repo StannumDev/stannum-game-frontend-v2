@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { googleLogin } from '@/services';
-import { achievementHandler, errorHandler } from '@/helpers';
+import { achievementHandler, errorHandler, getRedirectUrl } from '@/helpers';
 import { GoogleColourIcon, SpinnerIcon } from '@/icons';
 import { FormErrorMessage } from '@/components';
 import { AppError } from '@/interfaces';
 
 export const GoogleAuthButton = () => {
-    const router = useRouter();
+    const searchParams = useSearchParams();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -29,10 +29,10 @@ export const GoogleAuthButton = () => {
                 }
 
                 if (username.startsWith("google_")) {
-                    router.push('/register/google');
+                    window.location.replace('/register/google');
                 } else {
                     achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
-                    router.push('/dashboard');
+                    window.location.replace(getRedirectUrl(searchParams.get('redirect')));
                 }
             } catch (error:unknown) {
                 const appError:AppError = errorHandler(error);
@@ -47,7 +47,7 @@ export const GoogleAuthButton = () => {
         },
         prompt: "consent",
     });
-    
+
     return (
         <div className="w-full flex flex-col items-center gap-2">
             <button

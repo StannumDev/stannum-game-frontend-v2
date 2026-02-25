@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { requestLogin } from "@/services";
-import { errorHandler } from "@/helpers";
+import { errorHandler, getRedirectUrl } from "@/helpers";
 import { AppError } from "@/interfaces";
 import { UnlockIcon, UserIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, ButtonShowPassword } from "@/components";
@@ -19,6 +20,7 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 export const LoginForm = () => {
+    const searchParams = useSearchParams();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -30,7 +32,7 @@ export const LoginForm = () => {
         setErrorMessage(null);
         try {
             const success = await requestLogin(data);
-            if (success) window.location.replace('/dashboard');
+            if (success) window.location.replace(getRedirectUrl(searchParams.get('redirect')));
         } catch (error:unknown) {
             const appError:AppError = errorHandler(error);
             setErrorMessage(appError.friendlyMessage);

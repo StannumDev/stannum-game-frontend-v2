@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import Image from "next/image";
 import background from '@/assets/background/stannum_game_trophy.webp';
@@ -56,7 +57,9 @@ export default function LandingPage() {
           <div className="grow h-px bg-card-lightest"></div>
         </div>
         <div className="mt-6 w-full max-w-lg flex justify-center">
-          <GoogleAuthButton/>
+          <Suspense>
+            <GoogleAuthButton/>
+          </Suspense>
         </div>
       </section>
     </main>
