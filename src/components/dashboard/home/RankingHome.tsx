@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getIndividualRanking  } from "@/services";
 import { errorHandler } from "@/helpers";
 import type { SimpleRanking } from "@/interfaces";
-import { RankingStarIcon, SpinnerIcon } from "@/icons";
-import { CardRankingHome, MotionWrapperLayout } from "@/components";
+import { RankingStarIcon } from "@/icons";
+import { CardRankingHome, MotionWrapperLayout, RankingRowSkeleton } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 
 export const RankingHome = () => {
@@ -57,11 +57,16 @@ export const RankingHome = () => {
                     </div>
                     <div className="mt-2 w-[calc(100%+9px)] lg:w-[calc(100%+13px)] grow min-h-72 xl:min-h-48 overflow-y-auto overflow-x-hidden relative">
                         { isLoading ?
-                            <div className="size-full flex justify-center items-center">
-                                <SpinnerIcon className="animate-spin size-8"/>
+                            <div className="w-full pr-1 lg:pr-2 flex flex-col gap-1.5 lg:gap-3 absolute top-0 left-0">
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <RankingRowSkeleton key={i} />
+                                ))}
                             </div>
                         : rankings.length === 0 ? (
-                            <div className="size-full bg-card flex justify-center items-center"><p className="max-w-sm text-center text-card-lightest">En breve veras reflejado tu puntaje y del resto de jugadores aquí.</p></div>
+                            <div className="size-full bg-card flex flex-col justify-center items-center gap-2 py-8">
+                                <RankingStarIcon className="text-4xl text-card-lighter" />
+                                <p className="max-w-sm text-center text-card-lightest">El ranking se actualizará a medida que los jugadores completen lecciones e instrucciones.</p>
+                            </div>
                         ) : (
                             <div className="w-full pr-1 lg:pr-2 grow flex flex-col gap-1.5 lg:gap-3 items-start absolute top-0 left-0">
                                 {rankings.map((player) => <CardRankingHome user={player} owner={username === player.username} key={`ranking_home_${player.username}`} />)}

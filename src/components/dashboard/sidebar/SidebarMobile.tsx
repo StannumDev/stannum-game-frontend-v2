@@ -7,6 +7,7 @@ import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motio
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
 import { formatCoins } from '@/utilities';
+import { getRankByLevel } from '@/config/ranks';
 import styles from '@/components/styles/sidebar.module.css';
 import default_user from "@/assets/user/default_user.webp";
 import stannum_coin from "@/assets/tins_coin.svg";
@@ -55,8 +56,8 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                             <div className="flex items-center gap-2">
                                 {!isLoading && user && (
                                     <div id="tins-display" className="flex items-center gap-1">
-                                        <Image src={stannum_coin} alt="Tins" width={12} height={12} className="shrink-0" />
-                                        <span className="text-[11px] text-amber-400 font-bold">{formatCoins(user.coins ?? 0)}</span>
+                                        <Image src={stannum_coin} alt="Tins" width={14} height={14} className="shrink-0" />
+                                        <span className="text-xs text-amber-400 font-bold">{formatCoins(user.coins ?? 0)}</span>
                                     </div>
                                 )}
                                 <div className="relative">
@@ -75,11 +76,16 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                             />
                                         }
                                     </Link>
-                                    {!isLoading && user && (
-                                        <span className="absolute -bottom-1 -right-1 z-20 min-w-4 h-4 px-0.5 rounded-full bg-stannum text-[8px] font-black text-card flex justify-center items-center border-2 border-background">
-                                            {user.currentLevel}
-                                        </span>
-                                    )}
+                                    {!isLoading && user && (() => {
+                                        const rank = getRankByLevel(user.currentLevel);
+                                        return (
+                                            <span className="absolute -bottom-1 -right-1 z-20 min-w-4 h-4 px-0.5 rounded-full bg-card text-[8px] font-black flex justify-center items-center border-2 border-background">
+                                                <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${rank.color}, ${rank.colorSecondary})` }}>
+                                                    {user.currentLevel}
+                                                </span>
+                                            </span>
+                                        );
+                                    })()}
                                 </div>
                             </div>
                         </m.div>

@@ -42,16 +42,15 @@ export const UserProfileEditCover = ({ showModal, setShowModal, equippedCoverId,
 
     return (
         <Fragment>
-            <div className="content-visibility-hidden lg:content-visibility-visible">
-                <button
-                    type="button"
-                    onClick={() => setShowModal(true)}
-                    className="h-8 px-2.5 rounded-lg lg:flex justify-center items-center gap-1.5 bg-stannum hover:bg-stannum-light absolute bottom-3 right-3 z-20 transition-200"
-                >
-                    <EditIcon className="size-4 text-card" />
-                    <span className="text-xs font-semibold text-card">Editar</span>
-                </button>
-            </div>
+            <button
+                type="button"
+                onClick={() => setShowModal(true)}
+                aria-label="Editar portada"
+                className="h-8 px-2.5 rounded-lg flex justify-center items-center gap-1.5 bg-stannum hover:bg-stannum-light absolute bottom-3 right-3 z-20 transition-200"
+            >
+                <EditIcon className="size-4 text-card" />
+                <span className="hidden lg:inline text-xs font-semibold text-card">Editar</span>
+            </button>
             <Modal
                 className="max-w-7xl lg:aspect-video flex-col"
                 showModal={showModal}

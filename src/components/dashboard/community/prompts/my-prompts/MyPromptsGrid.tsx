@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { getMyPrompts } from '@/services';
 import { errorHandler } from '@/helpers';
-import { MyPromptCard, CreatePromptModal, LoadingScreen, GoBackButton } from '@/components';
+import { MyPromptCard, CreatePromptModal, CommunityCardSkeleton, GoBackButton } from '@/components';
 import type { PromptVisibility, MyPromptCard as MyPromptCardType, MyPromptsResponse } from '@/interfaces';
 import { InfoCircleIcon, PlusIcon } from '@/icons';
 
@@ -78,7 +78,13 @@ export const MyPromptsGrid = () => {
                     </div>
                 </section>
 
-                {isLoading && prompts.length === 0 && <LoadingScreen />}
+                {isLoading && prompts.length === 0 && (
+                    <div className="columns-1 md:columns-2 xl:columns-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <CommunityCardSkeleton key={i} />
+                        ))}
+                    </div>
+                )}
 
                 {!isLoading && prompts.length === 0 && (
                     <m.div

@@ -104,6 +104,28 @@ export const useUserStore = create<UserStore>((set, get) => ({
                         type: 'streak',
                     });
                 }
+
+                if ((currentUser.dailyStreak?.shields || 0) > 0 &&
+                    (user.dailyStreak?.shields || 0) < (currentUser.dailyStreak?.shields || 0) &&
+                    user.dailyStreak?.count > 0) {
+                    callToast({
+                        message: {
+                            title: 'Escudo de racha consumido',
+                            description: 'Tu racha está a salvo gracias al escudo.',
+                        },
+                        type: 'streak',
+                    });
+                }
+
+                if (user.dailyStreak?.recoveryAvailable && !currentUser.dailyStreak?.recoveryAvailable) {
+                    callToast({
+                        message: {
+                            title: 'Perdiste tu racha',
+                            description: 'Podés recuperarla por 30 Tins en las próximas 24h.',
+                        },
+                        type: 'streak',
+                    });
+                }
             }
 
             set({ user, error: null, _refreshCount: get()._refreshCount + 1 });

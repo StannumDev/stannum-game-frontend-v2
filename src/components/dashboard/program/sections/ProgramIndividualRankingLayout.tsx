@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getProgramIndividualRanking } from "@/services";
 import { errorHandler } from "@/helpers";
 import type { SimpleRanking } from "@/interfaces";
-import { RankingStarIcon, SpinnerIcon } from "@/icons";
-import { CardRankingHome } from "@/components";
+import { RankingStarIcon } from "@/icons";
+import { CardRankingHome, RankingRowSkeleton } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 
 interface Props {
@@ -59,8 +59,10 @@ export const ProgramIndividualRankingLayout = ({ programId }: Props) => {
                 </div>
                 <div className="mt-2 w-full">
                     { isLoading ? (
-                        <div className="size-full flex justify-center items-center py-12">
-                            <SpinnerIcon className="animate-spin size-8"/>
+                        <div className="w-full flex flex-col gap-1.5 lg:gap-3">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                                <RankingRowSkeleton key={i} />
+                            ))}
                         </div>
                     ) : hasError ? (
                         <div className="size-full flex justify-center items-center py-12">

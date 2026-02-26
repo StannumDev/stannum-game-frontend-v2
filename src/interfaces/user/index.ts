@@ -176,6 +176,10 @@ export interface FullUserDetails {
         count: number;
         lastActivityLocalDate?: string;
         timezone: string;
+        shields: number;
+        lostCount?: number | null;
+        lostAt?: string | null;
+        recoveryAvailable: boolean;
     };
     coins: number;
     xpHistory: Array<{
@@ -185,7 +189,7 @@ export interface FullUserDetails {
         // meta?: string;
     }>;
     coinsHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED" | "STORE_PURCHASE" | "CHEST_OPENED";
+        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED" | "STORE_PURCHASE" | "CHEST_OPENED" | "STREAK_SHIELD_PURCHASE" | "STREAK_RECOVERY";
         coins: number;
         date: string;
     }>;

@@ -8,7 +8,7 @@ import { driver, type Driver, type PopoverDOM } from "driver.js";
 import { getUserDetailsByUsername, getTutorialStatus, markTutorialAsCompleted } from "@/services";
 import { errorHandler } from "@/helpers";
 import { TUTORIAL_ICONS } from "@/helpers/tutorialIcons";
-import { UserProfileDetails, ProfileSectionsLayout, LoadingScreen } from "@/components";
+import { UserProfileDetails, ProfileSectionsLayout, ProfileSkeleton } from "@/components";
 import { FullUserDetails } from "@/interfaces";
 import { PowerIcon, WarningOctagonIcon } from "@/icons";
 import { useUserStore } from "@/stores/userStore";
@@ -224,7 +224,7 @@ export const UserProfileWrapper = ({username}:Props) => {
         storeLogout();
     }
 
-    if (isLoading) return <LoadingScreen />;
+    if (isLoading) return <ProfileSkeleton />;
 
     if (notFound || !userData) return (
         <main className="main-container size-full px-4 text-center justify-center items-center">
