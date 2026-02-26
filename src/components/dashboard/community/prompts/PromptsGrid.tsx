@@ -6,7 +6,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllPrompts } from '@/services';
 import { errorHandler } from '@/helpers';
-import { PromptCard, PromptsGridFilter, CreatePromptModal, PromptDetailModal, LoadingScreen, GoBackButton } from '@/components';
+import { PromptCard, PromptsGridFilter, CreatePromptModal, PromptDetailModal, CommunityCardSkeleton, GoBackButton } from '@/components';
 import type { PromptCard as PromptCardType, PromptFilters, PromptsResponse } from '@/interfaces';
 
 export const PromptsGrid = () => {
@@ -113,7 +113,13 @@ export const PromptsGrid = () => {
                     onFilterChange={handleFilterChange}
                     onClearFilters={handleClearFilters}
                 />
-                {isLoading && prompts.length === 0 && <LoadingScreen />}
+                {isLoading && prompts.length === 0 && (
+                    <div className="columns-1 md:columns-2 xl:columns-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <CommunityCardSkeleton key={i} />
+                        ))}
+                    </div>
+                )}
                 {!isLoading && prompts.length === 0 &&
                     <m.div
                         className="grow flex flex-col justify-center items-center text-center"

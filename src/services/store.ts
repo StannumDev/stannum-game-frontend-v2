@@ -20,3 +20,15 @@ export const equipCover = async (coverId: string): Promise<{ coverId: string }> 
     if (!response?.data?.success) throw new Error('Unexpected response structure');
     return response.data;
 };
+
+export const purchaseStreakShield = async (): Promise<{ shields: number; coinsSpent: number; coinsRemaining: number }> => {
+    const response = await api.post(`${STORE_URL}/items/streak-shield/purchase`);
+    if (!response?.data?.success) throw new Error('Unexpected response structure');
+    return response.data;
+};
+
+export const recoverStreak = async (): Promise<{ restoredCount: number; coinsSpent: number; coinsRemaining: number }> => {
+    const response = await api.post(`${STORE_URL}/streak/recover`);
+    if (!response?.data?.success) throw new Error('Unexpected response structure');
+    return response.data;
+};

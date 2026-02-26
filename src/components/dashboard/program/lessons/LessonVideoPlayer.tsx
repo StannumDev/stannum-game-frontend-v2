@@ -104,6 +104,12 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         }
     }, [showNextOverlay, xpResult]);
 
+    useEffect(() => {
+        if (!showNextOverlay) return;
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = ''; };
+    }, [showNextOverlay]);
+
     const handleTimeUpdate = async () => {
         if (!videoRef.current) return;
 
@@ -188,15 +194,15 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     return (
         <div className='w-full aspect-video relative rounded-lg border border-card cursor-pointer overflow-hidden'>
             {showNextOverlay && nextLesson && isNextLessonAvailable && (
-                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
-                                <CrownIcon className="size-8 text-stannum" />
-                                <span className="text-4xl font-black">+</span>
-                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
-                                <span className="text-4xl font-black">XP</span>
+                                <CrownIcon className="size-6 lg:size-8 text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-2xl lg:text-4xl font-black text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">XP</span>
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
@@ -214,43 +220,43 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <button
                             type="button"
                             onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                            className="flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 text-sm bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
                         >
                             <ChestIcon className="size-4" />
                             <span>¡Cofre desbloqueado! Reclamalo</span>
                         </button>
                     )}
-                    <p className="text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
+                    <p className="text-base lg:text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
                         <Image
                             width={160}
                             height={90}
                             alt="Miniatura"
                             src={`https://image.mux.com/${nextLesson.muxPlaybackId}/thumbnail.png?width=160&height=90&time=5`}
-                            className="rounded-lg"
+                            className="rounded-lg hidden lg:block"
                             onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
-                        <div className="flex-1">
+                        <div className="flex-1 text-center lg:text-left">
                             <p className="text-sm opacity-80">Siguiente lección</p>
-                            <p className="font-semibold">{nextLesson.title}</p>
+                            <p className="font-semibold text-sm lg:text-base">{nextLesson.title}</p>
                         </div>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente lección</button>
+                        <button type="button" onClick={cancelRedirect} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`)} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente lección</button>
                     </div>
                 </div>
             )}
             {showNextOverlay && nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
-                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
-                                <CrownIcon className="size-8 text-stannum" />
-                                <span className="text-4xl font-black">+</span>
-                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
-                                <span className="text-4xl font-black">XP</span>
+                                <CrownIcon className="size-6 lg:size-8 text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-2xl lg:text-4xl font-black text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">XP</span>
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
@@ -268,33 +274,33 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <button
                             type="button"
                             onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                            className="flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 text-sm bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
                         >
                             <ChestIcon className="size-4" />
                             <span>¡Cofre desbloqueado! Reclamalo</span>
                         </button>
                     )}
-                    <p className="text-lg font-bold text-center">Completá la instrucción para seguir avanzando ({countdown}s)</p>
+                    <p className="text-base lg:text-lg font-bold text-center">Completá la instrucción para seguir avanzando ({countdown}s)</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente instrucción</p>
                         <p className="font-semibold">{nextInstruction.title}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir a la instrucción</button>
+                        <button type="button" onClick={cancelRedirect} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`)} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir a la instrucción</button>
                     </div>
                 </div>
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && nextModule && (
-                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
-                                <CrownIcon className="size-8 text-stannum" />
-                                <span className="text-4xl font-black">+</span>
-                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
-                                <span className="text-4xl font-black">XP</span>
+                                <CrownIcon className="size-6 lg:size-8 text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-2xl lg:text-4xl font-black text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">XP</span>
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
@@ -312,33 +318,33 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <button
                             type="button"
                             onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                            className="flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 text-sm bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
                         >
                             <ChestIcon className="size-4" />
                             <span>¡Cofre desbloqueado! Reclamalo</span>
                         </button>
                     )}
-                    <p className="text-lg font-bold text-center">Siguiente módulo en {countdown} segundos...</p>
+                    <p className="text-base lg:text-lg font-bold text-center">Siguiente módulo en {countdown} segundos...</p>
                     <div className="flex flex-col items-center gap-1">
                         <p className="text-sm opacity-80">Siguiente módulo</p>
                         <p className="font-semibold">{nextModule.name}</p>
                     </div>
                     <div className="flex gap-4 mt-2">
-                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente módulo</button>
+                        <button type="button" onClick={cancelRedirect} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`)} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Siguiente módulo</button>
                     </div>
                 </div>
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && !nextModule && (
-                <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
                             <div className="flex items-center gap-2">
-                                <CrownIcon className="size-8 text-stannum" />
-                                <span className="text-4xl font-black">+</span>
-                                <AnimatedCounter target={xpResult.totalGain} className="text-4xl font-black text-stannum" />
-                                <span className="text-4xl font-black">XP</span>
+                                <CrownIcon className="size-6 lg:size-8 text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">+</span>
+                                <AnimatedCounter target={xpResult.totalGain} className="text-2xl lg:text-4xl font-black text-stannum" />
+                                <span className="text-2xl lg:text-4xl font-black">XP</span>
                             </div>
                             {xpResult.streakBonus > 0 && (
                                 <p className="text-sm text-white/60">Incluye +{xpResult.streakBonus} XP por racha diaria</p>
@@ -356,16 +362,16 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                         <button
                             type="button"
                             onClick={() => { cancelRedirect(); router.push(nextChest.moduleHref); }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
+                            className="flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 text-sm bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-semibold rounded-lg transition-200"
                         >
                             <ChestIcon className="size-4" />
                             <span>¡Cofre desbloqueado! Reclamalo</span>
                         </button>
                     )}
-                    <p className="text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
+                    <p className="text-base lg:text-lg font-bold text-center">Volviendo al programa ({countdown}s)</p>
                     <div className="flex gap-4 mt-2">
-                        <button type="button" onClick={cancelRedirect} className="px-6 py-2.5 bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
-                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-6 py-2.5 bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir al programa</button>
+                        <button type="button" onClick={cancelRedirect} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-card-light hover:bg-card-lighter text-white font-semibold rounded-lg transition-200">Cancelar</button>
+                        <button type="button" onClick={() => router.push(`/dashboard/library/${program.toLowerCase()}`)} className="px-4 py-2 lg:px-6 lg:py-2.5 text-sm bg-stannum hover:bg-stannum-light text-card font-bold rounded-lg transition-200">Ir al programa</button>
                     </div>
                 </div>
             )}

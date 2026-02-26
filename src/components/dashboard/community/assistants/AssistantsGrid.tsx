@@ -7,7 +7,7 @@ import { FolderIcon, InfoCircleIcon, PlusIcon } from '@/icons';
 import { getAllAssistants } from '@/services';
 import { errorHandler } from '@/helpers';
 import type { AssistantCard as AssistantCardType, AssistantFilters, AssistantsResponse } from '@/interfaces';
-import { AssistantCard, AssistantsGridFilter, CreateAssistantModal, GoBackButton, LoadingScreen } from '@/components';
+import { AssistantCard, AssistantsGridFilter, CreateAssistantModal, GoBackButton, CommunityCardSkeleton } from '@/components';
 
 export const AssistantsGrid = () => {
     const [assistants, setAssistants] = useState<AssistantCardType[]>([]);
@@ -113,7 +113,13 @@ export const AssistantsGrid = () => {
                     onFilterChange={handleFilterChange}
                     onClearFilters={handleClearFilters}
                 />
-                {isLoading && assistants.length === 0 && <LoadingScreen />}
+                {isLoading && assistants.length === 0 && (
+                    <div className="columns-1 md:columns-2 xl:columns-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <CommunityCardSkeleton key={i} />
+                        ))}
+                    </div>
+                )}
                 {!isLoading && assistants.length === 0 &&
                     <m.div
                         className="grow flex flex-col justify-center items-center text-center"
