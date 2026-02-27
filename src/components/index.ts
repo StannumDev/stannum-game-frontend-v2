@@ -83,6 +83,9 @@ export { StoreCard } from "./dashboard/store/StoreCard";
 export { StoreTinsBalance } from "./dashboard/store/StoreTinsBalance";
 export { StoreTinsSection } from "./dashboard/store/StoreTinsSection";
 export { StoreCoverCard } from "./dashboard/store/StoreCoverCard";
+export { ProgramDetail } from "./dashboard/store/ProgramDetail";
+export { ProgramModulePreview } from "./dashboard/store/ProgramModulePreview";
+export { ProgramPurchasePanel } from "./dashboard/store/ProgramPurchasePanel";
 
 
 // PROGRAMS

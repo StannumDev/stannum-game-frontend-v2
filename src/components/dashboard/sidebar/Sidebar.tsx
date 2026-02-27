@@ -18,6 +18,8 @@ const SKELETON_LINKS: Array<SidebarLink> = [
 export const Sidebar = () => {
     const pathname = usePathname();
 
+    if (pathname.startsWith('/dashboard/checkout')) return null;
+
     const user = useUserStore(s => s.user);
     const isLoading = useUserStore(s => s.isLoading);
     const isAuthenticated = useUserStore(s => s.isAuthenticated);

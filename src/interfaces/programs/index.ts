@@ -61,9 +61,10 @@ export interface Program {
     id: ProgramId;
     name: string;
     price: number;
-    href: string;
+    priceARS: number | null;
     categories: Array<ProgramCategory>;
     description: string;
+    longDescription?: string;
     logo: StaticImageData;
     background: StaticImageData;
     sections: Array<Section>;

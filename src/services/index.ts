@@ -9,3 +9,4 @@ export * from './assistant';
 export * from './prompt';
 export * from './store';
 export * from './chest';
+export * from './payment';
