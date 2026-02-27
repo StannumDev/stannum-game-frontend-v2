@@ -1,11 +1,13 @@
 'use client'
 
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
+import { useUserStore } from '@/stores/userStore';
+import { PowerIcon } from '@/icons';
 import { formatCoins } from '@/utilities';
 import { getRankByLevel } from '@/config/ranks';
 import styles from '@/components/styles/sidebar.module.css';
@@ -20,13 +22,26 @@ interface Props{
 }
 
 export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
-    
+
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const storeLogout = useUserStore(s => s.logout);
 
     const [isShow, setIsShow] = useState(true);
     const { scrollY } = useScroll();
     const [lastScroll, setLastScroll] = useState(0);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     useMotionValueEvent(scrollY, "change", (scrollYPosition) => {
         const distanceFromBottom = document.documentElement.scrollHeight - (scrollYPosition + window.innerHeight)
@@ -60,8 +75,8 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         <span className="text-xs text-amber-400 font-bold">{formatCoins(user.coins ?? 0)}</span>
                                     </div>
                                 )}
-                                <div className="relative">
-                                    <Link href={`/dashboard/profile/${user?.username}`} className="size-8 aspect-square rounded-full relative overflow-hidden block">
+                                <div className="relative" ref={menuRef}>
+                                    <button type="button" onClick={() => setIsMenuOpen(!isMenuOpen)} className="size-8 aspect-square rounded-full relative overflow-hidden block">
                                         { isLoading ?
                                             <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
                                         :
@@ -75,7 +90,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                                 onError={() => setProfilePhotoError(true)}
                                             />
                                         }
-                                    </Link>
+                                    </button>
                                     {!isLoading && user && (() => {
                                         const rank = getRankByLevel(user.currentLevel);
                                         return (
@@ -86,6 +101,39 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                             </span>
                                         );
                                     })()}
+                                    <AnimatePresence>
+                                        {isMenuOpen && (
+                                            <m.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                className="absolute top-full right-0 mt-2 w-48 bg-card border border-card-light rounded-lg overflow-hidden shadow-xl z-50"
+                                            >
+                                                <Link
+                                                    href={`/dashboard/profile/${user?.username ?? ''}`}
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
+                                                >
+                                                    Mi perfil
+                                                </Link>
+                                                <Link
+                                                    href="/dashboard/purchases"
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
+                                                >
+                                                    Mis compras
+                                                </Link>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { setIsMenuOpen(false); storeLogout(); }}
+                                                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-card-light transition-200"
+                                                >
+                                                    <PowerIcon className="text-base"/>
+                                                    Cerrar sesión
+                                                </button>
+                                            </m.div>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             </div>
                         </m.div>

@@ -10,7 +10,7 @@ interface Props {
 
 export const StoreCard = ({ program, isPurchased }: Props) => {
 
-    const { id, name, description, href, logo, price, background } = program;
+    const { id, name, description, logo, price, background } = program;
 
     if(price < 0){
         return (
@@ -35,7 +35,7 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
     }
 
     return (
-        <Link href={ isPurchased ? `/dashboard/library/${id}` : href } target={ isPurchased ? "_self" : "_blank"} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
+        <Link href={`/dashboard/store/${id}`} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
             { isPurchased && <div className="bg-stannum/40 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-3 right-3 z-20">En tu biblioteca</div>  }
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>

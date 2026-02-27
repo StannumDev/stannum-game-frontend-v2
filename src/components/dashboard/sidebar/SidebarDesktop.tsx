@@ -1,13 +1,13 @@
 'use client'
 
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, m } from 'framer-motion';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { useUserStore } from '@/stores/userStore';
 import { useSidebarStore } from '@/stores/sidebarStore';
-import { PanelCloseIcon, PanelOpenIcon, PowerIcon } from '@/icons';
+import { PanelCloseIcon, PanelOpenIcon, PowerIcon, OptionsIcon } from '@/icons';
 import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink, Tooltip } from '@/components';
 import default_user from "@/assets/user/default_user.webp";
 import { formatCoins } from '@/utilities';
@@ -28,11 +28,23 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
     const isExpanded = useSidebarStore(s => s.isExpanded);
     const toggleExpanded = useSidebarStore(s => s.toggleExpanded);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
     const storeLogout = useUserStore(s => s.logout);
 
     const onLogout = () => {
         storeLogout();
     }
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const activeIndex = useMemo(() => {
         return links.findIndex(link => {
@@ -194,19 +206,50 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                         </m.div>
                                 }
                                 {
-                                    isExpanded && !isLoading &&
-                                    <m.button
-                                        key={'sidebar_logout_desktop'}
+                                    !isLoading &&
+                                    <m.div
+                                        key={'sidebar_menu_desktop'}
                                         initial={{ y: 150, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         exit={{ y: 150, opacity: 0 }}
-                                        type="button"
-                                        onClick={onLogout}
-                                        className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0"
+                                        className="relative shrink-0"
+                                        ref={menuRef}
                                     >
-                                        <span className="sr-only">Cerrar sesión</span>
-                                        <PowerIcon className="text-xl transition-200"/>
-                                    </m.button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                            className="bg-card h-8 aspect-square rounded-full flex justify-center items-center text-neutral-400 hover:text-white shrink-0"
+                                        >
+                                            <span className="sr-only">Menú</span>
+                                            <OptionsIcon className="text-xl transition-200"/>
+                                        </button>
+                                        <AnimatePresence>
+                                            {isMenuOpen && (
+                                                <m.div
+                                                    initial={{ opacity: 0, y: 10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: 10 }}
+                                                    className="absolute bottom-full right-0 mb-2 w-48 bg-card border border-card-light rounded-lg overflow-hidden shadow-xl z-50"
+                                                >
+                                                    <Link
+                                                        href="/dashboard/purchases"
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
+                                                    >
+                                                        Mis compras
+                                                    </Link>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => { setIsMenuOpen(false); onLogout(); }}
+                                                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-card-light transition-200"
+                                                    >
+                                                        <PowerIcon className="text-base"/>
+                                                        Cerrar sesión
+                                                    </button>
+                                                </m.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </m.div>
                                 }
                             </AnimatePresence>
                         </m.div>
