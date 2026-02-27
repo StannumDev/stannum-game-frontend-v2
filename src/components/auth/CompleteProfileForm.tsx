@@ -50,7 +50,7 @@ export const CompleteProfileForm = () => {
         const fetchUserData = async () => {
             if (isMounted) setIsFetching(true);
             try {
-                const user = await getUserByTokenClient();
+                const { user } = await getUserByTokenClient();
                 if (!isMounted) return;
                 if (user.profile?.name) setValue('name', user.profile.name);
                 if (user.profile?.birthdate) {

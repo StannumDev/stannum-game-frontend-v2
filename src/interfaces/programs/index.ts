@@ -62,6 +62,7 @@ export interface Program {
     name: string;
     price: number;
     priceARS: number | null;
+    purchasable: boolean;
     categories: Array<ProgramCategory>;
     description: string;
     longDescription?: string;

@@ -177,6 +177,7 @@ export interface FullUserDetails {
         lastActivityLocalDate?: string;
         timezone: string;
         shields: number;
+        shieldCoveredDate?: string | null;
         lostCount?: number | null;
         lostAt?: string | null;
         recoveryAvailable: boolean;
