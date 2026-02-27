@@ -9,7 +9,7 @@ import { useUserStore } from '@/stores/userStore';
 import {
     ChestIcon, CrownIcon, MedalIcon,
     StarIcon, VideosIcon,
-    CompassIcon, CheckIcon,
+    CompassIcon, CheckIcon, KeyIcon,
 } from '@/icons';
 import stannum_coin from '@/assets/tins_coin.svg';
 import { achievements } from '@/config/achievements';
@@ -159,13 +159,13 @@ export const ProgramDetail = ({ program }: Props) => {
                     <m.p variants={fadeUp} className="text-sm lg:text-base text-white/80 max-w-xl leading-relaxed">
                         {program.description}
                     </m.p>
-                    {program.price > 0 && (
+                    {program.purchasable && program.price > 0 && (
                         <m.div variants={fadeUp} className="lg:hidden flex items-end gap-1 self-end">
                             <span className="text-2xl font-black">{program.price}</span>
                             <span className="text-sm text-white/60 mb-0.5">USD</span>
                         </m.div>
                     )}
-                    {program.price === 0 && (
+                    {program.purchasable && program.price === 0 && (
                         <m.span variants={fadeUp} className="lg:hidden text-2xl font-black text-stannum self-end">Gratis</m.span>
                     )}
                 </m.div>
@@ -314,6 +314,11 @@ export const ProgramDetail = ({ program }: Props) => {
                         {isPurchased ? (
                             <Link href={`/dashboard/library/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center hover:bg-stannum-light transition-200">
                                 Ir al programa
+                            </Link>
+                        ) : !program.purchasable ? (
+                            <Link href="/dashboard?activar=true" className="w-full py-3.5 rounded-lg bg-card-light text-white font-bold text-center flex items-center justify-center gap-2 hover:bg-white/10 transition-200">
+                                <KeyIcon className="size-4" />
+                                Activar clave
                             </Link>
                         ) : (
                             <Link href={`/dashboard/checkout/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center gap-2 hover:bg-stannum-light transition-200">

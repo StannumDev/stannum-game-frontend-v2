@@ -17,7 +17,7 @@ export default async function CheckoutPage({ params }: Props) {
     const { programId } = await params;
     const program = programs.find(p => p.id === programId.toLowerCase());
     if (!program) return notFound();
-    if (program.price < 0) return notFound();
+    if (!program.purchasable) return notFound();
 
     return <CheckoutForm program={program} />;
 }

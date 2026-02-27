@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRightIcon } from '@/icons';
+import { ArrowRightIcon, KeyIcon } from '@/icons';
 import { Program } from '@/interfaces';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export const StoreCard = ({ program, isPurchased }: Props) => {
 
-    const { id, name, description, logo, price, background } = program;
+    const { id, name, description, logo, price, purchasable, background } = program;
 
     if(price < 0){
         return (
@@ -48,20 +48,21 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
                 </div>
                 <div className='mt-6 w-full flex items-end gap-4'>
                     <div className='grow flex flex-col items-center lg:items-start gap-1'>
-                        {
-                            price === 0 ? (
-                                <div className='flex justify-center items-end gap-1'>
-                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>Gratis</b>
-                                </div>
-                            )
-                            : (
-                                <div className='flex justify-center items-end gap-1'>
-                                    <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>{price}</b>
-                                    <small className='text-sm font-thin text-white/75'>USD</small>
-                                </div>
-                            )
-                        }
-                        <small className='subtitle-1'>{ price >= 0 ? 'Oferta lanzamiento' : 'Proximamente'}</small>
+                        {!purchasable ? (
+                            <div className='flex items-center gap-2'>
+                                <KeyIcon className='size-4 text-white/60' />
+                                <span className='text-sm font-semibold text-white/60'>Clave de producto</span>
+                            </div>
+                        ) : price === 0 ? (
+                            <div className='flex justify-center items-end gap-1'>
+                                <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>Gratis</b>
+                            </div>
+                        ) : (
+                            <div className='flex justify-center items-end gap-1'>
+                                <b className='text-5xl lg:text-3xl leading-none font-black tracking-tighter'>{price}</b>
+                                <small className='text-sm font-thin text-white/75'>USD</small>
+                            </div>
+                        )}
                     </div>
                     <div className='hidden w-fit lg:flex justify-center items-center'>
                         <span className='text-sm text-white/75 group-hover:text-white'>{ isPurchased ? 'Ir ahora' : 'Ver más'}</span>

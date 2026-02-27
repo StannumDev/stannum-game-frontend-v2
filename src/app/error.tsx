@@ -7,6 +7,10 @@ export default function Error({error, reset}: {error: Error & { digest?: string 
     const router = useRouter();
 
     useEffect(() => {
+        if (error.name === 'ChunkLoadError' || error.message?.includes('Loading chunk')) {
+            window.location.replace('/login')
+            return
+        }
         if(process.env.NEXT_PUBLIC_ENV === 'development') {
             console.error("Error occurred:", error);
         }

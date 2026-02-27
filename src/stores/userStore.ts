@@ -55,8 +55,18 @@ export const useUserStore = create<UserStore>((set, get) => ({
                 return profileStatus;
             }
 
-            const user = await getUserByTokenClient();
+            const { user, shieldConsumed, streakSaved } = await getUserByTokenClient();
             set({ user, isLoading: false, isAuthenticated: true, error: null, _refreshCount: Date.now() });
+
+            if (shieldConsumed) {
+                callToast({
+                    message: streakSaved
+                        ? { title: 'Escudo de racha consumido', description: 'Tu racha está a salvo gracias al escudo.' }
+                        : { title: 'Escudo de racha consumido', description: 'Faltaste más de un día, tu racha se perdió.' },
+                    type: 'streak',
+                });
+            }
+
             return profileStatus;
         } catch (err: unknown) {
             const appError = errorHandler(err);
@@ -70,7 +80,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
         set({ _isRefreshing: true });
         try {
             const currentUser = get().user;
-            const user = await getUserByTokenClient();
+            const { user, shieldConsumed, streakSaved } = await getUserByTokenClient();
 
             if (currentUser) {
                 if ((user.achievements?.length ?? 0) > (currentUser.achievements?.length ?? 0)) {
@@ -105,14 +115,11 @@ export const useUserStore = create<UserStore>((set, get) => ({
                     });
                 }
 
-                if ((currentUser.dailyStreak?.shields || 0) > 0 &&
-                    (user.dailyStreak?.shields || 0) < (currentUser.dailyStreak?.shields || 0) &&
-                    user.dailyStreak?.count > 0) {
+                if (shieldConsumed) {
                     callToast({
-                        message: {
-                            title: 'Escudo de racha consumido',
-                            description: 'Tu racha está a salvo gracias al escudo.',
-                        },
+                        message: streakSaved
+                            ? { title: 'Escudo de racha consumido', description: 'Tu racha está a salvo gracias al escudo.' }
+                            : { title: 'Escudo de racha consumido', description: 'Faltaste más de un día, tu racha se perdió.' },
                         type: 'streak',
                     });
                 }

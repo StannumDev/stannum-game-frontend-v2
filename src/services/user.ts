@@ -6,13 +6,17 @@ import api from "@/lib/api";
 
 type GetUserOpts = { force?: boolean };
 
-export const getUserByTokenClient = async (): Promise<FullUserDetails> => {
+export const getUserByTokenClient = async (): Promise<{ user: FullUserDetails; shieldConsumed?: boolean; streakSaved?: boolean }> => {
     try {
         const response = await api.get(`${process.env.NEXT_PUBLIC_API_USER_URL}/`);
         if (!response?.data?.success || !response.data?.data) {
             throw new Error("Error al obtener los detalles del usuario. Estructura inesperada.");
         }
-        return response.data.data as FullUserDetails;
+        return {
+            user: response.data.data as FullUserDetails,
+            shieldConsumed: response.data.shieldConsumed || false,
+            streakSaved: response.data.streakSaved || false,
+        };
     } catch (error:unknown) {
         throw error;
     }
