@@ -446,6 +446,32 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-07",
+                    title: "Sesión 07",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 07",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/11ytXrEzXMzVhN3oN2spXbPE_3jEUpa1-/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 07",
+                            description: "Conceptos clave",
+                            link: "https://drive.google.com/file/d/1OvHEcfw3R60ApIGcVxwXU6TrtfLAvibQ/view?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Ejercicios Sesión 07",
+                            description: "Ejercicios Prácticos de Consolidación",
+                            link: "https://drive.google.com/file/d/1lnJjgTkjDJewV0bQOJ02px5FvZfSMMKA/view?usp=sharing",
+                            type: "activity",
+                        },
+                    ],
+                },
             ],
         },
     ],
