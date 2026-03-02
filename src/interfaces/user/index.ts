@@ -42,13 +42,25 @@ export interface AchievementDetails {
     coinsReward: number;
 }
 
+export type SubscriptionStatus = 'pending' | 'active' | 'paused' | 'cancelled' | 'expired' | null;
+
+export interface SubscriptionDetails {
+    status: SubscriptionStatus;
+    priceARS: number | null;
+    currentPeriodEnd: string | null;
+    subscribedAt: string | null;
+    cancelledAt: string | null;
+    lastPaymentAt: string | null;
+}
+
 export interface ProgramDetails {
     isPurchased: boolean;
+    hasAccessFlag: boolean;
     acquiredAt?: string;
     instructions: Array<InstructionDetails>;
     lessonsCompleted: Array<LessonDetails>;
     lastWatchedLesson?: { lessonId: string; currentTime: number };
-    // tests: Array<TestDetails>;
+    subscription?: SubscriptionDetails;
     productKey?: string;
 }
 
@@ -101,6 +113,7 @@ export interface UserFavorites {
 
 export interface UserProgram {
     isPurchased: boolean;
+    hasAccessFlag: boolean;
     acquiredAt?: string;
     instructions: Array<InstructionDetails>;
     lessonsCompleted: {
@@ -116,11 +129,7 @@ export interface UserProgram {
         viewedAt: string;
         currentTime?: number;
     };
-    // tests: {
-    //     date: string;
-    //     sections?: any[];
-    //     totalScore: number;
-    // }[];
+    subscription?: SubscriptionDetails;
     productKey?: string;
     coinsRewardedModules?: string[];
     coinsRewardedProgram?: boolean;
@@ -170,6 +179,7 @@ export interface FullUserDetails {
         tia: UserProgram;
         tia_summer: UserProgram;
         tmd: UserProgram;
+        trenno_ia: UserProgram;
     };
     preferences: UserPreferences;
     dailyStreak: {

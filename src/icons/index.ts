@@ -31,7 +31,10 @@ export {
     IoHourglassSharp as HourglassIcon,
     IoShieldCheckmark as ShieldCompletedIcon,
     IoShieldHalfSharp as ShieldHalfIcon,
-    IoShield as ShieldEmpyIcon
+    IoShield as ShieldEmpyIcon,
+    IoGift as GiftIcon,
+    IoGameController as GameControllerIcon,
+    IoRocket as RocketIcon
 } from "react-icons/io5";
 
 export {

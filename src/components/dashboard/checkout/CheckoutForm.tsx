@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { Program } from '@/interfaces';
 import { useUserStore } from '@/stores/userStore';
 import { STANNUMLogo } from '@/components';
-import { LockIcon, UserIcon } from '@/icons';
-import { IoGift } from 'react-icons/io5';
+import { LockIcon, UserIcon, GiftIcon } from '@/icons';
 import { CouponInput } from './CouponInput';
 import { GiftOptions } from './GiftOptions';
 import { CheckoutSummary } from './CheckoutSummary';
 import { createPreference } from '@/services/payment';
 import type { CouponResult } from '@/services/payment';
+import { hasAccess } from '@/utilities';
 
 interface Props {
     program: Program;
@@ -19,9 +19,9 @@ interface Props {
 
 export const CheckoutForm = ({ program }: Props) => {
     const user = useUserStore(s => s.user);
-    const isPurchased = user?.programs?.[program.id]?.isPurchased ?? false;
+    const isPurchased = hasAccess(user?.programs?.[program.id]);
 
-    const [type, setType] = useState<'self' | 'gift'>('self');
+    const [type, setType] = useState<'self' | 'gift'>(isPurchased ? 'gift' : 'self');
     const [giftDelivery, setGiftDelivery] = useState<'email' | 'manual'>('email');
     const [giftEmail, setGiftEmail] = useState('');
     const [couponData, setCouponData] = useState<CouponResult | null>(null);
@@ -71,24 +71,6 @@ export const CheckoutForm = ({ program }: Props) => {
         }
     };
 
-    if (isPurchased && type === 'self') {
-        return (
-            <div className="w-full min-h-svh flex flex-col">
-                <header className="w-full flex justify-between items-center p-4 lg:px-8">
-                    <Link href="/dashboard"><STANNUMLogo className="w-36" gameColor="fill-stannum" stannumColor="fill-white" /></Link>
-                    <Link href={`/dashboard/store/${program.id}`} className="text-sm text-white/60 hover:text-white transition-200">Volver a la tienda</Link>
-                </header>
-                <div className="grow flex flex-col items-center justify-center p-6 text-center gap-4">
-                    <h1 className="text-2xl font-bold">Ya tenés este programa</h1>
-                    <p className="text-white/60">Podés acceder desde tu biblioteca.</p>
-                    <Link href={`/dashboard/library/${program.id}`} className="mt-4 py-3 px-6 rounded-lg bg-stannum text-black font-bold hover:bg-stannum-light transition-200">
-                        Ir al programa
-                    </Link>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="w-full min-h-svh flex flex-col">
             <header className="w-full flex justify-between items-center p-4 lg:px-8 border-b border-card">
@@ -107,12 +89,13 @@ export const CheckoutForm = ({ program }: Props) => {
 
                     <div className="flex flex-col gap-3">
                         <span className="subtitle-1">Tipo de compra</span>
-                        <div className="card p-5 flex flex-col gap-4">
+                        <div className="card p-5">
                             <div className="flex gap-3">
                                 <button
                                     type="button"
                                     onClick={() => { setType('self'); setGiftEmail(''); setGiftDelivery('email'); }}
-                                    className={`grow py-3 rounded-lg text-sm font-medium border transition-200 flex items-center justify-center gap-2 ${type === 'self' ? 'border-stannum bg-stannum/10 text-stannum' : 'border-card hover:border-card-light'}`}
+                                    disabled={isPurchased}
+                                    className={`grow py-3 rounded-lg text-sm font-medium border transition-200 flex items-center justify-center gap-2 ${isPurchased ? 'opacity-40 cursor-not-allowed border-card' : type === 'self' ? 'border-stannum bg-stannum/10 text-stannum' : 'border-card hover:border-card-light'}`}
                                 >
                                     <UserIcon className="size-4" />
                                     Para mí
@@ -122,11 +105,11 @@ export const CheckoutForm = ({ program }: Props) => {
                                     onClick={() => setType('gift')}
                                     className={`grow py-3 rounded-lg text-sm font-medium border transition-200 flex items-center justify-center gap-2 ${type === 'gift' ? 'border-stannum bg-stannum/10 text-stannum' : 'border-card hover:border-card-light'}`}
                                 >
-                                    <IoGift className="size-4" />
+                                    <GiftIcon className="size-4" />
                                     Para regalar
                                 </button>
                             </div>
-
+                            {isPurchased && <span className="text-[10px] text-white/30">Ya tenés este programa</span>}
                             {type === 'gift' && (
                                 <GiftOptions
                                     giftDelivery={giftDelivery}

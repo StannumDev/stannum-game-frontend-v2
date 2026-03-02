@@ -2,8 +2,13 @@ import { ReactNode } from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
+import { DemoUpgradeBanner } from "@/components/dashboard/program/DemoUpgradeBanner";
 import { programs } from '@/config/programs';
 import { Program } from "@/interfaces";
+
+const DEMO_TO_FULL: Record<string, string> = {
+    demo_trenno: 'trenno_ia',
+};
 
 interface Props {
     children: ReactNode;
@@ -49,6 +54,11 @@ export default async function ProgramDashboardLayout({children, params}:Props) {
         <main className="main-container">
             <h1 className="sr-only">Panel de control {foundProgram.name} STANNUM Game</h1>
             <ProgramCover program={foundProgram}/>
+            {foundProgram.type === 'demo' && DEMO_TO_FULL[foundProgram.id] && (
+                <div className="px-4 lg:px-6 mb-4">
+                    <DemoUpgradeBanner fullProgramId={DEMO_TO_FULL[foundProgram.id]} />
+                </div>
+            )}
             <MotionWrapperLayout>
                 <section className="w-full card px-0">
                     <h2 className="mb-4 title-2 px-4 lg:px-6">Explora las posibilidades</h2>

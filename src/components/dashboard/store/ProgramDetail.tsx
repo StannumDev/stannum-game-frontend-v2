@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { m } from 'framer-motion';
+import MuxPlayer from '@mux/mux-player-react/lazy';
 import { Program } from '@/interfaces';
 import { useUserStore } from '@/stores/userStore';
 import {
@@ -16,11 +17,15 @@ import { achievements } from '@/config/achievements';
 import { GoBackButton } from '@/components/ui/GoBackButton';
 import { ProgramModulePreview } from './ProgramModulePreview';
 import { ProgramPurchasePanel } from './ProgramPurchasePanel';
+import { hasAccess, formatARS } from '@/utilities';
+import '@/components/styles/lessonVideoPlayer.css';
 
 const programCategoryMap: Record<string, string> = {
     tia: 'tia',
     tia_summer: 'summer',
     tmd: 'tmd',
+    trenno_ia: 'tia',
+    demo_trenno: 'tia',
 };
 
 interface Props {
@@ -63,8 +68,19 @@ const fadeUp = {
 
 export const ProgramDetail = ({ program }: Props) => {
     const user = useUserStore(s => s.user);
-    const isPurchased = user?.programs?.[program.id]?.isPurchased ?? false;
+    const isPurchased = hasAccess(user?.programs?.[program.id]);
     const stats = useMemo(() => computeStats(program), [program]);
+
+    const trailerLesson = useMemo(() => {
+        for (const section of program.sections) {
+            for (const mod of section.modules ?? []) {
+                if (mod.lessons.length > 0 && mod.lessons[0].muxPlaybackId) {
+                    return mod.lessons[0];
+                }
+            }
+        }
+        return null;
+    }, [program]);
 
     const programAchievements = useMemo(() => {
         const cat = programCategoryMap[program.id];
@@ -159,15 +175,19 @@ export const ProgramDetail = ({ program }: Props) => {
                     <m.p variants={fadeUp} className="text-sm lg:text-base text-white/80 max-w-xl leading-relaxed">
                         {program.description}
                     </m.p>
-                    {program.purchasable && program.price > 0 && (
+                    {program.type === 'subscription' && program.subscriptionPriceARS ? (
+                        <m.div variants={fadeUp} className="lg:hidden flex flex-col items-end self-end">
+                            <span className="text-2xl font-black">{formatARS(program.subscriptionPriceARS)}</span>
+                            <span className="text-[11px] text-white/50">por mes</span>
+                        </m.div>
+                    ) : program.purchasable && program.price > 0 ? (
                         <m.div variants={fadeUp} className="lg:hidden flex items-end gap-1 self-end">
                             <span className="text-2xl font-black">{program.price}</span>
                             <span className="text-sm text-white/60 mb-0.5">USD</span>
                         </m.div>
-                    )}
-                    {program.purchasable && program.price === 0 && (
+                    ) : program.purchasable && program.price === 0 ? (
                         <m.span variants={fadeUp} className="lg:hidden text-2xl font-black text-stannum self-end">Gratis</m.span>
-                    )}
+                    ) : null}
                 </m.div>
             </m.div>
 
@@ -197,20 +217,44 @@ export const ProgramDetail = ({ program }: Props) => {
             <div className="w-full flex flex-col lg:flex-row gap-6">
                 <div className="w-full lg:w-2/3 flex flex-col gap-6">
 
-                    {program.longDescription && (
-                        <m.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ type: 'spring', bounce: 0, delay: 0.1 }}
-                            className="card p-6"
-                        >
-                            <h2 className="title-2 mb-4">Acerca de este programa</h2>
-                            <div
-                                className="text-sm lg:text-base text-white/70 leading-relaxed space-y-3 [&_strong]:text-white [&_p]:mb-0"
-                                dangerouslySetInnerHTML={{ __html: program.longDescription }}
-                            />
-                        </m.div>
-                    )}
+                    <m.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ type: 'spring', bounce: 0, delay: 0.05 }}
+                        className="card p-0 overflow-hidden rounded-xl"
+                    >
+                        {trailerLesson && (
+                            <div className="w-full aspect-video relative">
+                                <MuxPlayer
+                                    className="size-full absolute top-0 left-0"
+                                    playbackId={trailerLesson.muxPlaybackId}
+                                    envKey={process.env.NEXT_PUBLIC_MUX_TOKEN_DATA}
+                                    preload="auto"
+                                    playsInline
+                                    streamType="on-demand"
+                                    thumbnailTime={5}
+                                    forwardSeekOffset={5}
+                                    backwardSeekOffset={5}
+                                    defaultShowRemainingTime
+                                    defaultHiddenCaptions
+                                    primaryColor="rgba(255,255,255,1)"
+                                    accentColor="#00FFCC"
+                                    metadataVideoId={trailerLesson.id}
+                                    metadataVideoTitle={`Trailer - ${program.name}`}
+                                    title={`Trailer - ${program.name}`}
+                                />
+                            </div>
+                        )}
+                        {program.longDescription && (
+                            <div className="px-6 py-6">
+                                <h2 className="title-2 mb-4">Acerca de este programa</h2>
+                                <div
+                                    className="text-sm lg:text-base text-white/70 leading-relaxed space-y-3 [&_strong]:text-white [&_p]:mb-0"
+                                    dangerouslySetInnerHTML={{ __html: program.longDescription }}
+                                />
+                            </div>
+                        )}
+                    </m.div>
 
                     <m.div
                         initial={{ opacity: 0, y: 20 }}
@@ -307,13 +351,21 @@ export const ProgramDetail = ({ program }: Props) => {
                 </div>
             </div>
 
-            {program.price >= 0 && (
+            {(program.price >= 0 || program.type === 'subscription' || program.type === 'demo') && (
                 <>
                     <div className="lg:hidden h-9" />
                     <div className="lg:hidden z-[999] px-4 pt-4 pb-2 bg-gradient-to-t from-background via-background to-transparent" style={{ position: 'fixed', left: 0, right: 0, bottom: 'calc(3.5rem + env(safe-area-inset-bottom))' }}>
                         {isPurchased ? (
                             <Link href={`/dashboard/library/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center hover:bg-stannum-light transition-200">
                                 Ir al programa
+                            </Link>
+                        ) : program.type === 'demo' ? (
+                            <Link href={`/dashboard/library/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center gap-2 hover:bg-stannum-light transition-200">
+                                Probar gratis
+                            </Link>
+                        ) : program.type === 'subscription' && program.subscriptionPriceARS ? (
+                            <Link href={`/dashboard/subscription/checkout/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center gap-2 hover:bg-stannum-light transition-200">
+                                Suscribirme — {formatARS(program.subscriptionPriceARS)}/mes
                             </Link>
                         ) : !program.purchasable ? (
                             <Link href="/dashboard?activar=true" className="w-full py-3.5 rounded-lg bg-card-light text-white font-bold text-center flex items-center justify-center gap-2 hover:bg-white/10 transition-200">

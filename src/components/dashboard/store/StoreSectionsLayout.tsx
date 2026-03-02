@@ -7,11 +7,12 @@ import { NewAppsIcon } from "@/icons";
 import { MotionWrapperLayout, NavbarSection, StoreCard, StoreTutorial } from "@/components";
 import { programs } from "@/config/programs";
 import { useUserStore } from "@/stores/userStore";
+import { hasAccess } from "@/utilities";
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: NewAppsIcon },
     { name: "Principales", id: "main", disabled: true },
-    { name: "Gratuitos", id: "free", disabled: true },
+    { name: "Gratuitos", id: "free" },
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
@@ -61,7 +62,7 @@ export const StoreSectionsLayout = () => {
                         </div>
                     )}
                     {filteredPrograms.map(program => {
-                        const isPurchased = user?.programs?.[program.id as keyof typeof user.programs]?.isPurchased ?? false;
+                        const isPurchased = hasAccess(user?.programs?.[program.id as keyof typeof user.programs]);
                         return (
                             <StoreCard
                                 key={program.id}

@@ -35,8 +35,10 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
             ...section,
             Icon: sectionIconMap[section.id],
         }));
+        // Demo programs are excluded from rankings
+        if (program.type === 'demo') return withIcons;
         return [...withIcons, { id: "ranking", name: "Ranking", Icon: RankingStarIcon }];
-    }, [program.sections]);
+    }, [program.sections, program.type]);
 
     const sectionIds = useMemo(() => {
         return sectionsWithRanking.map(section => section.id);

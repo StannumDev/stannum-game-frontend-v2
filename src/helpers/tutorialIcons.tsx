@@ -3,8 +3,8 @@ import {
     PlayIcon, FireIcon, RankingStarIcon, CompassIcon, KeyIcon,
     CheckIcon, LockIcon, CrownIcon, RouteIcon, ToolsIcon,
     UserCircleIcon, EditIcon, MedalIcon, ChestIcon,
+    GameControllerIcon, RocketIcon,
 } from '@/icons';
-import { IoGameController, IoRocket } from 'react-icons/io5';
 import tinsCoin from '@/assets/tins_coin.svg';
 
 const toHtml = (Icon: React.ComponentType<{ size?: number; color?: string }>) =>
@@ -26,8 +26,8 @@ export const TUTORIAL_ICONS = {
     user: toHtml(UserCircleIcon),
     edit: toHtml(EditIcon),
     medal: toHtml(MedalIcon),
-    gamepad: toHtml(IoGameController),
-    rocket: toHtml(IoRocket),
+    gamepad: toHtml(GameControllerIcon),
+    rocket: toHtml(RocketIcon),
     coin: coinIconHtml,
     chest: toHtml(ChestIcon),
 } as const;

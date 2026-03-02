@@ -10,8 +10,7 @@ import { verifyPayment } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
 import { programs } from '@/config/programs';
 import { formatARS } from '@/utilities';
-import { CheckIcon, CrossIcon } from '@/icons';
-import { IoGift } from 'react-icons/io5';
+import { CheckIcon, CrossIcon, GiftIcon } from '@/icons';
 import { ProductKeyDisplay } from '@/components/dashboard/purchases/ProductKeyDisplay';
 
 const fadeUp = {
@@ -127,7 +126,7 @@ export const PurchaseResult = () => {
                             <div className="flex justify-between items-center">
                                 <span className="text-white/50">Tipo</span>
                                 <span className="flex items-center gap-1.5 font-medium">
-                                    {order.type === 'gift' ? <><IoGift className="size-3.5 text-stannum" /> Regalo</> : 'Compra personal'}
+                                    {order.type === 'gift' ? <><GiftIcon className="size-3.5 text-stannum" /> Regalo</> : 'Compra personal'}
                                 </span>
                             </div>
                             <div className="h-px bg-card-light" />

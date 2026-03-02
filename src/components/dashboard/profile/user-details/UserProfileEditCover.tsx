@@ -59,7 +59,7 @@ export const UserProfileEditCover = ({ showModal, setShowModal, equippedCoverId,
                 <div className="w-full">
                     <div className="w-full card rounded-b-none p-0 overflow-hidden relative">
                         <div className="size-full bg-gradient-to-b from-transparent to-black absolute top-0 left-0 z-10"></div>
-                        <Image priority src={getCoverImage(selectedId === 'default' ? 'cover_default' : `cover_${selectedId}`)} alt="Preview portada" className="w-full aspect-video lg:aspect-auto lg:h-80 object-cover relative z-0 object-[50%_65%]" />
+                        <Image priority src={getCoverImage(selectedId === 'default' ? 'cover_default' : `cover_${selectedId}`)} alt="Preview portada" className="w-full aspect-video lg:aspect-auto lg:h-96 object-cover relative z-0 object-[50%_65%]" />
                     </div>
                     <div className="-mt-16 lg:-mt-44 w-full flex justify-center relative z-10">
                         <div className="size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md"></div>

@@ -17,6 +17,7 @@ try {
 export const TIA_PROGRAM: Program = {
     id: "tia",
     name: "TRENNO IA",
+    type: "purchase",
     price: 50,
     priceARS: 50000,
     purchasable: false,
@@ -200,9 +201,10 @@ export const TIA_PROGRAM: Program = {
 export const TIA_SUMMER_PROGRAM: Program = {
     id: "tia_summer",
     name: "TRENNO IA SUMMER",
+    type: "purchase",
     price: 250,
     priceARS: 250000,
-    purchasable: false,
+    purchasable: true,
     categories: ["main"],
     description: "Programa intensivo especializado en el entrenamiento en inteligencia artificial para líderes de empresas y sus equipos.",
     longDescription: "<p><strong>TRENNO IA SUMMER</strong> es la versión más completa y profunda del entrenamiento en inteligencia artificial de STANNUM Game. Diseñado para líderes que quieren llevar a sus equipos al siguiente nivel, este programa combina <strong>sesiones en vivo grabadas</strong>, ejercicios prácticos de consolidación y recursos exclusivos.</p><p>Además de dominar el <strong>Prompt Engineering</strong> y la <strong>personalización de ChatGPT</strong>, accedés a grabaciones de sesiones reales con análisis en profundidad, templates profesionales para desarrollo de roles, y ejercicios guiados que cubren desde la organización digital hasta la delegación estratégica con IA.</p><p>Cada módulo incluye material de soporte descargable: presentaciones, documentos de referencia, plantillas de prompts y ejercicios de consolidación diseñados para que apliques todo lo aprendido directamente en tu negocio. Es el programa más completo para quienes buscan resultados inmediatos y tangibles.</p>",
@@ -461,6 +463,7 @@ export const TIA_SUMMER_PROGRAM: Program = {
 export const TMD_PROGRAM: Program = {
     id: "tmd",
     name: "TRENNO Mark Digital",
+    type: "purchase",
     price: -1,
     priceARS: null,
     purchasable: false,
@@ -520,8 +523,92 @@ export const TMD_PROGRAM: Program = {
     ],
 };
 
+export const TRENNO_IA_PROGRAM: Program = {
+    id: "trenno_ia",
+    name: "Trenno IA",
+    type: "subscription",
+    price: 0,
+    priceARS: null,
+    subscriptionPriceARS: 30000,
+    purchasable: true,
+    categories: ["main"],
+    description: "Entrenamiento mensual con inteligencia artificial. Accedé a contenido actualizado, lecciones nuevas cada mes y todas las herramientas de STANNUM Game.",
+    longDescription: "<p><strong>Trenno IA</strong> es el programa de suscripción mensual de STANNUM Game. A diferencia de los programas de compra única, Trenno IA se actualiza constantemente con <strong>nuevas lecciones, instrucciones y contenido</strong> para que siempre estés a la vanguardia de la inteligencia artificial.</p><p>Con tu suscripción activa, accedés a todo el contenido del programa, incluyendo lecciones en video, instrucciones prácticas con feedback real, cofres de recompensa, XP y participación en el ranking competitivo.</p><p>Cancelá en cualquier momento. Tu acceso se mantiene hasta el final del período facturado.</p>",
+    logo: tia_logo,
+    background: background_tia,
+    sections: [],
+};
+
+export const DEMO_TRENNO_PROGRAM: Program = {
+    id: "demo_trenno",
+    name: "Trenno IA — Demo",
+    type: "demo",
+    price: 0,
+    priceARS: 0,
+    purchasable: false,
+    categories: ["free"],
+    description: "Probá Trenno IA gratis. Accedé a lecciones de muestra y descubrí el programa de entrenamiento mensual en inteligencia artificial.",
+    logo: tia_logo,
+    background: background_tia,
+    sections: [
+        {
+            id: "demo",
+            name: "Demo",
+            modules: [
+                {
+                    id: "DEMO_TRENNOIAM01",
+                    name: "Introducción a Trenno IA",
+                    description: "Primeros pasos con inteligencia artificial.",
+                    lessons: [
+                        {
+                            id: "DEMO_TRENNOIAM01L01",
+                            title: "Bienvenida a Trenno IA",
+                            description: "Conocé el programa y lo que vas a aprender.",
+                            longTitle: "Bienvenida a Trenno IA",
+                            duration: 0,
+                            muxPlaybackId: muxPlaybackIds["DEMO_TRENNOIAM01L01"] || "",
+                        },
+                        {
+                            id: "DEMO_TRENNOIAM01L02",
+                            title: "Tu primer prompt",
+                            description: "Aprendé a escribir tu primera instrucción para IA.",
+                            longTitle: "Tu primer prompt con inteligencia artificial",
+                            duration: 0,
+                            muxPlaybackId: muxPlaybackIds["DEMO_TRENNOIAM01L02"] || "",
+                        },
+                    ],
+                    instructions: [
+                        {
+                            id: "DEMO_TRENNOIAI01",
+                            title: "Creá tu primer prompt",
+                            shortDescription: "Escribí un prompt siguiendo la estructura aprendida.",
+                            description: "Usando lo que aprendiste en las lecciones anteriores, escribí un prompt para ChatGPT que siga la estructura de 6 pasos.",
+                            difficulty: "LOW",
+                            rewardXP: 100,
+                            acceptedFormats: [],
+                            maxFileSizeMB: 0,
+                            deliverableHint: "Escribí tu prompt directamente en el campo de texto.",
+                            resources: [],
+                            afterLessonId: "DEMO_TRENNOIAM01L02",
+                            estimatedTimeSec: 600,
+                            deliverableType: "text",
+                            steps: [
+                                "Pensá en una tarea que quieras resolver con IA.",
+                                "Aplicá la estructura de 6 pasos para crear el prompt.",
+                                "Enviá tu prompt como entregable.",
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+};
+
 export const programs: Array<Program> = [
     TIA_PROGRAM,
     TIA_SUMMER_PROGRAM,
-    TMD_PROGRAM
+    TMD_PROGRAM,
+    TRENNO_IA_PROGRAM,
+    DEMO_TRENNO_PROGRAM,
 ];

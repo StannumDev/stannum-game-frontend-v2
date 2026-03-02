@@ -8,8 +8,7 @@ import { resendGiftEmail } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
 import { formatARS } from '@/utilities';
 import { ProductKeyDisplay } from './ProductKeyDisplay';
-import { KeyIcon, ArrowDownIcon, UserIcon } from '@/icons';
-import { IoGift } from 'react-icons/io5';
+import { KeyIcon, ArrowDownIcon, UserIcon, GiftIcon } from '@/icons';
 
 interface Props {
     order: OrderDetails;
@@ -84,7 +83,7 @@ export const PurchaseCard = ({ order }: Props) => {
                     <span>{formatDate(order.createdAt)}</span>
                     <span className="text-white/20">·</span>
                     <span className="flex items-center gap-1">
-                        {order.type === 'gift' ? <IoGift className="size-3" /> : <UserIcon className="size-3" />}
+                        {order.type === 'gift' ? <GiftIcon className="size-3" /> : <UserIcon className="size-3" />}
                         {order.type === 'gift' ? 'Regalo' : 'Compra personal'}
                     </span>
                     {order.fulfilledAt && (

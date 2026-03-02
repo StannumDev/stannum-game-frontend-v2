@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Program } from '@/interfaces';
-import { ArrowRightIcon, KeyIcon, CheckIcon, VideosIcon, CompassIcon, ChestIcon } from '@/icons';
+import { ArrowRightIcon, KeyIcon, CheckIcon, VideosIcon, CompassIcon, ChestIcon, GiftIcon, RotateRightIcon } from '@/icons';
+import { formatARS } from '@/utilities';
 
 interface Props {
     program: Program;
@@ -35,6 +36,120 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                         Ir al programa
                         <ArrowRightIcon className="size-4" />
                     </Link>
+                    {purchasable && program.type !== 'subscription' && (
+                        <Link href={`/dashboard/checkout/${id}`} className="w-full py-2.5 rounded-lg border border-card-light text-white/60 hover:text-white text-sm text-center hover:border-white/20 transition-200 flex items-center justify-center gap-2">
+                            <GiftIcon className="size-3.5" />
+                            Comprar para regalar
+                        </Link>
+                    )}
+                    {program.type === 'subscription' && (
+                        <Link href="/dashboard/subscriptions" className="w-full py-2.5 rounded-lg border border-card-light text-white/60 hover:text-white text-sm text-center hover:border-white/20 transition-200 flex items-center justify-center gap-2">
+                            <RotateRightIcon className="size-3.5" />
+                            Gestionar suscripción
+                        </Link>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
+    if (program.type === 'demo') {
+        return (
+            <div className="rounded-xl overflow-hidden sticky top-6 border border-card">
+                <div className="relative aspect-[3/1]">
+                    <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
+                    <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
+                    <div className="absolute bottom-3 left-5 right-5 z-20 flex items-end justify-between">
+                        <Image src={logo} alt={program.name} className="w-32" />
+                        <span className="text-2xl font-black text-stannum">Gratis</span>
+                    </div>
+                </div>
+                <div className="bg-card p-5 flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-2">
+                        {[
+                            { icon: <VideosIcon className="size-3.5 text-stannum" />, text: `${totalLessons} lecciones de muestra` },
+                            { icon: <CompassIcon className="size-3.5 text-stannum" />, text: `${totalInstructions} instrucciones` },
+                        ].filter(item => !item.text.startsWith('0')).map((item, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                                {item.icon}
+                                <span className="text-xs text-white/60">{item.text}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    {isPurchased ? (
+                        <>
+                            <Link
+                                href={`/dashboard/library/${id}`}
+                                className="w-full py-3.5 rounded-lg bg-stannum text-black font-extrabold text-center hover:bg-stannum-light transition-200 flex items-center justify-center gap-2"
+                            >
+                                Ir al demo
+                                <ArrowRightIcon className="size-4" />
+                            </Link>
+                            <Link
+                                href="/dashboard/store/trenno_ia"
+                                className="w-full py-2.5 rounded-lg border border-stannum/30 text-stannum text-sm text-center hover:bg-stannum/10 transition-200"
+                            >
+                                Suscribite a Trenno IA para acceder a todo
+                            </Link>
+                        </>
+                    ) : (
+                        <Link
+                            href={`/dashboard/library/${id}`}
+                            className="w-full py-3.5 rounded-lg bg-stannum text-black font-extrabold text-center hover:bg-stannum-light transition-200 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                            style={{ transition: 'all 0.2s' }}
+                        >
+                            Probar gratis
+                            <ArrowRightIcon className="size-4" />
+                        </Link>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
+    if (program.type === 'subscription' && program.subscriptionPriceARS) {
+        return (
+            <div className="rounded-xl overflow-hidden sticky top-6 border border-card">
+                <div className="relative aspect-[3/1]">
+                    <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
+                    <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
+                    <div className="absolute bottom-3 left-5 right-5 z-20 flex items-end justify-between">
+                        <Image src={logo} alt={program.name} className="w-32" />
+                        <div className="flex flex-col items-end">
+                            <span className="text-2xl font-black">{formatARS(program.subscriptionPriceARS)}</span>
+                            <span className="text-[11px] text-white/50">por mes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-card p-5 flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-2">
+                        {[
+                            { icon: <VideosIcon className="size-3.5 text-stannum" />, text: `${totalLessons} lecciones en video` },
+                            { icon: <CompassIcon className="size-3.5 text-stannum" />, text: `${totalInstructions} instrucciones` },
+                            { icon: <ChestIcon className="size-3.5 text-amber-400" />, text: `${totalModules} cofres de recompensa` },
+                            { icon: <RotateRightIcon className="size-3.5 text-stannum" />, text: 'Contenido actualizado' },
+                        ].filter(item => !item.text.startsWith('0')).map((item, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                                {item.icon}
+                                <span className="text-xs text-white/60">{item.text}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <Link
+                        href={`/dashboard/subscription/checkout/${id}`}
+                        className="w-full py-3.5 rounded-lg bg-stannum text-black font-extrabold text-center hover:bg-stannum-light transition-200 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                        style={{ transition: 'all 0.2s' }}
+                    >
+                        Suscribirme
+                        <ArrowRightIcon className="size-4" />
+                    </Link>
+
+                    <p className="text-[11px] text-white/30 text-center">
+                        Cancelá en cualquier momento. Sin compromiso.
+                    </p>
                 </div>
             </div>
         );

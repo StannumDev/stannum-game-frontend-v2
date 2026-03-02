@@ -15,7 +15,7 @@ export const achievements: Array<Achievement> = [
         xpReward: 50,
         coinsReward: 10,
         getProgress: (user: FullUserDetails) => {
-            return Object.values(user.programs ?? {}).some(p => p.isPurchased) ? 100 : 0;
+            return Object.values(user.programs ?? {}).some(p => p.hasAccessFlag) ? 100 : 0;
         }
     },
     {
@@ -319,7 +319,7 @@ export const achievements: Array<Achievement> = [
         coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             const tia = user.programs?.tia;
-            return tia?.isPurchased ? 100 : 0;
+            return tia?.hasAccessFlag ? 100 : 0;
         }
     },
     {
@@ -384,7 +384,7 @@ export const achievements: Array<Achievement> = [
         coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             const tiaSummer = user.programs?.tia_summer;
-            return tiaSummer?.isPurchased ? 100 : 0;
+            return tiaSummer?.hasAccessFlag ? 100 : 0;
         }
     },
     {

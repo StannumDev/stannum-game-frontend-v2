@@ -9,9 +9,9 @@ interface Props {
 
 export const GiftOptions = ({ giftDelivery, setGiftDelivery, giftEmail, setGiftEmail }: Props) => {
     return (
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="mt-2">
             <h3 className="text-sm font-medium text-white/80">Cómo entregar el regalo</h3>
-            <div className="flex flex-col gap-2">
+            <div className="mt-2 flex flex-col gap-2">
                 <label className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-200 ${giftDelivery === 'email' ? 'border-stannum bg-stannum/5' : 'border-card hover:border-card-light'}`}>
                     <input
                         type="radio"
@@ -41,7 +41,7 @@ export const GiftOptions = ({ giftDelivery, setGiftDelivery, giftEmail, setGiftE
             </div>
 
             {giftDelivery === 'email' && (
-                <div className="flex flex-col gap-1">
+                <div className="mt-4 flex flex-col gap-1">
                     <label htmlFor="giftEmail" className="text-sm text-white/60">Correo del destinatario</label>
                     <input
                         id="giftEmail"
