@@ -6,14 +6,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { FullUserDetails, NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { MotionWrapperLayout, NavbarSection, LibraryCard } from "@/components";
 import { AppsIcon, KeyIcon } from "@/icons";
-import { calculateProgramProgress } from "@/utilities";
+import { calculateProgramProgress, hasAccess } from "@/utilities";
 import { programs } from "@/config/programs";
 import { useUserStore } from "@/stores/userStore";
 
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: AppsIcon },
     { name: "Principales", id: "main", disabled: true },
-    { name: "Gratuitos", id: "free", disabled: true },
+    { name: "Gratuitos", id: "free" },
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
@@ -42,7 +42,7 @@ export const LibrarySectionsLayout = () => {
 
     if (!user) return null;
 
-    const filteredPrograms = programs.filter(program => user.programs?.[program.id as keyof FullUserDetails['programs']]?.isPurchased).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
+    const filteredPrograms = programs.filter(program => hasAccess(user.programs?.[program.id as keyof FullUserDetails['programs']])).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
 
     return (
         <MotionWrapperLayout className="grow">

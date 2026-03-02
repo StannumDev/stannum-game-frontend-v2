@@ -23,6 +23,18 @@ export const markLessonAsCompleted = async (programName: string, lessonId: strin
     }
 };
 
+export const getPlaybackId = async (programName: string, lessonId: string): Promise<string | null> => {
+    try {
+        const response = await api.get(
+            `${process.env.NEXT_PUBLIC_API_LESSON_URL}/playback/${programName}/${lessonId}`
+        );
+        if (!response?.data?.success) return null;
+        return response.data.playbackId ?? null;
+    } catch {
+        return null;
+    }
+};
+
 export const saveLastWatchedLesson = async (programName: string, lessonId: string, currentTime: number): Promise<boolean> => {
     try {
         const response = await api.patch(

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import MuxPlayer from '@mux/mux-player-react/lazy';
 import type MuxPlayerElement from "@mux/mux-player";
 import { createBlurUp } from '@mux/blurup';
-import { markLessonAsCompleted, saveLastWatchedLesson } from "@/services";
+import { markLessonAsCompleted, saveLastWatchedLesson, getPlaybackId } from "@/services";
 import type { LessonCompletionResult } from "@/services/lesson";
 import { Lesson } from '@/interfaces';
 import { errorHandler } from "@/helpers";
@@ -51,6 +51,9 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const [cancelNext, setCancelNext] = useState(false);
     const [xpResult, setXpResult] = useState<LessonCompletionResult | null>(null);
 
+    const [securePlaybackId, setSecurePlaybackId] = useState<string | null>(null);
+    const [playbackError, setPlaybackError] = useState(false);
+
     const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
     const hasStartedRedirect = useRef(false);
     const lastTimeRef = useRef(0);
@@ -60,9 +63,26 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const nextLesson = moduleLessons[currentIndex + 1];
 
     useEffect(() => {
+        setSecurePlaybackId(null);
+        setPlaybackError(false);
+        getPlaybackId(program.toLowerCase(), lesson.id).then(id => {
+            if (id) {
+                setSecurePlaybackId(id);
+            } else {
+                // Fallback to static ID if backend unavailable
+                setSecurePlaybackId(lesson.muxPlaybackId || null);
+                if (!lesson.muxPlaybackId) setPlaybackError(true);
+            }
+        });
+    }, [program, lesson.id, lesson.muxPlaybackId]);
+
+    const activePlaybackId = securePlaybackId || lesson.muxPlaybackId;
+
+    useEffect(() => {
+        if (!activePlaybackId) return;
         const fetchBlurData = async () => {
             try {
-                const { blurDataURL, aspectRatio } = await createBlurUp(lesson.muxPlaybackId);
+                const { blurDataURL, aspectRatio } = await createBlurUp(activePlaybackId);
                 setBlurData({ blurDataURL, aspectRatio });
             } catch {
                 setBlurData({ blurDataURL: "", aspectRatio: 16 / 9 });
@@ -94,7 +114,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             }
             hasStartedRedirect.current = false;
         };
-    }, [lesson.muxPlaybackId, lesson.id, program]);
+    }, [activePlaybackId, lesson.id, program]);
 
     useEffect(() => {
         if (showNextOverlay && xpResult && xpResult.totalGain > 0) {
@@ -380,7 +400,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 ref={videoRef}
                 className="w-full aspect-video absolute top-0 left-0"
                 style={{ aspectRatio: blurData.aspectRatio }}
-                playbackId={lesson.muxPlaybackId}
+                playbackId={activePlaybackId}
                 envKey={process.env.NEXT_PUBLIC_MUX_TOKEN_DATA}
                 preload="auto"
                 autoPlay

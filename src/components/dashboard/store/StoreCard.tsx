@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightIcon, KeyIcon } from '@/icons';
 import { Program } from '@/interfaces';
+import { formatARS } from '@/utilities';
 
 interface Props {
     program:Program;
@@ -48,7 +49,12 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
                 </div>
                 <div className='mt-6 w-full flex items-end gap-4'>
                     <div className='grow flex flex-col items-center lg:items-start gap-1'>
-                        {!purchasable ? (
+                        {program.type === 'subscription' && program.subscriptionPriceARS ? (
+                            <div className='flex flex-col items-center lg:items-start gap-0.5'>
+                                <b className='text-3xl lg:text-2xl leading-none font-black tracking-tighter'>{formatARS(program.subscriptionPriceARS)}</b>
+                                <small className='text-[11px] font-thin text-white/50'>por mes</small>
+                            </div>
+                        ) : !purchasable ? (
                             <div className='flex items-center gap-2'>
                                 <KeyIcon className='size-4 text-white/60' />
                                 <span className='text-sm font-semibold text-white/60'>Clave de producto</span>

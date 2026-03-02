@@ -5,8 +5,7 @@ import Image from 'next/image';
 import { Modal } from '@/components';
 import { useUserStore } from '@/stores/userStore';
 import { formatCoins } from '@/utilities';
-import { CrownIcon, FireIcon, MedalIcon } from '@/icons';
-import { IoGift } from 'react-icons/io5';
+import { CrownIcon, FireIcon, MedalIcon, GiftIcon } from '@/icons';
 import stannum_coin from '@/assets/tins_coin.svg';
 
 export const StoreTinsBalance = () => {
@@ -60,7 +59,7 @@ export const StoreTinsBalance = () => {
                         </div>
                     </div>
                     <div className="mt-6 w-full p-4 bg-card-light rounded-xl flex flex-col lg:flex-row items-center gap-3 text-center lg:text-start">
-                        <IoGift className="size-10 text-stannum shrink-0" />
+                        <GiftIcon className="size-10 text-stannum shrink-0" />
                         <p>Los <b className="text-amber-400 font-semibold">Tins</b> son exclusivos y limitados. Gastalos con criterio en la tienda para desbloquear contenido único como portadas de perfil, cajas misteriosas y más.</p>
                     </div>
                 </div>

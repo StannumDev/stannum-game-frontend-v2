@@ -1,6 +1,7 @@
 import type { FullUserDetails, Program, Lesson, Instruction, ContinueEntry, ProgramId } from "@/interfaces";
 import { isLessonAvailable, isInstructionAvailable } from "./lessons";
 import { calculateProgramProgress } from "./progress";
+import { hasAccess } from "./access";
 
 const PROGRESS_HIDE_THRESHOLD = 0.95;
 const NEAR_END_SECONDS = 10;
@@ -59,7 +60,7 @@ export const buildContinueEntryForProgram = (program: Program, user: FullUserDet
     const programId = program.id as ProgramId;
     const state = user.programs?.[programId];
 
-    if (!state?.isPurchased) return null;
+    if (!hasAccess(state)) return null;
 
     const programProgress = calculateProgramProgress(program, user);
     const last = state.lastWatchedLesson;
