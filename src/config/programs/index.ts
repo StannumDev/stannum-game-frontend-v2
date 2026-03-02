@@ -461,13 +461,13 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         {
                             title: "Resumen Sesión 07",
                             description: "Conceptos clave",
-                            link: "https://drive.google.com/file/d/1OvHEcfw3R60ApIGcVxwXU6TrtfLAvibQ/view?usp=sharing",
+                            link: "https://drive.google.com/file/d/1ZLunQTxQ8VABnOLaOzG8NRjObxw55JOE/view?usp=sharing",
                             type: "document",
                         },
                         {
                             title: "Ejercicios Sesión 07",
                             description: "Ejercicios Prácticos de Consolidación",
-                            link: "https://drive.google.com/file/d/1lnJjgTkjDJewV0bQOJ02px5FvZfSMMKA/view?usp=sharing",
+                            link: "https://drive.google.com/file/d/1B5f0AnKuBoGNyBT86kWchz8mzAtPViFY/view?usp=sharing",
                             type: "activity",
                         },
                     ],
