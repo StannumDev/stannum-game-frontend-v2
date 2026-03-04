@@ -472,6 +472,38 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-07",
+                    title: "Sesión 07",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 08",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://tldv.io/app/meetings/69a759d2310dbf0012e63b92",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 08",
+                            description: "Conceptos clave",
+                            link: "https://docs.google.com/document/d/1cy-n0PP9sDQtsOYORZr5S_DcsBH5bLAdRR198ZF4JSQ/edit?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Ejercicios Sesión 08",
+                            description: "Ejercicios Prácticos de Consolidación",
+                            link: "https://drive.google.com/file/d/1Bk4qsf4glwK7Z2r2x4Yi69EkLMxD_K1W/view?usp=sharing",
+                            type: "activity",
+                        },
+                        {
+                            title: "Documentos de contexto",
+                            description: "Carpeta de documentos claves",
+                            link: "https://drive.google.com/drive/folders/1--YlHDesUgvbnMbmmzhIqmJ4RG43YP0x?usp=sharing",
+                            type: "folder",
+                        },
+                    ],
+                },
             ],
         },
     ],
