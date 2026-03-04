@@ -473,8 +473,8 @@ export const TIA_SUMMER_PROGRAM: Program = {
                     ],
                 },
                 {
-                    id: "sesion-07",
-                    title: "Sesión 07",
+                    id: "sesion-08",
+                    title: "Sesión 08",
                     description: "Grabación, resumen, ejercicios y PROMPTs",
                     type: "folder",
                     children: [
