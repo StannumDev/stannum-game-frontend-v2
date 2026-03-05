@@ -185,7 +185,7 @@ export const RachaHome = () => {
                     </div>
                     <div className={`hidden lg:block h-20 w-px bg-gradient-to-b from-transparent to-transparent ${streakStatus.missedToday ? "via-invalid/50" : "via-stannum/50"}`}/>
                     <div className="grow shrink-0 flex flex-col gap-2">
-                        <div className="grid grid-cols-7 gap-4">
+                        <div className="grid grid-cols-7 gap-2 sm:gap-4">
                             {days.map((day, index) => (
                                 day === "completed" || (day === "today" && !streakStatus.missedToday) ? (
                                     <div key={index} className={`w-full flex flex-col items-center gap-1 relative ${streakStatus.missedToday ? "text-invalid" : "text-stannum"}`}>

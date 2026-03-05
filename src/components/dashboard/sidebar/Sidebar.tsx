@@ -24,7 +24,7 @@ export const Sidebar = () => {
     const isAuthenticated = useUserStore(s => s.isAuthenticated);
     const refreshCount = useUserStore(s => s._refreshCount);
 
-    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(() => typeof window !== 'undefined' ? window.matchMedia('(min-width: 1024px)').matches : false);
 
     useEffect(() => {
         const checkScreenSize = () => {
@@ -47,7 +47,7 @@ export const Sidebar = () => {
 
     if (pathname.startsWith('/dashboard/checkout') || pathname.startsWith('/dashboard/subscription/checkout') || pathname.startsWith('/dashboard/subscription/result')) return null;
 
-    const links: Array<SidebarLink> = userData ? [
+    const baseLinks: Array<SidebarLink> = userData ? [
         {
             label: 'Inicio',
             href: '/dashboard',
@@ -68,24 +68,32 @@ export const Sidebar = () => {
             href: '/dashboard/store',
             Icon: StoreIcon,
         },
-        ...(hasSubscription ? [{
-            label: 'Suscripciones',
-            href: '/dashboard/subscriptions',
-            Icon: RotateRightIcon,
-        }] : []),
-        {
-            label: 'Mi perfil',
-            href: `/dashboard/profile/${userData.username}`,
-            Icon: UserCircleIcon,
-        },
     ] : SKELETON_LINKS;
+
+    const profileLink: SidebarLink = {
+        label: 'Mi perfil',
+        href: `/dashboard/profile/${userData?.username}`,
+        Icon: UserCircleIcon,
+    };
+
+    const subscriptionLink: SidebarLink = {
+        label: 'Suscripciones',
+        href: '/dashboard/subscriptions',
+        Icon: RotateRightIcon,
+    };
+
+    // Desktop: include subscription link if applicable
+    const desktopLinks = [...baseLinks, ...(hasSubscription ? [subscriptionLink] : []), profileLink];
+    // Mobile: exclude subscription link to prevent nav overflow (5 items + search = 6 cols)
+    // TODO: relocate subscription access for mobile (profile menu or settings)
+    const mobileLinks = [...baseLinks, profileLink];
 
     const showLoading = isLoading || (isAuthenticated && !userData);
 
     return (
     isLargeScreen ?
-        <SidebarDesktop user={userData} links={links} pathname={pathname} isLoading={showLoading} />
+        <SidebarDesktop user={userData} links={desktopLinks} pathname={pathname} isLoading={showLoading} />
     :
-        <SidebarMobile key={pathname} user={userData} links={links} pathname={pathname} isLoading={showLoading} />
+        <SidebarMobile key={pathname} user={userData} links={mobileLinks} pathname={pathname} isLoading={showLoading} />
     )
 };

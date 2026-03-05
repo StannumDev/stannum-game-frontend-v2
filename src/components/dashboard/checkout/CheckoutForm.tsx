@@ -66,7 +66,6 @@ export const CheckoutForm = ({ program }: Props) => {
         } catch (err: any) {
             const msg = err?.response?.data?.friendlyMessage || 'Ocurrió un error al procesar tu solicitud.';
             setError(msg);
-        } finally {
             setIsLoading(false);
         }
     };
@@ -75,7 +74,7 @@ export const CheckoutForm = ({ program }: Props) => {
         <div className="w-full min-h-svh flex flex-col">
             <header className="w-full flex justify-between items-center p-4 lg:px-8 border-b border-card">
                 <Link href="/dashboard"><STANNUMLogo className="w-36" gameColor="fill-stannum" stannumColor="fill-white" /></Link>
-                <Link href={`/dashboard/store/${program.id}`} className="text-sm text-white/60 hover:text-white transition-200">Volver a la tienda</Link>
+                <Link href={`/dashboard/store/${program.id}`} className="text-sm text-white/60 hover:text-white transition-200 min-h-[44px] min-w-[44px] flex items-center justify-end">Volver a la tienda</Link>
             </header>
 
             <div className="grow w-full max-w-4xl mx-auto p-6 lg:p-8 flex flex-col lg:flex-row gap-8">

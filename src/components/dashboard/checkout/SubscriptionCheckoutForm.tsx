@@ -69,7 +69,7 @@ export const SubscriptionCheckoutForm = ({ program }: Props) => {
         <div className="w-full min-h-svh flex flex-col">
             <header className="w-full flex justify-between items-center p-4 lg:px-8 border-b border-card">
                 <Link href="/dashboard"><STANNUMLogo className="w-36" gameColor="fill-stannum" stannumColor="fill-white" /></Link>
-                <Link href={`/dashboard/store/${program.id}`} className="text-sm text-white/60 hover:text-white transition-200">Volver a la tienda</Link>
+                <Link href={`/dashboard/store/${program.id}`} className="text-sm text-white/60 hover:text-white transition-200 min-h-[44px] min-w-[44px] flex items-center justify-end">Volver a la tienda</Link>
             </header>
 
             <div className="grow w-full max-w-4xl mx-auto p-6 lg:p-8 flex flex-col lg:flex-row gap-8">
@@ -135,12 +135,12 @@ export const SubscriptionCheckoutForm = ({ program }: Props) => {
                         </div>
                     </div>
 
-                    <label className="flex items-start gap-3 cursor-pointer">
+                    <label className="flex items-start gap-3 cursor-pointer min-h-[44px]">
                         <input
                             type="checkbox"
                             checked={acceptedTerms}
                             onChange={e => setAcceptedTerms(e.target.checked)}
-                            className="mt-0.5 size-4 rounded border-card accent-stannum"
+                            className="mt-1 size-4 rounded border-card accent-stannum"
                         />
                         <span className="text-xs text-white/50 leading-relaxed">
                             Confirmo que soy mayor de 18 años y acepto los{' '}
