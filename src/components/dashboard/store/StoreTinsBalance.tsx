@@ -19,6 +19,7 @@ export const StoreTinsBalance = () => {
             <button
                 type="button"
                 onClick={() => setShowModal(true)}
+                aria-label="Ver mis Tins"
                 className="flex items-center gap-2 hover:bg-card-light rounded px-1.5 py-1 cursor-pointer transition-200"
             >
                 <Image src={stannum_coin} alt="Tins" width={32} height={32} className="size-6 lg:size-8 shrink-0" />

@@ -89,7 +89,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   viewportFit: "cover",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
   userScalable: true,
   interactiveWidget: 'resizes-visual',
 }

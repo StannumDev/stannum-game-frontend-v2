@@ -125,6 +125,7 @@ export const StoreTinsSection = () => {
                                 type="button"
                                 onClick={() => scroll('left')}
                                 disabled={!canScrollLeft}
+                                aria-label="Anterior"
                                 className="p-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent transition-200 cursor-pointer disabled:cursor-default"
                             >
                                 <ArrowLeftIcon className="size-3.5" />
@@ -133,6 +134,7 @@ export const StoreTinsSection = () => {
                                 type="button"
                                 onClick={() => scroll('right')}
                                 disabled={!canScrollRight}
+                                aria-label="Siguiente"
                                 className="p-2 rounded-lg text-card-lightest hover:text-white disabled:text-card-light hover:bg-[rgba(255,255,255,0.1)] disabled:hover:bg-transparent transition-200 cursor-pointer disabled:cursor-default"
                             >
                                 <ArrowRightIcon className="size-3.5" />

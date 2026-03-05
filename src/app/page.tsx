@@ -31,7 +31,7 @@ export default function LandingPage() {
     <main className="w-full flex justify-center">
       <VideoIntro/>
       <h1 className="sr-only">Bienvenido a STANNUM Game</h1>
-      <section className="w-full lg:w-auto lg:grow h-full lg:h-auto min-h-svh flex justify-center items-center fixed lg:relative top-0 left-0 overflow-y-hidden">
+      <section className="w-full lg:w-auto lg:grow h-full lg:h-auto min-h-svh flex justify-center items-center sticky lg:relative top-0 left-0 overflow-y-hidden">
         <div className="lg:size-full lg:relative min-h-lvh">
           <div className="size-full absolute top-0 left-0 bg-gradient-to-br lg:bg-gradient-to-r from-background/25 lg:from-transparent via-background/75 lg:via-background/50 to-background lg:to-background z-10"></div>
           <div className="size-full absolute top-0 left-0 z-0">

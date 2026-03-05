@@ -154,7 +154,7 @@ export const ActivarProductoHome = () => {
                         <div className="size-full bg-gradient-to-br from-transparent to-black/75 absolute top-0 left-0 z-10"></div>
                         <Image src={redeem_code} fill alt="Activar producto STANNUM Game" className="size-full object-cover object-[90%_50%] rounded-t-lg lg:rounded-t-none lg:rounded-s-lg"/>
                     </div>
-                    <main className="w-full lg:max-w-[calc(384px+4rem)] p-6 g:p-8 flex flex-col text-center lg:text-start">
+                    <main className="w-full lg:max-w-[calc(384px+4rem)] p-6 lg:p-8 flex flex-col text-center lg:text-start">
                         <h2 className="title-2 text-5xl text-stannum">Activa un <span className="block text-white">producto</span></h2>
                         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 lg:mt-6 w-full max-w-sm flex flex-col gap-2" id="formActivarProducto">
                             <label htmlFor="code" className="w-full max-w-xs">Ingresa tu clave de producto para comenzar tu entrenamiento.</label>

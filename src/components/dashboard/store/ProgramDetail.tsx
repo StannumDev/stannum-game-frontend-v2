@@ -248,6 +248,7 @@ export const ProgramDetail = ({ program }: Props) => {
                         {program.longDescription && (
                             <div className="px-6 py-6">
                                 <h2 className="title-2 mb-4">Acerca de este programa</h2>
+                                {/* SAFE: program.longDescription is static trusted HTML from src/config/programs/index.ts */}
                                 <div
                                     className="text-sm lg:text-base text-white/70 leading-relaxed space-y-3 [&_strong]:text-white [&_p]:mb-0"
                                     dangerouslySetInnerHTML={{ __html: program.longDescription }}

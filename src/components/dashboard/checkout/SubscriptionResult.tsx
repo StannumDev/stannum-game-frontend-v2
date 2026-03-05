@@ -44,12 +44,7 @@ export const SubscriptionResult = () => {
                 const result = await getSubscriptionStatus(programId);
                 setSubStatus(result);
             } catch {
-                // If status check fails, still show success based on URL params
-                if (status === 'active') {
-                    setSubStatus(null);
-                } else {
-                    setError('No pudimos verificar tu suscripción.');
-                }
+                setError('Estamos verificando tu suscripción. Si ya autorizaste el pago, puede tardar unos minutos.');
             } finally {
                 setIsLoading(false);
             }

@@ -34,13 +34,13 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
     const [lastScroll, setLastScroll] = useState(0);
 
     useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
+        const handleClickOutside = (e: PointerEvent) => {
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
                 setIsMenuOpen(false);
             }
         };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener('pointerdown', handleClickOutside);
+        return () => document.removeEventListener('pointerdown', handleClickOutside);
     }, []);
 
     useMotionValueEvent(scrollY, "change", (scrollYPosition) => {
@@ -76,7 +76,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                     </div>
                                 )}
                                 <div className="relative" ref={menuRef}>
-                                    <button type="button" onClick={() => setIsMenuOpen(!isMenuOpen)} className="size-8 aspect-square rounded-full relative overflow-hidden block">
+                                    <button type="button" onClick={() => setIsMenuOpen(!isMenuOpen)} className="size-8 aspect-square rounded-full relative overflow-hidden block" aria-label="Abrir menú de perfil">
                                         { isLoading ?
                                             <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
                                         :

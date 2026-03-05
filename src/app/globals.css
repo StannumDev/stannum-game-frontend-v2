@@ -121,20 +121,16 @@
 }
 
 @layer base {
-  * {
+  button, a, label, nav, [role="button"] {
     user-select: none;
   }
 
-  img {
-      pointer-events: none;
+  input, textarea, button{
+    @apply outline-none bg-transparent border-0 rounded-none
   }
 
-  b{
-    @apply font-normal
-  }
-  
-  input, textarea, button{
-    @apply outline-none focus-visible:outline-none bg-transparent border-0 rounded-none
+  *:focus-visible {
+    @apply ring-2 ring-stannum/50 ring-offset-1 ring-offset-background rounded-sm;
   }
 
   input:-webkit-autofill,

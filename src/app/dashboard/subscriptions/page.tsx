@@ -3,5 +3,5 @@ import { SubscriptionsLayout } from '@/components/dashboard/subscriptions/Subscr
 export const metadata = { title: 'Mis Suscripciones' };
 
 export default function SubscriptionsPage() {
-    return <SubscriptionsLayout />;
+    return <main className="main-container"><SubscriptionsLayout /></main>;
 }
