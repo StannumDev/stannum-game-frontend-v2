@@ -118,6 +118,15 @@ src/
 │       │   ├── prompts/
 │       │   └── assistants/
 │       ├── store/                # Tienda: portadas (Tins), programas (product keys)
+│       │   └── [programId]/      # Detalle de programa en tienda
+│       ├── checkout/             # Compra unica (Mercado Pago)
+│       │   ├── [programId]/      # Checkout de compra
+│       │   └── result/           # Resultado de compra
+│       ├── purchases/            # Historial de compras
+│       ├── subscriptions/        # Gestion de suscripciones
+│       ├── subscription/         # Suscripcion (Mercado Pago)
+│       │   ├── checkout/[programId]/ # Checkout de suscripcion
+│       │   └── result/           # Resultado de suscripcion
 │       ├── profile/[username]/   # Perfil de usuario
 │       └── search/               # Busqueda de usuarios
 │
@@ -176,7 +185,9 @@ src/
 │   ├── productKey.ts             # getProductKey, activateProductKey
 │   ├── profilePhoto.ts          # Upload y delete foto de perfil (S3 presigned)
 │   ├── chest.ts                 # openChest (abrir cofre, obtener recompensas)
-│   └── store.ts                 # getStoreCovers, purchaseCover, equipCover
+│   ├── store.ts                 # getStoreCovers, purchaseCover, equipCover, purchaseStreakShield, recoverStreak
+│   ├── payment.ts               # createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail
+│   └── subscription.ts          # createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory
 │
 ├── stores/                       # Zustand stores
 │   ├── userStore.ts              # Usuario, autenticacion, achievements
@@ -239,6 +250,11 @@ NEXT_PUBLIC_API_PRODUCT_KEY_URL=/product-key
 NEXT_PUBLIC_API_PHOTO_URL=/profile-photo
 NEXT_PUBLIC_API_CHEST_URL=/chest
 NEXT_PUBLIC_API_STORE_URL=/store
+NEXT_PUBLIC_API_PAYMENT_URL=/payment
+NEXT_PUBLIC_API_SUBSCRIPTION_URL=/subscription
+
+# Mercado Pago (pagos y suscripciones)
+NEXT_PUBLIC_MP_PUBLIC_KEY=tu_mp_public_key
 
 # Google OAuth
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_client_id.apps.googleusercontent.com
@@ -281,6 +297,15 @@ NEXT_PUBLIC_ENV=development
 | `/dashboard/community/prompts` | Explorar prompts compartidos |
 | `/dashboard/community/assistants` | Explorar GPTs/assistants |
 | `/dashboard/store` | Tienda: portadas de perfil (Tins) + activar codigos de producto |
+| `/dashboard/store/[programId]` | Detalle de programa en tienda |
+| `/dashboard/checkout/[programId]` | Checkout de compra unica (Mercado Pago) |
+| `/dashboard/checkout/result` | Resultado de compra |
+| `/dashboard/purchases` | Historial de compras del usuario |
+| `/dashboard/subscriptions` | Gestion de suscripciones activas |
+| `/dashboard/subscription/checkout/[programId]` | Checkout de suscripcion (Mercado Pago) |
+| `/dashboard/subscription/result` | Resultado de suscripcion |
+| `/dashboard/library/[program_id]/ranking` | Ranking del programa |
+| `/dashboard/library/[program_id]/resources` | Recursos del programa |
 | `/dashboard/profile/[username]` | Perfil publico de usuario |
 | `/dashboard/search` | Busqueda de usuarios |
 
@@ -462,6 +487,10 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 - Modal de detalle con preview, rareza y precio
 - Config: `src/config/covers.ts`
 
+### Tienda - Streak Shield y Recuperacion
+- **Streak Shield:** Comprable con Tins, protege la racha si se pierde un dia
+- **Recuperacion de Streak:** Permite restaurar una racha perdida pagando con Tins
+
 ### Daily Streaks
 - Racha de dias consecutivos con actividad
 - Bonus de XP creciente (capped a 7 dias)
@@ -518,7 +547,24 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 | `productKey.ts` | getProductKey, activateProductKey |
 | `profilePhoto.ts` | uploadProfilePhoto (S3 presigned), deleteProfilePhoto |
 | `chest.ts` | openChest |
-| `store.ts` | getStoreCovers, purchaseCover, equipCover |
+| `store.ts` | getStoreCovers, purchaseCover, equipCover, purchaseStreakShield, recoverStreak |
+| `payment.ts` | createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail |
+| `subscription.ts` | createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory |
+
+## Pagos y Suscripciones (Mercado Pago)
+
+### Compra Unica
+- Checkout integrado con Mercado Pago (SDK JS)
+- Flujo: seleccionar programa → aplicar cupon (opcional) → crear preferencia → pagar → verificar → activar programa
+- Historial de compras en `/dashboard/purchases`
+- Soporte para reenvio de email de regalo
+
+### Suscripciones
+- Suscripciones mensuales via Mercado Pago (redirect mode)
+- Flujo: seleccionar plan → crear suscripcion → redirect a MP → callback con resultado
+- Gestion de suscripciones activas en `/dashboard/subscriptions`
+- Cancelacion de suscripcion desde el frontend
+- Historial de pagos de suscripcion
 
 ## Onboarding
 
