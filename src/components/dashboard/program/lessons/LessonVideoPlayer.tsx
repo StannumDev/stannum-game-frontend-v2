@@ -52,7 +52,6 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const [xpResult, setXpResult] = useState<LessonCompletionResult | null>(null);
 
     const [securePlaybackId, setSecurePlaybackId] = useState<string | null>(null);
-    const [playbackError, setPlaybackError] = useState(false);
 
     const redirectTimeout = useRef<NodeJS.Timeout | null>(null);
     const hasStartedRedirect = useRef(false);
@@ -64,14 +63,12 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
 
     useEffect(() => {
         setSecurePlaybackId(null);
-        setPlaybackError(false);
         getPlaybackId(program.toLowerCase(), lesson.id).then(id => {
             if (id) {
                 setSecurePlaybackId(id);
             } else {
                 // Fallback to static ID if backend unavailable
                 setSecurePlaybackId(lesson.muxPlaybackId || null);
-                if (!lesson.muxPlaybackId) setPlaybackError(true);
             }
         });
     }, [program, lesson.id, lesson.muxPlaybackId]);
