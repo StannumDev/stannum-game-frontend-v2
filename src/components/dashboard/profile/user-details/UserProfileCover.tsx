@@ -16,7 +16,7 @@ interface Props {
 export const UserProfileCover = ({ rankingPosition, equippedCoverId, owner, unlockedCoverIds }: Props) => {
 
     const [showModal, setShowModal] = useState(false);
-    const coverImage = getCoverImage(equippedCoverId || 'cover_default');
+    const coverImage = getCoverImage(`cover_${equippedCoverId || 'default'}`);
 
     return (
         <div className="w-full card rounded-b-none border-b-0 p-0 overflow-hidden relative group/main">

@@ -4,14 +4,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { googleLogout } from '@react-oauth/google';
 import type { AchievementDetails, AuthUserResponse, RegisterState, UpdateUsernameResponse } from '@/interfaces';
-import api from '@/lib/api';
+import api, { AUTH_TIMEOUT_MS } from '@/lib/api';
 import { clearLoginFlag } from '@/lib/tokenStorage';
 
 const AUTH_URL = process.env.NEXT_PUBLIC_API_AUTH_URL;
 
 export const authUserByToken = async (): Promise<AuthUserResponse> => {
     try {
-        const response = await api.get(`${AUTH_URL}/auth-user`);
+        const response = await api.get(`${AUTH_URL}/auth-user`, { timeout: AUTH_TIMEOUT_MS });
 
         if (!response?.data?.success) {
             return { success: false, achievementsUnlocked: [], profileStatus: undefined };

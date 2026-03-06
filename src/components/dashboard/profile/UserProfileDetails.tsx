@@ -16,7 +16,7 @@ export const UserProfileDetails = ({user, fetchUserData, owner}:Props) => {
                 <section id="profile-card" className="w-full flex flex-col relative lg:static">
                     <UserProfileCover
                         rankingPosition={user?.rankingPosition}
-                        equippedCoverId={user?.equippedCoverId ? `cover_${user.equippedCoverId}` : 'cover_default'}
+                        equippedCoverId={user?.equippedCoverId || 'default'}
                         owner={owner}
                         unlockedCoverIds={['default', ...(user?.unlockedCovers?.map(c => c.coverId) || [])]}
                     />

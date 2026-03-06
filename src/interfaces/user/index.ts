@@ -191,6 +191,7 @@ export interface FullUserDetails {
         lostCount?: number | null;
         lostAt?: string | null;
         recoveryAvailable: boolean;
+        recoveryExpiresAt?: string | null;
     };
     coins: number;
     xpHistory: Array<{

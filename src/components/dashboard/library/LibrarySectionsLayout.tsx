@@ -13,7 +13,7 @@ import { useUserStore } from "@/stores/userStore";
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: AppsIcon },
     { name: "Principales", id: "main", disabled: true },
-    { name: "Gratuitos", id: "free" },
+    { name: "Gratuitos", id: "free", disabled: true },
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
