@@ -181,6 +181,7 @@ export interface FullUserDetails {
         tia_pool: UserProgram;
         tmd: UserProgram;
         trenno_ia: UserProgram;
+        demo_trenno: UserProgram;
     };
     preferences: UserPreferences;
     dailyStreak: {

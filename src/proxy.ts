@@ -20,8 +20,14 @@ export function proxy(request: NextRequest) {
   }
 
   if (GUEST_ONLY_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/')) || pathname === '/register' || pathname === '/') {
-    if (hasLoginFlag) {
+    if (hasLoginFlag && hasTokens) {
       return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+    // Stale logged_in flag without tokens — clean it up
+    if (hasLoginFlag && !hasTokens) {
+      const response = NextResponse.next();
+      response.cookies.delete('logged_in');
+      return response;
     }
   }
 
