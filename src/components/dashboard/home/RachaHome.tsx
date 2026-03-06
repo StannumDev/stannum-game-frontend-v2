@@ -36,9 +36,8 @@ const formatCountdown = (totalSeconds: number): string => {
     return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 };
 
-const getRecoverySecondsLeft = (lostAt: string): number => {
-    const lostTime = new Date(lostAt).getTime();
-    const deadline = lostTime + 24 * 60 * 60 * 1000;
+const getRecoverySecondsLeft = (expiresAt: string): number => {
+    const deadline = new Date(expiresAt).getTime();
     return Math.max(0, Math.floor((deadline - Date.now()) / 1000));
 };
 
@@ -71,9 +70,9 @@ export const RachaHome = () => {
             setCountdown(null);
         }
 
-        if (dailyStreak?.recoveryAvailable && dailyStreak.lostAt) {
+        if (dailyStreak?.recoveryAvailable && dailyStreak.recoveryExpiresAt) {
             const updateRecovery = () => {
-                const secs = getRecoverySecondsLeft(dailyStreak.lostAt!);
+                const secs = getRecoverySecondsLeft(dailyStreak.recoveryExpiresAt!);
                 if (secs <= 0) {
                     setRecoveryCountdown(null);
                 } else {

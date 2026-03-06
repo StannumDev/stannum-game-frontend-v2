@@ -6,7 +6,16 @@ import { callToast } from '@/helpers/callToast';
 import { buildRedirectParam } from '@/helpers/redirect';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const AUTH_TIMEOUT_MS = 8_000;
 const REFRESH_TIMEOUT_MS = 20_000;
+
+const GATEWAY_ERROR_CODES = [502, 503, 504];
+
+export const isNetworkError = (error: unknown): boolean => {
+  if (!axios.isAxiosError(error)) return false;
+  if (!error.response) return error.code !== 'ERR_CANCELED';
+  return GATEWAY_ERROR_CODES.includes(error.response.status);
+};
 
 const SKIP_REFRESH_ENDPOINTS = [
   '/auth/login',

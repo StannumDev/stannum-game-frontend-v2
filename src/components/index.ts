@@ -117,6 +117,8 @@ export { ProgramPlayerRankingCard } from "./dashboard/program/ranking/ProgramPla
 
 // AUTH
 export { UserInitializer } from "./auth/UserInitializer";
+export { ConnectionError } from "./auth/ConnectionError";
+export { DashboardGuard } from "./auth/DashboardGuard";
 export { CompleteProfileForm } from "./auth/CompleteProfileForm";
 
 // LOGIN

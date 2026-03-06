@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { AppError, FullUserDetails, ProfileStatus } from '@/interfaces';
 import { authUserByToken, logout as authLogout } from '@/services/auth';
 import { isLoggedIn } from '@/lib/tokenStorage';
+import { isNetworkError } from '@/lib/api';
 import { getUserByTokenClient } from '@/services/user';
 import { achievementHandler, callToast, errorHandler } from '@/helpers';
 import { getRankByLevel } from '@/config/ranks';
@@ -10,12 +11,14 @@ interface UserStore {
     user: FullUserDetails | null;
     isLoading: boolean;
     isAuthenticated: boolean;
+    connectionError: boolean;
     error: AppError | null;
     _initStarted: boolean;
     _refreshCount: number;
     _isRefreshing: boolean;
 
     initUser: () => Promise<ProfileStatus | null | undefined>;
+    retryInit: () => Promise<ProfileStatus | null | undefined>;
     refreshUser: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -24,6 +27,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     user: null,
     isLoading: true,
     isAuthenticated: false,
+    connectionError: false,
     error: null,
     _initStarted: false,
     _refreshCount: 0,
@@ -55,8 +59,25 @@ export const useUserStore = create<UserStore>((set, get) => ({
                 return profileStatus;
             }
 
-            const { user, shieldConsumed, streakSaved } = await getUserByTokenClient();
-            set({ user, isLoading: false, isAuthenticated: true, error: null, _refreshCount: Date.now() });
+            let userData;
+            try {
+                userData = await getUserByTokenClient();
+            } catch (userErr: unknown) {
+                if (isNetworkError(userErr)) {
+                    const wasAlreadyConnectionError = get().connectionError;
+                    set({ isLoading: false, connectionError: true, _initStarted: false });
+                    if (!wasAlreadyConnectionError) {
+                        callToast({ type: 'warning', message: { title: 'Sin conexión', description: 'No se pudo conectar al servidor. Reintentando...' } });
+                    }
+                } else {
+                    errorHandler(userErr);
+                    set({ isLoading: false, isAuthenticated: true, error: null, _initStarted: false });
+                }
+                return null;
+            }
+
+            const { user, shieldConsumed, streakSaved } = userData;
+            set({ user, isLoading: false, isAuthenticated: true, connectionError: false, error: null, _refreshCount: Date.now() });
 
             if (shieldConsumed) {
                 callToast({
@@ -69,10 +90,23 @@ export const useUserStore = create<UserStore>((set, get) => ({
 
             return profileStatus;
         } catch (err: unknown) {
+            if (isNetworkError(err)) {
+                const wasAlreadyConnectionError = get().connectionError;
+                set({ isLoading: false, connectionError: true, _initStarted: false });
+                if (!wasAlreadyConnectionError) {
+                    callToast({ type: 'warning', message: { title: 'Sin conexión', description: 'No se pudo conectar al servidor. Reintentando...' } });
+                }
+                return null;
+            }
             const appError = errorHandler(err);
             set({ user: null, isLoading: false, isAuthenticated: false, error: appError, _initStarted: false });
             return null;
         }
+    },
+
+    retryInit: async () => {
+        set({ _initStarted: false, isLoading: true });
+        return get().initUser();
     },
 
     refreshUser: async () => {
@@ -128,7 +162,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
                     callToast({
                         message: {
                             title: 'Perdiste tu racha',
-                            description: 'Podés recuperarla por 30 Tins en las próximas 24h.',
+                            description: 'Podés recuperarla por 30 Tins en las próximas 48h.',
                         },
                         type: 'streak',
                     });
@@ -145,7 +179,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     },
 
     logout: async () => {
-        set({ user: null, isAuthenticated: false, error: null, _initStarted: false });
+        set({ user: null, isAuthenticated: false, connectionError: false, error: null, _initStarted: false });
         try {
             await authLogout();
         } catch (err: unknown) {
