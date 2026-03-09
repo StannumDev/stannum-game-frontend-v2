@@ -25,7 +25,9 @@ const LINK_HEIGHT = 56;
 
 export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
 
-    const isExpanded = useSidebarStore(s => s.isExpanded);
+    const storeExpanded = useSidebarStore(s => s.isExpanded);
+    const hydrated = useSidebarStore(s => s._hydrated);
+    const isExpanded = hydrated ? storeExpanded : true;
     const toggleExpanded = useSidebarStore(s => s.toggleExpanded);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);

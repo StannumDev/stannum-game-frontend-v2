@@ -7,7 +7,9 @@ import { useSearchHandler } from "@/hooks";
 import { useSidebarStore } from "@/stores/sidebarStore";
 
 export const BuscadorSidebar = () => {
-    const isExpanded = useSidebarStore(s => s.isExpanded);
+    const storeExpanded = useSidebarStore(s => s.isExpanded);
+    const hydrated = useSidebarStore(s => s._hydrated);
+    const isExpanded = hydrated ? storeExpanded : true;
     const setExpanded = useSidebarStore(s => s.setExpanded);
 
     const { register, handleSubmit, onSubmit, reset, setFocus, watch } = useSearchHandler();
