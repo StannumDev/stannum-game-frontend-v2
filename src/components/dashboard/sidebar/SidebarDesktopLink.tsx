@@ -12,7 +12,9 @@ interface Props{
 }
 
 export const SidebarDesktopLink = ({link, isActive}:Props) => {
-    const isExpanded = useSidebarStore(s => s.isExpanded);
+    const storeExpanded = useSidebarStore(s => s.isExpanded);
+    const hydrated = useSidebarStore(s => s._hydrated);
+    const isExpanded = hydrated ? storeExpanded : true;
     const { label, href, Icon } = link
 
     return (
