@@ -178,6 +178,7 @@ export interface FullUserDetails {
     programs: {
         tia: UserProgram;
         tia_summer: UserProgram;
+        tia_pool: UserProgram;
         tmd: UserProgram;
         trenno_ia: UserProgram;
         demo_trenno: UserProgram;

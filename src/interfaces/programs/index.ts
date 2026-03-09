@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export type ProgramId = 'tmd' | 'tia' | 'tia_summer' | 'trenno_ia' | 'demo_trenno';
+export type ProgramId = 'tmd' | 'tia' | 'tia_summer' | 'trenno_ia' | 'demo_trenno' | 'tia_pool';
 export type ProgramCategory = '' | 'main' | 'free' | 'shorts';
 
 export interface Resource {

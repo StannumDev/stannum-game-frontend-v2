@@ -1,6 +1,7 @@
 import stannum_achievement_background from '@/assets/achievements/stannum_achievement_background.webp';
 import tia_achievement_background from '@/assets/achievements/tia_achievement_background.webp';
 import tia_summer_achievement_background from '@/assets/achievements/tia_summer_achievement_background.webp';
+import tia_pool_achievement_background from '@/assets/achievements/tia_achievement_background.webp';
 
 import { FullUserDetails, Achievement } from "@/interfaces";
 import { programs } from "@/config/programs";
@@ -426,6 +427,61 @@ export const achievements: Array<Achievement> = [
                 section.modules?.every(mod =>
                     mod.instructions.every(inst =>
                         tiaSummer.instructions?.some(i => i.instructionId === inst.id && i.status === "GRADED")
+                    )
+                )
+            );
+            return (allLessonsDone && allInstructionsDone) ? 100 : 0;
+        }
+    },
+    {
+        id: "trenno_ia_pool_joined",
+        title: "Edición POOL 26",
+        description: "Participaste del programa exclusivo TRENNO IA POOL 2026",
+        background: tia_pool_achievement_background,
+        categories: ["pool"],
+        xpReward: 100,
+        getProgress: (user: FullUserDetails) => {
+            const tiaPool = user.programs?.tia_pool;
+            return tiaPool?.isPurchased ? 100 : 0;
+        }
+    },
+    {
+        id: "trenno_ia_pool_halfway",
+        title: "Mitad de cancha POOL",
+        description: "Llegá a la mitad del programa POOL",
+        background: tia_pool_achievement_background,
+        categories: ["pool"],
+        xpReward: 150,
+        getProgress: (user: FullUserDetails) => {
+            const tiaPool = user.programs?.tia_pool;
+            if (!tiaPool) return 0;
+            const completed = (tiaPool.lessonsCompleted || []).length;
+            return completed >= 10 ? 100 : Math.floor((completed / 10) * 100);
+        }
+    },
+    {
+        id: "trenno_ia_pool_graduate",
+        title: "Graduado POOL 26",
+        description: "Completá el 100% del programa TRENNO IA POOL 2026",
+        background: tia_pool_achievement_background,
+        categories: ["pool"],
+        xpReward: 500,
+        getProgress: (user: FullUserDetails) => {
+            const tiaPool = user.programs?.tia_pool;
+            if (!tiaPool) return 0;
+            const tiaPoolConfig = programs.find(p => p.id === "tia_pool");
+            if (!tiaPoolConfig) return 0;
+            const allLessonsDone = tiaPoolConfig.sections.every(section =>
+                section.modules?.every(mod =>
+                    mod.lessons.every(lesson =>
+                        tiaPool.lessonsCompleted?.some(lc => lc.lessonId === lesson.id)
+                    )
+                )
+            );
+            const allInstructionsDone = tiaPoolConfig.sections.every(section =>
+                section.modules?.every(mod =>
+                    mod.instructions.every(inst =>
+                        tiaPool.instructions?.some(i => i.instructionId === inst.id && i.status === "GRADED")
                     )
                 )
             );
