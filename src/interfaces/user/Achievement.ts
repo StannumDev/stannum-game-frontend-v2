@@ -20,14 +20,17 @@ export type AchievementId =
     | "trenno_ia_completed"
     | "trenno_ia_summer_joined"
     | "trenno_ia_summer_halfway"
-    | "trenno_ia_summer_graduate";
+    | "trenno_ia_summer_graduate"
+    | "trenno_ia_pool_joined"
+    | "trenno_ia_pool_halfway"
+    | "trenno_ia_pool_graduate";
 
 export interface Achievement {
     id: AchievementId;
     title: string;
     description: string;
     background: StaticImageData;
-    categories: Array<"stannum"|"tmd"|"tia"|"summer">;
+    categories: Array<"stannum"|"tmd"|"tia"|"summer"|"pool">;
     getProgress: (user: FullUserDetails) => number;
     xpReward: number;
 }
