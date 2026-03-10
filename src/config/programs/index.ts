@@ -605,10 +605,13 @@ export const TIA_SUMMER_PROGRAM: Program = {
 export const TIA_POOL_PROGRAM: Program = {
     id: "tia_pool",
     name: "TRENNO IA POOL",
+    type: "purchase",
     price: 250,
-    href: "https://stannum.com.ar/trenno-ia-pool-2026",
+    priceARS: 250000,
+    purchasable: true,
     categories: ["main"],
     description: "Programa intensivo especializado en el entrenamiento en inteligencia artificial para líderes de empresas y sus equipos.",
+    longDescription: "<p><strong>TRENNO IA POOL</strong> es la versión más completa y profunda del entrenamiento en inteligencia artificial de STANNUM Game. Diseñado para líderes que quieren llevar a sus equipos al siguiente nivel, este programa combina <strong>sesiones en vivo grabadas</strong>, ejercicios prácticos de consolidación y recursos exclusivos.</p><p>Además de dominar el <strong>Prompt Engineering</strong> y la <strong>personalización de ChatGPT</strong>, accedés a grabaciones de sesiones reales con análisis en profundidad, templates profesionales para desarrollo de roles, y ejercicios guiados que cubren desde la organización digital hasta la delegación estratégica con IA.</p><p>Cada módulo incluye material de soporte descargable: presentaciones, documentos de referencia, plantillas de prompts y ejercicios de consolidación diseñados para que apliques todo lo aprendido directamente en tu negocio. Es el programa más completo para quienes buscan resultados inmediatos y tangibles.</p>",
     logo: tia_pool_logo,
     background: background_tia_pool,
     sections: [
@@ -836,12 +839,8 @@ export const DEMO_TRENNO_PROGRAM: Program = {
 export const programs: Array<Program> = [
     TIA_PROGRAM,
     TIA_SUMMER_PROGRAM,
-<<<<<<< HEAD
     TMD_PROGRAM,
     TRENNO_IA_PROGRAM,
     DEMO_TRENNO_PROGRAM,
-=======
-    TIA_POOL_PROGRAM,
-    TMD_PROGRAM
->>>>>>> 04dae5e638e2c0465b81238c3893862f31681758
+    TIA_POOL_PROGRAM
 ];

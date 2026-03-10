@@ -21,6 +21,10 @@ const moduleChests: Record<string, ChestConfig[]> = {
         { id: 'TIASM02C01', moduleId: 'TIASM02', afterItemId: 'TIASM02L01', name: 'Cofre', rarity: 'uncommon' },
         { id: 'TIASM02C02', moduleId: 'TIASM02', afterItemId: 'TIASM02L14', name: 'Cofre', rarity: 'legendary' },
     ],
+    'TIAPM02': [
+        { id: 'TIAPM02C01', moduleId: 'TIAPM02', afterItemId: 'TIAPM02L01', name: 'Cofre', rarity: 'uncommon' },
+        { id: 'TIAPM02C02', moduleId: 'TIAPM02', afterItemId: 'TIAPM02L14', name: 'Cofre', rarity: 'legendary' },
+    ],
 };
 
 export const getModuleChests = (moduleId: string): ChestConfig[] => moduleChests[moduleId] ?? [];

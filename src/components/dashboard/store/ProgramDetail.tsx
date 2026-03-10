@@ -23,6 +23,7 @@ import '@/components/styles/lessonVideoPlayer.css';
 const programCategoryMap: Record<string, string> = {
     tia: 'tia',
     tia_summer: 'summer',
+    tia_pool: 'pool',
     tmd: 'tmd',
     trenno_ia: 'tia',
     demo_trenno: 'tia',

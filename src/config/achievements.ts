@@ -440,9 +440,10 @@ export const achievements: Array<Achievement> = [
         background: tia_pool_achievement_background,
         categories: ["pool"],
         xpReward: 100,
+        coinsReward: 15,
         getProgress: (user: FullUserDetails) => {
             const tiaPool = user.programs?.tia_pool;
-            return tiaPool?.isPurchased ? 100 : 0;
+            return tiaPool?.hasAccessFlag ? 100 : 0;
         }
     },
     {
@@ -452,6 +453,7 @@ export const achievements: Array<Achievement> = [
         background: tia_pool_achievement_background,
         categories: ["pool"],
         xpReward: 150,
+        coinsReward: 20,
         getProgress: (user: FullUserDetails) => {
             const tiaPool = user.programs?.tia_pool;
             if (!tiaPool) return 0;
@@ -466,6 +468,7 @@ export const achievements: Array<Achievement> = [
         background: tia_pool_achievement_background,
         categories: ["pool"],
         xpReward: 500,
+        coinsReward: 60,
         getProgress: (user: FullUserDetails) => {
             const tiaPool = user.programs?.tia_pool;
             if (!tiaPool) return 0;
