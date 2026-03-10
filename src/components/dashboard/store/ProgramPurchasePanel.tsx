@@ -43,7 +43,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                         </Link>
                     )}
                     {program.type === 'subscription' && (
-                        <Link href="/dashboard/subscriptions" className="w-full py-2.5 rounded-lg border border-card-light text-white/60 hover:text-white text-sm text-center hover:border-white/20 transition-200 flex items-center justify-center gap-2">
+                        <Link href="/dashboard/billing?tab=subscriptions" className="w-full py-2.5 rounded-lg border border-card-light text-white/60 hover:text-white text-sm text-center hover:border-white/20 transition-200 flex items-center justify-center gap-2">
                             <RotateRightIcon className="size-3.5" />
                             Gestionar suscripción
                         </Link>

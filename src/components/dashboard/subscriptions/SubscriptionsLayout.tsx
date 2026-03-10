@@ -27,18 +27,20 @@ export const SubscriptionsLayout = () => {
         if (!user) return;
         setIsLoading(true);
 
-        const results: SubEntry[] = [];
-        for (const prog of subscriptionPrograms) {
-            const userProg = user.programs?.[prog.id];
-            if (!userProg?.subscription?.status) continue;
+        const activePrograms = subscriptionPrograms.filter(
+            prog => user.programs?.[prog.id]?.subscription?.status
+        );
 
-            try {
-                const status = await getSubscriptionStatus(prog.id);
-                results.push({ programId: prog.id, status });
-            } catch {
-                // skip programs that fail to load
-            }
-        }
+        const settled = await Promise.allSettled(
+            activePrograms.map(async (prog): Promise<SubEntry> => ({
+                programId: prog.id,
+                status: await getSubscriptionStatus(prog.id),
+            }))
+        );
+
+        const results: SubEntry[] = settled
+            .filter((r): r is PromiseFulfilledResult<SubEntry> => r.status === 'fulfilled')
+            .map(r => r.value);
 
         setEntries(results);
         setIsLoading(false);

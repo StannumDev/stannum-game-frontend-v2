@@ -17,7 +17,7 @@ export { Skeleton } from "./ui/Skeleton";
 export { RankingRowSkeleton } from "./ui/skeletons/RankingRowSkeleton";
 export { CommunityCardSkeleton } from "./ui/skeletons/CommunityCardSkeleton";
 export { ProfileSkeleton } from "./ui/skeletons/ProfileSkeleton";
-export { WhatsNewModal } from "./ui/WhatsNewModal";
+
 export { Tooltip } from "./ui/Tooltip";
 
 // SIDEBAR
@@ -176,6 +176,9 @@ export { MyPromptCard } from './dashboard/community/prompts/my-prompts/MyPromptC
 export { MyPromptCardOptionsMenu } from './dashboard/community/prompts/my-prompts/MyPromptCardOptionsMenu';
 export { DeletePromptModal } from './dashboard/community/prompts/my-prompts/DeletePromptModal';
 export { EditPromptModal } from './dashboard/community/prompts/my-prompts/EditPromptModal';
+
+// BILLING
+export { BillingLayout } from "./dashboard/billing/BillingLayout";
 
 // SUBSCRIPTIONS
 export { SubscriptionCard } from "./dashboard/subscriptions/SubscriptionCard";

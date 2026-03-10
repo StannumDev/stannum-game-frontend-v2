@@ -11,6 +11,7 @@ import { TUTORIAL_ICONS } from '@/helpers/tutorialIcons';
 import { PlayIcon } from '@/icons';
 import { Modal, MotionWrapperLayout, StepFiveTutorial, StepFourTutorial, StepOneTutorial, StepSixTutorial, StepThreeTutorial, StepTwoTutorial } from "@/components";
 import { useUserStore } from '@/stores/userStore';
+import { useModalQueueStore } from '@/stores/modalQueueStore';
 import background from "@/assets/background/the_game.webp";
 import "driver.js/dist/driver.css";
 
@@ -18,12 +19,20 @@ const steps:Array<number> = [1,2,3,4,5,6];
 
 const TOTAL_TUTORIAL_STEPS = 8;
 
+const MODAL_ID = 'initial_tutorial';
+const MODAL_PRIORITY = 10;
+
 export const PresentacionHome = () => {
     const user = useUserStore(s => s.user);
+    const isMyTurn = useModalQueueStore(s => s.queue[0]?.id === MODAL_ID);
+    const request = useModalQueueStore(s => s.request);
+    const release = useModalQueueStore(s => s.release);
 
     const introRef = useRef<HTMLDivElement | null>(null);
     const driverRef = useRef<Driver | null>(null);
-    
+    const destroyedByNav = useRef(false);
+    const destroyedByReplay = useRef(false);
+
     const pathname = usePathname();
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -32,18 +41,29 @@ export const PresentacionHome = () => {
 
     const [isTutorialCompleted, setIsTutorialCompleted] = useState<boolean>(false);
     const [canStartTutorial, setCanStartTutorial] = useState<boolean>(false);
-    
+
     const completeTutorial = async () => {
+        if (destroyedByNav.current || destroyedByReplay.current) {
+            destroyedByNav.current = false;
+            destroyedByReplay.current = false;
+            release(MODAL_ID);
+            return;
+        }
         try {
             await markTutorialAsCompleted("initial_tutorial");
             setIsTutorialCompleted(true);
         } catch (error:unknown) {
             errorHandler(error);
+        } finally {
+            release(MODAL_ID);
         }
     };
-  
+
     const showTutorial = () => {
-        driverRef.current && driverRef.current.destroy();
+        if (driverRef.current) {
+            destroyedByReplay.current = true;
+            driverRef.current.destroy();
+        }
         setSelectedStep(1);
         setShowModal(true);
     };
@@ -86,6 +106,7 @@ export const PresentacionHome = () => {
             try {
                 const completed = await getTutorialStatus("initial_tutorial");
                 setIsTutorialCompleted(completed);
+                if (!completed) request(MODAL_ID, MODAL_PRIORITY);
                 setCanStartTutorial(true);
             } catch (error:unknown) {
                 errorHandler(error);
@@ -93,12 +114,12 @@ export const PresentacionHome = () => {
         };
 
         checkTutorialCompletion();
-    }, []);
+    }, [request]);
 
     useEffect(() => {
-        
+
         const startIntro = () => {
-            if (!canStartTutorial || isTutorialCompleted || !introRef.current) return;
+            if (!canStartTutorial || isTutorialCompleted || !introRef.current || !isMyTurn) return;
 
             const driverInstance = driver({
                 animate: true,
@@ -225,10 +246,15 @@ export const PresentacionHome = () => {
         };
 
         startIntro();
-    }, [canStartTutorial, isTutorialCompleted]);
+    }, [canStartTutorial, isTutorialCompleted, isMyTurn]);
 
     useEffect(() => {
-        return () => {driverRef.current && driverRef.current.destroy()};
+        return () => {
+            if (driverRef.current) {
+                destroyedByNav.current = true;
+                driverRef.current.destroy();
+            }
+        };
     }, [pathname]);
 
     return (

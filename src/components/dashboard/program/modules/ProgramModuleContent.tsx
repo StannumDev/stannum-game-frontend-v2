@@ -17,6 +17,7 @@ import type { PathMapItem, NodeState } from './path-map/pathMapUtils';
 import { getModuleChests } from '@/config/chests';
 import type { ChestConfig } from '@/config/chests';
 import { ChestOpenModal } from './path-map/ChestOpenModal';
+import { useModalQueueStore } from '@/stores/modalQueueStore';
 import 'driver.js/dist/driver.css';
 
 type ModuleItem =
@@ -58,12 +59,19 @@ interface Props {
     nextModuleHref?: string;
 }
 
+const PATH_MAP_MODAL_ID = 'path_map_tutorial';
+const PATH_MAP_MODAL_PRIORITY = 40;
+
 export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, previousModule, nextModuleName, nextModuleHref }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const user = useUserStore(s => s.user);
     const isLoading = useUserStore(s => s.isLoading);
     const driverRef = useRef<Driver | null>(null);
+    const destroyedByNav = useRef(false);
+    const isMyTurn = useModalQueueStore(s => s.queue[0]?.id === PATH_MAP_MODAL_ID);
+    const request = useModalQueueStore(s => s.request);
+    const release = useModalQueueStore(s => s.release);
 
     const [view, setView] = useState<'map' | 'list'>('map');
     const [openChestId, setOpenChestId] = useState<string | null>(null);
@@ -96,25 +104,33 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
             try {
                 const completed = await getTutorialStatus('path_map_tutorial');
                 setIsTutorialCompleted(completed);
+                if (!completed) request(PATH_MAP_MODAL_ID, PATH_MAP_MODAL_PRIORITY);
                 setCanStartTutorial(true);
             } catch (error: unknown) {
                 errorHandler(error);
             }
         };
         check();
-    }, []);
+    }, [request]);
 
     const completeTutorial = async () => {
+        if (destroyedByNav.current) {
+            destroyedByNav.current = false;
+            release(PATH_MAP_MODAL_ID);
+            return;
+        }
         try {
             await markTutorialAsCompleted('path_map_tutorial');
             setIsTutorialCompleted(true);
         } catch (error: unknown) {
             errorHandler(error);
+        } finally {
+            release(PATH_MAP_MODAL_ID);
         }
     };
 
     useEffect(() => {
-        if (!canStartTutorial || isTutorialCompleted || isLoading || !user) return;
+        if (!canStartTutorial || isTutorialCompleted || isLoading || !user || !isMyTurn) return;
 
         setView('map');
         try { localStorage.setItem('moduleView', 'map'); } catch { /* ignore */ }
@@ -271,10 +287,15 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
         }, 1000);
 
         return () => clearTimeout(timeout);
-    }, [canStartTutorial, isTutorialCompleted, isLoading, user]);
+    }, [canStartTutorial, isTutorialCompleted, isLoading, user, isMyTurn]);
 
     useEffect(() => {
-        return () => { driverRef.current?.destroy(); };
+        return () => {
+            if (driverRef.current) {
+                destroyedByNav.current = true;
+                driverRef.current.destroy();
+            }
+        };
     }, [pathname]);
 
     if (isLoading || !user) return <LoadingScreen />;

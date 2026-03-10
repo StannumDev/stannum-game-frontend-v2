@@ -34,6 +34,7 @@ export interface SubscriptionPayment {
     currency: string;
     status: 'approved' | 'rejected' | 'pending' | 'refunded';
     retryAttempt: number;
+    receiptNumber: string | null;
     date: string;
 }
 
@@ -67,5 +68,22 @@ export const getPaymentHistory = async (programId: string, page = 1): Promise<Pa
     const response = await api.get(`${SUBSCRIPTION_URL}/payments/${programId}?page=${page}`);
     if (!response?.data?.success) throw new Error('Unexpected response structure');
     return response.data;
+};
+
+export const downloadSubscriptionReceipt = async (paymentId: string): Promise<void> => {
+    const response = await api.get(`${SUBSCRIPTION_URL}/payment/${paymentId}/receipt`, {
+        responseType: 'blob',
+    });
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const disposition = response.headers['content-disposition'];
+    const filenameMatch = disposition?.match(/filename="?([^"]+)"?/);
+    link.download = filenameMatch?.[1] || `comprobante-${paymentId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => window.URL.revokeObjectURL(url), 1000);
 };
 

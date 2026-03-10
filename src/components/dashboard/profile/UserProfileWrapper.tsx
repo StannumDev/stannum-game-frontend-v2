@@ -12,17 +12,25 @@ import { UserProfileDetails, ProfileSectionsLayout, ProfileSkeleton } from "@/co
 import { FullUserDetails } from "@/interfaces";
 import { PowerIcon, WarningOctagonIcon } from "@/icons";
 import { useUserStore } from "@/stores/userStore";
+import { useModalQueueStore } from "@/stores/modalQueueStore";
 import "driver.js/dist/driver.css";
 
 interface Props{
     username: string;
 }
 
+const PROFILE_MODAL_ID = 'profile_tutorial';
+const PROFILE_MODAL_PRIORITY = 50;
+
 export const UserProfileWrapper = ({username}:Props) => {
     const owner = useUserStore(s => s.user?.username) === username;
     const storeLogout = useUserStore(s => s.logout);
     const pathname = usePathname();
     const driverRef = useRef<Driver | null>(null);
+    const destroyedByNav = useRef(false);
+    const isMyTurn = useModalQueueStore(s => s.queue[0]?.id === PROFILE_MODAL_ID);
+    const request = useModalQueueStore(s => s.request);
+    const release = useModalQueueStore(s => s.release);
 
     const [userData, setUserData] = useState<FullUserDetails|null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -56,25 +64,33 @@ export const UserProfileWrapper = ({username}:Props) => {
             try {
                 const completed = await getTutorialStatus('profile_tutorial');
                 setIsTutorialCompleted(completed);
+                if (!completed) request(PROFILE_MODAL_ID, PROFILE_MODAL_PRIORITY);
                 setCanStartTutorial(true);
             } catch (error: unknown) {
                 errorHandler(error);
             }
         };
         check();
-    }, [owner]);
+    }, [owner, request]);
 
     const completeTutorial = async () => {
+        if (destroyedByNav.current) {
+            destroyedByNav.current = false;
+            release(PROFILE_MODAL_ID);
+            return;
+        }
         try {
             await markTutorialAsCompleted('profile_tutorial');
             setIsTutorialCompleted(true);
         } catch (error: unknown) {
             errorHandler(error);
+        } finally {
+            release(PROFILE_MODAL_ID);
         }
     };
 
     useEffect(() => {
-        if (!canStartTutorial || isTutorialCompleted || isLoading || !userData) return;
+        if (!canStartTutorial || isTutorialCompleted || isLoading || !userData || !isMyTurn) return;
 
         const timeout = setTimeout(() => {
             const steps: NonNullable<Parameters<typeof driver>[0]>['steps'] = [];
@@ -214,10 +230,15 @@ export const UserProfileWrapper = ({username}:Props) => {
         }, 800);
 
         return () => clearTimeout(timeout);
-    }, [canStartTutorial, isTutorialCompleted, isLoading, userData]);
+    }, [canStartTutorial, isTutorialCompleted, isLoading, userData, isMyTurn]);
 
     useEffect(() => {
-        return () => { driverRef.current?.destroy(); };
+        return () => {
+            if (driverRef.current) {
+                destroyedByNav.current = true;
+                driverRef.current.destroy();
+            }
+        };
     }, [pathname]);
 
     const onLogout = () => {

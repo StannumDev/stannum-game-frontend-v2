@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkUsernameExists, updateUsername } from "@/services";
 import { errorHandler } from "@/helpers";
+import { isLoggedIn } from "@/lib/tokenStorage";
 import { AtIcon } from "@/icons";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo } from "@/components";
 
@@ -17,8 +19,18 @@ type Schema = z.infer<typeof schema>
 
 export const GoogleAuthUsername = () => {
 
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const hasSession = isLoggedIn();
+
+    useEffect(() => {
+        if (!hasSession) router.replace('/login');
+    }, [hasSession, router]);
+
     const { register, handleSubmit, formState: { errors }} = useForm<Schema>({ resolver: zodResolver(schema) })
+
+    if (!hasSession) return null;
 
     const onSubmit: SubmitHandler<Schema> = async ({ username }: Schema) => {
         setIsLoading(true);

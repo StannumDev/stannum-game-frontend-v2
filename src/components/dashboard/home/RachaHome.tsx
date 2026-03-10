@@ -148,7 +148,7 @@ export const RachaHome = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-end gap-0.5 text-[10px] lg:text-xs">
-                        <span className="text-card-lightest">Recompensa actual</span>
+                        <span className={streakStatus.maxStreak && !streakStatus.missedToday ? "text-white" : "text-card-lightest"}>Recompensa actual</span>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1 text-stannum font-bold">
                                 <CrownIcon className="size-3 lg:size-3.5"/>
@@ -228,37 +228,27 @@ export const RachaHome = () => {
                     </div>
                 </div>
 
-                {currentShields > 0 ? (
-                    <button
-                        type="button"
-                        onClick={() => setShowShieldModal(true)}
-                        className="p-3 rounded-lg border border-blue-500/30 bg-blue-500/10 flex items-center gap-3 cursor-pointer hover:border-blue-500/50 transition-200"
-                    >
-                        <ShieldCompletedIcon className="size-5 text-blue-400 shrink-0" />
-                        <div className="min-w-0 text-left">
-                            <p className="text-sm font-semibold text-blue-400">Escudo activo</p>
-                            <p className="text-xs text-card-lightest">Tu racha está protegida si faltás un día</p>
-                        </div>
-                    </button>
-                ) : (
-                    <button
-                        type="button"
-                        onClick={() => setShowShieldModal(true)}
-                        className="p-3 rounded-lg border border-invalid/30 bg-invalid/10 flex items-center justify-between gap-3 cursor-pointer hover:border-invalid/50 transition-200"
-                    >
-                        <div className="flex items-center gap-3 min-w-0">
-                            <ShieldEmpyIcon className="size-5 text-invalid shrink-0" />
-                            <div className="text-left">
-                                <p className="text-sm font-semibold text-invalid">Sin escudo</p>
-                                <p className="text-xs text-card-lightest">Protegé tu racha si faltás un día</p>
+                <button
+                    type="button"
+                    onClick={() => setShowShieldModal(true)}
+                    className={`w-fit ml-auto px-3 py-1.5 rounded-full border bg-card flex items-center gap-2 cursor-pointer transition-200 ${currentShields > 0 ? "border-stannum/30 hover:border-stannum/50" : "border-invalid/30 hover:border-invalid/50"}`}
+                >
+                    {currentShields > 0 ? (
+                        <>
+                            <ShieldCompletedIcon className="size-4 text-stannum shrink-0" />
+                            <span className="text-xs font-semibold text-stannum">Protegido</span>
+                        </>
+                    ) : (
+                        <>
+                            <ShieldEmpyIcon className="size-4 text-invalid shrink-0" />
+                            <span className="text-xs font-semibold text-invalid">Sin escudo</span>
+                            <div className="flex items-center gap-1 shrink-0">
+                                <Image src={stannum_coin} alt="Tins" width={12} height={12} />
+                                <span className="text-xs font-bold text-amber-400">{SHIELD_PRICE}</span>
                             </div>
-                        </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                            <Image src={stannum_coin} alt="Tins" width={14} height={14} />
-                            <span className="text-xs font-bold text-amber-400">{SHIELD_PRICE}</span>
-                        </div>
-                    </button>
-                )}
+                        </>
+                    )}
+                </button>
 
                 {user.dailyStreak.recoveryAvailable && user.dailyStreak.lostCount && recoveryCountdown && (
                     <div className="p-3 rounded-lg border border-amber-500/50 bg-amber-500/10 flex items-center justify-between gap-3">

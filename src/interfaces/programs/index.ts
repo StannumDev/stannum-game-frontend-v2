@@ -67,9 +67,11 @@ export interface Program {
     priceARS: number | null;
     subscriptionPriceARS?: number | null;
     purchasable: boolean;
+    hidden?: boolean;
     categories: Array<ProgramCategory>;
     description: string;
     longDescription?: string;
+    learningPoints?: Array<string>;
     logo: StaticImageData;
     background: StaticImageData;
     sections: Array<Section>;
