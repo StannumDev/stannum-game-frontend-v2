@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import type { SidebarLink } from "@/interfaces";
-import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon, RotateRightIcon } from "@/icons";
+import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 import { isSubscription } from "@/utilities";
@@ -76,24 +76,14 @@ export const Sidebar = () => {
         Icon: UserCircleIcon,
     };
 
-    const subscriptionLink: SidebarLink = {
-        label: 'Suscripciones',
-        href: '/dashboard/subscriptions',
-        Icon: RotateRightIcon,
-    };
-
-    // Desktop: include subscription link if applicable
-    const desktopLinks = [...baseLinks, ...(hasSubscription ? [subscriptionLink] : []), profileLink];
-    // Mobile: exclude subscription link to prevent nav overflow (5 items + search = 6 cols)
-    // TODO: relocate subscription access for mobile (profile menu or settings)
-    const mobileLinks = [...baseLinks, profileLink];
+    const allLinks = [...baseLinks, profileLink];
 
     const showLoading = isLoading || (isAuthenticated && !userData);
 
     return (
     isLargeScreen ?
-        <SidebarDesktop user={userData} links={desktopLinks} pathname={pathname} isLoading={showLoading} />
+        <SidebarDesktop user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} hasSubscription={!!hasSubscription} />
     :
-        <SidebarMobile key={pathname} user={userData} links={mobileLinks} pathname={pathname} isLoading={showLoading} />
+        <SidebarMobile key={pathname} user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} hasSubscription={!!hasSubscription} />
     )
 };

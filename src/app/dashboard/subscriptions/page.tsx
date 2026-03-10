@@ -1,7 +1,5 @@
-import { SubscriptionsLayout } from '@/components/dashboard/subscriptions/SubscriptionsLayout';
-
-export const metadata = { title: 'Mis Suscripciones' };
+import { redirect } from 'next/navigation';
 
 export default function SubscriptionsPage() {
-    return <main className="main-container"><SubscriptionsLayout /></main>;
+    redirect('/dashboard/billing?tab=subscriptions');
 }

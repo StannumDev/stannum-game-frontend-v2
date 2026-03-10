@@ -8,7 +8,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
     const { programId } = await params;
-    const program = programs.find(p => p.id === programId.toLowerCase());
+    const program = programs.find(p => p.id === programId.toLowerCase() && !p.hidden);
     if (!program) return { title: 'Programa no encontrado' };
     return {
         title: `${program.name} | Tienda`,
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ProgramDetailPage({ params }: Props) {
     const { programId } = await params;
-    const program = programs.find(p => p.id === programId.toLowerCase());
+    const program = programs.find(p => p.id === programId.toLowerCase() && !p.hidden);
     if (!program) return notFound();
 
     return (

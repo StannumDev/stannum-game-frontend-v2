@@ -12,7 +12,7 @@ import { hasAccess } from "@/utilities";
 const sections: Array<NavbarSectionType> = [
     { name: "Todos", id: "", Icon: NewAppsIcon },
     { name: "Principales", id: "main", disabled: true },
-    { name: "Gratuitos", id: "free" },
+    { name: "Gratuitos", id: "free", disabled: true },
     { name: "Shorts", id: "shorts", disabled: true },
 ];
 
@@ -39,7 +39,9 @@ export const StoreSectionsLayout = () => {
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
 
-    const filteredPrograms = programs.filter(program => !selectedLayout || program.categories.includes(selectedLayout as ProgramCategory));
+    const filteredPrograms = programs
+        .filter(program => !program.hidden && (!selectedLayout || program.categories.includes(selectedLayout as ProgramCategory)))
+        .sort((a, b) => (a.price < 0 ? 1 : 0) - (b.price < 0 ? 1 : 0));
 
     return (
         <MotionWrapperLayout>

@@ -266,7 +266,14 @@ export const ProgramDetail = ({ program }: Props) => {
                     >
                         <h2 className="title-2 mb-4">Lo que vas a aprender</h2>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                            {program.sections.flatMap(s => s.modules ?? []).map((mod) => (
+                            {program.learningPoints ? program.learningPoints.map((point, i) => (
+                                <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-card-light/30">
+                                    <div className="mt-0.5 size-5 rounded-full bg-stannum/20 flex justify-center items-center shrink-0">
+                                        <CheckIcon className="size-3 text-stannum" />
+                                    </div>
+                                    <span className="text-sm">{point}</span>
+                                </div>
+                            )) : program.sections.flatMap(s => s.modules ?? []).map((mod) => (
                                 <div key={mod.id} className="flex items-start gap-3 p-3 rounded-lg bg-card-light/30">
                                     <div className="mt-0.5 size-5 rounded-full bg-stannum/20 flex justify-center items-center shrink-0">
                                         <CheckIcon className="size-3 text-stannum" />

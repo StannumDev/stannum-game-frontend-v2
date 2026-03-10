@@ -4,11 +4,11 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { m, AnimatePresence } from 'framer-motion';
 import { programs } from '@/config/programs';
-import { resendGiftEmail } from '@/services/payment';
+import { resendGiftEmail, downloadReceipt } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
 import { formatARS } from '@/utilities';
 import { ProductKeyDisplay } from './ProductKeyDisplay';
-import { KeyIcon, ArrowDownIcon, UserIcon, GiftIcon } from '@/icons';
+import { KeyIcon, ArrowDownIcon, UserIcon, GiftIcon, DownloadIcon } from '@/icons';
 
 interface Props {
     order: OrderDetails;
@@ -33,6 +33,8 @@ export const PurchaseCard = ({ order }: Props) => {
     const [resendSuccess, setResendSuccess] = useState(false);
     const [resendError, setResendError] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadError, setDownloadError] = useState(false);
 
     const program = programs.find(p => p.id === order.programId);
     const status = statusConfig[order.status] || { text: order.status, className: 'bg-white/5 text-white/40 border-white/10' };
@@ -50,6 +52,18 @@ export const PurchaseCard = ({ order }: Props) => {
             setResendError(true);
         } finally {
             setResending(false);
+        }
+    };
+
+    const handleDownloadReceipt = async () => {
+        setIsDownloading(true);
+        setDownloadError(false);
+        try {
+            await downloadReceipt(order.id);
+        } catch {
+            setDownloadError(true);
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -103,6 +117,18 @@ export const PurchaseCard = ({ order }: Props) => {
                         <span className="text-xs text-stannum font-medium">-{formatARS(order.discountApplied)}</span>
                     )}
                 </div>
+
+                {order.status === 'approved' && order.receiptNumber && (
+                    <button
+                        type="button"
+                        onClick={handleDownloadReceipt}
+                        disabled={isDownloading}
+                        className="flex items-center gap-1.5 text-xs text-stannum hover:text-stannum-light transition-200 w-fit disabled:opacity-50"
+                    >
+                        <DownloadIcon className="size-3" />
+                        {downloadError ? 'Error al descargar' : isDownloading ? 'Descargando...' : 'Descargar comprobante'}
+                    </button>
+                )}
 
                 {hasGiftKeys && (
                     <>

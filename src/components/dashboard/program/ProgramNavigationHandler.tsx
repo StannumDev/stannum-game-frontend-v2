@@ -10,6 +10,7 @@ import { errorHandler } from "@/helpers";
 import { TUTORIAL_ICONS } from "@/helpers/tutorialIcons";
 import type { IconType } from "react-icons";
 import type { Program } from "@/interfaces";
+import { useModalQueueStore } from "@/stores/modalQueueStore";
 import "driver.js/dist/driver.css";
 
 interface Props {
@@ -22,10 +23,17 @@ const sectionIconMap: Record<string, IconType> = {
     ranking: RankingStarIcon,
 };
 
+const MODAL_ID = 'program_library_tutorial';
+const MODAL_PRIORITY = 30;
+
 export const ProgramNavigationHandler = ({ program }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const driverRef = useRef<Driver | null>(null);
+    const destroyedByNav = useRef(false);
+    const isMyTurn = useModalQueueStore(s => s.queue[0]?.id === MODAL_ID);
+    const request = useModalQueueStore(s => s.request);
+    const release = useModalQueueStore(s => s.release);
 
     const [isTutorialCompleted, setIsTutorialCompleted] = useState(false);
     const [canStartTutorial, setCanStartTutorial] = useState(false);
@@ -75,25 +83,33 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
             try {
                 const completed = await getTutorialStatus('program_library_tutorial');
                 setIsTutorialCompleted(completed);
+                if (!completed) request(MODAL_ID, MODAL_PRIORITY);
                 setCanStartTutorial(true);
             } catch (error: unknown) {
                 errorHandler(error);
             }
         };
         check();
-    }, []);
+    }, [request]);
 
     const completeTutorial = async () => {
+        if (destroyedByNav.current) {
+            destroyedByNav.current = false;
+            release(MODAL_ID);
+            return;
+        }
         try {
             await markTutorialAsCompleted('program_library_tutorial');
             setIsTutorialCompleted(true);
         } catch (error: unknown) {
             errorHandler(error);
+        } finally {
+            release(MODAL_ID);
         }
     };
 
     useEffect(() => {
-        if (!canStartTutorial || isTutorialCompleted) return;
+        if (!canStartTutorial || isTutorialCompleted || !isMyTurn) return;
 
         const timeout = setTimeout(() => {
             const steps: NonNullable<Parameters<typeof driver>[0]>['steps'] = [];
@@ -210,10 +226,15 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
         }, 800);
 
         return () => clearTimeout(timeout);
-    }, [canStartTutorial, isTutorialCompleted]);
+    }, [canStartTutorial, isTutorialCompleted, isMyTurn]);
 
     useEffect(() => {
-        return () => { driverRef.current?.destroy(); };
+        return () => {
+            if (driverRef.current) {
+                destroyedByNav.current = true;
+                driverRef.current.destroy();
+            }
+        };
     }, [pathname]);
 
     return (

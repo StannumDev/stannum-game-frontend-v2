@@ -19,9 +19,10 @@ interface Props{
     links: Array<SidebarLink>;
     pathname: string;
     isLoading: boolean;
+    hasSubscription: boolean;
 }
 
-export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
+export const SidebarMobile = ({user, links, pathname, isLoading, hasSubscription}:Props) => {
 
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [profilePhotoError, setProfilePhotoError] = useState(false);
@@ -117,12 +118,21 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                                     Mi perfil
                                                 </Link>
                                                 <Link
-                                                    href="/dashboard/purchases"
+                                                    href="/dashboard/billing"
                                                     onClick={() => setIsMenuOpen(false)}
                                                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
                                                 >
                                                     Mis compras
                                                 </Link>
+                                                {hasSubscription && (
+                                                    <Link
+                                                        href="/dashboard/billing?tab=subscriptions"
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
+                                                    >
+                                                        Mis suscripciones
+                                                    </Link>
+                                                )}
                                                 <button
                                                     type="button"
                                                     onClick={() => { setIsMenuOpen(false); storeLogout(); }}

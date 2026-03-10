@@ -9,6 +9,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { SelectorIcon } from "@/icons";
 import { getUserByTokenClient, updateUserProfile } from "@/services";
 import { achievementHandler, errorHandler } from "@/helpers";
+import { isLoggedIn } from "@/lib/tokenStorage";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo, LoadingScreen } from "@/components";
 
 const schema = z.object({
@@ -45,7 +46,11 @@ export const CompleteProfileForm = () => {
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<Schema>({ resolver: zodResolver(schema) });
 
+    const hasSession = isLoggedIn();
+
     useEffect(() => {
+        if (!hasSession) { router.replace('/login'); return; }
+
         let isMounted = true;
         const fetchUserData = async () => {
             if (isMounted) setIsFetching(true);
@@ -76,7 +81,7 @@ export const CompleteProfileForm = () => {
         };
         fetchUserData();
         return () => { isMounted = false; };
-    }, [setValue]);
+    }, [hasSession, router, setValue]);
 
     const onSubmit: SubmitHandler<Schema> = async (data) => {
         setIsLoading(true);

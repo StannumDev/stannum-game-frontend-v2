@@ -32,6 +32,7 @@ export interface OrderDetails {
     currency: string;
     status: string;
     productKeys: Array<{ code: string; used: boolean }>;
+    receiptNumber: string | null;
     fulfilledAt: string | null;
     giftEmailSent: boolean;
     createdAt: string;
@@ -75,4 +76,21 @@ export const resendGiftEmail = async (orderId: string): Promise<{ success: boole
     const response = await api.post(`${PAYMENT_URL}/order/${orderId}/resend-email`);
     if (!response?.data?.success) throw new Error('Unexpected response structure');
     return response.data;
+};
+
+export const downloadReceipt = async (orderId: string): Promise<void> => {
+    const response = await api.get(`${PAYMENT_URL}/order/${orderId}/receipt`, {
+        responseType: 'blob',
+    });
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const disposition = response.headers['content-disposition'];
+    const filenameMatch = disposition?.match(/filename="?([^"]+)"?/);
+    link.download = filenameMatch?.[1] || `comprobante-${orderId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => window.URL.revokeObjectURL(url), 1000);
 };

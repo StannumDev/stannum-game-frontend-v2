@@ -9,6 +9,7 @@ import { STANNUMLogo } from '@/components';
 import { verifyPayment } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
 import { programs } from '@/config/programs';
+import { useUserStore } from '@/stores/userStore';
 import { formatARS } from '@/utilities';
 import { CheckIcon, CrossIcon, GiftIcon } from '@/icons';
 import { ProductKeyDisplay } from '@/components/dashboard/purchases/ProductKeyDisplay';
@@ -25,6 +26,7 @@ const stagger = {
 
 export const PurchaseResult = () => {
     const searchParams = useSearchParams();
+    const refreshUser = useUserStore(s => s.refreshUser);
     const [order, setOrder] = useState<OrderDetails | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,6 +41,9 @@ export const PurchaseResult = () => {
                     const result = await verifyPayment(paymentId || undefined, orderId || undefined);
                     if (!result.order) throw new Error('No order data');
                     setOrder(result.order);
+                    if (result.order.status === 'approved' && result.order.type === 'self') {
+                        refreshUser();
+                    }
                 } else {
                     setError('No se encontró información del pago.');
                 }
@@ -164,7 +169,7 @@ export const PurchaseResult = () => {
                                     <p className="text-sm text-white/60 leading-relaxed">
                                         El regalo esta listo para ser entregado. Que empiece el entrenamiento.
                                     </p>
-                                    <Link href="/dashboard/purchases" className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center hover:bg-stannum-light transition-200">
+                                    <Link href="/dashboard/billing" className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center hover:bg-stannum-light transition-200">
                                         Ver mis compras
                                     </Link>
                                 </>

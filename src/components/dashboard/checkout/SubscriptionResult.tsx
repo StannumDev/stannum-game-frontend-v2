@@ -11,6 +11,7 @@ import { formatARS } from '@/utilities';
 import { CheckIcon, CrossIcon } from '@/icons';
 import { getSubscriptionStatus } from '@/services/subscription';
 import type { SubscriptionStatusResult } from '@/services/subscription';
+import { useUserStore } from '@/stores/userStore';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -24,6 +25,7 @@ const stagger = {
 
 export const SubscriptionResult = () => {
     const searchParams = useSearchParams();
+    const refreshUser = useUserStore(s => s.refreshUser);
     const [subStatus, setSubStatus] = useState<SubscriptionStatusResult | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -43,6 +45,9 @@ export const SubscriptionResult = () => {
             try {
                 const result = await getSubscriptionStatus(programId);
                 setSubStatus(result);
+                if (result.status === 'active') {
+                    refreshUser();
+                }
             } catch {
                 setError('Estamos verificando tu suscripción. Si ya autorizaste el pago, puede tardar unos minutos.');
             } finally {
@@ -53,7 +58,7 @@ export const SubscriptionResult = () => {
         fetchStatus();
     }, [programId, status]);
 
-    const isSuccess = status === 'active' || subStatus?.status === 'active';
+    const isSuccess = subStatus?.status === 'active';
 
     return (
         <div className="w-full min-h-svh flex flex-col">
@@ -143,7 +148,7 @@ export const SubscriptionResult = () => {
                             <Link href={`/dashboard/library/${programId}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center hover:bg-stannum-light transition-200">
                                 Comenzar entrenamiento
                             </Link>
-                            <Link href="/dashboard/subscriptions" className="text-sm text-white/50 hover:text-white transition-200">
+                            <Link href="/dashboard/billing?tab=subscriptions" className="text-sm text-white/50 hover:text-white transition-200">
                                 Ver mis suscripciones
                             </Link>
                         </m.div>

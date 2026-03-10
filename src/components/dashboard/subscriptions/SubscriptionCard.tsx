@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { m, AnimatePresence } from 'framer-motion';
 import { Program } from '@/interfaces';
 import { formatARS } from '@/utilities';
-import { cancelSubscription } from '@/services/subscription';
-import type { SubscriptionStatusResult } from '@/services/subscription';
-import { ArrowRightIcon, SpinnerIcon } from '@/icons';
+import { cancelSubscription, getPaymentHistory, downloadSubscriptionReceipt } from '@/services/subscription';
+import type { SubscriptionStatusResult, SubscriptionPayment } from '@/services/subscription';
+import { ArrowRightIcon, ArrowDownIcon, SpinnerIcon, DownloadIcon } from '@/icons';
 
 interface Props {
     program: Program;
@@ -28,10 +29,23 @@ const formatDate = (dateStr: string | null) => {
     return new Date(dateStr).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
+const paymentStatusConfig: Record<string, { text: string; className: string }> = {
+    approved: { text: 'Aprobado', className: 'text-emerald-400' },
+    rejected: { text: 'Rechazado', className: 'text-red-400' },
+    pending: { text: 'Pendiente', className: 'text-amber-400' },
+    refunded: { text: 'Reembolsado', className: 'text-blue-400' },
+};
+
 export const SubscriptionCard = ({ program, status, onCancelled }: Props) => {
     const [showCancel, setShowCancel] = useState(false);
     const [isCancelling, setIsCancelling] = useState(false);
     const [cancelError, setCancelError] = useState<string | null>(null);
+    const [showPayments, setShowPayments] = useState(false);
+    const [payments, setPayments] = useState<SubscriptionPayment[]>([]);
+    const [loadingPayments, setLoadingPayments] = useState(false);
+    const [paymentsError, setPaymentsError] = useState(false);
+    const [downloadingId, setDownloadingId] = useState<string | null>(null);
+    const [downloadErrorId, setDownloadErrorId] = useState<string | null>(null);
 
     const statusInfo = statusLabels[status.status || ''] || statusLabels.expired;
     const canCancel = status.status === 'active';
@@ -43,11 +57,43 @@ export const SubscriptionCard = ({ program, status, onCancelled }: Props) => {
             await cancelSubscription(program.id);
             setShowCancel(false);
             onCancelled();
-        } catch (err: any) {
-            const msg = err?.response?.data?.friendlyMessage || 'No pudimos cancelar tu suscripción. Intentá de nuevo.';
+        } catch (err: unknown) {
+            const msg = (err as { response?: { data?: { friendlyMessage?: string } } })?.response?.data?.friendlyMessage || 'No pudimos cancelar tu suscripción. Intentá de nuevo.';
             setCancelError(msg);
         } finally {
             setIsCancelling(false);
+        }
+    };
+
+    const handleTogglePayments = async () => {
+        if (showPayments) {
+            setShowPayments(false);
+            return;
+        }
+        setShowPayments(true);
+        setPaymentsError(false);
+        if (payments.length === 0) {
+            setLoadingPayments(true);
+            try {
+                const result = await getPaymentHistory(program.id);
+                setPayments(result.payments);
+            } catch {
+                setPaymentsError(true);
+            } finally {
+                setLoadingPayments(false);
+            }
+        }
+    };
+
+    const handleDownloadReceipt = async (paymentId: string) => {
+        setDownloadingId(paymentId);
+        setDownloadErrorId(null);
+        try {
+            await downloadSubscriptionReceipt(paymentId);
+        } catch {
+            setDownloadErrorId(paymentId);
+        } finally {
+            setDownloadingId(null);
         }
     };
 
@@ -144,6 +190,72 @@ export const SubscriptionCard = ({ program, status, onCancelled }: Props) => {
                         </div>
                     </div>
                 )}
+
+                <div className="w-full h-px bg-card-light" />
+
+                <button
+                    type="button"
+                    onClick={handleTogglePayments}
+                    className="flex items-center gap-1.5 text-xs text-stannum hover:text-stannum-light transition-200 w-fit"
+                >
+                    Historial de pagos
+                    <m.div
+                        animate={{ rotate: showPayments ? 180 : 0 }}
+                        transition={{ type: 'spring', bounce: 0 }}
+                    >
+                        <ArrowDownIcon className="size-2.5" />
+                    </m.div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                    {showPayments && (
+                        <m.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+                            className="overflow-hidden"
+                        >
+                            {loadingPayments ? (
+                                <div className="flex justify-center py-3">
+                                    <SpinnerIcon className="size-4 animate-spin text-white/30" />
+                                </div>
+                            ) : paymentsError ? (
+                                <p className="text-xs text-red-400 py-2">No pudimos cargar el historial. Intentá de nuevo.</p>
+                            ) : payments.length === 0 ? (
+                                <p className="text-xs text-white/40 py-2">No hay pagos registrados.</p>
+                            ) : (
+                                <div className="flex flex-col gap-2">
+                                    {payments.map(payment => {
+                                        const pStatus = paymentStatusConfig[payment.status] || { text: payment.status, className: 'text-white/40' };
+                                        return (
+                                            <div key={payment.id} className="flex items-center justify-between gap-3 py-2 px-3 rounded-lg bg-card-light/50 text-xs">
+                                                <div className="flex items-center gap-3 min-w-0">
+                                                    <span className="text-white/50 shrink-0">
+                                                        {new Date(payment.date).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                                    </span>
+                                                    <span className="font-semibold">{formatARS(payment.amount)}</span>
+                                                    <span className={`shrink-0 ${pStatus.className}`}>{pStatus.text}</span>
+                                                </div>
+                                                {payment.status === 'approved' && payment.receiptNumber && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleDownloadReceipt(payment.id)}
+                                                        disabled={downloadingId === payment.id}
+                                                        className="flex items-center gap-1 text-stannum hover:text-stannum-light transition-200 shrink-0 disabled:opacity-50"
+                                                    >
+                                                        <DownloadIcon className="size-3" />
+                                                        {downloadingId === payment.id ? 'Descargando...' : downloadErrorId === payment.id ? 'Error' : 'Comprobante'}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </m.div>
+                    )}
+                </AnimatePresence>
             </div>
         </div>
     );

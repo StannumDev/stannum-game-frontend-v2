@@ -20,7 +20,8 @@ export {
     FaGithub as GitHubIcon,
     FaLink as LinkIcon,
     FaPlus as PlusIcon,
-    FaDumbbell as DumbbellIcon
+    FaDumbbell as DumbbellIcon,
+    FaDownload as DownloadIcon
 } from "react-icons/fa6";
 
 export {
