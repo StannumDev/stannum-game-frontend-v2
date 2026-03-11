@@ -506,6 +506,38 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-09",
+                    title: "Sesión 09",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 09",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/1LuCdoOj1Phx0n5JycD61BHeOk07EIuDv/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 09",
+                            description: "Conceptos clave",
+                            link: "https://docs.google.com/document/d/1pgGicRFD8Qcup3tukcydTMRzDhpEWjODXoLqL_YL9Hw/edit?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Ejercicios Sesión 09",
+                            description: "Ejercicios Prácticos de Consolidación",
+                            link: "https://drive.google.com/file/d/1pI6dgo5x8yTSbzWVUMKPoUVi4PpOEcMX/view?usp=sharing",
+                            type: "activity",
+                        },
+                        {
+                            title: "PROMPTs Sesión 09",
+                            description: "Instrucciones y PROMPTs de la sesión",
+                            link: "https://docs.google.com/document/d/1vvt6P_RBbqbUJoiZ7fcypNYfZ4KYcHIAH5B0dK5HLvc/edit?usp=sharing",
+                            type: "document",
+                        },
+                    ],
+                },
             ],
         },
     ],
