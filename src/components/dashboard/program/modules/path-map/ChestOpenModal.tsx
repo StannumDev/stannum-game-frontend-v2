@@ -84,13 +84,10 @@ function RewardsReveal({ result, onClose }: { result: ChestOpenResult; onClose: 
 
     return (
         <>
-            {/* Chest icon — same amber style */}
             <div className="size-20 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-[0_4px_0_#78350f] flex justify-center items-center">
                 <ChestIcon className="size-10 text-amber-950" />
             </div>
-
             <h2 className="mt-4 text-xl lg:text-2xl font-black uppercase tracking-wider text-amber-400">Recompensas</h2>
-
             <m.div
                 className="mt-6 w-full flex flex-col gap-3"
                 initial="hidden"
@@ -162,16 +159,12 @@ export const ChestOpenModal = ({ chestId, programId, showModal, setShowModal, on
                             Cofre desbloqueado
                         </h2>
                         <p className="mt-1 text-sm text-white/50">Reclamá tu recompensa</p>
-
-                        {/* Chest with ambient glow */}
                         <div className="relative my-10">
                             <div className="absolute inset-0 -m-6 rounded-full bg-amber-500/20 animate-pulse" />
                             <div className="relative size-28 lg:size-32 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-[0_6px_0_#78350f,0_0_30px_rgba(245,158,11,0.4)] flex justify-center items-center">
                                 <ChestIcon className="size-14 lg:size-16 text-amber-950 drop-shadow-sm" />
                             </div>
                         </div>
-
-                        {/* 3D game button */}
                         <button
                             type="button"
                             onClick={handleOpen}
