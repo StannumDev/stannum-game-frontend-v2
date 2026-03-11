@@ -21,6 +21,7 @@ export interface Instruction {
     rewardXP: number;
     acceptedFormats: Array<string>;
     maxFileSizeMB: number;
+    maxFiles: number;
     deliverableHint: string;
     resources: Array<Resource>;
     afterLessonId: string;

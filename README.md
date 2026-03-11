@@ -216,10 +216,11 @@ src/
 │   ├── ranks.ts                  # Tiers: Hierro → Bronce → Plata → Oro → Diamante → STANNUM
 │   ├── chests.ts                 # Cofres por modulo (posicion, rareza)
 │   ├── covers.ts                 # Portadas de perfil (nombre, rareza, imagen)
-│   └── programs/                 # Programas educativos (TIA, TMD, TIA_SUMMER)
+│   └── programs/                 # Programas educativos (TIA, TMD, TIA_SUMMER, TIA_POOL, TRENNO_IA, DEMO_TRENNO)
 │       └── index.ts              # Configuracion de modulos, lecciones, instrucciones
 │
 ├── utilities/                    # Helpers adicionales
+│   ├── access.ts                 # hasAccess, hasAnyAccess, isSubscription, isActiveSubscription
 │   └── continue.ts               # Logica de "Continuar viendo"
 │
 ├── assets/                       # Imagenes estaticas
@@ -469,8 +470,8 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 
 ### Tins (Moneda Virtual)
 - Moneda interna de la plataforma (icono amber-400)
-- Se ganan al completar lecciones (5), instrucciones (10-25), modulos (30), programas (100), y abriendo cofres
-- Se gastan en la Tienda para comprar portadas de perfil
+- Se ganan al completar lecciones (5), instrucciones (10-25), modulos (30), programas (100), cofres y achievements
+- Se gastan en la Tienda para comprar portadas de perfil, escudos de racha y recuperacion de racha
 
 ### Cofres (Chests)
 - Nodos de recompensa dentro del PathMap de cada modulo
@@ -482,7 +483,7 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 - Config backend: `src/config/chestsConfig.js` (recompensas)
 
 ### Tienda de Portadas
-- Portadas de perfil comprables con Tins
+- 12 portadas de perfil comprables con Tins (common a legendary, 0-1500 Tins)
 - Scroll horizontal en mobile (snap), grilla responsive en desktop
 - Modal de detalle con preview, rareza y precio
 - Config: `src/config/covers.ts`
@@ -497,7 +498,7 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 - Se muestra en Home y perfil
 
 ### Achievements
-- **34 logros** definidos en `src/config/achievements.ts`
+- **31 logros** definidos en `src/config/achievements.ts`
 - Cada uno tiene `getProgress(user)` para calcular % de progreso
 - Al desbloquear: confetti (`canvas-confetti`) + toast con info
 - Recompensas en XP y Tins
@@ -607,4 +608,4 @@ Wrapper reutilizable para paginas con fade-in + slide-up al montar.
 
 ---
 
-**STANNUM 2025 - Repositorio Privado**
+**STANNUM 2026 - Repositorio Privado**

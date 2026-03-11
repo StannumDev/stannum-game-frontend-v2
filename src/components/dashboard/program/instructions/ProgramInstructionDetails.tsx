@@ -44,16 +44,18 @@ function formatEstimatedTime(seconds: number): string {
 
 export const ProgramInstructionDetails = ({ programId, instruction, userInstruction, relatedLessons, referencedLessons }: Props) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const dragCounter = useRef(0);
     const refreshUser = useUserStore(s => s.refreshUser);
 
     const [status, setStatus] = useState<InstructionStatus>(userInstruction?.status || 'PENDING');
     const [startDate, setStartDate] = useState<string | undefined>(userInstruction?.startDate);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [submittedText, setSubmittedText] = useState('');
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
 
-    const { id, title, shortDescription, description, difficulty, rewardXP, acceptedFormats, maxFileSizeMB, deliverableHint, resources, estimatedTimeSec, deliverableType, tools, steps } = instruction;
+    const { id, title, shortDescription, description, difficulty, rewardXP, acceptedFormats, maxFileSizeMB, maxFiles, deliverableHint, resources, estimatedTimeSec, deliverableType, tools, steps } = instruction;
 
     const isStarted = status !== 'PENDING';
     const score = userInstruction?.score;
@@ -79,6 +81,15 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
         return () => clearInterval(interval);
     }, [startDate, status, computeElapsed]);
 
+    useEffect(() => {
+        const hasUnsaved = selectedFiles.length > 0 || (deliverableType === 'text' && submittedText.trim().length > 0);
+        if (!hasUnsaved || status !== 'IN_PROCESS') return;
+
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => { e.preventDefault(); };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [selectedFiles, submittedText, status, deliverableType]);
+
     const handleStart = async () => {
         setIsLoading(true);
         try {
@@ -93,27 +104,46 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
         }
     };
 
-    const processFile = (file: File) => {
-        const ext = '.' + file.name.split('.').pop()?.toLowerCase();
-        if (!acceptedFormats.includes(ext)) { callToast({ type: 'error', message: { title: 'Formato no válido', description: `El formato ${ext} no es válido. Formatos aceptados: ${acceptedFormats.join(', ')}` } }); if (fileInputRef.current) fileInputRef.current.value = ''; return; }
-        if (file.size > maxFileSizeMB * 1024 * 1024) { callToast({ type: 'error', message: { title: 'Archivo muy grande', description: `El archivo excede el límite de ${maxFileSizeMB}MB.` } }); if (fileInputRef.current) fileInputRef.current.value = ''; return; }
-        setSelectedFile(file);
+    const processFiles = (newFiles: File[]) => {
+        const remaining = maxFiles - selectedFiles.length;
+        if (remaining <= 0) { callToast({ type: 'warning', message: { title: 'Límite alcanzado', description: `Máximo ${maxFiles} archivo${maxFiles > 1 ? 's' : ''}.` } }); return; }
+
+        const toAdd: File[] = [];
+        for (const file of newFiles.slice(0, remaining)) {
+            const ext = '.' + file.name.split('.').pop()?.toLowerCase();
+            if (!acceptedFormats.includes(ext)) { callToast({ type: 'error', message: { title: 'Formato no válido', description: `${file.name}: formato ${ext} no aceptado.` } }); continue; }
+            if (file.size > maxFileSizeMB * 1024 * 1024) { callToast({ type: 'error', message: { title: 'Archivo muy grande', description: `${file.name} excede el límite de ${maxFileSizeMB}MB.` } }); continue; }
+            toAdd.push(file);
+        }
+
+        if (newFiles.length > remaining) {
+            callToast({ type: 'warning', message: { title: 'Algunos archivos ignorados', description: `Solo se puede${remaining > 1 ? 'n' : ''} agregar ${remaining} archivo${remaining > 1 ? 's' : ''} más.` } });
+        }
+
+        if (toAdd.length > 0) setSelectedFiles(prev => [...prev, ...toAdd]);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
+
+    const removeFile = (index: number) => {
+        setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+        if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        processFile(file);
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+        processFiles(Array.from(files));
+        e.target.value = '';
     };
 
     const handleSubmit = async () => {
-        if (deliverableType === 'file' && !selectedFile) { callToast({ type: 'warning', message: { title: 'Archivo requerido', description: 'Debes seleccionar un archivo antes de entregar.' } }); return; }
+        if (deliverableType === 'file' && selectedFiles.length === 0) { callToast({ type: 'warning', message: { title: 'Archivo requerido', description: 'Debes seleccionar al menos un archivo antes de entregar.' } }); return; }
         if (deliverableType === 'text' && !submittedText.trim()) { callToast({ type: 'warning', message: { title: 'Texto requerido', description: 'Debes escribir tu respuesta antes de entregar.' } }); return; }
 
         setIsLoading(true);
         try {
             await submitInstruction(programId, id, {
-                file: selectedFile || undefined,
+                files: selectedFiles.length > 0 ? selectedFiles : undefined,
                 text: submittedText || undefined,
             });
             setStatus('SUBMITTED');
@@ -260,56 +290,94 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
                                 <p className="mt-2">{deliverableHint}</p>
                             </div>
                         </div>
-                        <div className={`w-full max-w-md lg:max-w-sm shrink-0 ${status !== 'GRADED' ? 'lg:aspect-square' : ''}`}>
+                        <div className={`w-full max-w-md lg:max-w-sm mx-auto lg:mx-0 shrink-0 ${(status === 'SUBMITTED' || status === 'ERROR') ? 'lg:aspect-square' : ''}`}>
                             {status === 'IN_PROCESS' && deliverableType === 'file' &&
-                                <div className={`group size-full p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center gap-4 relative transition-200 ${selectedFile ? 'border-stannum bg-transparent' : 'border-stannum bg-transparent hover:bg-stannum/5 cursor-pointer'}`}>
-                                    {!selectedFile &&
+                                <div
+                                    className={`size-full p-6 border-2 border-dashed rounded-lg flex flex-col items-center gap-4 relative transition-200 group/drop ${isDragging ? 'border-stannum-light bg-stannum/10' : 'border-stannum'}`}
+                                    onDragEnter={(e) => { e.preventDefault(); dragCounter.current++; setIsDragging(true); }}
+                                    onDragOver={(e) => { e.preventDefault(); }}
+                                    onDragLeave={() => { dragCounter.current--; if (dragCounter.current === 0) setIsDragging(false); }}
+                                    onDrop={(e) => { e.preventDefault(); dragCounter.current = 0; setIsDragging(false); if (e.dataTransfer.files.length > 0) processFiles(Array.from(e.dataTransfer.files)); }}
+                                >
+                                    {selectedFiles.length === 0 && (
+                                        <label className="absolute inset-0 z-10 cursor-pointer">
+                                            <input
+                                                ref={fileInputRef}
+                                                type="file"
+                                                multiple
+                                                accept={acceptedFormats.join(',')}
+                                                onChange={handleFileChange}
+                                                className="absolute inset-0 opacity-0 cursor-pointer"
+                                            />
+                                        </label>
+                                    )}
+                                    {selectedFiles.length > 0 && (
                                         <input
                                             ref={fileInputRef}
                                             type="file"
+                                            multiple
                                             accept={acceptedFormats.join(',')}
                                             onChange={handleFileChange}
-                                            className="absolute inset-0 z-10 opacity-0 cursor-pointer"
+                                            className="hidden"
                                         />
-                                    }
-                                    <UploadIcon className="size-10 text-stannum" />
+                                    )}
+                                    <UploadIcon className="size-10 text-stannum shrink-0" />
                                     <h3 className="pb-2 title-3 border-b border-white/10">Tu trabajo</h3>
-                                    {selectedFile ?
-                                        <div className="flex flex-col items-center gap-2">
-                                            <p className="text-sm text-stannum text-center truncate max-w-[200px]">{selectedFile.name}</p>
-                                            <button
-                                                type="button"
-                                                onClick={() => {
-                                                    setSelectedFile(null);
-                                                    if (fileInputRef.current) fileInputRef.current.value = '';
-                                                }}
-                                                className="text-xs text-white/50 hover:text-white underline"
-                                            >
-                                                Cambiar archivo
-                                            </button>
+
+                                    {selectedFiles.length > 0 && (
+                                        <div className="w-full flex flex-col gap-2 relative z-20">
+                                            {selectedFiles.map((file, i) => (
+                                                <div key={i} className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-card-light/40 rounded">
+                                                    <p className="text-sm text-stannum truncate">{file.name}</p>
+                                                    <button
+                                                        type="button"
+                                                        aria-label={`Quitar ${file.name}`}
+                                                        onClick={() => removeFile(i)}
+                                                        className="text-white/50 hover:text-invalid shrink-0 transition-200"
+                                                    >
+                                                        <CrossIcon className="size-4" />
+                                                    </button>
+                                                </div>
+                                            ))}
                                         </div>
-                                    :
+                                    )}
+
+                                    {selectedFiles.length > 0 && selectedFiles.length < maxFiles && (
+                                        <label className="relative z-20 w-36 h-10 hover:bg-stannum/40 rounded-full border-2 border-solid border-stannum text-stannum tracking-tighter transition-200 flex justify-center items-center text-sm cursor-pointer" aria-label="Agregar más archivos">
+                                            <input
+                                                type="file"
+                                                multiple
+                                                accept={acceptedFormats.join(',')}
+                                                onChange={handleFileChange}
+                                                className="hidden"
+                                            />
+                                            Agregar más
+                                        </label>
+                                    )}
+
+                                    {selectedFiles.length === 0 && (
                                         <>
-                                            <p className="text-sm text-white/75">Hacé click o arrastrá tu archivo aquí</p>
-                                            <span className="w-36 h-10 group-hover:bg-stannum/40 rounded-full border-2 border-solid border-stannum text-stannum tracking-tighter transition-200 flex justify-center items-center">
+                                            <span className="w-36 h-10 rounded-full border-2 border-solid border-stannum text-stannum group-hover/drop:bg-stannum/40 tracking-tighter transition-200 flex justify-center items-center text-sm">
                                                 Subir archivo
                                             </span>
+                                            <span className="text-xs text-white/40">o arrastrá acá</span>
                                         </>
-                                    }
-                                    {selectedFile &&
+                                    )}
+
+                                    <p className="text-xs text-white/50">{selectedFiles.length}/{maxFiles} archivo{maxFiles > 1 ? 's' : ''}</p>
+
+                                    {selectedFiles.length > 0 &&
                                         <button
                                             type="button"
                                             onClick={handleSubmit}
                                             disabled={isLoading}
-                                            className="w-36 h-10 bg-stannum hover:bg-stannum-light disabled:opacity-50 rounded-full text-card font-semibold tracking-tighter transition-200 flex justify-center items-center gap-2"
+                                            className="w-full h-12 bg-stannum hover:bg-stannum-light disabled:opacity-50 rounded-lg text-card font-bold tracking-tight transition-200 flex justify-center items-center gap-2 animate-fade-in"
                                         >
                                             {isLoading ? <SpinnerIcon className="size-5 animate-spin text-card" /> : 'Enviar respuesta'}
                                         </button>
                                     }
-                                    <div className="text-center text-xs text-white/75 font-thin flex flex-col absolute bottom-6 left-0 right-0 mx-auto">
-                                        <p>Tamaño máximo <b className="font-semibold">{maxFileSizeMB}MB</b></p>
-                                        <p>Formato <b className="font-semibold">{acceptedFormats.map(f => f.replace('.', '').toUpperCase()).join(' & ')}</b></p>
-                                    </div>
+
+                                    <p className="text-center text-xs text-white/50 font-thin">Máx <b className="font-semibold">{maxFileSizeMB}MB</b> por archivo</p>
                                 </div>
                             }
                             {status === 'IN_PROCESS' && deliverableType === 'text' && (
