@@ -43,4 +43,5 @@ export interface Achievement {
     getProgress: (user: FullUserDetails) => number;
     xpReward: number;
     coinsReward: number;
+    comingSoon?: boolean;
 }

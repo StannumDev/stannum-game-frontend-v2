@@ -275,7 +275,8 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 50,
         coinsReward: 10,
-        getProgress: () => 0
+        comingSoon: true,
+        getProgress: (user: FullUserDetails) => (user.communityStats?.promptsCount ?? 0) >= 1 ? 100 : 0
     },
     {
         id: "assistant_creator",
@@ -285,7 +286,8 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 50,
         coinsReward: 10,
-        getProgress: () => 0
+        comingSoon: true,
+        getProgress: (user: FullUserDetails) => (user.communityStats?.assistantsCount ?? 0) >= 1 ? 100 : 0
     },
     {
         id: "community_favorite",
@@ -295,7 +297,11 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 150,
         coinsReward: 20,
-        getProgress: () => 0
+        comingSoon: true,
+        getProgress: (user: FullUserDetails) => {
+            const total = user.communityStats?.totalFavoritesReceived ?? 0;
+            return total >= 5 ? 100 : Math.floor((total / 5) * 100);
+        }
     },
     {
         id: "collector",
@@ -346,8 +352,11 @@ export const achievements: Array<Achievement> = [
             const allLessonsDone = firstModule.lessons.every(l =>
                 (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
             );
+            const allInstructionsDone = firstModule.instructions.every(inst =>
+                (tiaProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
+            );
 
-            return allLessonsDone ? 100 : 0;
+            return allLessonsDone && allInstructionsDone ? 100 : 0;
         }
     },
     {
@@ -370,6 +379,9 @@ export const achievements: Array<Achievement> = [
                 return section.modules.every(program_module =>
                     program_module.lessons.every(lesson =>
                         (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === lesson.id)
+                    ) &&
+                    program_module.instructions.every(inst =>
+                        (tiaProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
                     )
                 );
             }) ? 100 : 0;
