@@ -13,7 +13,7 @@ interface Props{
 }
 
 export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => {
-    const { title, description, background, categories, getProgress, id, xpReward, coinsReward } = achievement
+    const { title, description, background, categories, getProgress, id, xpReward, coinsReward, comingSoon } = achievement
     const achieved = (user.achievements ?? []).some(a => a.achievementId === id);
     const progress = getProgress(user)
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -59,7 +59,13 @@ export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => 
                     </AnimatePresence>
                 </div>
                 {
-                    !achieved &&
+                    !achieved && comingSoon &&
+                    <div className='mt-2'>
+                        <span className='text-xs font-semibold bg-white/10 text-white/60 py-1 px-2 rounded-lg'>Próximamente</span>
+                    </div>
+                }
+                {
+                    !achieved && !comingSoon &&
                     <div className='mt-2 flex justify-center items-center gap-2'>
                         <div className='text-sm leading-none font-black'>{progress}%</div>
                         <div className="w-full h-1.5 bg-white rounded-lg flex overflow-hidden transition-200" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>

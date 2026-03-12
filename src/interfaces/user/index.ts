@@ -213,6 +213,11 @@ export interface FullUserDetails {
         unlockedDate: string;
     }>;
     rankingPosition?: number;
+    communityStats?: {
+        promptsCount: number;
+        assistantsCount: number;
+        totalFavoritesReceived: number;
+    };
 }
 
 export type ProfileStatus = 'complete' | 'needs_username' | 'needs_profile';
