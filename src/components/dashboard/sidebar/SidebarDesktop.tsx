@@ -61,12 +61,12 @@ export const SidebarDesktop = ({user, links, pathname, isLoading, hasSubscriptio
     return (
         <Fragment>
             <m.div
-                initial={{ maxWidth: 0 }}
+                initial={false}
                 animate={{ maxWidth: isExpanded ? 320 : 80 }}
                 className='hidden lg:block content-visibility-hidden lg:content-visibility-visible lg:w-64 2xl:w-80 min-h-svh shrink-0'
             >
                 <m.div
-                    initial={{ maxWidth: 0 }}
+                    initial={false}
                     animate={{ maxWidth: isExpanded ? 320 : 80 }}
                     className="hidden lg:block w-full min-h-svh sticky top-0 left-0"
                 >
