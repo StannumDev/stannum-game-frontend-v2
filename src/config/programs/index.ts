@@ -538,6 +538,38 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-10",
+                    title: "Sesión 10",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 10",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/1UcJqfeU0xPGyosAhnb70C4XcrmtWP9pr/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 10",
+                            description: "Conceptos clave",
+                            link: "https://docs.google.com/document/d/1qhzAvpxWt7y3fy8R1FLJGxK3aLNgUMOCdb1mgW6LS6w/edit?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Transcripción Sesión 10",
+                            description: "Transcripción completa de la sesión",
+                            link: "https://docs.google.com/document/d/1-TQZq4_Gz_s6p4wmSXddf0uUhp_uWy5_mQaAJ4h8hYo/edit?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Arquitectura Agéntica y Sistemas de IA",
+                            description: "Documento de interés",
+                            link: "https://drive.google.com/file/d/111D5eGoOaxhiLCdMq161YKvyimJDrtx8/view?usp=sharing",
+                            type: "document",
+                        },
+                    ],
+                },
             ],
         },
     ],
