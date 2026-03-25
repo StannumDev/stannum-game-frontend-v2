@@ -570,6 +570,32 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-11",
+                    title: "Sesión 11",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 11",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/1E4Tp9T-FM7GYfPd273j0QbGcxhkC-YZ2/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 11",
+                            description: "Conceptos clave",
+                            link: "https://drive.google.com/file/d/1L6QFSjRvXeeX_9Je0n3hz_6Xz1tJMaHI/view?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Automatizaciones de Make",
+                            description: "Conceptos clave",
+                            link: "https://drive.google.com/file/d/1laLm2waKIVr0RdYD85tS9lQTplTD8oh4/view?usp=sharing",
+                            type: "document",
+                        }
+                    ],
+                },
             ],
         },
     ],
