@@ -596,6 +596,32 @@ export const TIA_SUMMER_PROGRAM: Program = {
                         }
                     ],
                 },
+                {
+                    id: "sesion-12",
+                    title: "Sesión 12",
+                    description: "Grabación, resumen, ejercicios y PROMPTs",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 12",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/1c2MrtGl96cWVmpOYDTXz3BrCIAft-zXK/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Transcripción Sesión 12",
+                            description: "Transcripción completa de la sesión",
+                            link: "https://docs.google.com/document/d/1Bsf_J3u5IDcZY40Xfg5XOjJg0evynIqNhDs5NoCAWLc/edit?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "Resumen Sesión 12",
+                            description: "Conceptos clave",
+                            link: "https://drive.google.com/file/d/1DCmR-mgZ993W-oWsZ1aR5yDLhupzh4am/view?usp=sharing",
+                            type: "document",
+                        },
+                    ],
+                },
             ],
         },
     ],
