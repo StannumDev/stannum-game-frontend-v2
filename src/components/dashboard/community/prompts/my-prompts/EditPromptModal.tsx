@@ -139,7 +139,7 @@ export const EditPromptModal = ({ isOpen, onClose, onSuccess, prompt }: Props) =
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-card border-l border-card-light z-50 overflow-y-auto"
+                        className="fixed right-0 top-0 h-full w-full md:w-150 bg-card border-l border-card-light z-50 overflow-y-auto"
                     >
                         <form className="p-6 space-y-6">
                             <div className="flex items-center justify-between pb-4 border-b border-card-light">
