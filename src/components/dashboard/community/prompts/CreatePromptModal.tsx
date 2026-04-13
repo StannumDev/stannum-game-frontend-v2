@@ -134,7 +134,7 @@ export const CreatePromptModal = ({ isOpen, onClose, onSuccess }: Props) => {
                     animate={{ x: 0 }}
                     exit={{ x: '100%' }}
                     transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-card border-l border-card-light z-[99999999999999] overflow-y-auto"
+                    className="fixed right-0 top-0 h-full w-full md:w-150 bg-card border-l border-card-light z-[99999999999999] overflow-y-auto"
                 >
                     <form className="w-full p-4 sm:p-6 space-y-6">
                         <div className="w-full flex items-start sm:items-center justify-between pb-4 border-b border-card-light">
