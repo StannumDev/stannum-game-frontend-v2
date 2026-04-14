@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, m } from 'framer-motion';
 import type { Achievement, FullUserDetails } from '@/interfaces';
+import { usePrograms } from '@/providers/ProgramsProvider';
 import stannum_coin from '@/assets/tins_coin.svg';
 
 interface Props{
@@ -13,9 +14,10 @@ interface Props{
 }
 
 export const ProfileAchievementsCard = ({ achievement, user, owner }: Props) => {
+    const { programs } = usePrograms();
     const { title, description, background, categories, getProgress, id, xpReward, coinsReward, comingSoon } = achievement
     const achieved = (user.achievements ?? []).some(a => a.achievementId === id);
-    const progress = getProgress(user)
+    const progress = getProgress(user, programs)
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     if(!achieved && !owner) return null;

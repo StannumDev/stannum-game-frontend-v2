@@ -1,14 +1,17 @@
 import { StaticImageData } from "next/image";
 
-export type ProgramId = 'tmd' | 'tia' | 'tia_summer' | 'tia_pool' | 'trenno_ia' | 'demo_trenno';
+export type KnownProgramId = 'tmd' | 'tia' | 'tia_summer' | 'tia_pool' | 'trenno_ia' | 'demo_trenno';
+export type ProgramId = KnownProgramId | (string & {});
 export type ProgramCategory = '' | 'main' | 'free' | 'shorts';
 
 export interface Resource {
     id?: string;
+    parentId?: string;
     title: string;
     description: string;
     link?: string;
     type: 'document' | 'video' | 'presentation' | 'folder' | 'activity' | 'submission';
+    order?: number;
     children?: Array<Resource>;
 }
 
@@ -31,16 +34,19 @@ export interface Instruction {
     deliverableType: 'file' | 'text';
     tools?: Array<string>;
     steps: Array<string>;
+    order?: number;
 }
-  
+
 export interface Lesson {
     id: string;
     title: string;
     description: string;
     longTitle: string;
     duration: number;
+    durationSec?: number;
     muxPlaybackId: string;
     blocked?: boolean;
+    order?: number;
 }
 
 export interface Module {
@@ -49,11 +55,13 @@ export interface Module {
     description: string;
     lessons: Array<Lesson>;
     instructions: Array<Instruction>;
+    order?: number;
 }
 
 export interface Section {
     id: string;
     name: string;
+    order?: number;
     modules?: Array<Module>;
     resources?: Array<Resource>;
 }
@@ -63,17 +71,20 @@ export type ProgramType = 'purchase' | 'subscription' | 'demo';
 export interface Program {
     id: ProgramId;
     name: string;
-    type: ProgramType;
+    type?: ProgramType;
     price: number;
-    priceARS: number | null;
+    href?: string;
+    priceARS?: number | null;
     subscriptionPriceARS?: number | null;
-    purchasable: boolean;
+    purchasable?: boolean;
     hidden?: boolean;
     categories: Array<ProgramCategory>;
     description: string;
     longDescription?: string;
     learningPoints?: Array<string>;
-    logo: StaticImageData;
-    background: StaticImageData;
+    logo?: StaticImageData | string;
+    background?: StaticImageData | string;
+    logoUrl?: string;
+    backgroundUrl?: string;
     sections: Array<Section>;
 }

@@ -24,16 +24,16 @@ export const Sidebar = () => {
     const isAuthenticated = useUserStore(s => s.isAuthenticated);
     const refreshCount = useUserStore(s => s._refreshCount);
 
-    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(() => typeof window !== 'undefined' ? window.matchMedia('(min-width: 1024px)').matches : false);
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean | null>(null);
 
     useEffect(() => {
         const checkScreenSize = () => {
-            window && setIsLargeScreen(window.innerWidth >= 1024);
+            setIsLargeScreen(window.innerWidth >= 1024);
         };
         checkScreenSize();
-        window && window.addEventListener('resize', checkScreenSize);
+        window.addEventListener('resize', checkScreenSize);
         return () => {
-            window && window.removeEventListener('resize', checkScreenSize);
+            window.removeEventListener('resize', checkScreenSize);
         };
     }, []);
 
@@ -79,6 +79,8 @@ export const Sidebar = () => {
     const allLinks = [...baseLinks, profileLink];
 
     const showLoading = isLoading || (isAuthenticated && !userData);
+
+    if (isLargeScreen === null) return null;
 
     return (
     isLargeScreen ?

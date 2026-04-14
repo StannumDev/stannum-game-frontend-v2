@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import { ArrowRightIcon } from '@/icons';
 import { formatARS } from '@/utilities';
-import { programs } from '@/config/programs';
+import { usePrograms } from '@/providers/ProgramsProvider';
 
 interface Props {
     fullProgramId: string;
 }
 
 export const DemoUpgradeBanner = ({ fullProgramId }: Props) => {
+    const { programs } = usePrograms();
     const fullProgram = programs.find(p => p.id === fullProgramId);
     if (!fullProgram) return null;
 

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MotionWrapperLayout, ProgramCover, ProgramNavigationHandler } from "@/components";
 import { DemoUpgradeBanner } from "@/components/dashboard/program/DemoUpgradeBanner";
-import { programs } from '@/config/programs';
+import { getProgramByIdServer } from "@/services/programServer";
 import { Program } from "@/interfaces";
 
 const DEMO_TO_FULL: Record<string, string> = {
@@ -19,7 +19,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { program_id } = await params;
-    const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
+    const foundProgram:Program|null = await getProgramByIdServer(program_id.toLowerCase());
 
     if (!foundProgram) {
         return {
@@ -47,9 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProgramDashboardLayout({children, params}:Props) {
 
     const { program_id } = await params;
-    const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
+    const foundProgram:Program|null = await getProgramByIdServer(program_id.toLowerCase());
     if (!foundProgram) return notFound();
-    
+
     return (
         <main className="main-container">
             <h1 className="sr-only">Panel de control {foundProgram.name} STANNUM Game</h1>

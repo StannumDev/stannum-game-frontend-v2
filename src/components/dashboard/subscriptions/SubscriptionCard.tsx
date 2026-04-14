@@ -100,10 +100,10 @@ export const SubscriptionCard = ({ program, status, onCancelled }: Props) => {
     return (
         <div className="card p-0 overflow-hidden">
             <div className="relative h-24">
-                <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
+                {program.background && <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />}
                 <div className="size-full bg-gradient-to-t from-card to-transparent absolute top-0 left-0 z-10" />
                 <div className="absolute bottom-3 left-4 z-20 flex items-end gap-3">
-                    <Image src={program.logo} alt={program.name} className="w-24" />
+                    {program.logo ? <Image src={program.logo} alt={program.name} className="w-24" /> : <span className="text-lg font-bold">{program.name}</span>}
                     <span className={`text-xs font-semibold py-1 px-2.5 rounded-md border ${statusInfo.color}`}>
                         {statusInfo.label}
                     </span>

@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { FullUserDetails } from "@/interfaces";
+import { FullUserDetails, Program } from "@/interfaces";
 
 export type AchievementId =
     | "first_program_acquired"
@@ -40,7 +40,7 @@ export interface Achievement {
     description: string;
     background: StaticImageData;
     categories: Array<"stannum"|"tmd"|"tia"|"summer"|"pool">;
-    getProgress: (user: FullUserDetails) => number;
+    getProgress: (user: FullUserDetails, programs?: Program[]) => number;
     xpReward: number;
     coinsReward: number;
     comingSoon?: boolean;

@@ -1,11 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { NewAppsIcon } from "@/icons";
 import { MotionWrapperLayout, NavbarSection, StoreCard, StoreTutorial } from "@/components";
-import { programs } from "@/config/programs";
+import { usePrograms } from "@/providers/ProgramsProvider";
 import { useUserStore } from "@/stores/userStore";
 import { hasAccess } from "@/utilities";
 
@@ -17,6 +17,7 @@ const sections: Array<NavbarSectionType> = [
 ];
 
 export const StoreSectionsLayout = () => {
+    const { programs, loading, error } = usePrograms();
     const user = useUserStore(s => s.user);
     const router = useRouter();
     const pathname = usePathname();
@@ -39,9 +40,34 @@ export const StoreSectionsLayout = () => {
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
 
-    const filteredPrograms = programs
+    const filteredPrograms = useMemo(() => programs
         .filter(program => !program.hidden && (!selectedLayout || program.categories.includes(selectedLayout as ProgramCategory)))
-        .sort((a, b) => (a.price < 0 ? 1 : 0) - (b.price < 0 ? 1 : 0));
+        .sort((a, b) => (a.price < 0 ? 1 : 0) - (b.price < 0 ? 1 : 0)),
+        [programs, selectedLayout]
+    );
+
+    if (loading) {
+        return (
+            <MotionWrapperLayout>
+                <section className="w-full card px-0">
+                    <div className="p-8 text-center text-card-lightest">Cargando...</div>
+                </section>
+            </MotionWrapperLayout>
+        );
+    }
+
+    if (error) {
+        return (
+            <MotionWrapperLayout>
+                <section className="w-full card px-0">
+                    <div className="p-8 text-center">
+                        <h2 className="text-2xl font-semibold text-stannum">Error al cargar los programas</h2>
+                        <p className="mt-2 text-lg text-card-lightest">Ocurrió un error al obtener los programas. Intenta nuevamente más tarde.</p>
+                    </div>
+                </section>
+            </MotionWrapperLayout>
+        );
+    }
 
     return (
         <MotionWrapperLayout>

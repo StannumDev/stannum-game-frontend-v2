@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { programs } from '@/config/programs';
+import { usePrograms } from '@/providers/ProgramsProvider';
 import { useUserStore } from '@/stores/userStore';
 import { getSubscriptionStatus } from '@/services/subscription';
 import type { SubscriptionStatusResult } from '@/services/subscription';
@@ -15,13 +15,14 @@ interface SubEntry {
     status: SubscriptionStatusResult;
 }
 
-const subscriptionPrograms = programs.filter(p => p.type === 'subscription');
-
 export const SubscriptionsLayout = () => {
+    const { programs } = usePrograms();
     const user = useUserStore(s => s.user);
     const refreshUser = useUserStore(s => s.refreshUser);
     const [entries, setEntries] = useState<SubEntry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const subscriptionPrograms = programs.filter(p => p.type === 'subscription');
 
     const fetchAll = useCallback(async () => {
         if (!user) return;
@@ -44,7 +45,7 @@ export const SubscriptionsLayout = () => {
 
         setEntries(results);
         setIsLoading(false);
-    }, [user]);
+    }, [user, subscriptionPrograms]);
 
     useEffect(() => { fetchAll(); }, [fetchAll]);
 

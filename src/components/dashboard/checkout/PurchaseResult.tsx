@@ -8,7 +8,7 @@ import { m } from 'framer-motion';
 import { STANNUMLogo } from '@/components';
 import { verifyPayment } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
-import { programs } from '@/config/programs';
+import { usePrograms } from '@/providers/ProgramsProvider';
 import { useUserStore } from '@/stores/userStore';
 import { formatARS } from '@/utilities';
 import { CheckIcon, CrossIcon, GiftIcon } from '@/icons';
@@ -25,6 +25,7 @@ const stagger = {
 };
 
 export const PurchaseResult = () => {
+    const { programs } = usePrograms();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
     const [order, setOrder] = useState<OrderDetails | null>(null);
@@ -103,7 +104,7 @@ export const PurchaseResult = () => {
                                 <CheckIcon className="size-6 text-stannum" />
                             </div>
                             {program && (
-                                <Image src={program.logo} alt={program.name} className="mt-4 w-44 lg:w-52" />
+                                program.logo ? <Image src={program.logo} alt={program.name} className="mt-4 w-44 lg:w-52" /> : <span className="mt-4 text-xl font-bold">{program.name}</span>
                             )}
                             <h1 className="text-2xl font-bold">
                                 {order.type === 'self' ? '¡Compra exitosa!' : '¡Compra de regalo exitosa!'}

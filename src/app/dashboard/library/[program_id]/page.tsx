@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { programs } from "@/config/programs";
+import { getProgramByIdServer } from "@/services/programServer";
 
 interface Props {
     params: Promise<{
@@ -9,7 +9,7 @@ interface Props {
 
 export default async function ProgramPage({ params }: Props) {
     const { program_id } = await params;
-    const foundProgram = programs.find(p => p.id === program_id.toLowerCase());
+    const foundProgram = await getProgramByIdServer(program_id.toLowerCase());
     if (!foundProgram || foundProgram.sections.length === 0) redirect('/dashboard/library');
     const firstSectionId = foundProgram.sections[0].id;
     redirect(`/dashboard/library/${program_id.toLowerCase()}/${firstSectionId}`);

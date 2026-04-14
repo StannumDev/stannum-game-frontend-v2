@@ -19,7 +19,6 @@ interface Props {
 
 const sectionIconMap: Record<string, IconType> = {
     preseason: TimerIcon,
-    resources: ToolsIcon,
     ranking: RankingStarIcon,
 };
 
@@ -39,9 +38,12 @@ export const ProgramNavigationHandler = ({ program }: Props) => {
     const [canStartTutorial, setCanStartTutorial] = useState(false);
 
     const sectionsWithRanking = useMemo(() => {
+        const isResourceSection = (s: typeof program.sections[number]) =>
+            (s.resources?.length ?? 0) > 0 && (!s.modules || s.modules.length === 0);
+
         const withIcons = program.sections.map(section => ({
             ...section,
-            Icon: sectionIconMap[section.id],
+            Icon: sectionIconMap[section.id] ?? (isResourceSection(section) ? ToolsIcon : undefined),
         }));
         // Demo programs are excluded from rankings
         if (program.type === 'demo') return withIcons;

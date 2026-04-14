@@ -15,7 +15,7 @@ import { AppError } from "@/interfaces";
 import { FormErrorMessage, Modal, MotionWrapperLayout, SubmitButtonLoading } from "@/components";
 import activar_producto from "@/assets/background/activar_producto.webp";
 import redeem_code from "@/assets/background/stannum_game_trophy.webp";
-import { programs } from "@/config/programs";
+import { usePrograms } from "@/providers/ProgramsProvider";
 
 const schema = z.object({
     code: z.string()
@@ -33,6 +33,7 @@ interface ProductInfo {
 };
 
 export const ActivarProductoHome = () => {
+    const { programs } = usePrograms();
     const router = useRouter();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);

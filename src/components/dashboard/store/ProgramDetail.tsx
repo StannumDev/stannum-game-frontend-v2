@@ -158,7 +158,7 @@ export const ProgramDetail = ({ program }: Props) => {
             >
                 <div className="size-full bg-gradient-to-t from-black via-black/60 to-transparent absolute top-0 left-0 z-10" />
                 <div className="size-full bg-gradient-to-r from-black/50 to-transparent absolute top-0 left-0 z-10" />
-                <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" priority />
+                {program.background && <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" priority />}
 
                 <div className="hidden lg:block relative z-20 pt-6 pl-6">
                     <GoBackButton href="/dashboard/store" className="bg-black/40 hover:bg-black/60" />
@@ -171,7 +171,7 @@ export const ProgramDetail = ({ program }: Props) => {
                     className="relative z-20 p-6 pt-6 pb-8 lg:p-8 lg:pt-8 lg:pb-10 flex flex-col gap-4"
                 >
                     <m.div variants={fadeUp}>
-                        <Image src={program.logo} alt={program.name} className="w-48 lg:w-64" />
+                        {program.logo ? <Image src={program.logo} alt={program.name} className="w-48 lg:w-64" /> : <h1 className="text-3xl lg:text-5xl font-bold">{program.name}</h1>}
                     </m.div>
                     <m.p variants={fadeUp} className="text-sm lg:text-base text-white/80 max-w-xl leading-relaxed">
                         {program.description}
