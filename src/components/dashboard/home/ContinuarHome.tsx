@@ -1,15 +1,15 @@
 'use client';
 
-import { StaticImageData } from "next/image";
 import Link from "next/link";
 import { PlayCircleIcon, KeyIcon } from "@/icons";
 import { buildContinueEntryForProgram } from "@/utilities";
 import { MotionWrapperLayout, ContinuarCardHome } from "@/components";
 import { ContinueEntry } from "@/interfaces";
-import { programs } from "@/config/programs";
+import { usePrograms } from "@/providers/ProgramsProvider";
 import { useUserStore } from "@/stores/userStore";
 
 export const ContinuarHome = () => {
+    const { programs } = usePrograms();
     const user = useUserStore(s => s.user);
     if (!user) return null;
     const entries: Array<ContinueEntry> = programs.map(p => buildContinueEntryForProgram(p, user)).filter(Boolean) as ContinueEntry[];
@@ -28,7 +28,7 @@ export const ContinuarHome = () => {
                                 href={e.href}
                                 programName={e.programName}
                                 activityTitle={e.activityTitle}
-                                programLogo={e.programLogo as StaticImageData}
+                                programLogo={e.programLogo}
                                 type={e.type}
                                 activityLabel={e.activityLabel}
                                 programProgress={e.programProgress}

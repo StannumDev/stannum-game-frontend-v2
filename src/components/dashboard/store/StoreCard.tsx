@@ -18,11 +18,11 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
             <div className="w-full aspect-square lg:aspect-auto rounded-lg border border-card flex flex-col opacity-50 overflow-hidden relative">
                 <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                     <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>
-                    <Image src={background} alt={name} className='size-full object-cover absolute top-0 left-0 z-0'/>
+                    {background && <Image src={background} alt={name} className='size-full object-cover absolute top-0 left-0 z-0'/>}
                 </div>
                 <div className='w-full grow flex flex-col p-6 pt-8 lg:bg-card z-20'>
                     <div className='w-full grow flex flex-col justify-center items-center'>
-                        <Image src={logo} alt={name} className='w-52 lg:w-48'/>
+                        {logo ? <Image src={logo} alt={name} className='w-52 lg:w-48'/> : <h3 className="text-xl font-bold text-center">{name}</h3>}
                         <p className='hidden lg:block mt-4 text-center line-clamp-2'>{description}</p>
                     </div>
                     <div className='mt-6 w-full flex items-end gap-4'>
@@ -40,11 +40,11 @@ export const StoreCard = ({ program, isPurchased }: Props) => {
             { isPurchased && <div className="bg-stannum/40 text-stannum text-xs font-semibold py-1 px-2 rounded-lg absolute top-3 right-3 z-20">En tu biblioteca</div>  }
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>
-                <Image src={background} alt={name} className='size-full object-cover absolute top-0 left-0 z-0'/>
+                {background && <Image src={background} alt={name} className='size-full object-cover absolute top-0 left-0 z-0'/>}
             </div>
             <div className='w-full grow flex flex-col p-6 pt-8 lg:bg-card lg:group-hover:bg-card-light z-20'>
                 <div className='w-full grow flex flex-col justify-center items-center'>
-                    <Image src={logo} alt={name} className='w-52 lg:w-48'/>
+                    {logo ? <Image src={logo} alt={name} className='w-52 lg:w-48'/> : <h3 className="text-xl font-bold text-center">{name}</h3>}
                     <p className='hidden lg:block mt-4 text-center line-clamp-2'>{description}</p>
                 </div>
                 <div className='mt-6 w-full flex items-end gap-4'>

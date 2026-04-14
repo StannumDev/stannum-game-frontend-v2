@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { InstructionPageContent } from "@/components";
 import { Instruction, Module, Program, Section } from "@/interfaces";
-import { programs } from "@/config/programs";
+import { getProgramByIdServer } from "@/services/programServer";
 
 interface Props {
     params: Promise<{
@@ -14,7 +14,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { program_id, instructionId } = await params;
 
-    const program: Program | undefined = programs.find(p => p.id === program_id.toLowerCase());
+    const program: Program | null = await getProgramByIdServer(program_id.toLowerCase());
     const modules: Module[] = program?.sections.flatMap(section => section.modules||[]) ?? [];
 
     const program_module: Module | undefined = modules.find(m => m.instructions.some(l => l.id === instructionId));
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function InstructionPage({ params }: Props) {
     const { program_id, instructionId } = await params;
-    const program = programs.find(p => p.id === program_id.toLowerCase());
+    const program = await getProgramByIdServer(program_id.toLowerCase());
     if (!program) return notFound();
 
     let section: Section | undefined;

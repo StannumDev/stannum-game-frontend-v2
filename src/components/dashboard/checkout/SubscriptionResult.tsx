@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { m } from 'framer-motion';
 import { STANNUMLogo } from '@/components';
-import { programs } from '@/config/programs';
+import { usePrograms } from '@/providers/ProgramsProvider';
 import { formatARS } from '@/utilities';
 import { CheckIcon, CrossIcon } from '@/icons';
 import { getSubscriptionStatus } from '@/services/subscription';
@@ -24,6 +24,7 @@ const stagger = {
 };
 
 export const SubscriptionResult = () => {
+    const { programs } = usePrograms();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
     const [subStatus, setSubStatus] = useState<SubscriptionStatusResult | null>(null);
@@ -103,7 +104,7 @@ export const SubscriptionResult = () => {
                                 <CheckIcon className="size-6 text-stannum" />
                             </div>
                             {program && (
-                                <Image src={program.logo} alt={program.name} className="mt-4 w-44 lg:w-52" />
+                                program.logo ? <Image src={program.logo} alt={program.name} className="mt-4 w-44 lg:w-52" /> : <span className="mt-4 text-xl font-bold">{program.name}</span>
                             )}
                             <h1 className="text-2xl font-bold">¡Suscripción activa!</h1>
                             <p className="text-white/60 text-sm">

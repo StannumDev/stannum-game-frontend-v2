@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { m, AnimatePresence } from 'framer-motion';
-import { programs } from '@/config/programs';
+import { usePrograms } from '@/providers/ProgramsProvider';
 import { resendGiftEmail, downloadReceipt } from '@/services/payment';
 import type { OrderDetails } from '@/services/payment';
 import { formatARS } from '@/utilities';
@@ -29,6 +29,7 @@ const formatDate = (dateStr: string) => {
 };
 
 export const PurchaseCard = ({ order }: Props) => {
+    const { programs } = usePrograms();
     const [resending, setResending] = useState(false);
     const [resendSuccess, setResendSuccess] = useState(false);
     const [resendError, setResendError] = useState(false);
@@ -72,10 +73,10 @@ export const PurchaseCard = ({ order }: Props) => {
             <div className="w-28 lg:w-40 shrink-0 relative overflow-hidden">
                 {program ? (
                     <>
-                        <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
+                        {program.background && <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />}
                         <div className="size-full bg-gradient-to-r from-black/20 to-black/70 absolute top-0 left-0 z-10" />
                         <div className="size-full flex justify-center items-center relative z-20 p-3">
-                            <Image src={program.logo} alt={program.name} className="w-20 lg:w-24" />
+                            {program.logo ? <Image src={program.logo} alt={program.name} className="w-20 lg:w-24" /> : <span className="text-sm font-bold text-center">{program.name}</span>}
                         </div>
                     </>
                 ) : (

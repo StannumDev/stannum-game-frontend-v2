@@ -35,12 +35,12 @@ export const ProgramCover = ({ program }: Props) => {
             <div className='size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0'></div>
             <div className='size-full absolute top-0 left-0 z-10'>
                 <div className='bg-gradient-to-b from-transparent to-black/50 size-full absolute top-0 left-0 z-20'></div>
-                <Image
+                {program.background && <Image
                     priority
                     src={program.background}
                     alt={program.name}
                     className='size-full object-cover relative blur-sm object-[50%_30%] z-0'
-                />
+                />}
                 <Image
                     priority
                     src={texture}
@@ -50,7 +50,7 @@ export const ProgramCover = ({ program }: Props) => {
                 />
             </div>
             <div className='py-8 lg:py-16 relative z-20'>
-                <Image priority src={program.logo} alt={`Logo ${program.name}`} className='w-64 lg:w-80 object-contain drop-shadow-md'/>
+                {program.logo ? <Image priority src={program.logo} alt={`Logo ${program.name}`} className='w-64 lg:w-80 object-contain drop-shadow-md'/> : <h1 className="text-3xl lg:text-5xl font-bold drop-shadow-md">{program.name}</h1>}
             </div>
             {/* <div className='hidden lg:flex card card-link p-4 min-w-36 max-w-40 flex-col justify-center items-center text-center absolute bottom-4 left-4 z-30'>
                 <h2 className='w-full px-2 text-stannum bg-stannum/40 rounded'>Top Leader</h2>

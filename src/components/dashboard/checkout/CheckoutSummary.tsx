@@ -17,10 +17,10 @@ export const CheckoutSummary = ({ program, originalAmount, discountApplied, fina
     return (
         <div className="card !p-0 overflow-hidden sticky top-6">
             <div className="w-full aspect-[3/1] relative">
-                <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
+                {program.background && <Image src={program.background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />}
                 <div className="size-full bg-gradient-to-t from-black via-black/60 to-black/20 absolute top-0 left-0 z-10" />
                 <div className="size-full flex items-end p-4 relative z-20">
-                    <Image src={program.logo} alt={program.name} className="w-28 lg:w-32" />
+                    {program.logo ? <Image src={program.logo} alt={program.name} className="w-28 lg:w-32" /> : <span className="text-lg font-bold">{program.name}</span>}
                 </div>
             </div>
 

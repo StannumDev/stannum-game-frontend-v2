@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Program } from '@/interfaces';
 import { ArrowRightIcon, KeyIcon, CheckIcon, VideosIcon, CompassIcon, ChestIcon, GiftIcon, RotateRightIcon } from '@/icons';
 import { formatARS } from '@/utilities';
+import defaultBackground from '@/assets/background/stannum_game_trophy.webp';
 
 interface Props {
     program: Program;
@@ -12,7 +13,9 @@ interface Props {
 }
 
 export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
-    const { id, price, purchasable, logo, background } = program;
+    const { id, price, purchasable } = program;
+    const background = program.background ?? defaultBackground;
+    const logo = program.logo;
 
     const totalLessons = program.sections.reduce((acc, s) => acc + (s.modules?.reduce((m, mod) => m + mod.lessons.length, 0) ?? 0), 0);
     const totalInstructions = program.sections.reduce((acc, s) => acc + (s.modules?.reduce((m, mod) => m + mod.instructions.length, 0) ?? 0), 0);
@@ -25,7 +28,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                     <div className="size-full bg-gradient-to-t from-card to-transparent absolute top-0 left-0 z-10" />
                     <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                     <div className="absolute bottom-3 left-4 z-20">
-                        <Image src={logo} alt={program.name} className="w-28" />
+                        {logo ? <Image src={logo} alt={program.name} className="w-28" /> : <span className="text-lg font-bold">{program.name}</span>}
                     </div>
                 </div>
                 <div className="bg-card p-5 flex flex-col gap-3">
@@ -60,7 +63,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                     <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
                     <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                     <div className="absolute bottom-3 left-5 right-5 z-20 flex items-end justify-between">
-                        <Image src={logo} alt={program.name} className="w-32" />
+                        {logo ? <Image src={logo} alt={program.name} className="w-32" /> : <span className="text-lg font-bold">{program.name}</span>}
                         <span className="text-2xl font-black text-stannum">Gratis</span>
                     </div>
                 </div>
@@ -115,7 +118,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                     <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
                     <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                     <div className="absolute bottom-3 left-5 right-5 z-20 flex items-end justify-between">
-                        <Image src={logo} alt={program.name} className="w-32" />
+                        {logo ? <Image src={logo} alt={program.name} className="w-32" /> : <span className="text-lg font-bold">{program.name}</span>}
                         <div className="flex flex-col items-end">
                             <span className="text-2xl font-black">{formatARS(program.subscriptionPriceARS)}</span>
                             <span className="text-[11px] text-white/50">por mes</span>
@@ -162,7 +165,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                     <div className="size-full bg-gradient-to-t from-card to-transparent absolute top-0 left-0 z-10" />
                     <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                     <div className="absolute bottom-3 left-4 z-20">
-                        <Image src={logo} alt={program.name} className="w-28" />
+                        {logo ? <Image src={logo} alt={program.name} className="w-28" /> : <span className="text-lg font-bold">{program.name}</span>}
                     </div>
                 </div>
                 <div className="bg-card p-5 flex flex-col gap-3">
@@ -180,7 +183,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                     <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
                     <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                     <div className="absolute bottom-3 left-4 z-20">
-                        <Image src={logo} alt={program.name} className="w-28" />
+                        {logo ? <Image src={logo} alt={program.name} className="w-28" /> : <span className="text-lg font-bold">{program.name}</span>}
                     </div>
                 </div>
                 <div className="bg-card p-5 flex flex-col gap-4">
@@ -220,7 +223,7 @@ export const ProgramPurchasePanel = ({ program, isPurchased }: Props) => {
                 <div className="size-full bg-gradient-to-t from-card via-card/80 to-transparent absolute top-0 left-0 z-10" />
                 <Image src={background} alt={program.name} className="size-full object-cover absolute top-0 left-0 z-0" />
                 <div className="absolute bottom-3 left-5 right-5 z-20 flex items-end justify-between">
-                    <Image src={logo} alt={program.name} className="w-32" />
+                    {logo ? <Image src={logo} alt={program.name} className="w-32" /> : <span className="text-lg font-bold">{program.name}</span>}
                     {price === 0 ? (
                         <span className="text-2xl font-black text-stannum">Gratis</span>
                     ) : (

@@ -6,7 +6,7 @@ type Props = {
     href: string;
     programName: string;
     activityTitle: string;
-    programLogo: StaticImageData;
+    programLogo?: StaticImageData | string;
     type: 'lesson' | 'instruction';
     activityLabel: string;
     programProgress: number;
@@ -22,11 +22,15 @@ export const ContinuarCardHome = ({ href, programName, activityTitle, programLog
             <article className="size-full card rounded-lg flex flex-col items-start hover:border-card-lightest transition-200 group">
                 <h3 className="sr-only">{programName}</h3>
                 <div className="w-40 min-h-10 grow">
-                    <Image
-                        src={programLogo}
-                        alt={programName}
-                        className="w-40 h-auto object-contain"
-                    />
+                    {programLogo ? (
+                        <Image
+                            src={programLogo}
+                            alt={programName}
+                            className="w-40 h-auto object-contain"
+                        />
+                    ) : (
+                        <span className="text-lg font-bold">{programName}</span>
+                    )}
                 </div>
                 <h4 className="mt-4 subtitle-1 flex items-center gap-1.5">
                     {type === 'instruction'

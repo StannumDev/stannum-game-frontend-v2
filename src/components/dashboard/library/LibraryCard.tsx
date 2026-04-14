@@ -14,11 +14,11 @@ export const LibraryCard = ({ program, progress }: Props) => {
         <Link href={`/dashboard/library/${id.toLowerCase()}`} className="w-full aspect-square lg:aspect-auto rounded-lg border border-card lg:hover:border-card-light flex flex-col overflow-hidden group relative">
             <div className="w-full h-full lg:h-auto lg:aspect-video absolute lg:relative top-0 left-0 z-10">
                 <div className='size-full bg-gradient-to-b from-black/25 lg:from-transparent to-black lg:to-card lg:group-hover:to-card-light absolute top-0 left-0 z-10'></div>
-                <Image src={background} alt={`Fondo de ${name}`} className='size-full object-cover absolute top-0 left-0 z-0' width={600} height={340} />
+                {background && <Image src={background} alt={`Fondo de ${name}`} className='size-full object-cover absolute top-0 left-0 z-0' width={600} height={340} />}
             </div>
             <div className='w-full grow flex flex-col p-6 pt-8 lg:bg-card lg:group-hover:bg-card-light z-20'>
                 <div className='w-full grow flex flex-col justify-center items-center'>
-                    <Image src={logo} alt={`Logo de ${name}`} className='w-52 lg:w-48' />
+                    {logo ? <Image src={logo} alt={`Logo de ${name}`} className='w-52 lg:w-48' /> : <h3 className="text-xl font-bold text-center">{name}</h3>}
                     <p className='hidden lg:block mt-4 text-center line-clamp-2'>{description}</p>
                 </div>
                 <div className='mt-6 w-full p-6 lg:p-0 flex justify-center items-center gap-2 absolute lg:static bottom-0 left-0'>

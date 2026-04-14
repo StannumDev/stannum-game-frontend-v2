@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Program, Resource } from "@/interfaces";
-import { programs } from "@/config/programs";
+import { getProgramByIdServer } from "@/services/programServer";
 import { DocumentIcon, EditIcon, FolderColourIcon, PlayCircleIcon, SlidesIcon, UploadIcon } from "@/icons";
 import Link from "next/link";
 
@@ -22,8 +22,8 @@ function ResourceIcon({ type }: { type: Resource['type'] }) {
 
 export default async function ProgramResourcesPage({ params }: Props) {
     const { program_id } = await params;
-    const foundProgram:Program|undefined = programs.find(program => program.id === program_id.toLowerCase());
-    const foundSection = foundProgram?.sections.find(sec => sec.id === "resources");
+    const foundProgram:Program|null = await getProgramByIdServer(program_id.toLowerCase());
+    const foundSection = foundProgram?.sections.find(sec => sec.resources && sec.resources.length > 0 && (!sec.modules || sec.modules.length === 0));
     if (!foundProgram || !foundSection || !foundSection.resources) return notFound();
     return (
         <section className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">

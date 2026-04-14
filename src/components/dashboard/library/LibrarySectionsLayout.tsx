@@ -1,13 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { FullUserDetails, NavbarSection as NavbarSectionType, ProgramCategory } from "@/interfaces";
 import { MotionWrapperLayout, NavbarSection, LibraryCard } from "@/components";
 import { AppsIcon, KeyIcon } from "@/icons";
 import { calculateProgramProgress, hasAccess } from "@/utilities";
-import { programs } from "@/config/programs";
+import { usePrograms } from "@/providers/ProgramsProvider";
 import { useUserStore } from "@/stores/userStore";
 
 const sections: Array<NavbarSectionType> = [
@@ -18,6 +18,7 @@ const sections: Array<NavbarSectionType> = [
 ];
 
 export const LibrarySectionsLayout = () => {
+    const { programs, loading, error } = usePrograms();
     const user = useUserStore(s => s.user);
     const router = useRouter();
     const pathname = usePathname();
@@ -40,9 +41,36 @@ export const LibrarySectionsLayout = () => {
         router.push(`${pathname}${layout ? `?${params.toString()}` : ''}`, { scroll: false });
     }, [pathname, router, searchParams]);
 
+    const filteredPrograms = useMemo(() => programs
+        .filter(program => hasAccess(user?.programs?.[program.id as keyof FullUserDetails['programs']]))
+        .filter(program => !selectedLayout || program.categories.includes(selectedLayout)),
+        [programs, selectedLayout, user]
+    );
+
     if (!user) return null;
 
-    const filteredPrograms = programs.filter(program => hasAccess(user.programs?.[program.id as keyof FullUserDetails['programs']])).filter(program => !selectedLayout || program.categories.includes(selectedLayout));
+    if (loading) {
+        return (
+            <MotionWrapperLayout className="grow">
+                <section className="size-full card px-0 flex flex-col">
+                    <div className="p-8 text-center text-card-lightest">Cargando...</div>
+                </section>
+            </MotionWrapperLayout>
+        );
+    }
+
+    if (error) {
+        return (
+            <MotionWrapperLayout className="grow">
+                <section className="size-full card px-0 flex flex-col">
+                    <div className="p-8 text-center">
+                        <h2 className="text-2xl font-semibold text-stannum">Error al cargar los programas</h2>
+                        <p className="mt-2 text-lg text-card-lightest">Ocurrió un error al obtener los programas. Intenta nuevamente más tarde.</p>
+                    </div>
+                </section>
+            </MotionWrapperLayout>
+        );
+    }
 
     return (
         <MotionWrapperLayout className="grow">

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ProgramModuleContent } from '@/components';
-import { programs } from "@/config/programs";
+import { getProgramByIdServer } from "@/services/programServer";
 import type { Module, Program, Section } from '@/interfaces';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 export default async function ProgramModulePage({ params }: Props) {
     const { program_id, section, program_module } = await params;
 
-    const foundProgram: Program | undefined = programs.find(program => program.id === program_id.toLowerCase());
+    const foundProgram: Program | null = await getProgramByIdServer(program_id.toLowerCase());
     if (!foundProgram) return notFound();
 
     const foundSection: Section | undefined = foundProgram?.sections.find(sec => sec.id === section);

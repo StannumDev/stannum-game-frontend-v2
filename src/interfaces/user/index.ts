@@ -182,6 +182,7 @@ export interface FullUserDetails {
         tmd: UserProgram;
         trenno_ia: UserProgram;
         demo_trenno: UserProgram;
+        [key: string]: UserProgram;
     };
     preferences: UserPreferences;
     dailyStreak: {

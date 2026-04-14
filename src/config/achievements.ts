@@ -3,8 +3,7 @@ import tia_achievement_background from '@/assets/achievements/tia_achievement_ba
 import tia_summer_achievement_background from '@/assets/achievements/tia_summer_achievement_background.webp';
 import tia_pool_achievement_background from '@/assets/achievements/tia_achievement_background.webp';
 
-import { FullUserDetails, Achievement } from "@/interfaces";
-import { programs } from "@/config/programs";
+import { FullUserDetails, Achievement, Program } from "@/interfaces";
 
 export const achievements: Array<Achievement> = [
     {
@@ -40,17 +39,17 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 100,
         coinsReward: 15,
-        getProgress: (user: FullUserDetails) => {
-            for (const program of programs) {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
+            for (const program of (programs || [])) {
                 const userProgram = user.programs[program.id];
                 if (!userProgram) continue;
-                for (const section of program.sections) {
+                for (const section of (program.sections || [])) {
                     if(!section.modules) continue;
-                    for (const program_module of section.modules) {
-                        const allLessonsDone = program_module.lessons.every(l =>
+                    for (const program_module of (section.modules || [])) {
+                        const allLessonsDone = (program_module.lessons || []).every(l =>
                             (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
                         );
-                        const allInstructionsDone = program_module.instructions.every(inst =>
+                        const allInstructionsDone = (program_module.instructions || []).every(inst =>
                             (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
                         );
                         if (allLessonsDone && allInstructionsDone) return 100;
@@ -93,15 +92,15 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 100,
         coinsReward: 15,
-        getProgress: (user: FullUserDetails) => {
-            for (const programCfg of programs) {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
+            for (const programCfg of (programs || [])) {
                 const userProgram = user.programs[programCfg.id];
                 if (!userProgram) continue;
-                for (const section of programCfg.sections) {
+                for (const section of (programCfg.sections || [])) {
                     if(!section.modules) continue;
-                    for (const program_module of section.modules) {
-                        if (program_module.instructions.length <= 0) continue;
-                        const allInstructionsDone = program_module.instructions.every(inst =>
+                    for (const program_module of (section.modules || [])) {
+                        if ((program_module.instructions || []).length <= 0) continue;
+                        const allInstructionsDone = (program_module.instructions || []).every(inst =>
                             (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
                         );
                         if (allInstructionsDone) return 100;
@@ -119,15 +118,15 @@ export const achievements: Array<Achievement> = [
         categories: ["stannum"],
         xpReward: 200,
         coinsReward: 25,
-        getProgress: (user: FullUserDetails) => {
-            for (const programCfg of programs) {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
+            for (const programCfg of (programs || [])) {
                 const userProgram = user.programs[programCfg.id];
                 if (!userProgram) continue;
-                const allModulesDone = programCfg.sections.every(section => {
+                const allModulesDone = (programCfg.sections || []).every(section => {
                     if (!section.modules || section.modules.length === 0) return true;
-                    return section.modules.every(program_module => {
-                        const allLessonsDone = program_module.lessons.every(l => (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id));
-                        const allInstructionsDone = program_module.instructions.every(inst => (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED"));
+                    return (section.modules || []).every(program_module => {
+                        const allLessonsDone = (program_module.lessons || []).every(l => (userProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id));
+                        const allInstructionsDone = (program_module.instructions || []).every(inst => (userProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED"));
                         return allLessonsDone && allInstructionsDone;
                     });
                 });
@@ -337,22 +336,22 @@ export const achievements: Array<Achievement> = [
         categories: ["tia"],
         xpReward: 150,
         coinsReward: 20,
-        getProgress: (user: FullUserDetails) => {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
             const tiaProgram = user.programs?.tia;
             if (!tiaProgram) return 0;
 
-            const tiaConfig = programs.find(p => p.id === "tia");
+            const tiaConfig = (programs || []).find(p => p.id === "tia");
             if (!tiaConfig) return 0;
 
-            const firstSection = tiaConfig.sections[0];
+            const firstSection = (tiaConfig.sections || [])[0];
             if (!firstSection || !firstSection.modules || firstSection.modules.length === 0) return 0;
 
             const firstModule = firstSection.modules[0];
 
-            const allLessonsDone = firstModule.lessons.every(l =>
+            const allLessonsDone = (firstModule.lessons || []).every(l =>
                 (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === l.id)
             );
-            const allInstructionsDone = firstModule.instructions.every(inst =>
+            const allInstructionsDone = (firstModule.instructions || []).every(inst =>
                 (tiaProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
             );
 
@@ -367,20 +366,20 @@ export const achievements: Array<Achievement> = [
         categories: ["tia"],
         xpReward: 300,
         coinsReward: 40,
-        getProgress: (user: FullUserDetails) => {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
             const tiaProgram = user.programs?.tia;
             if (!tiaProgram) return 0;
 
-            const tiaConfig = programs.find(p => p.id === "tia");
+            const tiaConfig = (programs || []).find(p => p.id === "tia");
             if (!tiaConfig) return 0;
 
-            return tiaConfig.sections.every(section => {
+            return (tiaConfig.sections || []).every(section => {
                 if (!section.modules || section.modules.length === 0) return true;
-                return section.modules.every(program_module =>
-                    program_module.lessons.every(lesson =>
+                return (section.modules || []).every(program_module =>
+                    (program_module.lessons || []).every(lesson =>
                         (tiaProgram.lessonsCompleted || []).some(lc => lc.lessonId === lesson.id)
                     ) &&
-                    program_module.instructions.every(inst =>
+                    (program_module.instructions || []).every(inst =>
                         (tiaProgram.instructions || []).some(i => i.instructionId === inst.id && i.status === "GRADED")
                     )
                 );
@@ -423,21 +422,21 @@ export const achievements: Array<Achievement> = [
         categories: ["summer"],
         xpReward: 500,
         coinsReward: 60,
-        getProgress: (user: FullUserDetails) => {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
             const tiaSummer = user.programs?.tia_summer;
             if (!tiaSummer) return 0;
-            const tiaSummerConfig = programs.find(p => p.id === "tia_summer");
+            const tiaSummerConfig = (programs || []).find(p => p.id === "tia_summer");
             if (!tiaSummerConfig) return 0;
-            const allLessonsDone = tiaSummerConfig.sections.every(section =>
-                section.modules?.every(mod =>
-                    mod.lessons.every(lesson =>
+            const allLessonsDone = (tiaSummerConfig.sections || []).every(section =>
+                (section.modules || []).every(mod =>
+                    (mod.lessons || []).every(lesson =>
                         tiaSummer.lessonsCompleted?.some(lc => lc.lessonId === lesson.id)
                     )
                 )
             );
-            const allInstructionsDone = tiaSummerConfig.sections.every(section =>
-                section.modules?.every(mod =>
-                    mod.instructions.every(inst =>
+            const allInstructionsDone = (tiaSummerConfig.sections || []).every(section =>
+                (section.modules || []).every(mod =>
+                    (mod.instructions || []).every(inst =>
                         tiaSummer.instructions?.some(i => i.instructionId === inst.id && i.status === "GRADED")
                     )
                 )
@@ -481,21 +480,21 @@ export const achievements: Array<Achievement> = [
         categories: ["pool"],
         xpReward: 500,
         coinsReward: 60,
-        getProgress: (user: FullUserDetails) => {
+        getProgress: (user: FullUserDetails, programs?: Program[]) => {
             const tiaPool = user.programs?.tia_pool;
             if (!tiaPool) return 0;
-            const tiaPoolConfig = programs.find(p => p.id === "tia_pool");
+            const tiaPoolConfig = (programs || []).find(p => p.id === "tia_pool");
             if (!tiaPoolConfig) return 0;
-            const allLessonsDone = tiaPoolConfig.sections.every(section =>
-                section.modules?.every(mod =>
-                    mod.lessons.every(lesson =>
+            const allLessonsDone = (tiaPoolConfig.sections || []).every(section =>
+                (section.modules || []).every(mod =>
+                    (mod.lessons || []).every(lesson =>
                         tiaPool.lessonsCompleted?.some(lc => lc.lessonId === lesson.id)
                     )
                 )
             );
-            const allInstructionsDone = tiaPoolConfig.sections.every(section =>
-                section.modules?.every(mod =>
-                    mod.instructions.every(inst =>
+            const allInstructionsDone = (tiaPoolConfig.sections || []).every(section =>
+                (section.modules || []).every(mod =>
+                    (mod.instructions || []).every(inst =>
                         tiaPool.instructions?.some(i => i.instructionId === inst.id && i.status === "GRADED")
                     )
                 )
