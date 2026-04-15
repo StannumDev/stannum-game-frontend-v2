@@ -48,7 +48,9 @@ La app estara disponible en `http://localhost:3000`.
 
 - **Zustand 5.0.11** - State management global
   - `userStore` - Usuario, autenticacion, achievements
+  - `programStore` - Catalogo de programas desde API
   - `sidebarStore` - Estado del sidebar movil
+  - `modalQueueStore` - Cola de prioridad para modales y tutoriales
 
 ### Autenticacion
 
@@ -100,6 +102,8 @@ src/
 │   ├── login/                    # Login page
 │   ├── register/                 # Registro y Google OAuth
 │   ├── password-recovery/        # Recuperacion de contrasena
+│   ├── privacidad/               # Politica de privacidad
+│   ├── terminos/                 # Terminos y condiciones
 │   └── dashboard/                # App principal (protegida)
 │       ├── page.tsx              # Home dashboard
 │       ├── layout.tsx            # Dashboard layout (sidebar, navbar, tutorial)
@@ -119,11 +123,12 @@ src/
 │       │   └── assistants/
 │       ├── store/                # Tienda: portadas (Tins), programas (product keys)
 │       │   └── [programId]/      # Detalle de programa en tienda
+│       ├── billing/              # Pagos unificados (compras + suscripciones en tabs)
 │       ├── checkout/             # Compra unica (Mercado Pago)
 │       │   ├── [programId]/      # Checkout de compra
 │       │   └── result/           # Resultado de compra
-│       ├── purchases/            # Historial de compras
-│       ├── subscriptions/        # Gestion de suscripciones
+│       ├── purchases/            # Redirect → /billing
+│       ├── subscriptions/        # Redirect → /billing?tab=subscriptions
 │       ├── subscription/         # Suscripcion (Mercado Pago)
 │       │   ├── checkout/[programId]/ # Checkout de suscripcion
 │       │   └── result/           # Resultado de suscripcion
@@ -141,7 +146,7 @@ src/
 │   │   ├── MotionProvider.tsx    # LazyMotion provider global
 │   │   ├── MotionWrapperLayout.tsx # Wrapper de animacion fade-in
 │   │   ├── Tooltip.tsx           # Tooltip reutilizable
-│   │   ├── WhatsNewModal.tsx     # Modal de novedades
+│   │   ├── Skeleton.tsx          # Skeleton de carga generico
 │   │   ├── FormErrorMessage.tsx  # Mensaje de error en formularios
 │   │   └── ReCaptchaField.tsx    # Campo reCAPTCHA
 │   ├── auth/                     # Componentes de autenticacion
@@ -150,10 +155,16 @@ src/
 │   │   ├── google/               # Google OAuth flow
 │   │   ├── password-recovery/    # Recuperacion de contrasena
 │   │   ├── CompleteProfileForm.tsx
-│   │   └── UserInitializer.tsx   # Inicializacion del usuario
+│   │   ├── UserInitializer.tsx   # Inicializacion del usuario
+│   │   ├── DashboardGuard.tsx    # Guard de autenticacion del dashboard
+│   │   └── ConnectionError.tsx   # Pantalla de error de conexion
 │   ├── dashboard/                # Componentes del dashboard
 │   │   ├── home/                 # Home: continuar, ranking, racha, metas
-│   │   ├── program/              # Programa: cover, modulos, lecciones, instrucciones
+│   │   ├── billing/              # BillingLayout: tabs compras + suscripciones
+│   │   ├── checkout/             # CheckoutForm, CouponInput, GiftOptions, PurchaseResult
+│   │   ├── purchases/            # PurchaseList, PurchaseCard, ProductKeyDisplay
+│   │   ├── subscriptions/        # SubscriptionsLayout, SubscriptionCard
+│   │   ├── program/              # Programa: cover, modulos, lecciones, instrucciones, DemoUpgradeBanner
 │   │   │   ├── lessons/          # LessonVideoPlayer, LessonDetails, etc.
 │   │   │   ├── instructions/     # InstructionCard, InstructionDetails
 │   │   │   ├── modules/          # ModuleContent, BlockedModule, PathMap
@@ -171,6 +182,8 @@ src/
 │   │   ├── library/              # Biblioteca con secciones
 │   │   ├── tutorial/             # Tutorials de onboarding (modales de bienvenida)
 │   │   └── SearchResultsList.tsx # Resultados de busqueda
+│   ├── shared/                   # Componentes compartidos
+│   │   └── GlobalErrorListener.tsx # Listener de unhandled promise rejections
 │   ├── VideoIntro.tsx            # Video intro landing
 │   └── ButtonShowPassword.tsx    # Toggle mostrar contrasena
 │
@@ -189,9 +202,14 @@ src/
 │   ├── payment.ts               # createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail
 │   └── subscription.ts          # createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory
 │
+├── providers/                    # React providers
+│   └── ProgramsProvider.tsx      # Inicializa programStore cuando el usuario esta autenticado
+│
 ├── stores/                       # Zustand stores
 │   ├── userStore.ts              # Usuario, autenticacion, achievements
-│   └── sidebarStore.ts           # Estado del sidebar
+│   ├── programStore.ts           # Catalogo de programas (fetch desde API, cache)
+│   ├── sidebarStore.ts           # Estado del sidebar
+│   └── modalQueueStore.ts        # Cola de prioridad para modales/tutoriales
 │
 ├── interfaces/                   # TypeScript interfaces
 │   ├── user/                     # User, FullUserDetails, Level, Achievement
@@ -212,23 +230,27 @@ src/
 │   └── useSearchHandler.ts       # Logica de busqueda con debounce
 │
 ├── config/                       # Configuraciones
-│   ├── achievements.ts           # 34 achievements con metadata y getProgress()
+│   ├── achievements.ts           # 31 achievements con metadata y getProgress()
 │   ├── ranks.ts                  # Tiers: Hierro → Bronce → Plata → Oro → Diamante → STANNUM
 │   ├── chests.ts                 # Cofres por modulo (posicion, rareza)
 │   ├── covers.ts                 # Portadas de perfil (nombre, rareza, imagen)
+│   ├── programMetadata.ts        # Metadata por programa (tipo, precio, learningPoints)
+│   ├── programAssets.ts          # Assets estaticos por programa (logo, background)
 │   └── programs/                 # Programas educativos (TIA, TMD, TIA_SUMMER, TIA_POOL, TRENNO_IA, DEMO_TRENNO)
 │       └── index.ts              # Configuracion de modulos, lecciones, instrucciones
 │
 ├── utilities/                    # Helpers adicionales
 │   ├── access.ts                 # hasAccess, hasAnyAccess, isSubscription, isActiveSubscription
-│   └── continue.ts               # Logica de "Continuar viendo"
+│   ├── continue.ts               # Logica de "Continuar viendo"
+│   └── programMapper.ts          # Mapeo API → interfaz Program (merge metadata + assets)
 │
 ├── assets/                       # Imagenes estaticas
 │   ├── tins_coin.svg             # Icono de moneda Tins
 │   └── ...                       # Backgrounds, iconos, etc.
 │
 ├── lib/                          # Configuraciones core
-│   └── api.ts                    # Axios instance con interceptors (refresh token)
+│   ├── api.ts                    # Axios instance con interceptors (refresh token)
+│   └── tokenStorage.ts           # Manejo de cookie logged_in (isLoggedIn, clearLoginFlag)
 │
 └── proxy.ts                      # Next.js 16 middleware (proteccion de rutas)
 ```
@@ -284,6 +306,8 @@ NEXT_PUBLIC_ENV=development
 | `/register` | Registro de cuenta nueva (multi-step) |
 | `/register/google` | Completar perfil post Google OAuth |
 | `/password-recovery` | Recuperacion de contrasena con OTP |
+| `/privacidad` | Politica de privacidad |
+| `/terminos` | Terminos y condiciones |
 
 ### Dashboard (Autenticado)
 
@@ -299,10 +323,11 @@ NEXT_PUBLIC_ENV=development
 | `/dashboard/community/assistants` | Explorar GPTs/assistants |
 | `/dashboard/store` | Tienda: portadas de perfil (Tins) + activar codigos de producto |
 | `/dashboard/store/[programId]` | Detalle de programa en tienda |
+| `/dashboard/billing` | Pagos unificados: compras + suscripciones (tabs) |
 | `/dashboard/checkout/[programId]` | Checkout de compra unica (Mercado Pago) |
 | `/dashboard/checkout/result` | Resultado de compra |
-| `/dashboard/purchases` | Historial de compras del usuario |
-| `/dashboard/subscriptions` | Gestion de suscripciones activas |
+| `/dashboard/purchases` | Redirect → `/dashboard/billing` |
+| `/dashboard/subscriptions` | Redirect → `/dashboard/billing?tab=subscriptions` |
 | `/dashboard/subscription/checkout/[programId]` | Checkout de suscripcion (Mercado Pago) |
 | `/dashboard/subscription/result` | Resultado de suscripcion |
 | `/dashboard/library/[program_id]/ranking` | Ranking del programa |
@@ -415,6 +440,36 @@ interface SidebarStore {
   isOpen: boolean;
   toggle: () => void;
   close: () => void;
+}
+```
+
+### programStore
+
+**Archivo:** `src/stores/programStore.ts`
+
+Catalogo de programas cargado desde la API. Se inicializa via `ProgramsProvider` cuando el usuario esta autenticado.
+
+```typescript
+interface ProgramStore {
+  programs: Program[];
+  loading: boolean;
+  error: boolean;
+  fetchPrograms: () => void;
+  refreshPrograms: () => void;
+}
+```
+
+### modalQueueStore
+
+**Archivo:** `src/stores/modalQueueStore.ts`
+
+Cola de prioridad para coordinar modales y tutoriales. Solo el modal con menor numero de prioridad tiene permiso para mostrarse. Cuando termina, se libera y el siguiente toma su turno.
+
+```typescript
+interface ModalQueueStore {
+  queue: ModalEntry[];
+  request: (id: string, priority: number) => void;
+  release: (id: string) => void;
 }
 ```
 
@@ -557,13 +612,13 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 ### Compra Unica
 - Checkout integrado con Mercado Pago (SDK JS)
 - Flujo: seleccionar programa → aplicar cupon (opcional) → crear preferencia → pagar → verificar → activar programa
-- Historial de compras en `/dashboard/purchases`
+- Historial de compras en `/dashboard/billing`
 - Soporte para reenvio de email de regalo
 
 ### Suscripciones
 - Suscripciones mensuales via Mercado Pago (redirect mode)
 - Flujo: seleccionar plan → crear suscripcion → redirect a MP → callback con resultado
-- Gestion de suscripciones activas en `/dashboard/subscriptions`
+- Gestion de suscripciones activas en `/dashboard/billing?tab=subscriptions`
 - Cancelacion de suscripcion desde el frontend
 - Historial de pagos de suscripcion
 

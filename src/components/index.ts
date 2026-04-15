@@ -1,6 +1,7 @@
 // COMPONENTS
 export { ButtonShowPassword } from "./ButtonShowPassword";
 export { InstallPromptModal } from "./InstallPromptModal";
+export { WhatsNewModal } from "./ui/WhatsNewModal";
 export { VideoIntro } from "./VideoIntro";
 
 // UI

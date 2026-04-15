@@ -6,7 +6,6 @@ import type { SidebarLink } from "@/interfaces";
 import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/icons";
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { useUserStore } from "@/stores/userStore";
-import { isSubscription } from "@/utilities";
 
 const SKELETON_LINKS: Array<SidebarLink> = [
     { label: 'Inicio', href: '/dashboard', Icon: HomeIcon },
@@ -42,8 +41,6 @@ export const Sidebar = () => {
         const photoUrl = user.profilePhoto ? `${user.profilePhoto}?v=${refreshCount}` : undefined;
         return { id: user.id, username: user.username, profilePhoto: photoUrl, currentLevel: user.level?.currentLevel ?? 1, coins: user.coins ?? 0 };
     }, [user?.id, user?.username, user?.profilePhoto, user?.level?.currentLevel, user?.coins, refreshCount]);
-
-    const hasSubscription = user?.programs && Object.values(user.programs).some(p => isSubscription(p));
 
     if (pathname.startsWith('/dashboard/checkout') || pathname.startsWith('/dashboard/subscription/checkout') || pathname.startsWith('/dashboard/subscription/result')) return null;
 
@@ -84,8 +81,8 @@ export const Sidebar = () => {
 
     return (
     isLargeScreen ?
-        <SidebarDesktop user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} hasSubscription={!!hasSubscription} />
+        <SidebarDesktop user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} />
     :
-        <SidebarMobile key={pathname} user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} hasSubscription={!!hasSubscription} />
+        <SidebarMobile key={pathname} user={userData} links={allLinks} pathname={pathname} isLoading={showLoading} />
     )
 };
