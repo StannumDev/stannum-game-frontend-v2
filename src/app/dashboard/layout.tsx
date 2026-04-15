@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { UserInitializer, ConnectionError, DashboardGuard, InstallPromptModal, Sidebar } from "@/components";
+import { UserInitializer, ConnectionError, DashboardGuard, InstallPromptModal, WhatsNewModal, Sidebar } from "@/components";
 import { ProgramsProvider } from "@/providers/ProgramsProvider";
 
 export default async function DashboardLayout({children}:{children: React.ReactNode}) {
@@ -10,6 +10,7 @@ export default async function DashboardLayout({children}:{children: React.ReactN
             <DashboardGuard>
                 <ProgramsProvider>
                     <InstallPromptModal/>
+                    <WhatsNewModal/>
 
                     <div className="grow w-full max-w-[1920px] flex relative text-white">
                         <Sidebar />

@@ -19,12 +19,11 @@ interface Props{
     links: Array<SidebarLink>;
     pathname: string;
     isLoading: boolean;
-    hasSubscription: boolean;
 }
 
 const LINK_HEIGHT = 56;
 
-export const SidebarDesktop = ({user, links, pathname, isLoading, hasSubscription}:Props) => {
+export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
 
     const storeExpanded = useSidebarStore(s => s.isExpanded);
     const hydrated = useSidebarStore(s => s._hydrated);
@@ -234,22 +233,6 @@ export const SidebarDesktop = ({user, links, pathname, isLoading, hasSubscriptio
                                                     exit={{ opacity: 0, y: 10 }}
                                                     className="absolute bottom-full right-0 mb-2 w-48 bg-card border border-card-light rounded-lg overflow-hidden shadow-xl z-50"
                                                 >
-                                                    <Link
-                                                        href="/dashboard/billing"
-                                                        onClick={() => setIsMenuOpen(false)}
-                                                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
-                                                    >
-                                                        Mis compras
-                                                    </Link>
-                                                    {hasSubscription && (
-                                                        <Link
-                                                            href="/dashboard/billing?tab=subscriptions"
-                                                            onClick={() => setIsMenuOpen(false)}
-                                                            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white/80 hover:bg-card-light hover:text-white transition-200"
-                                                        >
-                                                            Mis suscripciones
-                                                        </Link>
-                                                    )}
                                                     <button
                                                         type="button"
                                                         onClick={() => { setIsMenuOpen(false); onLogout(); }}
