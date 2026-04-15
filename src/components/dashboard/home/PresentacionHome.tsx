@@ -50,7 +50,7 @@ export const PresentacionHome = () => {
             return;
         }
         try {
-            await markTutorialAsCompleted("initial_tutorial");
+            await markTutorialAsCompleted("initial_tutorial_v2");
             setIsTutorialCompleted(true);
         } catch (error:unknown) {
             errorHandler(error);
@@ -104,7 +104,7 @@ export const PresentacionHome = () => {
     useEffect(() => {
         const checkTutorialCompletion = async () => {
             try {
-                const completed = await getTutorialStatus("initial_tutorial");
+                const completed = await getTutorialStatus("initial_tutorial_v2");
                 setIsTutorialCompleted(completed);
                 if (!completed) request(MODAL_ID, MODAL_PRIORITY);
                 setCanStartTutorial(true);
