@@ -46,7 +46,7 @@ export const InstallPromptModal = () => {
     };
 
     const HIDE_INSTALLATION = Cookies.get('HIDE_INSTALLATION') === 'true';
-    const TUTORIAL_FINISHED = Cookies.get('tutorial_initial_tutorial') === 'true';
+    const TUTORIAL_FINISHED = Cookies.get('tutorial_initial_tutorial_v2') === 'true';
     if(!HIDE_INSTALLATION && TUTORIAL_FINISHED){
       checkInstallationStatus();
       window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
