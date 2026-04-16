@@ -64,16 +64,11 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     useEffect(() => {
         setSecurePlaybackId(null);
         getPlaybackId(program.toLowerCase(), lesson.id).then(id => {
-            if (id) {
-                setSecurePlaybackId(id);
-            } else {
-                // Fallback to static ID if backend unavailable
-                setSecurePlaybackId(lesson.muxPlaybackId || null);
-            }
+            if (id) setSecurePlaybackId(id);
         });
-    }, [program, lesson.id, lesson.muxPlaybackId]);
+    }, [program, lesson.id]);
 
-    const activePlaybackId = securePlaybackId || lesson.muxPlaybackId;
+    const activePlaybackId = securePlaybackId ?? undefined;
 
     useEffect(() => {
         if (!activePlaybackId) return;
@@ -245,14 +240,9 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                     )}
                     <p className="text-base lg:text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
-                        <Image
-                            width={160}
-                            height={90}
-                            alt="Miniatura"
-                            src={`https://image.mux.com/${nextLesson.muxPlaybackId}/thumbnail.png?width=160&height=90&time=5`}
-                            className="rounded-lg hidden lg:block"
-                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                        />
+                        <div className="w-[160px] h-[90px] rounded-lg hidden lg:flex items-center justify-center bg-card-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="opacity-40"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
                         <div className="flex-1 text-center lg:text-left">
                             <p className="text-sm opacity-80">Siguiente lección</p>
                             <p className="font-semibold text-sm lg:text-base">{nextLesson.title}</p>

@@ -34,7 +34,6 @@ export interface Instruction {
     deliverableType: 'file' | 'text';
     tools?: Array<string>;
     steps: Array<string>;
-    order?: number;
 }
 
 export interface Lesson {
@@ -44,24 +43,21 @@ export interface Lesson {
     longTitle: string;
     duration: number;
     durationSec?: number;
-    muxPlaybackId: string;
+    muxPlaybackId?: string;
     blocked?: boolean;
-    order?: number;
 }
 
 export interface Module {
     id: string;
     name: string;
-    description: string;
+    description?: string;
     lessons: Array<Lesson>;
     instructions: Array<Instruction>;
-    order?: number;
 }
 
 export interface Section {
     id: string;
     name: string;
-    order?: number;
     modules?: Array<Module>;
     resources?: Array<Resource>;
 }
@@ -73,7 +69,6 @@ export interface Program {
     name: string;
     type?: ProgramType;
     price: number;
-    href?: string;
     priceARS?: number | null;
     subscriptionPriceARS?: number | null;
     purchasable?: boolean;
@@ -84,7 +79,5 @@ export interface Program {
     learningPoints?: Array<string>;
     logo?: StaticImageData | string;
     background?: StaticImageData | string;
-    logoUrl?: string;
-    backgroundUrl?: string;
     sections: Array<Section>;
 }
