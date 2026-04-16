@@ -47,7 +47,6 @@ export const mapApiProgram = (apiProgram: Partial<Program>): Program => {
         id: (apiProgram.id || '') as ProgramId,
         name: apiProgram.name || '',
         price: apiProgram.price ?? 0,
-        href: apiProgram.href || '',
         categories: apiProgram.categories || [],
         description: apiProgram.description || '',
         sections,
@@ -59,10 +58,8 @@ export const mapApiProgram = (apiProgram: Partial<Program>): Program => {
         hidden: apiProgram.hidden ?? meta.hidden ?? false,
         longDescription: apiProgram.longDescription ?? meta.longDescription,
         learningPoints: apiProgram.learningPoints?.length ? apiProgram.learningPoints : meta.learningPoints,
-        logo: assets.logo ?? apiProgram.logoUrl ?? undefined,
-        background: assets.background ?? apiProgram.backgroundUrl ?? defaultBackground,
-        logoUrl: apiProgram.logoUrl,
-        backgroundUrl: apiProgram.backgroundUrl,
+        logo: assets.logo ?? undefined,
+        background: assets.background ?? defaultBackground,
     };
 };
 

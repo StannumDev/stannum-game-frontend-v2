@@ -311,7 +311,7 @@ export const achievements: Array<Achievement> = [
         xpReward: 50,
         coinsReward: 10,
         getProgress: (user: FullUserDetails) => {
-            const total = (user.favorites?.prompts?.length ?? 0) + (user.favorites?.assistants?.length ?? 0);
+            const total = (user.favorites?.prompts ?? 0) + (user.favorites?.assistants ?? 0);
             return total >= 10 ? 100 : Math.floor((total / 10) * 100);
         }
     },

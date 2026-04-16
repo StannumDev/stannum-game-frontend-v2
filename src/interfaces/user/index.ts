@@ -21,12 +21,6 @@ export interface EnterpriseDetails {
     jobPosition: string;
 }
 
-export interface TeamDetails {
-    id: string;
-    name: string;
-    position?: string;
-}
-
 export interface LevelDetails {
     currentLevel: number;
     experienceTotal: number;
@@ -68,9 +62,7 @@ export interface InstructionDetails {
     instructionId: string;
     startDate: string;
     submittedAt?: string;
-    reviewedAt?: string;
     score?: number;
-    xpGrantedAt?: string;
     xpGained?: number;
     estimatedTimeSec?: number;
     observations?: string;
@@ -106,15 +98,9 @@ export interface UserSearchResult extends BaseUser {
     jobPosition?: string;
 }
 
-export interface UserFavorites {
-    prompts: string[];
-    assistants: string[];
-}
-
 export interface UserProgram {
     isPurchased: boolean;
     hasAccessFlag: boolean;
-    acquiredAt?: string;
     instructions: Array<InstructionDetails>;
     lessonsCompleted: {
         lessonId: string;
@@ -129,23 +115,7 @@ export interface UserProgram {
         viewedAt: string;
         currentTime?: number;
     };
-    subscription?: SubscriptionDetails;
-    productKey?: string;
-    coinsRewardedModules?: string[];
-    coinsRewardedProgram?: boolean;
-    totalXp?: number;
-}
-
-export interface UserPreferences {
-    tutorials: {
-        name: string;
-        isCompleted: boolean;
-        completedAt?: string;
-    }[];
-    notificationsEnabled: boolean;
-    hasProfilePhoto: boolean;
-    isGoogleAccount: boolean;
-    allowPasswordLogin: boolean;
+    subscription?: Pick<SubscriptionDetails, 'status'>;
 }
 
 export type CoverRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
@@ -167,14 +137,12 @@ export interface FullUserDetails {
     profilePhoto?: string;
     profile: UserProfile;
     enterprise: EnterpriseDetails;
-    teams?: Array<{
-        programName: string;
-        teamName: string;
-        role: string;
-    }>;
     level: LevelDetails;
     achievements: Array<AchievementDetails>;
-    favorites: UserFavorites;
+    favorites: {
+        prompts: number;
+        assistants: number;
+    };
     programs: {
         tia: UserProgram;
         tia_summer: UserProgram;
@@ -184,30 +152,16 @@ export interface FullUserDetails {
         demo_trenno: UserProgram;
         [key: string]: UserProgram;
     };
-    preferences: UserPreferences;
     dailyStreak: {
         count: number;
         lastActivityLocalDate?: string;
         timezone: string;
         shields: number;
-        shieldCoveredDate?: string | null;
         lostCount?: number | null;
-        lostAt?: string | null;
         recoveryAvailable: boolean;
         recoveryExpiresAt?: string | null;
     };
     coins: number;
-    xpHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "CHEST_OPENED";
-        xp: number;
-        date: string;
-        // meta?: string;
-    }>;
-    coinsHistory: Array<{
-        type: "LESSON_COMPLETED" | "INSTRUCTION_GRADED" | "DAILY_STREAK" | "STREAK_BONUS" | "ACHIEVEMENT_UNLOCKED" | "MODULE_COMPLETED" | "PROGRAM_COMPLETED" | "FAVORITE_RECEIVED" | "STORE_PURCHASE" | "CHEST_OPENED" | "STREAK_SHIELD_PURCHASE" | "STREAK_RECOVERY";
-        coins: number;
-        date: string;
-    }>;
     equippedCoverId?: string;
     unlockedCovers?: Array<{
         coverId: string;
