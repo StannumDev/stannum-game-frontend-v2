@@ -5,6 +5,8 @@ import styles from '@/components/styles/ProgramInstructionCard.module.css';
 import instruction_logo from '@/assets/background/stannum_game_trophy.webp';
 import { Instruction, InstructionDetails } from '@/interfaces';
 import Link from 'next/link';
+import { FreshnessBadge } from '@/components/ui/FreshnessBadge';
+import type { FreshnessStatus } from '@/utilities';
 
 interface Props{
     index: number;
@@ -12,11 +14,12 @@ interface Props{
     instruction: Instruction;
     isAvailable: boolean;
     userInstruction?: InstructionDetails;
+    freshness?: FreshnessStatus;
 }
 
 const difficultyLabels: Record<string, string> = { LOW: 'Baja', MEDIUM: 'Media', HIGH: 'Alta' };
 
-export const ProgramInstructionCard = ({ index, programName, instruction, isAvailable, userInstruction }:Props) => {
+export const ProgramInstructionCard = ({ index, programName, instruction, isAvailable, userInstruction, freshness }:Props) => {
     const { id, title, shortDescription, rewardXP, difficulty } = instruction;
     const status = userInstruction?.status;
     const inProcess = status === 'IN_PROCESS';
@@ -32,7 +35,10 @@ export const ProgramInstructionCard = ({ index, programName, instruction, isAvai
                     <Image priority src={instruction_logo} alt='Instrucción' className='size-full absolute top-0 left-0 object-[90%_50%] object-cover grayscale' />
                 </div>
                 <div className='lg:pl-6 w-full lg:w-auto grow lg:min-w-0 lg:h-full lg:pr-8 flex flex-col justify-center gap-2 lg:gap-0'>
-                    <span className='subtitle-1'>Instrucción {index < 10 ? `0${index}` : index}</span>
+                    <div className='flex items-center gap-2'>
+                        <span className='subtitle-1'>Instrucción {index < 10 ? `0${index}` : index}</span>
+                        <FreshnessBadge status={freshness ?? null} size='sm' />
+                    </div>
                     <h2 className='w-full title-2 lg:text-xl lg:truncate'>{title}</h2>
                     <p className='hidden mt-2 w-full max-w-xl lg:line-clamp-3 text-white/50'>{shortDescription}</p>
                 </div>

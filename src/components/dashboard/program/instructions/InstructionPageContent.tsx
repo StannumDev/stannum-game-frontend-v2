@@ -24,7 +24,7 @@ export const InstructionPageContent = ({ instruction, program_module, program, p
 
     useEffect(() => {
         if (!isLoading && user) {
-            const available = isInstructionAvailable(user, typedProgramId, instruction);
+            const available = isInstructionAvailable(user, typedProgramId, program_module, instruction);
             if (!available) {
                 router.replace(`/dashboard/library/${programId}`);
             } else {

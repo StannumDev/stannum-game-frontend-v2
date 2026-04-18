@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { LockIcon, PlayIcon } from "@/icons";
 import { Lesson } from "@/interfaces";
+import { FreshnessBadge } from "@/components/ui/FreshnessBadge";
+import type { FreshnessStatus } from "@/utilities";
 
 interface Props {
     lesson: Lesson;
@@ -10,9 +12,10 @@ interface Props {
     isCurrent?: boolean;
     isCompleted: boolean;
     isAvailable: boolean;
+    freshness?: FreshnessStatus;
 }
 
-export const LessonMiniatureCard = ({ lesson, index, programId, isCurrent, isCompleted, isAvailable }: Props) => {
+export const LessonMiniatureCard = ({ lesson, index, programId, isCurrent, isCompleted, isAvailable, freshness }: Props) => {
 
     if(isAvailable) {
         return (
@@ -37,7 +40,10 @@ export const LessonMiniatureCard = ({ lesson, index, programId, isCurrent, isCom
                     )}
                 </div>
                 <div className="col-span-3 px-4 py-2 flex flex-col">
-                    <p className="subtitle-1">Lección {index < 10 ? `0${index}` : index}</p>
+                    <div className="flex items-center gap-2">
+                        <p className="subtitle-1">Lección {index < 10 ? `0${index}` : index}</p>
+                        <FreshnessBadge status={freshness ?? null} size='sm' />
+                    </div>
                     <h2 className="w-full title-3 grow truncate">{lesson.title}</h2>
                     <p className={`subtitle-1 ${ isCompleted ? "text-stannum" : !isCompleted && !isCurrent ? "text-invalid" : isCurrent && "text-white" }`}>{isCurrent ? "Reproduciendo" : isCompleted ? "Completado" : "Pendiente"}</p>
                 </div>
@@ -63,7 +69,10 @@ export const LessonMiniatureCard = ({ lesson, index, programId, isCurrent, isCom
                     )}
                 </div>
                 <div className="col-span-3 px-4 py-2 flex flex-col">
-                    <p className="subtitle-1">Lección {index < 10 ? `0${index}` : index}</p>
+                    <div className="flex items-center gap-2">
+                        <p className="subtitle-1">Lección {index < 10 ? `0${index}` : index}</p>
+                        <FreshnessBadge status={freshness ?? null} size='sm' />
+                    </div>
                     <h2 className="w-full title-3 grow truncate">{lesson.title}</h2>
                     <p className="subtitle-1">Bloqueado</p>
                 </div>

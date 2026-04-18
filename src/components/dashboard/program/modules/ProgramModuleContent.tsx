@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { driver, type Driver, type PopoverDOM } from 'driver.js';
 import { GoBackButton, LoadingScreen, ProgramLessonCard, ProgramInstructionCard } from '@/components';
 import { useUserStore } from '@/stores/userStore';
-import { isLessonAvailable, isInstructionAvailable, isModuleComplete } from '@/utilities';
+import { isLessonAvailable, isInstructionAvailable, hasModuleAccess, getLessonFreshness, getInstructionFreshness } from '@/utilities';
 import { getTutorialStatus, markTutorialAsCompleted } from '@/services';
 import { errorHandler } from '@/helpers';
 import { TUTORIAL_ICONS } from '@/helpers/tutorialIcons';
@@ -54,15 +54,16 @@ interface Props {
     foundModule: Module;
     programId: string;
     moduleIndex: number;
-    previousModule?: Module;
     nextModuleName?: string;
     nextModuleHref?: string;
+    nextModuleId?: string;
+    allModules: Module[];
 }
 
 const PATH_MAP_MODAL_ID = 'path_map_tutorial';
 const PATH_MAP_MODAL_PRIORITY = 40;
 
-export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, previousModule, nextModuleName, nextModuleHref }: Props) => {
+export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, nextModuleName, nextModuleHref, nextModuleId, allModules }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const user = useUserStore(s => s.user);
@@ -93,7 +94,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
     };
 
     const typedProgramId = programId as ProgramId;
-    const isModuleAccessible = !previousModule || (user ? isModuleComplete(user, typedProgramId, previousModule) : true);
+    const isModuleAccessible = user ? hasModuleAccess(user, typedProgramId, allModules, foundModule.id) : true;
 
     useEffect(() => {
         if (!isLoading && user && !isModuleAccessible) router.replace(`/dashboard/library/${programId}`);
@@ -329,7 +330,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
             };
         } else if (item.type === 'instruction') {
             const userInstruction = userInstructions.find((ui) => ui.instructionId === item.instruction.id);
-            const isAvailable = isInstructionAvailable(user, typedProgramId, item.instruction);
+            const isAvailable = isInstructionAvailable(user, typedProgramId, foundModule, item.instruction);
             const isCompleted = userInstruction && ['SUBMITTED', 'GRADED'].includes(userInstruction.status);
 
             let state: NodeState;
@@ -408,7 +409,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                         items={pathMapItems}
                         nextModuleName={nextModuleName}
                         nextModuleHref={nextModuleHref}
-                        isNextModuleAvailable={isModuleComplete(user, typedProgramId, foundModule)}
+                        isNextModuleAvailable={nextModuleId ? hasModuleAccess(user, typedProgramId, allModules, nextModuleId) : false}
                         onChestClick={(chestId) => setOpenChestId(chestId)}
                     />
                 ) : (
@@ -417,6 +418,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                             if (item.type === 'lesson') {
                                 const isCompleted = userLessons.some((ul) => ul.lessonId === item.lesson.id);
                                 const isAvailable = isLessonAvailable(user, typedProgramId, foundModule, item.lesson.id);
+                                const freshness = getLessonFreshness(user, typedProgramId, item.lesson);
                                 return (
                                     <ProgramLessonCard
                                         key={item.lesson.id}
@@ -427,11 +429,13 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                                         isCompleted={isCompleted}
                                         isAvailable={isAvailable}
                                         isBlocked={item.lesson.blocked}
+                                        freshness={freshness}
                                     />
                                 );
                             } else if (item.type === 'instruction') {
                                 const userInstruction = userInstructions.find((ui) => ui.instructionId === item.instruction.id);
-                                const isAvailable = isInstructionAvailable(user, typedProgramId, item.instruction);
+                                const isAvailable = isInstructionAvailable(user, typedProgramId, foundModule, item.instruction);
+                                const freshness = getInstructionFreshness(user, typedProgramId, item.instruction);
                                 return (
                                     <ProgramInstructionCard
                                         key={item.instruction.id}
@@ -440,6 +444,7 @@ export const ProgramModuleContent = ({ foundModule, programId, moduleIndex, prev
                                         instruction={item.instruction}
                                         isAvailable={isAvailable}
                                         userInstruction={userInstruction}
+                                        freshness={freshness}
                                     />
                                 );
                             } else {

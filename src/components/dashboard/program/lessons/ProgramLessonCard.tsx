@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ArrowRightIcon, CheckIcon, LockIcon, PlayIcon } from '@/icons';
 import styles from '@/components/styles/ProgramLessonCard.module.css';
+import { FreshnessBadge } from '@/components/ui/FreshnessBadge';
+import type { FreshnessStatus } from '@/utilities';
 
 interface Props{
     id: string;
@@ -10,9 +12,10 @@ interface Props{
     isCompleted: boolean;
     isAvailable: boolean;
     isBlocked?: boolean;
+    freshness?: FreshnessStatus;
 }
 
-export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, isAvailable, isBlocked }: Props) => {
+export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, isAvailable, isBlocked, freshness }: Props) => {
 
     if(isAvailable){
         return (
@@ -21,7 +24,10 @@ export const ProgramLessonCard = ({ id, programName, index, title, isCompleted, 
                     <span className='text-lg lg:text-4xl font-semibold lg:relative lg:-left-1'>{ index < 10 ? `0${index}` : index }</span>
                 </div>
                 <div className='lg:ml-4 grow min-w-0 overflow-x-hidden flex flex-col pr-4 lg:pr-8 relative z-10'>
-                    <span className='subtitle-1'>Lección { index < 10 ? `0${index}` : index }</span>
+                    <div className='flex items-center gap-2'>
+                        <span className='subtitle-1'>Lección { index < 10 ? `0${index}` : index }</span>
+                        <FreshnessBadge status={freshness ?? null} size='sm' />
+                    </div>
                     <h2 className='w-full title-2 text-base lg:text-xl truncate'>{title}</h2>
                 </div>
                 { isCompleted ?

@@ -25,7 +25,6 @@ export default async function ProgramModulePage({ params }: Props) {
 
     const modules = foundSection.modules;
     const currentIndex = modules.findIndex(mod => mod.id === program_module);
-    const previousModule = currentIndex > 0 ? modules[currentIndex - 1] : undefined;
     const nextModule = currentIndex >= 0 && currentIndex < modules.length - 1 ? modules[currentIndex + 1] : undefined;
     const nextModuleHref = nextModule ? `/dashboard/library/${program_id}/${section}/${nextModule.id}` : undefined;
 
@@ -39,14 +38,17 @@ export default async function ProgramModulePage({ params }: Props) {
         if (sec.id === section) break;
     }
 
+    const allModules: Module[] = foundProgram.sections.flatMap(s => s.modules || []);
+
     return (
         <ProgramModuleContent
             foundModule={foundModule}
             programId={program_id}
             moduleIndex={globalModuleIndex}
-            previousModule={previousModule}
             nextModuleName={nextModule?.name}
             nextModuleHref={nextModuleHref}
+            nextModuleId={nextModule?.id}
+            allModules={allModules}
         />
     );
 }

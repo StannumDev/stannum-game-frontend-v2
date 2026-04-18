@@ -101,6 +101,7 @@ export interface UserSearchResult extends BaseUser {
 export interface UserProgram {
     isPurchased: boolean;
     hasAccessFlag: boolean;
+    acquiredAt?: string | null;
     instructions: Array<InstructionDetails>;
     lessonsCompleted: {
         lessonId: string;

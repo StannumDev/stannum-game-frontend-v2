@@ -25,7 +25,7 @@ const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextA
                 if (isLessonCompleted(user, program.id, lesson.id)) {
                     const pendingInstructions = mod.instructions.filter(inst => inst.afterLessonId === lesson.id);
                     for (const inst of pendingInstructions) {
-                        if (!isInstructionAvailable(user, programId, inst)) continue;
+                        if (!isInstructionAvailable(user, programId, mod, inst)) continue;
                         const userInstr = userInstructions.find(ui => ui.instructionId === inst.id);
                         const isDone = userInstr && ["SUBMITTED", "GRADED"].includes(userInstr.status);
                         if (!isDone) return { type: 'instruction', instruction: inst };
@@ -38,7 +38,7 @@ const nextUncompletedActivity = (program: Program, user: FullUserDetails): NextA
                 }
 
                 for (const inst of mod.instructions) {
-                    if (!isInstructionAvailable(user, programId, inst)) continue;
+                    if (!isInstructionAvailable(user, programId, mod, inst)) continue;
                     const userInstr = userInstructions.find(ui => ui.instructionId === inst.id);
                     const isDone = userInstr && ["SUBMITTED", "GRADED"].includes(userInstr.status);
                     if (!isDone) return { type: 'instruction', instruction: inst };

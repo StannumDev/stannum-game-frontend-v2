@@ -1,6 +1,7 @@
 export { calculateProgramProgress, calculateProgramTotals } from './progress';
 export { buildContinueEntryForProgram } from './continue';
-export { isLessonAvailable, isInstructionAvailable, isModuleComplete } from './lessons';
+export { isLessonAvailable, isInstructionAvailable, isModuleComplete, hasModuleAccess } from './lessons';
+export { getLessonFreshness, getInstructionFreshness, type FreshnessStatus } from './freshness';
 export { hasAccess, hasAnyAccess, isSubscription, isActiveSubscription } from './access';
 
 export const formatCoins = (n: number): string =>
