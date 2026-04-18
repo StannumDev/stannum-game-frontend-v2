@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { CheckIcon, CompassIcon, CrownIcon, HourglassIcon, LockIcon } from "@/icons";
 import { Instruction, InstructionDetails } from "@/interfaces";
+import { FreshnessBadge } from "@/components/ui/FreshnessBadge";
+import type { FreshnessStatus } from "@/utilities";
 
 interface Props {
     instruction: Instruction;
     programId: string;
     isAvailable: boolean;
     userInstruction?: InstructionDetails;
+    freshness?: FreshnessStatus;
 }
 
 const statusConfig = {
@@ -45,7 +48,7 @@ const defaultConfig = {
     Icon: CompassIcon,
 };
 
-export const InstructionMiniatureCard = ({ instruction, programId, isAvailable, userInstruction }: Props) => {
+export const InstructionMiniatureCard = ({ instruction, programId, isAvailable, userInstruction, freshness }: Props) => {
     const status = userInstruction?.status;
 
     if (!isAvailable) {
@@ -72,6 +75,7 @@ export const InstructionMiniatureCard = ({ instruction, programId, isAvailable, 
                         <cfg.Icon className={`size-3 ${cfg.accent}`} />
                     </div>
                     <span className={`text-[10px] font-bold uppercase tracking-[0.12em] ${cfg.accent}`}>Instrucción</span>
+                    <FreshnessBadge status={freshness ?? null} size='sm' />
                 </div>
                 <div className="flex items-center gap-1">
                     <CrownIcon className={`size-2.5 ${cfg.accent} opacity-60`} />

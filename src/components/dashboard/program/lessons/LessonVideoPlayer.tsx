@@ -109,12 +109,17 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     }, [activePlaybackId, lesson.id, program]);
 
     useEffect(() => {
-        if (showNextOverlay && xpResult && xpResult.totalGain > 0) {
+        if (isCompleted) return;
+        import('canvas-confetti').catch(() => {});
+    }, [isCompleted]);
+
+    useEffect(() => {
+        if (showNextOverlay && !isCompleted) {
             import('canvas-confetti').then(({ default: confetti }) => {
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
             }).catch(() => {});
         }
-    }, [showNextOverlay, xpResult]);
+    }, [showNextOverlay, isCompleted]);
 
     useEffect(() => {
         if (!showNextOverlay) return;
@@ -130,7 +135,14 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         lastTimeRef.current = Math.floor(currentTime);
         const remaining = Number.isFinite(duration) ? duration - currentTime : Infinity;
 
-        if (remaining <= END_THRESHOLD && !markedAsCompleted.current) {
+        if (remaining > END_THRESHOLD || hasStartedRedirect.current || cancelNext) return;
+        hasStartedRedirect.current = true;
+
+        if (document.fullscreenElement) {
+            document.exitFullscreen().catch(() => {});
+        }
+
+        if (!markedAsCompleted.current) {
             markedAsCompleted.current = true;
             try {
                 const result = await markLessonAsCompleted(program.toLowerCase(), lesson.id);
@@ -141,36 +153,30 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
             }
         }
 
-        if (remaining <= END_THRESHOLD && !hasStartedRedirect.current && !cancelNext) {
-            hasStartedRedirect.current = true;
+        if (cancelNext) return;
 
-            if (document.fullscreenElement) {
-                document.exitFullscreen().catch(() => {});
-            }
+        setShowNextOverlay(true);
 
-            setShowNextOverlay(true);
+        let counter = NEXT_COUNTDOWN;
+        setCountdown(counter);
 
-            let counter = NEXT_COUNTDOWN;
+        redirectTimeout.current = setInterval(() => {
+            counter--;
             setCountdown(counter);
-
-            redirectTimeout.current = setInterval(() => {
-                counter--;
-                setCountdown(counter);
-                if (counter <= 0) {
-                    clearInterval(redirectTimeout.current!);
-                    redirectTimeout.current = null;
-                    if (nextLesson && isNextLessonAvailable) {
-                        router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`);
-                    } else if (nextInstruction) {
-                        router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`);
-                    } else if (nextModule) {
-                        router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`);
-                    } else {
-                        router.push(`/dashboard/library/${program.toLowerCase()}`);
-                    }
+            if (counter <= 0) {
+                clearInterval(redirectTimeout.current!);
+                redirectTimeout.current = null;
+                if (nextLesson && isNextLessonAvailable) {
+                    router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextLesson.id}`);
+                } else if (nextInstruction) {
+                    router.push(`/dashboard/library/${program.toLowerCase()}/instructions/${nextInstruction.id}`);
+                } else if (nextModule) {
+                    router.push(`/dashboard/library/${program.toLowerCase()}/lessons/${nextModule.firstLessonId}`);
+                } else {
+                    router.push(`/dashboard/library/${program.toLowerCase()}`);
                 }
-            }, 1000);
-        }
+            }
+        }, 1000);
     };
 
     const cancelRedirect = () => {

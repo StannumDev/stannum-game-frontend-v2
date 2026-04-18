@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { LoadingScreen, LessonVideoPlayer, LessonMiniatureCard, InstructionMiniatureCard, GoBackButton } from '@/components';
 import { useUserStore } from '@/stores/userStore';
-import { isLessonAvailable, isInstructionAvailable, isModuleComplete } from '@/utilities';
+import { isLessonAvailable, isInstructionAvailable, hasModuleAccess, getLessonFreshness, getInstructionFreshness } from '@/utilities';
 import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
 import { getModuleChests, type ChestConfig } from '@/config/chests';
 import { ChestMiniatureCard } from '@/components/dashboard/program/modules/path-map/ChestMiniatureCard';
@@ -48,7 +48,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
 
     const nextInstructionConfig = program_module.instructions
         .filter(inst => inst.afterLessonId === lesson.id)
-        .find(inst => isInstructionAvailable(user, typedProgramId, inst, [lesson.id]));
+        .find(inst => isInstructionAvailable(user, typedProgramId, program_module, inst, [lesson.id]));
     const nextInstruction = nextInstructionConfig ? { id: nextInstructionConfig.id, title: nextInstructionConfig.title } : undefined;
 
     const allModulesWithSection: Array<{ module: Module; section: Section }> = [];
@@ -60,8 +60,9 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
     const currentModuleIndex = allModulesWithSection.findIndex(m => m.module.id === program_module.id);
     const nextModuleEntry = allModulesWithSection[currentModuleIndex + 1];
     const nextModuleFirstLesson = nextModuleEntry?.module.lessons[0];
-    const isCurrentModuleComplete = isModuleComplete(user, typedProgramId, program_module, [lesson.id]);
-    const nextModule = nextModuleEntry && nextModuleFirstLesson && isCurrentModuleComplete ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
+    const allModules = allModulesWithSection.map(m => m.module);
+    const canAccessNextModule = nextModuleEntry ? hasModuleAccess(user, typedProgramId, allModules, nextModuleEntry.module.id) : false;
+    const nextModule = nextModuleEntry && nextModuleFirstLesson && canAccessNextModule ? { name: nextModuleEntry.module.name, firstLessonId: nextModuleFirstLesson.id } : undefined;
 
     const chestAfterLesson = getModuleChests(program_module.id).find(c => c.afterItemId === lesson.id);
     const nextChest = chestAfterLesson ? {
@@ -97,6 +98,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
         if (item.type === 'lesson') {
             const lessonCompleted = user.programs?.[programId as keyof typeof user.programs]?.lessonsCompleted?.some((ul) => ul.lessonId === item.lesson.id);
             const available = isLessonAvailable(user, typedProgramId, program_module, item.lesson.id);
+            const freshness = getLessonFreshness(user, typedProgramId, item.lesson);
             return (
                 <LessonMiniatureCard
                     key={item.lesson.id}
@@ -106,11 +108,13 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     isCurrent={item.lesson.id === lessonId}
                     isCompleted={lessonCompleted}
                     isAvailable={available}
+                    freshness={freshness}
                 />
             );
         } else if (item.type === 'instruction') {
             const userInstr = userInstructions.find(ui => ui.instructionId === item.instruction.id);
-            const available = isInstructionAvailable(user, typedProgramId, item.instruction);
+            const available = isInstructionAvailable(user, typedProgramId, program_module, item.instruction);
+            const freshness = getInstructionFreshness(user, typedProgramId, item.instruction);
             return (
                 <InstructionMiniatureCard
                     key={item.instruction.id}
@@ -118,6 +122,7 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     programId={programId}
                     isAvailable={available}
                     userInstruction={userInstr}
+                    freshness={freshness}
                 />
             );
         } else {

@@ -34,6 +34,9 @@ export interface Instruction {
     deliverableType: 'file' | 'text';
     tools?: Array<string>;
     steps: Array<string>;
+    order?: number;
+    createdAt?: string | null;
+    updatedAt?: string | null;
 }
 
 export interface Lesson {
@@ -45,12 +48,16 @@ export interface Lesson {
     durationSec?: number;
     muxPlaybackId?: string;
     blocked?: boolean;
+    order?: number;
+    createdAt?: string | null;
+    updatedAt?: string | null;
 }
 
 export interface Module {
     id: string;
     name: string;
     description?: string;
+    order?: number;
     lessons: Array<Lesson>;
     instructions: Array<Instruction>;
 }
@@ -58,6 +65,7 @@ export interface Module {
 export interface Section {
     id: string;
     name: string;
+    order?: number;
     modules?: Array<Module>;
     resources?: Array<Resource>;
 }
