@@ -734,6 +734,32 @@ export const TIA_POOL_PROGRAM: Program = {
                         },
                     ],
                 },
+                {
+                    id: "sesion-02",
+                    title: "Sesión 02",
+                    description: "Grabación, apuntes y ejercicios",
+                    type: "folder",
+                    children: [
+                        {
+                            title: "Grabación Sesión 02",
+                            description: "Repite la sesión cuando quieras",
+                            link: "https://drive.google.com/file/d/14cObHJAa1Tormm3ljeA5VWMPi7uQ--zu/view?usp=sharing",
+                            type: "video",
+                        },
+                        {
+                            title: "Resumen Sesión 02",
+                            description: "Conceptos clave",
+                            link: "https://drive.google.com/file/d/1QbHPtKqkuUaGGZ1q7kgIQAjLZeRinOq4/view?usp=sharing",
+                            type: "document",
+                        },
+                        {
+                            title: "PROMPTs Sesión 02",
+                            description: "Instrucciones y PROMPTs de la sesión",
+                            link: "https://docs.google.com/document/d/1BJ8OPdO_MDRhc4ELzy-hRZb0h2ZJgWXkD5lg9IF9rx0/edit?usp=sharing",
+                            type: "activity",
+                        },
+                    ],
+                },
             ],
         },
     ],
