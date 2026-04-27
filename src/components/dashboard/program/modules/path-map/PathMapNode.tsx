@@ -5,6 +5,8 @@ import type { PathMapItem, NodePosition } from './pathMapUtils';
 import { getLabelSide } from './pathMapUtils';
 import styles from '@/components/styles/PathMap.module.css';
 
+const MotionLink = m.create(Link);
+
 interface Props {
     item: PathMapItem;
     position: NodePosition;
@@ -43,20 +45,16 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
     const isChestOpened = isChest && item.state === 'completed';
     const isClickable = item.state !== 'blocked' && !isChestOpened;
 
-    const nodeContent = (
-        <m.div
-            id={`path-node-${item.id}`}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            whileHover={isClickable ? { scale: 1.1, transition: { duration: 0.15 } } : undefined}
-            whileTap={isClickable ? { scale: 0.95, transition: { duration: 0.1 } } : undefined}
-            transition={{ type: 'spring', bounce: 0, delay: nodeIndex * 0.05 }}
-            className={`rounded-full flex justify-center items-center ${styles.node3d} ${getNodeStyleClass(item, isFirstActive)}`}
-            style={{ width: nodeSize, height: nodeSize }}
-        >
-            <NodeIcon state={item.state} type={item.type} />
-        </m.div>
-    );
+    const nodeClassName = `rounded-full flex justify-center items-center ${styles.node3d} ${getNodeStyleClass(item, isFirstActive)}`;
+    const nodeStyle = { width: nodeSize, height: nodeSize };
+    const motionProps = {
+        initial: { scale: 0, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        whileHover: isClickable ? { scale: 1.1, transition: { duration: 0.15 } } : undefined,
+        whileTap: isClickable ? { scale: 0.95, transition: { duration: 0.1 } } : undefined,
+        transition: { type: 'spring' as const, bounce: 0, delay: nodeIndex * 0.05 },
+    };
+    const nodeIcon = <NodeIcon state={item.state} type={item.type} />;
 
     const labelContent = isChest ? (
         <>
@@ -132,18 +130,45 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             <div className="relative group">
                 {isChest ? (
                     isActive ? (
-                        <button type="button" onClick={handleChestClick} className="block cursor-pointer">
-                            {nodeContent}
-                        </button>
+                        <m.button
+                            type="button"
+                            onClick={handleChestClick}
+                            id={`path-node-${item.id}`}
+                            {...motionProps}
+                            className={`cursor-pointer ${nodeClassName}`}
+                            style={nodeStyle}
+                        >
+                            {nodeIcon}
+                        </m.button>
                     ) : (
-                        <div className={isChestOpened ? 'cursor-default' : 'cursor-not-allowed'}>{nodeContent}</div>
+                        <m.div
+                            id={`path-node-${item.id}`}
+                            {...motionProps}
+                            className={`${isChestOpened ? 'cursor-default' : 'cursor-not-allowed'} ${nodeClassName}`}
+                            style={nodeStyle}
+                        >
+                            {nodeIcon}
+                        </m.div>
                     )
                 ) : isClickable ? (
-                    <Link href={item.href} className="block cursor-pointer">
-                        {nodeContent}
-                    </Link>
+                    <MotionLink
+                        href={item.href}
+                        id={`path-node-${item.id}`}
+                        {...motionProps}
+                        className={`cursor-pointer ${nodeClassName}`}
+                        style={nodeStyle}
+                    >
+                        {nodeIcon}
+                    </MotionLink>
                 ) : (
-                    <div className="cursor-not-allowed">{nodeContent}</div>
+                    <m.div
+                        id={`path-node-${item.id}`}
+                        {...motionProps}
+                        className={`cursor-not-allowed ${nodeClassName}`}
+                        style={nodeStyle}
+                    >
+                        {nodeIcon}
+                    </m.div>
                 )}
                 {label}
             </div>
