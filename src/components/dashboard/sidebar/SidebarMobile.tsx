@@ -5,13 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
-import { BuscadorSidebarMobile, STANNUMIcon, SidebarMobileLink } from '@/components';
+import { BuscadorSidebarMobile, InitialsAvatar, STANNUMIcon, SidebarMobileLink } from '@/components';
 import { useUserStore } from '@/stores/userStore';
 import { PowerIcon } from '@/icons';
 import { formatCoins } from '@/utilities';
 import { getRankByLevel } from '@/config/ranks';
 import styles from '@/components/styles/sidebar.module.css';
-import default_user from "@/assets/user/default_user.webp";
 import stannum_coin from "@/assets/tins_coin.svg";
 
 interface Props{
@@ -24,7 +23,6 @@ interface Props{
 export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
 
     const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [profilePhotoError, setProfilePhotoError] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const storeLogout = useUserStore(s => s.logout);
@@ -80,14 +78,10 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         { isLoading ?
                                             <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-10"></div>
                                         :
-                                            <Image
-                                                priority
-                                                width={32}
-                                                height={32}
-                                                src={ profilePhotoError || !user?.profilePhoto ? default_user : user.profilePhoto}
-                                                alt='Foto de perfil Usuario STANNUM Game'
-                                                className="size-full object-cover absolute top-0 left-0 z-10"
-                                                onError={() => setProfilePhotoError(true)}
+                                            <InitialsAvatar
+                                                name={user?.username ?? 'U'}
+                                                className="size-full absolute top-0 left-0 z-10"
+                                                textClassName="text-[10px]"
                                             />
                                         }
                                     </button>

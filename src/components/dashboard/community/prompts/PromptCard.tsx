@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { m } from 'framer-motion';
 import { BookmarkIcon, BookmarkedIcon, CopyIcon, LikeIcon, LikedIcon } from '@/icons';
 import { copyPrompt, likePrompt, unlikePrompt, toggleFavoritePrompt } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
 import type { PromptCard as PromptCardType } from '@/interfaces';
-import default_user from "@/assets/user/default_user.webp";
+import { InitialsAvatar } from '@/components';
 import Link from 'next/link';
 
 interface Props {
@@ -246,7 +245,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                     </div>
                 </div>
                 <Link href={`/dashboard/profile/${prompt.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
-                    <Image src={prompt.author.profilePhotoUrl || default_user} alt={`Foto de ${prompt.author.username}`} width={24} height={24} className="size-6 rounded-full" />
+                    <InitialsAvatar name={prompt.author.username} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
                     <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{prompt.author.username}</span>
                 </Link>
             </div>

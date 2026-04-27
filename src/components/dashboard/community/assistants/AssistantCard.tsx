@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { m } from 'framer-motion';
 import { BookmarkIcon, BookmarkedIcon, ExternalLinkIcon, LikeIcon, LikedIcon } from '@/icons';
 import { clickAssistant, likeAssistant, unlikeAssistant, toggleFavoriteAssistant } from '@/services';
 import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/assistants';
 import type { AssistantCard as IAssistantCard } from '@/interfaces';
-import default_user from "@/assets/user/default_user.webp";
+import { InitialsAvatar } from '@/components';
 import Link from 'next/link';
 
 interface Props {
@@ -214,7 +213,7 @@ export const AssistantCard = ({ assistant }: Props) => {
                     </div>
                 </div>
                 <Link href={`/dashboard/profile/${assistant.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
-                    <Image src={assistant.author.profilePhotoUrl || default_user} alt={`Foto de ${assistant.author.username}`} width={24} height={24} className="size-6 rounded-full" />
+                    <InitialsAvatar name={assistant.author.username} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
                     <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{assistant.author.username}</span>
                 </Link>
             </div>

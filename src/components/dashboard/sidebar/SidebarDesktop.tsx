@@ -8,8 +8,7 @@ import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { useUserStore } from '@/stores/userStore';
 import { useSidebarStore } from '@/stores/sidebarStore';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon, OptionsIcon } from '@/icons';
-import { BuscadorSidebar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink, Tooltip } from '@/components';
-import default_user from "@/assets/user/default_user.webp";
+import { BuscadorSidebar, InitialsAvatar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink, Tooltip } from '@/components';
 import { formatCoins } from '@/utilities';
 import { getRankByLevel } from '@/config/ranks';
 import stannum_coin from "@/assets/tins_coin.svg";
@@ -29,7 +28,6 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
     const hydrated = useSidebarStore(s => s._hydrated);
     const isExpanded = hydrated ? storeExpanded : true;
     const toggleExpanded = useSidebarStore(s => s.toggleExpanded);
-    const [profilePhotoError, setProfilePhotoError] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const storeLogout = useUserStore(s => s.logout);
@@ -155,14 +153,10 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                     { isLoading ?
                                         <div className="size-full bg-gradient-to-br from-card to-card-light absolute top-0 left-0 animate-pulse z-0"></div>
                                     :
-                                        <Image
-                                            priority
-                                            width={56}
-                                            height={56}
-                                            src={ profilePhotoError || !user?.profilePhoto ? default_user : user.profilePhoto}
-                                            alt="Usuario STANNUM Game"
-                                            className="size-full object-cover absolute top-0 left-0 z-10"
-                                            onError={() => setProfilePhotoError(true)}
+                                        <InitialsAvatar
+                                            name={user?.username ?? 'U'}
+                                            className="size-full absolute top-0 left-0 z-10"
+                                            textClassName="text-sm"
                                         />
                                     }
                                 </Link>

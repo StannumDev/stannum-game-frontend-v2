@@ -1,14 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
-import Image from 'next/image';
 import { BookmarkIcon, BookmarkedIcon, CheckIcon, CopyIcon, ExternalLinkIcon, LikeIcon, LikedIcon, SpinnerIcon } from '@/icons';
 import { getPromptById, copyPrompt, likePrompt, unlikePrompt, toggleFavoritePrompt } from '@/services';
-import { Modal, STANNUMIcon } from '@/components';
+import { InitialsAvatar, Modal, STANNUMIcon } from '@/components';
 import { errorHandler } from '@/helpers';
 import { categoryIcons, difficultyIcons, platformOptions, categoryOptions, difficultyOptions } from '@/helpers/prompts';
 import type { Prompt } from '@/interfaces';
-import default_user from "@/assets/user/default_user.webp";
 
 interface Props {
     promptId: string | null;
@@ -290,12 +288,10 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                     <div className="pt-4 border-t border-card-light">
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
-                                <Image 
-                                    src={prompt.author.profilePhotoUrl || default_user} 
-                                    alt={`Foto de ${prompt.author.username}`} 
-                                    width={40} 
-                                    height={40} 
-                                    className="size-10 rounded-full" 
+                                <InitialsAvatar
+                                    name={prompt.author.name || prompt.author.username}
+                                    className="size-10 rounded-full shrink-0"
+                                    textClassName="text-sm"
                                 />
                                 <div>
                                     <p className="text-sm font-semibold">{prompt.author.username}</p>

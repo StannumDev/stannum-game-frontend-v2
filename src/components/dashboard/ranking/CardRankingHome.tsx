@@ -1,11 +1,9 @@
 'use client'
 
 import Link from "next/link"
-import Image from "next/image"
 import type { SimpleRanking } from "@/interfaces"
-import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
+import { FirstPlaceIcon, InitialsAvatar, SecondPlaceIcon, ThirdPlaceIcon } from "@/components"
 import { getRankByLevel } from "@/config/ranks"
-import default_user from "@/assets/user/default_user.webp";
 
 interface Props{
   user:SimpleRanking;
@@ -14,7 +12,7 @@ interface Props{
 
 export const CardRankingHome = ({ user, owner }: Props) => {
 
-  const { position, name, username, photo, enterprise, level } = user;
+  const { position, name, username, enterprise, level, points } = user;
   const rank = getRankByLevel(level);
 
   const renderPositionIcon = () => {
@@ -33,11 +31,11 @@ export const CardRankingHome = ({ user, owner }: Props) => {
               {renderPositionIcon()}
           </span>
           <span className="col-span-6 lg:col-span-3 lg:pl-2 flex items-center gap-2 lg:gap-3">
-            <Image src={photo || default_user} alt={`Foto de ${name}`} width={36} height={36} className="size-7 lg:size-9 rounded-full" />
+            <InitialsAvatar name={name} className="size-7 lg:size-9 rounded-full shrink-0" />
             <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </span>
           <span className="hidden lg:block lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise||"-"}</span>
-          <span className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base">{level}</span>
+          <span className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base font-bold">{points}</span>
           <span className="col-span-2 lg:col-span-1 flex justify-center">
               <span
                   className="text-[10px] lg:text-xs font-bold uppercase tracking-wider bg-clip-text text-transparent"
