@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { m } from "framer-motion";
 import { searchUsers } from "@/services";
 import { ArrowRightIcon } from "@/icons";
 import { errorHandler } from "@/helpers";
 import { AppError, UserSearchResult } from "@/interfaces";
-import default_user from "@/assets/user/default_user.webp";
-import { LoadingScreen } from "@/components";
+import { InitialsAvatar, LoadingScreen } from "@/components";
 
 interface Props {
     query: string;
@@ -53,14 +51,11 @@ export const SearchResultsList = ({ query }: Props) => {
                         <li key={user.id} className="w-full card card-link p-0 flex overflow-hidden">
                             <Link href={`/dashboard/profile/${user.username}`} className="w-full flex">
                                 <div className="h-full aspect-square relative">
-                                    <Image
-                                        priority
-                                        width={112}
-                                        height={112}
-                                        src={ !user.profilePhoto ? default_user : user.profilePhoto}
-                                        alt="Perfil de usuario STANNUM Game"
-                                        className="size-full object-cover absolute top-0 left-0"
-                                        />
+                                    <InitialsAvatar
+                                        name={user.name || user.username}
+                                        className="size-full absolute top-0 left-0"
+                                        textClassName="text-sm"
+                                    />
                                 </div>
                                 <div className="p-4 lg:p-6 grow min-w-0 flex justify-between items-center gap-4">
                                     <div className="grow min-w-0 relative">

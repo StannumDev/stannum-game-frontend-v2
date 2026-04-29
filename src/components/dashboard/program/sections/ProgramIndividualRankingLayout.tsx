@@ -54,7 +54,7 @@ export const ProgramIndividualRankingLayout = ({ programId }: Props) => {
                     <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Posición</h3>
                     <h3 className="col-span-6 lg:col-span-3 lg:pl-2 text-xs lg:text-base">Jugador</h3>
                     <h3 className="hidden lg:block lg:col-span-2 lg:pl-2 text-xs lg:text-base">Empresa</h3>
-                    <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Nivel</h3>
+                    <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Puntos</h3>
                     <h3 className="col-span-2 lg:col-span-1 text-center text-xs lg:text-base">Rango</h3>
                 </div>
                 <div className="mt-2 w-full">

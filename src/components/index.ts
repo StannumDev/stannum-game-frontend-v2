@@ -20,6 +20,7 @@ export { CommunityCardSkeleton } from "./ui/skeletons/CommunityCardSkeleton";
 export { ProfileSkeleton } from "./ui/skeletons/ProfileSkeleton";
 
 export { Tooltip } from "./ui/Tooltip";
+export { InitialsAvatar } from "./ui/InitialsAvatar";
 export { FreshnessBadge } from "./ui/FreshnessBadge";
 
 // SIDEBAR

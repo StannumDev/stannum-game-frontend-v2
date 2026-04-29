@@ -22,6 +22,7 @@ const SKIP_REFRESH_ENDPOINTS = [
   '/auth/register',
   '/auth/google',
   '/auth/refresh-token',
+  '/auth/logout',
   '/auth/password-recovery',
   '/auth/verify-recovery-otp',
   '/auth/reset-password',
@@ -46,14 +47,22 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 let refreshPromise: Promise<void> | null = null;
 let isLoggingOut = false;
 
-const forceLogout = () => {
+const forceLogout = async () => {
   if (isLoggingOut) return;
   isLoggingOut = true;
+
+  await axios.post(
+    `${API_URL}${process.env.NEXT_PUBLIC_API_AUTH_URL}/logout`,
+    {},
+    { withCredentials: true, timeout: AUTH_TIMEOUT_MS }
+  ).catch(() => {});
+
   try {
     clearLoginFlag();
   } catch (e) {
     if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('clearLoginFlag failed:', e);
   }
+
   if (typeof window !== 'undefined') {
     callToast({ type: 'warning', message: { title: 'Sesión expirada', description: 'Tu sesión expiró. Volvé a iniciar sesión.' } });
     setTimeout(() => { window.location.href = `/login${buildRedirectParam(window.location.pathname)}`; }, 1500);

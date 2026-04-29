@@ -262,7 +262,7 @@ export const UserProfileEditInfo = ({user, fetchUserData}:Props) => {
                                             <button
                                                 type="button"
                                                 onClick={() => remove(index)}
-                                                className="size-10 flex-shrink-0 hover:bg-invalid/20 text-invalid rounded-lg flex items-center justify-center transition-200 group"
+                                                className="size-10 shrink-0 hover:bg-invalid/20 text-invalid rounded-lg flex items-center justify-center transition-200 group"
                                                 disabled={isLoading}
                                             >
                                                 <TrashIcon className="size-5"/>

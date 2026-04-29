@@ -1,13 +1,10 @@
 'use client'
 
 import { ChangeEvent, useCallback, useState } from "react";
-import Image from "next/image";
 import { callToast } from "@/helpers";
 import { AddPhotoIcon } from "@/icons";
 import { FullUserDetails } from "@/interfaces";
-import { UserProfileEditPhoto } from "@/components";
-import { useUserStore } from "@/stores/userStore";
-import default_user from "@/assets/user/default_user.webp";
+import { InitialsAvatar, UserProfileEditPhoto } from "@/components";
 
 interface Props{
     owner: boolean;
@@ -18,7 +15,6 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
     const refreshCount = useUserStore(s => s._refreshCount);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
-    const [profilePhotoError, setProfilePhotoError] = useState(false);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -42,14 +38,10 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
 
     return (
         <div className={`size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md relative z-50 outline outline-2 outline-stannum ${owner ? 'rounded-tr-none lg:rounded-tr-none' : ''}`}>
-            <Image
-                priority
-                width={500}
-                height={500}
-                src={ profilePhotoError || !user.profilePhoto ? default_user : `${user.profilePhoto}?v=${refreshCount}`}
-                alt="Perfil de usuario STANNUM Game"
-                className="size-full object-cover absolute top-0 left-0 z-10 rounded-lg lg:rounded-2xl"
-                onError={() => setProfilePhotoError(true)}
+            <InitialsAvatar
+                name={user.profile.name || user.username}
+                className="size-full absolute top-0 left-0 z-10 rounded-lg lg:rounded-2xl"
+                textClassName="text-2xl lg:text-4xl"
             />
             { owner &&
                 <>
@@ -68,7 +60,7 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
                         setShowModal={setShowEditModal}
                         imageSrc={imageSrc}
                         onClose={handleModalClose}
-                        onPhotoUploaded={() => setProfilePhotoError(false)}
+                        onPhotoUploaded={() => {}}
                     />
                 </>
             }
