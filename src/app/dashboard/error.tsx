@@ -1,9 +1,10 @@
 'use client'
- 
+
 import { useEffect } from 'react';
 import { errorHandler } from '@/helpers';
 import { WarningOctagonIcon } from '@/icons';
- 
+import { ErrorFeedbackReporter } from '@/components/feedback';
+
 interface Props {
     error: Error & { digest?: string }
     reset: () => void
@@ -13,9 +14,10 @@ export default function Error({error, reset}: Props) {
     useEffect(() => {
         errorHandler(error);
     }, [error, reset])
- 
+
     return (
         <main className='main-container size-full px-4 text-center justify-center items-center gap-0'>
+            <ErrorFeedbackReporter error={error} boundary="dashboard" />
             <WarningOctagonIcon className='size-32 text-invalid' />
             <h2 className='title-2'>¡Algo salió mal!</h2>
             <p className='mt-2 subtitle-1 max-w-xl no-truncate'>Hubo un problema al cargar esta sección. Intentá de nuevo o volvé más tarde.</p>

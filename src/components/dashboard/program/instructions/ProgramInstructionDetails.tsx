@@ -7,6 +7,7 @@ import { startInstruction, submitInstruction, retryGrading } from "@/services";
 import { LessonMiniatureCard } from "@/components";
 import { errorHandler, callToast } from "@/helpers";
 import { useUserStore } from '@/stores/userStore';
+import { useFeedbackCooldownStore } from '@/stores/feedbackCooldownStore';
 import { Instruction, InstructionDetails, Lesson, ProgramId, Resource } from "@/interfaces";
 
 interface Props {
@@ -46,8 +47,22 @@ export const ProgramInstructionDetails = ({ programId, instruction, userInstruct
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dragCounter = useRef(0);
     const refreshUser = useUserStore(s => s.refreshUser);
+    const enqueueInstructionFeedback = useFeedbackCooldownStore(s => s.enqueueInstructionFeedback);
+    const isInstructionDismissed = useFeedbackCooldownStore(s => s.isInstructionDismissed);
 
     const [status, setStatus] = useState<InstructionStatus>(userInstruction?.status || 'PENDING');
+    const prevStatusRef = useRef<InstructionStatus | null>(null);
+
+    useEffect(() => {
+        const currentStatus = userInstruction?.status;
+        if (!currentStatus) return;
+        if (currentStatus === 'GRADED' && prevStatusRef.current !== 'GRADED') {
+            if (!isInstructionDismissed(instruction.id)) {
+                enqueueInstructionFeedback(instruction.id, programId);
+            }
+        }
+        prevStatusRef.current = currentStatus;
+    }, [userInstruction?.status, instruction.id, programId, enqueueInstructionFeedback, isInstructionDismissed]);
     const [startDate, setStartDate] = useState<string | undefined>(userInstruction?.startDate);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);

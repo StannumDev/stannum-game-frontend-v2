@@ -19,7 +19,10 @@ export const UserInitializer = () => {
 
     const handleProfileResult = useCallback((profileStatus: string | null | undefined) => {
         if (cancelledRef.current) return;
-        if (profileStatus === 'needs_username') {
+        if (profileStatus === 'needs_activation') {
+            clearLoginFlag();
+            router.replace(`/login${buildRedirectParam(pathname)}`);
+        } else if (profileStatus === 'needs_username') {
             router.replace('/register/google');
         } else if (profileStatus === 'needs_profile') {
             router.replace('/register/complete-profile');

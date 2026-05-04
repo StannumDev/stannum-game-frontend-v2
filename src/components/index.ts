@@ -123,6 +123,7 @@ export { UserInitializer } from "./auth/UserInitializer";
 export { ConnectionError } from "./auth/ConnectionError";
 export { DashboardGuard } from "./auth/DashboardGuard";
 export { CompleteProfileForm } from "./auth/CompleteProfileForm";
+export { ActivateAccountHandler } from "./auth/ActivateAccountHandler";
 
 // LOGIN
 export { LoginForm } from "./auth/login/LoginForm";

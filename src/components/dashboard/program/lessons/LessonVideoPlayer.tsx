@@ -14,6 +14,7 @@ import { CrownIcon, ChestIcon } from "@/icons";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import stannum_coin from "@/assets/tins_coin.svg";
 import { useUserStore } from '@/stores/userStore';
+import { useFeedbackCooldownStore } from '@/stores/feedbackCooldownStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
 interface Props {
@@ -41,6 +42,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const router = useRouter();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
+    const enqueueLessonFeedback = useFeedbackCooldownStore(s => s.enqueueLessonFeedback);
 
     const videoRef = useRef<MuxPlayerElement | null>(null);
     const [blurData, setBlurData] = useState<BlurData>({ blurDataURL: "", aspectRatio: 16 / 9 });
@@ -148,6 +150,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 const result = await markLessonAsCompleted(program.toLowerCase(), lesson.id);
                 setXpResult(result);
                 refreshUser();
+                enqueueLessonFeedback(lesson.id, program.toLowerCase());
             } catch (error:unknown) {
                 errorHandler(error);
             }

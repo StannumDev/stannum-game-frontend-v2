@@ -11,6 +11,45 @@ const REFRESH_TIMEOUT_MS = 20_000;
 
 const GATEWAY_ERROR_CODES = [502, 503, 504];
 
+const ERROR_CAPTURE_THROTTLE_MS = 5 * 60 * 1000;
+let lastErrorCapturedAt = 0;
+
+const captureServerError = (error: AxiosError) => {
+    try {
+        const status = error.response?.status;
+        if (!status || status < 500) return;
+
+        const url = error.config?.url || '';
+        if (url.includes('/feedback')) return;
+
+        const now = Date.now();
+        if (now - lastErrorCapturedAt < ERROR_CAPTURE_THROTTLE_MS) return;
+        lastErrorCapturedAt = now;
+
+        const route = typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : null;
+        const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : null;
+        const fullUrl = error.config?.baseURL ? `${error.config.baseURL}${url}` : url;
+
+        import('@/services/feedback').then(({ submitErrorFeedback, generateRequestId }) => {
+            submitErrorFeedback({
+                requestId: generateRequestId(),
+                userId: null,
+                context: {
+                    route,
+                    appVersion: process.env.NEXT_PUBLIC_APP_VERSION || 'unknown',
+                    userAgent,
+                },
+                errorPayload: {
+                    stack: error.stack ? error.stack.slice(0, 4000) : null,
+                    message: (error.message || '').slice(0, 500),
+                    route: fullUrl.slice(0, 200),
+                    statusCode: status,
+                },
+            }).catch(() => {});
+        }).catch(() => {});
+    } catch {}
+};
+
 export const isNetworkError = (error: unknown): boolean => {
   if (!axios.isAxiosError(error)) return false;
   if (!error.response) return error.code !== 'ERR_CANCELED';
@@ -87,6 +126,9 @@ api.interceptors.response.use(
         return api(config);
       }
     }
+
+    captureServerError(error);
+
     if (isLoggingOut) return Promise.reject(error);
 
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };

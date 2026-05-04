@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { m, AnimatePresence } from 'framer-motion';
 import { driver, type Driver, type PopoverDOM } from "driver.js";
 import { getTutorialStatus, markTutorialAsCompleted } from "@/services";
+import { useFeedbackCooldownStore } from "@/stores/feedbackCooldownStore";
 import { errorHandler } from '@/helpers';
 import { TUTORIAL_ICONS } from '@/helpers/tutorialIcons';
 import { PlayIcon } from '@/icons';
@@ -32,6 +33,8 @@ export const PresentacionHome = () => {
     const driverRef = useRef<Driver | null>(null);
     const destroyedByNav = useRef(false);
     const destroyedByReplay = useRef(false);
+    const onboardingFeedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const triggerOnboardingFeedback = useFeedbackCooldownStore(s => s.triggerOnboardingFeedback);
 
     const pathname = usePathname();
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -52,12 +55,25 @@ export const PresentacionHome = () => {
         try {
             await markTutorialAsCompleted("initial_tutorial_v2");
             setIsTutorialCompleted(true);
+            if (onboardingFeedbackTimer.current) clearTimeout(onboardingFeedbackTimer.current);
+            onboardingFeedbackTimer.current = setTimeout(() => {
+                triggerOnboardingFeedback();
+            }, 30_000);
         } catch (error:unknown) {
             errorHandler(error);
         } finally {
             release(MODAL_ID);
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (onboardingFeedbackTimer.current) {
+                clearTimeout(onboardingFeedbackTimer.current);
+                onboardingFeedbackTimer.current = null;
+            }
+        };
+    }, []);
 
     const showTutorial = () => {
         if (driverRef.current) {
