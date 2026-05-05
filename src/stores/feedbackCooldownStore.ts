@@ -14,6 +14,7 @@ export interface PendingFeedback {
 }
 
 interface FeedbackCooldownState {
+    boundUserId: string | null;
     dismissedLessonFeedbacks: string[];
     dismissedInstructionFeedbacks: string[];
     pendingLessonFeedbacks: PendingFeedback[];
@@ -48,6 +49,7 @@ interface FeedbackCooldownState {
     markLessonFeedbackShown: () => void;
     setLessonCelebrationActive: (active: boolean) => void;
 
+    bindToUser: (userId: string | null) => void;
     reset: () => void;
 }
 
@@ -59,6 +61,7 @@ const trimList = (list: string[], limit: number): string[] => {
 export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
     persist(
         (set, get) => ({
+            boundUserId: null,
             dismissedLessonFeedbacks: [],
             dismissedInstructionFeedbacks: [],
             pendingLessonFeedbacks: [],
@@ -141,7 +144,27 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
             markLessonFeedbackShown: () => set({ lastLessonFeedbackShownAt: Date.now() }),
             setLessonCelebrationActive: (active) => set({ lessonCelebrationActive: active }),
 
+            bindToUser: (userId) => {
+                const current = get().boundUserId;
+                if (current === userId) return;
+                set({
+                    boundUserId: userId,
+                    dismissedLessonFeedbacks: [],
+                    dismissedInstructionFeedbacks: [],
+                    pendingLessonFeedbacks: [],
+                    pendingInstructionFeedbacks: [],
+                    pendingOnboardingFeedback: false,
+                    lastNpsPromptedAt: null,
+                    lastNpsPostponedAt: null,
+                    lastOnboardingFeedbackAt: null,
+                    lastErrorReportedAt: null,
+                    lastLessonFeedbackShownAt: null,
+                    lessonCelebrationActive: false,
+                });
+            },
+
             reset: () => set({
+                boundUserId: null,
                 dismissedLessonFeedbacks: [],
                 dismissedInstructionFeedbacks: [],
                 pendingLessonFeedbacks: [],
@@ -167,6 +190,7 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                 return noop as Storage;
             }),
             partialize: (state) => ({
+                boundUserId: state.boundUserId,
                 dismissedLessonFeedbacks: state.dismissedLessonFeedbacks,
                 dismissedInstructionFeedbacks: state.dismissedInstructionFeedbacks,
                 pendingLessonFeedbacks: state.pendingLessonFeedbacks,
