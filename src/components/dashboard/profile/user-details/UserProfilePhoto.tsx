@@ -12,7 +12,6 @@ interface Props{
 }
 
 export const UserProfilePhoto = ({user, owner}:Props) => {
-    const refreshCount = useUserStore(s => s._refreshCount);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
