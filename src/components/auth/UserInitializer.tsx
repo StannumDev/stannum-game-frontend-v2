@@ -21,6 +21,7 @@ export const UserInitializer = () => {
     const cancelledRef = useRef(false);
 
     useEffect(() => {
+        if (!userId) return;
         bindToUser(userId);
     }, [userId, bindToUser]);
 
