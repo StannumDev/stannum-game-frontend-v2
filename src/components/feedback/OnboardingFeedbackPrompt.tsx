@@ -64,8 +64,6 @@ export const OnboardingFeedbackPrompt = () => {
             });
         } catch (e) {
             if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('[OnboardingFeedbackPrompt] submit error:', e);
-        } finally {
-            markPrompted();
         }
     };
 
@@ -78,7 +76,6 @@ export const OnboardingFeedbackPrompt = () => {
             variant="rating-1-5"
             title="Bienvenida"
             question="¿Qué tan claro te quedó cómo usar Stannum?"
-            followUpPlaceholder="¿Qué fue lo más confuso? (opcional)"
         />
     );
 };

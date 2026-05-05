@@ -165,5 +165,7 @@ export {
 
 export {
     BiLike as LikeIcon,
-    BiSolidLike as LikedIcon
+    BiSolidLike as LikedIcon,
+    BiDislike as DislikeIcon,
+    BiSolidDislike as DislikedIcon
 } from "react-icons/bi";

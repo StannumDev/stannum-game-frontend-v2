@@ -59,9 +59,6 @@ export const InstructionFeedbackPrompt = () => {
             });
         } catch (e) {
             if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('[InstructionFeedbackPrompt] submit error:', e);
-        } finally {
-            markDismissed(pending.id);
-            dequeue(pending.id);
         }
     };
 
@@ -73,10 +70,9 @@ export const InstructionFeedbackPrompt = () => {
             type="instruction"
             variant="dual-reaction"
             title="Instrucción"
-            question="Sobre la corrección de esta instrucción..."
+            question="Sobre la corrección de esta instrucción"
             questionA="¿La evaluación de la IA fue justa?"
             questionB="¿Las instrucciones quedaron claras?"
-            followUpPlaceholder="¿Qué le falta o le sobra? (opcional)"
         />
     );
 };

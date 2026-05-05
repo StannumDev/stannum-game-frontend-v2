@@ -5,6 +5,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 const DISMISSED_LIMIT_PER_TYPE = 200;
 const ERROR_THROTTLE_WINDOW_MS = 5 * 60 * 1000;
+const LESSON_FEEDBACK_COOLDOWN_MS = 3 * 60 * 60 * 1000;
+const LESSON_FEEDBACK_SAMPLE_RATE = 0.25;
 
 export interface PendingFeedback {
     id: string;
@@ -21,6 +23,8 @@ interface FeedbackCooldownState {
     lastNpsPostponedAt: number | null;
     lastOnboardingFeedbackAt: number | null;
     lastErrorReportedAt: number | null;
+    lastLessonFeedbackShownAt: number | null;
+    lessonCelebrationActive: boolean;
 
     markLessonDismissed: (lessonId: string) => void;
     markInstructionDismissed: (instructionId: string) => void;
@@ -40,6 +44,9 @@ interface FeedbackCooldownState {
 
     canReportError: () => boolean;
     markErrorReported: () => void;
+
+    markLessonFeedbackShown: () => void;
+    setLessonCelebrationActive: (active: boolean) => void;
 
     reset: () => void;
 }
@@ -61,6 +68,8 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
             lastNpsPostponedAt: null,
             lastOnboardingFeedbackAt: null,
             lastErrorReportedAt: null,
+            lastLessonFeedbackShownAt: null,
+            lessonCelebrationActive: false,
 
             markLessonDismissed: (lessonId) => set((state) => {
                 if (!lessonId || state.dismissedLessonFeedbacks.includes(lessonId)) return state;
@@ -86,13 +95,16 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                 return get().dismissedInstructionFeedbacks.includes(instructionId);
             },
 
-            enqueueLessonFeedback: (lessonId, programId) => set((state) => {
-                if (!lessonId || state.dismissedLessonFeedbacks.includes(lessonId)) return state;
-                if (state.pendingLessonFeedbacks.some(p => p.id === lessonId)) return state;
-                return {
+            enqueueLessonFeedback: (lessonId, programId) => {
+                const state = get();
+                if (!lessonId || state.dismissedLessonFeedbacks.includes(lessonId)) return;
+                if (state.pendingLessonFeedbacks.length > 0) return;
+                if (state.lastLessonFeedbackShownAt && Date.now() - state.lastLessonFeedbackShownAt < LESSON_FEEDBACK_COOLDOWN_MS) return;
+                if (Math.random() > LESSON_FEEDBACK_SAMPLE_RATE) return;
+                set({
                     pendingLessonFeedbacks: [...state.pendingLessonFeedbacks, { id: lessonId, programId: programId || null }].slice(-20),
-                };
-            }),
+                });
+            },
 
             enqueueInstructionFeedback: (instructionId, programId) => set((state) => {
                 if (!instructionId || state.dismissedInstructionFeedbacks.includes(instructionId)) return state;
@@ -126,6 +138,9 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
             },
             markErrorReported: () => set({ lastErrorReportedAt: Date.now() }),
 
+            markLessonFeedbackShown: () => set({ lastLessonFeedbackShownAt: Date.now() }),
+            setLessonCelebrationActive: (active) => set({ lessonCelebrationActive: active }),
+
             reset: () => set({
                 dismissedLessonFeedbacks: [],
                 dismissedInstructionFeedbacks: [],
@@ -136,6 +151,8 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                 lastNpsPostponedAt: null,
                 lastOnboardingFeedbackAt: null,
                 lastErrorReportedAt: null,
+                lastLessonFeedbackShownAt: null,
+                lessonCelebrationActive: false,
             }),
         }),
         {
@@ -158,6 +175,7 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                 lastNpsPromptedAt: state.lastNpsPromptedAt,
                 lastNpsPostponedAt: state.lastNpsPostponedAt,
                 lastOnboardingFeedbackAt: state.lastOnboardingFeedbackAt,
+                lastLessonFeedbackShownAt: state.lastLessonFeedbackShownAt,
             }),
         }
     )

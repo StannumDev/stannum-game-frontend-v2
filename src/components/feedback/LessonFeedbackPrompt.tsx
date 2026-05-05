@@ -8,12 +8,15 @@ import { submitFeedback, generateRequestId } from '@/services/feedback';
 
 const MODAL_ID = 'feedback_lesson';
 const MODAL_PRIORITY = 30;
+const POST_CELEBRATION_DELAY_MS = 2500;
 const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || 'unknown';
 
 export const LessonFeedbackPrompt = () => {
     const pending = useFeedbackCooldownStore(s => s.pendingLessonFeedbacks[0] || null);
+    const celebrationActive = useFeedbackCooldownStore(s => s.lessonCelebrationActive);
     const dequeue = useFeedbackCooldownStore(s => s.dequeueLessonFeedback);
     const markDismissed = useFeedbackCooldownStore(s => s.markLessonDismissed);
+    const markShown = useFeedbackCooldownStore(s => s.markLessonFeedbackShown);
     const isMyTurn = useModalQueueStore(s => s.queue[0]?.id === MODAL_ID);
     const request = useModalQueueStore(s => s.request);
     const release = useModalQueueStore(s => s.release);
@@ -22,16 +25,20 @@ export const LessonFeedbackPrompt = () => {
 
     useEffect(() => {
         if (!pending) return;
-        const t = setTimeout(() => request(MODAL_ID, MODAL_PRIORITY), 600);
+        if (celebrationActive) return;
+        const t = setTimeout(() => request(MODAL_ID, MODAL_PRIORITY), POST_CELEBRATION_DELAY_MS);
         return () => {
             clearTimeout(t);
             release(MODAL_ID);
         };
-    }, [pending, request, release]);
+    }, [pending, celebrationActive, request, release]);
 
     useEffect(() => {
-        if (pending && isMyTurn) setShow(true);
-    }, [pending, isMyTurn]);
+        if (pending && isMyTurn && !show) {
+            setShow(true);
+            markShown();
+        }
+    }, [pending, isMyTurn, show, markShown]);
 
     if (!pending) return null;
 
@@ -59,9 +66,6 @@ export const LessonFeedbackPrompt = () => {
             });
         } catch (e) {
             if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('[LessonFeedbackPrompt] submit error:', e);
-        } finally {
-            markDismissed(pending.id);
-            dequeue(pending.id);
         }
     };
 
@@ -74,7 +78,6 @@ export const LessonFeedbackPrompt = () => {
             variant="quick-reaction"
             title="Lección"
             question="¿Esta lección te ayudó a entender el tema?"
-            followUpPlaceholder="¿Qué le faltó? (opcional)"
         />
     );
 };

@@ -105,8 +105,6 @@ export const NpsFeedbackPrompt = () => {
             });
         } catch (e) {
             if (process.env.NEXT_PUBLIC_ENV === 'development') console.error('[NpsFeedbackPrompt] submit error:', e);
-        } finally {
-            markPrompted();
         }
     };
 
