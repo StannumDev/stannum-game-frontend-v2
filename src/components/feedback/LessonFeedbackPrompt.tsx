@@ -8,7 +8,7 @@ import { submitFeedback, generateRequestId } from '@/services/feedback';
 
 const MODAL_ID = 'feedback_lesson';
 const MODAL_PRIORITY = 30;
-const POST_CELEBRATION_DELAY_MS = 2500;
+const POST_CELEBRATION_DELAY_MS = 1000;
 const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || 'unknown';
 
 export const LessonFeedbackPrompt = () => {
