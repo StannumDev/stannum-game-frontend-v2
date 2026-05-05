@@ -12,7 +12,7 @@ interface Props{
 
 export const CardRankingHome = ({ user, owner }: Props) => {
 
-  const { position, name, username, enterprise, level, points } = user;
+  const { position, name, username, photo, enterprise, level, points } = user;
   const rank = getRankByLevel(level);
 
   const renderPositionIcon = () => {
@@ -31,7 +31,7 @@ export const CardRankingHome = ({ user, owner }: Props) => {
               {renderPositionIcon()}
           </span>
           <span className="col-span-6 lg:col-span-3 lg:pl-2 flex items-center gap-2 lg:gap-3">
-            <InitialsAvatar name={name} className="size-7 lg:size-9 rounded-full shrink-0" />
+            <InitialsAvatar name={name} photoUrl={photo} className="size-7 lg:size-9 rounded-full shrink-0" />
             <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </span>
           <span className="hidden lg:block lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise||"-"}</span>
