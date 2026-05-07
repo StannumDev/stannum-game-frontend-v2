@@ -7,12 +7,14 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { SelectorIcon } from "@/icons";
-import { getUserByTokenClient, updateUserProfile } from "@/services";
+import { getUserByTokenClient, updateUserProfile, completeActivation } from "@/services";
 import { achievementHandler, errorHandler } from "@/helpers";
 import { isLoggedIn } from "@/lib/tokenStorage";
 import { FormErrorMessage, SubmitButtonLoading, STANNUMLogo, LoadingScreen } from "@/components";
 
-const schema = z.object({
+type Mode = 'google' | 'activation';
+
+const baseSchema = {
     name: z.string().min(1, { message: "Campo requerido." }).min(2, "Debe contener más de 2 caracteres.").max(50, "Debe contener menos de 50 caracteres.").regex(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/, "El nombre solo puede contener letras, números y espacios."),
     birthdate: z.string().min(1, { message: "Campo requerido." })
         .refine(date => {
@@ -33,22 +35,38 @@ const schema = z.object({
     enterprise: z.string().min(1, { message: "Campo requerido." }).max(100, "Debe contener menos de 100 caracteres."),
     enterpriseRole: z.string().min(1, { message: "Campo requerido." }).max(50, "Debe contener menos de 50 caracteres."),
     aboutme: z.string().min(1, { message: "Campo requerido." }).max(2600, "Debe contener menos de 2600 caracteres."),
+};
+
+const googleSchema = z.object(baseSchema);
+
+const activationSchema = z.object({
+    username: z.string().min(1, { message: "Campo requerido." }).min(6, "Debe tener al menos 6 caracteres.").max(25, "No puede superar los 25 caracteres.").regex(/^[a-zA-Z0-9._]+$/, "Solo letras, números, puntos y guiones bajos."),
+    password: z.string().min(1, { message: "Campo requerido." }).min(8, "Mínimo 8 caracteres.").max(50, "Máximo 50 caracteres.").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$/, "Debe incluir mayúscula, minúscula y un número."),
+    ...baseSchema,
 });
 
-type Schema = z.infer<typeof schema>
+type ActivationSchema = z.infer<typeof activationSchema>
 
-export const CompleteProfileForm = () => {
+interface Props {
+    mode?: Mode;
+    initialEmail?: string;
+}
+
+export const CompleteProfileForm = ({ mode = 'google', initialEmail }: Props = {}) => {
     const router = useRouter();
+    const isActivation = mode === 'activation';
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [isFetching, setIsFetching] = useState<boolean>(!isActivation);
     const [country, setCountry] = useState<string>('');
     const [region, setRegion] = useState<string>('');
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<Schema>({ resolver: zodResolver(schema) });
+    const schema = isActivation ? activationSchema : googleSchema;
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ActivationSchema>({ resolver: zodResolver(schema) });
 
     const hasSession = isLoggedIn();
 
     useEffect(() => {
+        if (isActivation) return;
         if (!hasSession) { router.replace('/login'); return; }
 
         let isMounted = true;
@@ -81,15 +99,25 @@ export const CompleteProfileForm = () => {
         };
         fetchUserData();
         return () => { isMounted = false; };
-    }, [hasSession, router, setValue]);
+    }, [hasSession, router, setValue, isActivation]);
 
-    const onSubmit: SubmitHandler<Schema> = async (data) => {
+    const onSubmit: SubmitHandler<ActivationSchema> = async (data) => {
         setIsLoading(true);
         try {
-            const { success, achievementsUnlocked } = await updateUserProfile(data);
-            if (success) {
-                achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
-                router.replace('/dashboard');
+            if (isActivation) {
+                const { success, achievementsUnlocked } = await completeActivation(data);
+                if (success) {
+                    achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
+                    router.replace('/dashboard');
+                }
+            } else {
+                const { username: _u, password: _p, ...profileData } = data;
+                void _u; void _p;
+                const { success, achievementsUnlocked } = await updateUserProfile(profileData);
+                if (success) {
+                    achievementsUnlocked?.length && achievementHandler(achievementsUnlocked);
+                    router.replace('/dashboard');
+                }
             }
         } catch (error: unknown) {
             errorHandler(error);
@@ -105,10 +133,59 @@ export const CompleteProfileForm = () => {
             <div className="w-full max-w-2xl bg-card rounded-lg p-6 md:p-12 flex flex-col justify-center items-center relative">
                 <div className="w-full flex flex-col justify-center items-center">
                     <STANNUMLogo className="w-40 hidden md:block" gameColor='fill-stannum' stannumColor='fill-white'/>
-                    <h2 className="md:mt-12 text-3xl md:text-5xl font-black text-center"><b className="text-stannum font-black">Completá</b> tu perfil</h2>
-                    <p className="mt-4 text-center text-neutral-400 max-w-md">Necesitamos algunos datos más para que puedas acceder a la plataforma.</p>
+                    <h2 className="md:mt-12 text-3xl md:text-5xl font-black text-center">
+                        {isActivation
+                            ? <><b className="text-stannum font-black">Activá</b> tu cuenta</>
+                            : <><b className="text-stannum font-black">Completá</b> tu perfil</>
+                        }
+                    </h2>
+                    <p className="mt-4 text-center text-neutral-400 max-w-md">
+                        {isActivation
+                            ? <>Elegí un nombre de usuario y contraseña{initialEmail ? <> para <b className="text-white">{initialEmail}</b></> : ''}, y completá unos datos para empezar.</>
+                            : 'Necesitamos algunos datos más para que puedas acceder a la plataforma.'
+                        }
+                    </p>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8 w-full">
+                    {isActivation && (
+                        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="w-full">
+                                <div className='w-full flex flex-col gap-1'>
+                                    <label htmlFor="username" className="md:text-lg required">Nombre de usuario</label>
+                                    <input
+                                        type='text'
+                                        enterKeyHint="next"
+                                        minLength={6}
+                                        maxLength={25}
+                                        id="username"
+                                        autoComplete="username"
+                                        autoCapitalize="none"
+                                        disabled={isLoading}
+                                        className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 lowercase transition-200"
+                                        {...register("username")}
+                                    />
+                                </div>
+                                <FormErrorMessage condition={errors?.username} message={errors?.username?.message} className="mt-2"/>
+                            </div>
+                            <div className="w-full">
+                                <div className='w-full flex flex-col gap-1'>
+                                    <label htmlFor="password" className="md:text-lg required">Contraseña</label>
+                                    <input
+                                        type='password'
+                                        enterKeyHint="next"
+                                        minLength={8}
+                                        maxLength={50}
+                                        id="password"
+                                        autoComplete="new-password"
+                                        disabled={isLoading}
+                                        className="w-full h-10 px-2 border-b border-card-lighter focus-visible:border-stannum disabled:text-white/75 transition-200"
+                                        {...register("password")}
+                                    />
+                                </div>
+                                <FormErrorMessage condition={errors?.password} message={errors?.password?.message} className="mt-2"/>
+                            </div>
+                        </div>
+                    )}
                     <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="w-full">
                             <div className='w-full flex flex-col gap-1'>
@@ -229,7 +306,7 @@ export const CompleteProfileForm = () => {
                         <FormErrorMessage condition={errors?.aboutme} message={errors?.aboutme?.message} className="mt-2"/>
                     </div>
                     <div className="mt-8 w-full flex justify-center">
-                        <SubmitButtonLoading isLoading={isLoading} text="Completar perfil" className="w-full md:w-48 h-12 text-sm font-semibold"/>
+                        <SubmitButtonLoading isLoading={isLoading} text={isActivation ? 'Activar mi cuenta' : 'Completar perfil'} className="w-full md:w-48 h-12 text-sm font-semibold"/>
                     </div>
                 </form>
             </div>

@@ -155,8 +155,10 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                     :
                                         <InitialsAvatar
                                             name={user?.username ?? 'U'}
+                                            photoUrl={user?.profilePhoto}
                                             className="size-full absolute top-0 left-0 z-10"
                                             textClassName="text-sm"
+                                            priority
                                         />
                                     }
                                 </Link>

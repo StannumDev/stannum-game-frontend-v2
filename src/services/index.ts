@@ -11,3 +11,4 @@ export * from './store';
 export * from './chest';
 export * from './payment';
 export * from './subscription';
+export * from './feedback';

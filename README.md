@@ -51,6 +51,7 @@ La app estara disponible en `http://localhost:3000`.
   - `programStore` - Catalogo de programas desde API
   - `sidebarStore` - Estado del sidebar movil
   - `modalQueueStore` - Cola de prioridad para modales y tutoriales
+  - `feedbackCooldownStore` - Cooldowns de prompts de feedback (lecciones, instrucciones, NPS, onboarding) para evitar pedir feedback repetido
 
 ### Autenticacion
 
@@ -98,10 +99,12 @@ La app estara disponible en `http://localhost:3000`.
 src/
 ├── app/                          # Next.js App Router
 │   ├── page.tsx                  # Landing page
-│   ├── layout.tsx                # Root layout (GoogleOAuth, MotionProvider, Toastify)
+│   ├── layout.tsx                # Root layout (GoogleOAuth, MotionProvider, Toastify, GlobalErrorListener)
 │   ├── login/                    # Login page
 │   ├── register/                 # Registro y Google OAuth
 │   ├── password-recovery/        # Recuperacion de contrasena
+│   ├── activate/[token]/         # Magic link activation (auto-enroll onboarding del lead)
+│   ├── api/feedback/error/       # Route handler que ingesta errores client-side al backend
 │   ├── privacidad/               # Politica de privacidad
 │   ├── terminos/                 # Terminos y condiciones
 │   └── dashboard/                # App principal (protegida)
@@ -138,17 +141,24 @@ src/
 ├── components/                   # Componentes React
 │   ├── index.ts                  # Barrel exports
 │   ├── ui/                       # Componentes base reutilizables
-│   │   ├── button.tsx            # Button con variantes CVA
-│   │   ├── input.tsx             # Input con validacion visual
-│   │   ├── card.tsx              # Card container
 │   │   ├── Modal.tsx             # Modal generico con backdrop
 │   │   ├── AnimatedCounter.tsx   # Contador animado para XP/Tins
 │   │   ├── MotionProvider.tsx    # LazyMotion provider global
 │   │   ├── MotionWrapperLayout.tsx # Wrapper de animacion fade-in
 │   │   ├── Tooltip.tsx           # Tooltip reutilizable
 │   │   ├── Skeleton.tsx          # Skeleton de carga generico
+│   │   ├── skeletons/            # Skeletons especializados por seccion
+│   │   ├── LoadingScreen.tsx     # Pantalla de loading global
+│   │   ├── SubmitButtonLoading.tsx # Estado loading en botones de submit
+│   │   ├── GoBackButton.tsx      # Botón "volver" reutilizable
 │   │   ├── FormErrorMessage.tsx  # Mensaje de error en formularios
-│   │   └── ReCaptchaField.tsx    # Campo reCAPTCHA
+│   │   ├── ReCaptchaField.tsx    # Campo reCAPTCHA
+│   │   ├── input-otp.tsx         # Input de OTP
+│   │   ├── InitialsAvatar.tsx    # Avatar fallback con iniciales (sidebar, ranking, comunidad, perfil)
+│   │   ├── WhatsNewModal.tsx     # Modal de "novedades" / patch notes (versionado)
+│   │   ├── FreshnessBadge.tsx    # Badge de "Nuevo" / "Reciente"
+│   │   ├── STANNUMIcon.tsx       # Icono STANNUM (svg inline)
+│   │   └── STANNUMLogo.tsx       # Logo STANNUM (svg inline)
 │   ├── auth/                     # Componentes de autenticacion
 │   │   ├── login/                # Login form, background
 │   │   ├── register/             # Registro multi-step
@@ -182,25 +192,39 @@ src/
 │   │   ├── library/              # Biblioteca con secciones
 │   │   ├── tutorial/             # Tutorials de onboarding (modales de bienvenida)
 │   │   └── SearchResultsList.tsx # Resultados de busqueda
+│   ├── feedback/                 # Sistema de feedback (NPS, lecciones, instrucciones, errores)
+│   │   ├── FeedbackModal.tsx           # Modal genérico para enviar feedback
+│   │   ├── NpsFeedbackPrompt.tsx       # Prompt de NPS (rating 0-10)
+│   │   ├── LessonFeedbackPrompt.tsx    # Reaction up/down post-lección
+│   │   ├── InstructionFeedbackPrompt.tsx # Reaction up/down post-instrucción calificada
+│   │   ├── OnboardingFeedbackPrompt.tsx # Feedback post-onboarding del initial tutorial
+│   │   └── ErrorFeedbackReporter.tsx   # Captura errores client-side y los envía a /api/feedback/error
 │   ├── shared/                   # Componentes compartidos
-│   │   └── GlobalErrorListener.tsx # Listener de unhandled promise rejections
+│   │   └── GlobalErrorListener.tsx # Listener de unhandled promise rejections (alimenta ErrorFeedbackReporter)
+│   ├── toast/                    # Toasts custom (achievement, level up, etc.)
+│   ├── svg/                      # SVGs inline reutilizables
+│   ├── styles/                   # Estilos globales auxiliares
+│   ├── InstallPromptModal.tsx    # Modal "Instalar app" (PWA)
 │   ├── VideoIntro.tsx            # Video intro landing
 │   └── ButtonShowPassword.tsx    # Toggle mostrar contrasena
 │
 ├── services/                     # API calls al backend
-│   ├── auth.ts                   # Login, register, Google OAuth, password recovery
+│   ├── auth.ts                   # Login, register, Google OAuth, password recovery, magic link, complete-activation
 │   ├── user.ts                   # getUserByToken, editUser, searchUsers, tutorials
-│   ├── lesson.ts                 # completeLesson, saveLastWatchedLesson
-│   ├── instruction.ts            # startInstruction, submitInstruction, retryGrading
+│   ├── lesson.ts                 # completeLesson, saveLastWatchedLesson, getPlaybackId
+│   ├── instruction.ts            # startInstruction, presignFiles, submitInstruction, retryGrading
 │   ├── prompt.ts                 # CRUD prompts, like, favorite, copy, stats
 │   ├── assistant.ts              # CRUD assistants, like, favorite, click, stats
 │   ├── ranking.ts                # Ranking individual, por equipo, por programa
 │   ├── productKey.ts             # getProductKey, activateProductKey
-│   ├── profilePhoto.ts          # Upload y delete foto de perfil (S3 presigned)
-│   ├── chest.ts                 # openChest (abrir cofre, obtener recompensas)
-│   ├── store.ts                 # getStoreCovers, purchaseCover, equipCover, purchaseStreakShield, recoverStreak
-│   ├── payment.ts               # createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail
-│   └── subscription.ts          # createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory
+│   ├── profilePhoto.ts           # Upload y delete foto de perfil (S3 presigned)
+│   ├── chest.ts                  # openChest (abrir cofre, obtener recompensas)
+│   ├── store.ts                  # getStoreCovers, purchaseCover, equipCover, purchaseStreakShield, recoverStreak
+│   ├── payment.ts                # createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail, downloadOrderReceipt
+│   ├── subscription.ts           # createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory, downloadSubscriptionReceipt
+│   ├── program.ts                # Cliente API para programas (game frontend, /api/programs/public)
+│   ├── programServer.ts          # Mismo, pero para Server Components (RSC con cookies)
+│   └── feedback.ts               # submitFeedback, submitErrorFeedback (NPS / lesson / instruction / onboarding / error)
 │
 ├── providers/                    # React providers
 │   └── ProgramsProvider.tsx      # Inicializa programStore cuando el usuario esta autenticado
@@ -209,7 +233,8 @@ src/
 │   ├── userStore.ts              # Usuario, autenticacion, achievements
 │   ├── programStore.ts           # Catalogo de programas (fetch desde API, cache)
 │   ├── sidebarStore.ts           # Estado del sidebar
-│   └── modalQueueStore.ts        # Cola de prioridad para modales/tutoriales
+│   ├── modalQueueStore.ts        # Cola de prioridad para modales/tutoriales
+│   └── feedbackCooldownStore.ts  # Cooldowns por tipo (NPS, lesson, instruction, onboarding) para evitar spamear prompts
 │
 ├── interfaces/                   # TypeScript interfaces
 │   ├── user/                     # User, FullUserDetails, Level, Achievement
@@ -227,7 +252,8 @@ src/
 │
 ├── hooks/                        # Custom React hooks
 │   ├── useModuleProgress.ts      # Calculo de progreso de modulo
-│   └── useSearchHandler.ts       # Logica de busqueda con debounce
+│   ├── useSearchHandler.ts       # Logica de busqueda con debounce
+│   └── useRequestFeedback.ts     # Pide turno al modalQueueStore + chequea feedbackCooldownStore antes de mostrar un prompt
 │
 ├── config/                       # Configuraciones
 │   ├── achievements.ts           # 31 achievements con metadata y getProgress()
@@ -259,7 +285,7 @@ src/
 
 ```env
 # API Backend - URL base
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_API_URL=http://localhost:4000/api  # Default backend port (PORT env del back)
 
 # API Endpoints (rutas individuales)
 NEXT_PUBLIC_API_AUTH_URL=/auth
@@ -306,6 +332,8 @@ NEXT_PUBLIC_ENV=development
 | `/register` | Registro de cuenta nueva (multi-step) |
 | `/register/google` | Completar perfil post Google OAuth |
 | `/password-recovery` | Recuperacion de contrasena con OTP |
+| `/activate/[token]` | Magic link de auto-enroll: consume `GET /api/auth/magic-link/:token` y, si es stub user, presenta el formulario de `complete-activation` |
+| `/api/feedback/error` | Route handler de Next que ingesta errores client-side y los reenvía al backend (`/api/feedback/error` con API key) |
 | `/privacidad` | Politica de privacidad |
 | `/terminos` | Terminos y condiciones |
 
@@ -339,10 +367,12 @@ NEXT_PUBLIC_ENV=development
 
 ### Sistema de JWT
 
-El sistema usa access token (JWT, 15 min) + refresh token (opaco, 7 dias) con rotacion automatica.
+El sistema usa access token (JWT, 15 min) + refresh token (opaco, 7 días) con rotación automática.
 
-- **Access token:** Almacenado en cookie `token`, se renueva automaticamente via interceptor de Axios
-- **Refresh token:** Almacenado en cookie `refreshToken`, se rota en cada refresh
+- **Access token:** cookie httpOnly `access_token` seteada por el backend, se renueva automáticamente via interceptor de Axios cuando un request devuelve 401.
+- **Refresh token:** cookie httpOnly `refresh_token` (80 hex chars), se rota en cada refresh.
+- **Activation token:** cookie temporal con `scope: "activation"` que setea el endpoint `/auth/magic-link/:token` para que el stub user pueda completar el onboarding via `/auth/complete-activation`.
+- El frontend usa una cookie no-httpOnly de "logged_in" (helper `tokenStorage.ts`) solo como flag local para condicionar UI sin tener que leer el JWT.
 
 ### Flujo de Autenticacion
 
@@ -366,29 +396,7 @@ set({ user, isAuthenticated: true })
 
 La proteccion de rutas esta implementada en `src/proxy.ts` (Next.js 16 lo reconoce como middleware):
 
-```typescript
-// src/proxy.ts
-export async function proxy(request: NextRequest) {
-  const token = request.cookies.get('token')?.value;
-  const { pathname } = request.nextUrl;
-
-  const isGuestOnlyRoute = pathname === '/login' || pathname === '/register' || pathname === '/';
-  const isDashboardRoute = pathname.startsWith('/dashboard');
-
-  if (isDashboardRoute && !token) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-  if (isGuestOnlyRoute && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
-}
-
-export const config = {
-  matcher: ['/', '/dashboard/:path*', '/login', '/register', '/password-recovery'],
-};
-```
-
-> **Nota:** En Next.js 16 el archivo de middleware se llama `proxy.ts` y la funcion exportada se llama `proxy` (no `middleware`).
+El middleware vive en `src/proxy.ts` (Next.js 16 lo reconoce con ese nombre y la función exportada `proxy`, no `middleware`). Protege `/dashboard` empujando a `/login` cuando no hay sesión, redirige usuarios logueados fuera de `/login` y `/register`, y deja pasar libremente las rutas públicas (incluida `/activate/[token]`, que tiene su propio flujo de validación contra el backend).
 
 ## State Management - Zustand
 
@@ -633,13 +641,54 @@ Tutoriales interactivos usando **driver.js** con estado persistido en backend (`
 
 Cada tutorial se verifica via cookie (`tutorial_{name}`) y API antes de mostrarse. Al completarse se persiste en ambos.
 
+## Magic Link / Auto-Enroll
+
+Flujo de onboarding zero-friction para leads capturados externamente (Make → backend `POST /api/product-key/auto-enroll`):
+
+1. El backend crea un user stub y manda un email con `${FRONTEND_URL}/activate/<rawToken>`.
+2. La página `src/app/activate/[token]/page.tsx` consume `GET /api/auth/magic-link/:token`:
+   - Si `scope === "full"` (user ya completo) → redirect a `/dashboard`.
+   - Si `scope === "activation"` (stub user) → muestra el formulario de onboarding y al submit llama `POST /api/auth/complete-activation` con el activation JWT que el backend dejó en cookie.
+3. Tras `complete-activation` el backend setea cookies normales (`access_token` + `refresh_token`) y la app entra al dashboard.
+
+Errores comunes manejados en la página: `MAGIC_LINK_INVALID`, `MAGIC_LINK_EXPIRED`, `AUTH_ACCOUNT_DISABLED`.
+
+> Ver el lado backend en [`docs/systems/authentication.md`](https://github.com/stannumgame/stannum-game-backend-v2/blob/main/docs/systems/authentication.md) y [`teams-productkeys.md`](https://github.com/stannumgame/stannum-game-backend-v2/blob/main/docs/systems/teams-productkeys.md) del repo de backend.
+
+## Sistema de Feedback
+
+Captura feedback del usuario en distintos puntos del flujo y lo manda al backend (`/api/feedback`):
+
+- **NPS** (`NpsFeedbackPrompt`): rating 0-10 + mensaje opcional. Cooldown largo entre prompts (sincronizado con `feedbackState.lastNpsAt` del user).
+- **Lección** (`LessonFeedbackPrompt`): reaction up/down opcional al completar una lección.
+- **Instrucción** (`InstructionFeedbackPrompt`): reaction up/down después de recibir el AI grading.
+- **Onboarding** (`OnboardingFeedbackPrompt`): se dispara al cerrar el initial tutorial. Cooldown sincronizado con `feedbackState.lastOnboardingFeedbackAt`.
+- **Errores client-side** (`ErrorFeedbackReporter` + `GlobalErrorListener`): captura unhandled rejections y errores no controlados, y los envía vía `/api/feedback/error` (route handler de Next que reenvía al backend con API key).
+
+**Coordinación de prompts:**
+- `feedbackCooldownStore` lleva los cooldowns locales por tipo (evita repetir prompts dentro de la misma sesión, además del cooldown server-side).
+- `useRequestFeedback` pide turno al `modalQueueStore` antes de pintar cualquier prompt, así no compite con tutoriales ni con `WhatsNewModal`.
+- Todos los prompts usan `FeedbackModal` como base y llaman a `feedback.ts` (`submitFeedback` para tipos del usuario, `submitErrorFeedback` para errores).
+
+## Avatares e Identidad Visual
+
+- **`InitialsAvatar`** (`src/components/ui/InitialsAvatar.tsx`): fallback usado cuando `profilePhotoUrl` no existe. Toma las iniciales del nombre/username, calcula un color determinístico y se renderiza en sidebar, ranking, comunidad, perfil y cualquier otro lugar donde se mostraba un placeholder gris.
+- **`STANNUMIcon` / `STANNUMLogo`**: SVGs inline reutilizables del branding.
+
+## Patch Notes / WhatsNewModal
+
+`src/components/ui/WhatsNewModal.tsx` muestra un changelog versionado al usuario en su primer login después de un deploy. La detección se hace contra una versión guardada en cookie/localStorage; si no matchea, se encola en `modalQueueStore` con prioridad media (no compite con tutoriales obligatorios). Incluye un `FreshnessBadge` para resaltar features marcadas como nuevas.
+
 ## Manejo de Errores
 
-**Archivo:** `src/helpers/errorHandler.ts`
+**Archivos clave:**
+- `src/helpers/errorHandler.ts` — intercepta errores de Axios y los convierte a `AppError`
+- `src/components/shared/GlobalErrorListener.tsx` — captura `window.onerror` y `unhandledrejection`
+- `src/components/feedback/ErrorFeedbackReporter.tsx` — bridge entre los errores capturados y `/api/feedback/error`
 
-- Intercepta errores de Axios y los convierte a `AppError`
 - Muestra `toast.error()` con mensaje descriptivo
 - En desarrollo (`NEXT_PUBLIC_ENV=development`): logs en consola
+- Errores no manejados se reportan al backend (con metadata sanitizada) para tracking/triage
 
 ## Animaciones
 

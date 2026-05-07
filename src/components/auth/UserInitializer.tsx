@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useUserStore } from '@/stores/userStore';
+import { useFeedbackCooldownStore } from '@/stores/feedbackCooldownStore';
 import { clearLoginFlag } from '@/lib/tokenStorage';
 import { buildRedirectParam } from '@/helpers';
 
@@ -14,12 +15,22 @@ export const UserInitializer = () => {
     const initUser = useUserStore(s => s.initUser);
     const retryInit = useUserStore(s => s.retryInit);
     const connectionError = useUserStore(s => s.connectionError);
+    const userId = useUserStore(s => s.user?.id ?? null);
+    const bindToUser = useFeedbackCooldownStore(s => s.bindToUser);
     const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const cancelledRef = useRef(false);
 
+    useEffect(() => {
+        if (!userId) return;
+        bindToUser(userId);
+    }, [userId, bindToUser]);
+
     const handleProfileResult = useCallback((profileStatus: string | null | undefined) => {
         if (cancelledRef.current) return;
-        if (profileStatus === 'needs_username') {
+        if (profileStatus === 'needs_activation') {
+            clearLoginFlag();
+            router.replace(`/login${buildRedirectParam(pathname)}`);
+        } else if (profileStatus === 'needs_username') {
             router.replace('/register/google');
         } else if (profileStatus === 'needs_profile') {
             router.replace('/register/complete-profile');

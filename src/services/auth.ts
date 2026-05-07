@@ -146,3 +146,44 @@ export const updateUsername = async (username: string): Promise<UpdateUsernameRe
         throw error;
     }
 };
+
+export type MagicLinkScope = 'activation' | 'full';
+
+export interface MagicLinkResponse {
+    success: boolean;
+    scope: MagicLinkScope;
+    profileStatus?: string;
+    email?: string;
+}
+
+export const consumeMagicLink = async (token: string): Promise<MagicLinkResponse> => {
+    const response = await api.get(`${AUTH_URL}/magic-link/${encodeURIComponent(token)}`);
+    if (!response?.data?.success) throw new Error("Unexpected response structure");
+    return {
+        success: response.data.success,
+        scope: response.data.scope,
+        profileStatus: response.data.profileStatus,
+        email: response.data.email,
+    };
+};
+
+export interface CompleteActivationPayload {
+    username: string;
+    password: string;
+    name: string;
+    birthdate: string;
+    country: string;
+    region: string;
+    enterprise: string;
+    enterpriseRole: string;
+    aboutme: string;
+}
+
+export const completeActivation = async (data: CompleteActivationPayload): Promise<{ success: boolean; achievementsUnlocked: AchievementDetails[] }> => {
+    const response = await api.post(`${AUTH_URL}/complete-activation`, data);
+    if (!response?.data?.success) throw new Error("Unexpected response structure");
+    return {
+        success: response.data.success,
+        achievementsUnlocked: response.data.achievementsUnlocked || [],
+    };
+};

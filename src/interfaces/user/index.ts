@@ -174,6 +174,10 @@ export interface FullUserDetails {
         assistantsCount: number;
         totalFavoritesReceived: number;
     };
+    feedbackState?: {
+        lastNpsAt: string | null;
+        lastOnboardingFeedbackAt: string | null;
+    };
 }
 
 export type ProfileStatus = 'complete' | 'needs_username' | 'needs_profile';

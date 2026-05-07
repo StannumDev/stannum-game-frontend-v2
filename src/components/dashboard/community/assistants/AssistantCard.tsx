@@ -213,7 +213,7 @@ export const AssistantCard = ({ assistant }: Props) => {
                     </div>
                 </div>
                 <Link href={`/dashboard/profile/${assistant.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
-                    <InitialsAvatar name={assistant.author.username} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
+                    <InitialsAvatar name={assistant.author.username} photoUrl={assistant.author.profilePhotoUrl} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
                     <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{assistant.author.username}</span>
                 </Link>
             </div>

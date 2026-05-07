@@ -14,6 +14,7 @@ import { CrownIcon, ChestIcon } from "@/icons";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import stannum_coin from "@/assets/tins_coin.svg";
 import { useUserStore } from '@/stores/userStore';
+import { useFeedbackCooldownStore } from '@/stores/feedbackCooldownStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
 interface Props {
@@ -41,6 +42,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const router = useRouter();
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
+    const enqueueLessonFeedback = useFeedbackCooldownStore(s => s.enqueueLessonFeedback);
+    const setLessonCelebrationActive = useFeedbackCooldownStore(s => s.setLessonCelebrationActive);
 
     const videoRef = useRef<MuxPlayerElement | null>(null);
     const [blurData, setBlurData] = useState<BlurData>({ blurDataURL: "", aspectRatio: 16 / 9 });
@@ -127,6 +130,11 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         return () => { document.body.style.overflow = ''; };
     }, [showNextOverlay]);
 
+    useEffect(() => {
+        setLessonCelebrationActive(showNextOverlay);
+        return () => setLessonCelebrationActive(false);
+    }, [showNextOverlay, setLessonCelebrationActive]);
+
     const handleTimeUpdate = async () => {
         if (!videoRef.current) return;
 
@@ -145,9 +153,19 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         if (!markedAsCompleted.current) {
             markedAsCompleted.current = true;
             try {
+                const userBefore = useUserStore.getState().user;
+                const totalCompletedBefore = userBefore?.programs
+                    ? Object.values(userBefore.programs).reduce((acc, prog) => acc + (prog?.lessonsCompleted?.length || 0), 0)
+                    : 0;
+                const isFirstLessonEver = totalCompletedBefore === 0;
+                const isLastOfModule = currentIndex < 0 || !nextLesson;
+
                 const result = await markLessonAsCompleted(program.toLowerCase(), lesson.id);
                 setXpResult(result);
                 refreshUser();
+                if (!isFirstLessonEver && !isLastOfModule) {
+                    enqueueLessonFeedback(lesson.id, program.toLowerCase());
+                }
             } catch (error:unknown) {
                 errorHandler(error);
             }
@@ -246,8 +264,18 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                     )}
                     <p className="text-base lg:text-lg font-bold text-center">Siguiente lección en {countdown} segundos...</p>
                     <div className="flex items-center gap-4 w-full max-w-md">
-                        <div className="w-[160px] h-[90px] rounded-lg hidden lg:flex items-center justify-center bg-card-light">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="opacity-40"><path d="M8 5v14l11-7z"/></svg>
+                        <div className="w-[160px] h-[90px] rounded-lg hidden lg:flex items-center justify-center bg-card-light overflow-hidden relative shrink-0">
+                            {nextLesson.muxPlaybackId ? (
+                                <Image
+                                    className="size-full object-cover"
+                                    width={160}
+                                    height={90}
+                                    src={`https://image.mux.com/${nextLesson.muxPlaybackId}/thumbnail.png?width=160&height=90&time=5`}
+                                    alt="Miniatura siguiente lección"
+                                />
+                            ) : (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="opacity-40"><path d="M8 5v14l11-7z"/></svg>
+                            )}
                         </div>
                         <div className="flex-1 text-center lg:text-left">
                             <p className="text-sm opacity-80">Siguiente lección</p>

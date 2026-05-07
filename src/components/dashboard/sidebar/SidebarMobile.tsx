@@ -80,8 +80,10 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
                                         :
                                             <InitialsAvatar
                                                 name={user?.username ?? 'U'}
+                                                photoUrl={user?.profilePhoto}
                                                 className="size-full absolute top-0 left-0 z-10"
                                                 textClassName="text-[10px]"
+                                                priority
                                             />
                                         }
                                     </button>

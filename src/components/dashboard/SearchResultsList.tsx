@@ -53,6 +53,7 @@ export const SearchResultsList = ({ query }: Props) => {
                                 <div className="h-full aspect-square relative">
                                     <InitialsAvatar
                                         name={user.name || user.username}
+                                        photoUrl={user.profilePhoto}
                                         className="size-full absolute top-0 left-0"
                                         textClassName="text-sm"
                                     />

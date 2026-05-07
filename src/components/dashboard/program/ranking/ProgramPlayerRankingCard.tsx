@@ -12,7 +12,7 @@ interface Props{
 
 export const ProgramPlayerRankingCard = ({player}:Props) => {
 
-    const { position, name, username, enterprise, points  } = player
+    const { position, name, username, photo, enterprise, points  } = player
     const currentUsername = useUserStore(s => s.user?.username);
     const isUser = username === currentUsername;
 
@@ -25,7 +25,7 @@ export const ProgramPlayerRankingCard = ({player}:Props) => {
                 <span className="text-sm lg:text-base font-black">{position}</span>
             </h3>
             <h3 className="col-span-4 flex items-center gap-2 lg:gap-4">
-                <InitialsAvatar name={name} className="size-7 lg:size-9 rounded-full shrink-0" />
+                <InitialsAvatar name={name} photoUrl={photo} className="size-7 lg:size-9 rounded-full shrink-0" />
                 <span className="whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
             </h3>
             <h3 className="hidden lg:block col-span-4 whitespace-nowrap truncate text-sm lg:text-base">{enterprise}</h3>

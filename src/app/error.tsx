@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { ErrorFeedbackReporter } from '@/components/feedback'
 
 export default function Error({error, reset}: {error: Error & { digest?: string }, reset: () => void}) {
     const router = useRouter();
@@ -18,6 +19,7 @@ export default function Error({error, reset}: {error: Error & { digest?: string 
 
     return (
         <div className="size-full flex flex-col justify-center items-center gap-4 p-8 text-center">
+            <ErrorFeedbackReporter error={error} boundary="root" />
             <h2 className="title-2">Ocurrió un error inesperado</h2>
             <p className="subtitle-1">Algo salió mal. Intenta nuevamente o volvé al inicio.</p>
             <div className="flex gap-4">

@@ -245,7 +245,7 @@ export const PromptCard = ({ prompt, onClick }: Props) => {
                     </div>
                 </div>
                 <Link href={`/dashboard/profile/${prompt.author.username}`} className="flex items-center gap-2 text-xs group/author" onClick={(e) => e.stopPropagation()}>
-                    <InitialsAvatar name={prompt.author.username} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
+                    <InitialsAvatar name={prompt.author.username} photoUrl={prompt.author.profilePhotoUrl} className="size-6 rounded-full shrink-0" textClassName="text-[9px]" />
                     <span className="font-semibold text-card-lightest group-hover/author:text-stannum transition-200">{prompt.author.username}</span>
                 </Link>
             </div>

@@ -1,7 +1,14 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
 interface Props {
     name: string;
+    photoUrl?: string | null;
     className?: string;
     textClassName?: string;
+    priority?: boolean;
 }
 
 const COLORS = [
@@ -25,7 +32,29 @@ function getInitials(name: string): string {
     return name.toUpperCase();
 }
 
-export const InitialsAvatar = ({ name, className = '', textClassName = 'text-xs' }: Props) => {
+export const InitialsAvatar = ({ name, photoUrl, className = '', textClassName = 'text-xs', priority = false }: Props) => {
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+        setHasError(false);
+    }, [photoUrl]);
+
+    if (photoUrl && !hasError) {
+        return (
+            <div className={`relative overflow-hidden ${className}`}>
+                <Image
+                    src={photoUrl}
+                    alt={`Foto de ${name}`}
+                    fill
+                    sizes="200px"
+                    priority={priority}
+                    className="object-cover"
+                    onError={() => setHasError(true)}
+                />
+            </div>
+        );
+    }
+
     const color = COLORS[hashName(name) % COLORS.length];
     const initials = getInitials(name);
 

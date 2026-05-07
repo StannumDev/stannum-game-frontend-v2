@@ -5,6 +5,7 @@ import { callToast } from "@/helpers";
 import { AddPhotoIcon } from "@/icons";
 import { FullUserDetails } from "@/interfaces";
 import { InitialsAvatar, UserProfileEditPhoto } from "@/components";
+import { useUserStore } from "@/stores/userStore";
 
 interface Props{
     owner: boolean;
@@ -12,6 +13,7 @@ interface Props{
 }
 
 export const UserProfilePhoto = ({user, owner}:Props) => {
+    const refreshCount = useUserStore(s => s._refreshCount);
     const [showEditModal, setShowEditModal] = useState<boolean>(false);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -39,8 +41,10 @@ export const UserProfilePhoto = ({user, owner}:Props) => {
         <div className={`size-24 lg:size-48 bg-gradient-to-br from-card to-card-light rounded-lg lg:rounded-2xl shadow-md relative z-50 outline outline-2 outline-stannum ${owner ? 'rounded-tr-none lg:rounded-tr-none' : ''}`}>
             <InitialsAvatar
                 name={user.profile.name || user.username}
+                photoUrl={user.profilePhoto ? `${user.profilePhoto}?v=${refreshCount}` : null}
                 className="size-full absolute top-0 left-0 z-10 rounded-lg lg:rounded-2xl"
                 textClassName="text-2xl lg:text-4xl"
+                priority
             />
             { owner &&
                 <>

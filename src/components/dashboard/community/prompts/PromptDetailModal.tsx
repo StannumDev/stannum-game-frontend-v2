@@ -289,7 +289,8 @@ export const PromptDetailModal = ({ promptId, selectedPromptId, setSelectedPromp
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
                                 <InitialsAvatar
-                                    name={prompt.author.name || prompt.author.username}
+                                    name={prompt.author.username}
+                                    photoUrl={prompt.author.profilePhotoUrl}
                                     className="size-10 rounded-full shrink-0"
                                     textClassName="text-sm"
                                 />

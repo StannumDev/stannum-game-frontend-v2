@@ -1,20 +1,23 @@
 'use client'
 
-import { Dispatch, ReactNode, SetStateAction, useEffect, useRef, useCallback } from 'react';
+import { ReactNode, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
 import { CrossIcon } from '@/icons';
 
 interface Props{
     showModal: boolean;
-    setShowModal: Dispatch<SetStateAction<boolean>>;
+    setShowModal: (v: boolean) => void;
     className?: string;
     disableClose?: boolean;
+    disableBackdropClose?: boolean;
     children: ReactNode;
 }
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export const Modal = ({showModal, setShowModal, children, className, disableClose}:Props) => {
+export const Modal = ({showModal, setShowModal, children, className, disableClose, disableBackdropClose}:Props) => {
+
+    const blockBackdrop = disableClose || disableBackdropClose;
 
     const modalRef = useRef<HTMLDivElement>(null);
     const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -58,7 +61,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
         }
 
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape' && !disableClose) {
+            if (event.key === 'Escape' && !disableClose && !disableBackdropClose) {
                 setShowModal(false);
             }
             trapFocus(event);
@@ -69,7 +72,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
             document.body.classList.remove('overflow-hidden');
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [showModal, setShowModal, disableClose, trapFocus]);
+    }, [showModal, setShowModal, disableClose, disableBackdropClose, trapFocus]);
 
     return (
         <AnimatePresence>
@@ -83,7 +86,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.125 }}
                         className="w-full h-dvh bg-gradient-to-br from-black/75 to-black fixed top-0 left-0 z-10"
-                        onClick={ () => { if(!disableClose) setShowModal(false) }}
+                        onClick={ () => { if(!blockBackdrop) setShowModal(false) }}
                     ></m.div>
                     <m.div
                         ref={modalRef}
