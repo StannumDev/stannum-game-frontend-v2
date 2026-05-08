@@ -43,7 +43,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     const searchParams = useSearchParams();
     const refreshUser = useUserStore(s => s.refreshUser);
     const enqueueLessonFeedback = useFeedbackCooldownStore(s => s.enqueueLessonFeedback);
-    const setLessonCelebrationActive = useFeedbackCooldownStore(s => s.setLessonCelebrationActive);
+    const dequeueLessonFeedback = useFeedbackCooldownStore(s => s.dequeueLessonFeedback);
 
     const videoRef = useRef<MuxPlayerElement | null>(null);
     const [blurData, setBlurData] = useState<BlurData>({ blurDataURL: "", aspectRatio: 16 / 9 });
@@ -124,17 +124,6 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         }
     }, [showNextOverlay, isCompleted]);
 
-    useEffect(() => {
-        if (!showNextOverlay) return;
-        document.body.style.overflow = 'hidden';
-        return () => { document.body.style.overflow = ''; };
-    }, [showNextOverlay]);
-
-    useEffect(() => {
-        setLessonCelebrationActive(showNextOverlay);
-        return () => setLessonCelebrationActive(false);
-    }, [showNextOverlay, setLessonCelebrationActive]);
-
     const handleTimeUpdate = async () => {
         if (!videoRef.current) return;
 
@@ -206,6 +195,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         setShowNextOverlay(false);
         setCountdown(NEXT_COUNTDOWN);
         setCancelNext(true);
+        dequeueLessonFeedback(lesson.id);
     };
 
     const startAt = useMemo(() => {

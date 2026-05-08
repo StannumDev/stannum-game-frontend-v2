@@ -25,7 +25,6 @@ interface FeedbackCooldownState {
     lastOnboardingFeedbackAt: number | null;
     lastErrorReportedAt: number | null;
     lastLessonFeedbackShownAt: number | null;
-    lessonCelebrationActive: boolean;
 
     markLessonDismissed: (lessonId: string) => void;
     markInstructionDismissed: (instructionId: string) => void;
@@ -47,7 +46,6 @@ interface FeedbackCooldownState {
     markErrorReported: () => void;
 
     markLessonFeedbackShown: () => void;
-    setLessonCelebrationActive: (active: boolean) => void;
 
     bindToUser: (userId: string | null) => void;
     reset: () => void;
@@ -72,7 +70,6 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
             lastOnboardingFeedbackAt: null,
             lastErrorReportedAt: null,
             lastLessonFeedbackShownAt: null,
-            lessonCelebrationActive: false,
 
             markLessonDismissed: (lessonId) => set((state) => {
                 if (!lessonId || state.dismissedLessonFeedbacks.includes(lessonId)) return state;
@@ -142,7 +139,6 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
             markErrorReported: () => set({ lastErrorReportedAt: Date.now() }),
 
             markLessonFeedbackShown: () => set({ lastLessonFeedbackShownAt: Date.now() }),
-            setLessonCelebrationActive: (active) => set({ lessonCelebrationActive: active }),
 
             bindToUser: (userId) => {
                 const current = get().boundUserId;
@@ -159,7 +155,6 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                     lastOnboardingFeedbackAt: null,
                     lastErrorReportedAt: null,
                     lastLessonFeedbackShownAt: null,
-                    lessonCelebrationActive: false,
                 });
             },
 
@@ -175,7 +170,6 @@ export const useFeedbackCooldownStore = create<FeedbackCooldownState>()(
                 lastOnboardingFeedbackAt: null,
                 lastErrorReportedAt: null,
                 lastLessonFeedbackShownAt: null,
-                lessonCelebrationActive: false,
             }),
         }),
         {

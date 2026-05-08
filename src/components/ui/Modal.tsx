@@ -21,6 +21,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
 
     const modalRef = useRef<HTMLDivElement>(null);
     const previousFocusRef = useRef<HTMLElement | null>(null);
+    const wasShownRef = useRef(false);
 
     const trapFocus = useCallback((e: KeyboardEvent) => {
         if (e.key !== 'Tab' || !modalRef.current) return;
@@ -46,6 +47,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
 
     useEffect(() => {
         if(showModal) {
+            wasShownRef.current = true;
             previousFocusRef.current = document.activeElement as HTMLElement;
             document.body.classList.add('overflow-hidden');
 
@@ -55,13 +57,17 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
                     firstFocusable?.focus();
                 }
             });
-        } else {
+        } else if (wasShownRef.current) {
+            wasShownRef.current = false;
             document.body.classList.remove('overflow-hidden');
             previousFocusRef.current?.focus();
         }
 
         return () => {
-            document.body.classList.remove('overflow-hidden');
+            if (wasShownRef.current) {
+                document.body.classList.remove('overflow-hidden');
+                wasShownRef.current = false;
+            }
         };
     }, [showModal]);
 
