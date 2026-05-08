@@ -8,12 +8,11 @@ import { submitFeedback, generateRequestId } from '@/services/feedback';
 
 const MODAL_ID = 'feedback_lesson';
 const MODAL_PRIORITY = 30;
-const POST_CELEBRATION_DELAY_MS = 1000;
+const FEEDBACK_DELAY_MS = 1500;
 const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || 'unknown';
 
 export const LessonFeedbackPrompt = () => {
     const pending = useFeedbackCooldownStore(s => s.pendingLessonFeedbacks[0] || null);
-    const celebrationActive = useFeedbackCooldownStore(s => s.lessonCelebrationActive);
     const dequeue = useFeedbackCooldownStore(s => s.dequeueLessonFeedback);
     const markDismissed = useFeedbackCooldownStore(s => s.markLessonDismissed);
     const markShown = useFeedbackCooldownStore(s => s.markLessonFeedbackShown);
@@ -25,13 +24,12 @@ export const LessonFeedbackPrompt = () => {
 
     useEffect(() => {
         if (!pending) return;
-        if (celebrationActive) return;
-        const t = setTimeout(() => request(MODAL_ID, MODAL_PRIORITY), POST_CELEBRATION_DELAY_MS);
+        const t = setTimeout(() => request(MODAL_ID, MODAL_PRIORITY), FEEDBACK_DELAY_MS);
         return () => {
             clearTimeout(t);
             release(MODAL_ID);
         };
-    }, [pending, celebrationActive, request, release]);
+    }, [pending, request, release]);
 
     useEffect(() => {
         if (pending && isMyTurn && !show) {
