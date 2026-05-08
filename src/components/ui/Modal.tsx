@@ -60,6 +60,12 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
             previousFocusRef.current?.focus();
         }
 
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        };
+    }, [showModal]);
+
+    useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape' && !disableClose && !disableBackdropClose) {
                 setShowModal(false);
@@ -69,10 +75,9 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
         document.addEventListener('keydown', handleKeyDown);
 
         return () => {
-            document.body.classList.remove('overflow-hidden');
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [showModal, setShowModal, disableClose, disableBackdropClose, trapFocus]);
+    }, [setShowModal, disableClose, disableBackdropClose, trapFocus]);
 
     return (
         <AnimatePresence>
