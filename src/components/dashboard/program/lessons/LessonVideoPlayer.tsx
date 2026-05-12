@@ -15,6 +15,7 @@ import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import stannum_coin from "@/assets/tins_coin.svg";
 import { useUserStore } from '@/stores/userStore';
 import { useFeedbackCooldownStore } from '@/stores/feedbackCooldownStore';
+import { useLessonMarkLockStore } from '@/stores/lessonMarkLockStore';
 import '@/components/styles/lessonVideoPlayer.css';
 
 interface Props {
@@ -140,6 +141,9 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
         }
 
         if (!markedAsCompleted.current) {
+            const lockKey = `${program.toLowerCase()}:${lesson.id}`;
+            const lockStore = useLessonMarkLockStore.getState();
+            if (!lockStore.tryLock(lockKey)) return;
             markedAsCompleted.current = true;
             try {
                 const userBefore = useUserStore.getState().user;
@@ -157,6 +161,8 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 }
             } catch (error:unknown) {
                 errorHandler(error);
+            } finally {
+                useLessonMarkLockStore.getState().unlock(lockKey);
             }
         }
 
