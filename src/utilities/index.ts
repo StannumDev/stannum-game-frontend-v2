@@ -9,3 +9,10 @@ export const formatCoins = (n: number): string =>
 
 export const formatARS = (amount: number): string =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 }).format(amount);
+
+export const isEmptyDescription = (d?: string | null): boolean => {
+    if (d == null) return true;
+    const stripped = d.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+    if (stripped === '') return true;
+    return /^sin descripci[oó]n\.?$/i.test(stripped);
+};
