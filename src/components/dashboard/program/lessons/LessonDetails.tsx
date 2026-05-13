@@ -5,6 +5,7 @@
 // import { BookmarkedIcon, BookmarkIcon, CheckIcon, CrossIcon } from "@/icons";
 // import { ChangeLessonsButtons } from "@/components";
 import type { Lesson } from "@/interfaces";
+import { isEmptyDescription } from "@/utilities";
 
 interface Props {
     lesson: Lesson;
@@ -54,10 +55,12 @@ export const LessonDetails = ({ lesson }: Props) => {
             <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
             <div className="mb-4 grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0">
                 <div className="col-span-1 lg:col-span-3 max-h-64 lg:max-h-none pr-4 lg:pr-0 text-sm flex flex-col gap-2 overflow-y-auto">
-                    {lesson.description?.split('\n').map((p, i) => (
-                        <p key={i}>{p}</p>
-                    )) || (
-                        <p>No hay descripción disponible para esta lección.</p>
+                    {isEmptyDescription(lesson.description) ? (
+                        <p className="text-card-lightest italic">No hay descripción disponible para esta lección.</p>
+                    ) : (
+                        lesson.description?.split('\n').map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))
                     )}
                 </div>
 

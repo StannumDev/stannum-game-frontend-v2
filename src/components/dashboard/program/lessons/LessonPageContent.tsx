@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { LoadingScreen, LessonVideoPlayer, LessonMiniatureCard, InstructionMiniatureCard, GoBackButton } from '@/components';
 import { useUserStore } from '@/stores/userStore';
-import { isLessonAvailable, isInstructionAvailable, hasModuleAccess, getLessonFreshness, getInstructionFreshness } from '@/utilities';
+import { isLessonAvailable, isInstructionAvailable, hasModuleAccess, getLessonFreshness, getInstructionFreshness, isEmptyDescription } from '@/utilities';
 import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
 import { getModuleChests, type ChestConfig } from '@/config/chests';
 import { ChestMiniatureCard } from '@/components/dashboard/program/modules/path-map/ChestMiniatureCard';
@@ -175,9 +175,11 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     </div>
                 </div>
                 <span className="my-4 lg:mb-6 block w-full h-px bg-card-light"></span>
-                <div className="w-full max-w-5xl h-64 lg:h-auto text-sm text-left overflow-y-auto relative">
-                    <div dangerouslySetInnerHTML={{ __html: lesson.description }} className="size-full absolute lg:static top-0 left-0 whitespace-pre-line flex flex-col gap-4 lesson-description"/>
-                </div>
+                {!isEmptyDescription(lesson.description) && (
+                    <div className="w-full max-w-5xl h-64 lg:h-auto text-sm text-left overflow-y-auto relative">
+                        <div dangerouslySetInnerHTML={{ __html: lesson.description }} className="size-full absolute lg:static top-0 left-0 whitespace-pre-line flex flex-col gap-4 lesson-description"/>
+                    </div>
+                )}
             </div>
             <div className="mt-4 lg:hidden lg:content-visibility-hidden w-full h-96 relative overflow-y-auto overflow-x-hidden">
                 <div className="size-full flex flex-col gap-2 absolute top-0 left-0">
