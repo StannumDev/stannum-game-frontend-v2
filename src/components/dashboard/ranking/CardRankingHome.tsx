@@ -35,7 +35,7 @@ export const CardRankingHome = ({ user, owner }: Props) => {
             <span className="grow whitespace-nowrap truncate text-sm lg:text-base">{name}</span>
           </span>
           <span className="hidden lg:block lg:col-span-2 lg:pl-2 whitespace-nowrap truncate text-sm lg:text-base">{enterprise||"-"}</span>
-          <span className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base font-bold">{points}</span>
+          <span className="col-span-2 lg:col-span-1 text-center text-sm lg:text-base font-bold">{level}</span>
           <span className="col-span-2 lg:col-span-1 flex justify-center">
               <span
                   className="text-[10px] lg:text-xs font-bold uppercase tracking-wider bg-clip-text text-transparent"
