@@ -12,7 +12,7 @@ interface Props{
 
 export const CardRankingHome = ({ user, owner }: Props) => {
 
-  const { position, name, username, photo, enterprise, level, points } = user;
+  const { position, name, username, photo, enterprise, level } = user;
   const rank = getRankByLevel(level);
 
   const renderPositionIcon = () => {
