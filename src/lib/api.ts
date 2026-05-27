@@ -1,11 +1,12 @@
 'use client';
 
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { clearLoginFlag } from './tokenStorage';
+import { clearLoginFlag, isLoggedIn } from './tokenStorage';
 import { callToast } from '@/helpers/callToast';
 import { buildRedirectParam } from '@/helpers/redirect';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const AUTH_URL = process.env.NEXT_PUBLIC_API_AUTH_URL;
 export const AUTH_TIMEOUT_MS = 8_000;
 const REFRESH_TIMEOUT_MS = 20_000;
 
@@ -57,18 +58,22 @@ export const isNetworkError = (error: unknown): boolean => {
 };
 
 const SKIP_REFRESH_ENDPOINTS = [
-  '/auth/login',
   '/auth/register',
   '/auth/google',
   '/auth/refresh-token',
   '/auth/logout',
   '/auth/password-recovery',
   '/auth/verify-recovery-otp',
-  '/auth/reset-password',
+  '/auth/password-reset',
+  '/auth/complete-activation',
+  '/auth/magic-link',
 ];
 
 const shouldSkipRefresh = (url?: string): boolean => {
   if (!url) return false;
+  // Login es POST exacto a `${AUTH_URL}/` (no existe `/auth/login`): un 401 acá son
+  // credenciales inválidas, no un token expirado, así que nunca debe disparar refresh.
+  if (url === `${AUTH_URL}/` || url.endsWith('/auth/')) return true;
   return SKIP_REFRESH_ENDPOINTS.some(endpoint => url.includes(endpoint));
 };
 
@@ -110,8 +115,23 @@ const forceLogout = async () => {
 
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1000;
-const isRetryable = (error: AxiosError) =>
-  error.config?.method === 'get' && (!error.response || error.response.status >= 500);
+
+// POSTs de credenciales (login + google) son seguros de reintentar: re-emitir tokens es
+// idempotente. Se reintentan solo ante cold-start/gateway/red (502/503/504 o sin respuesta),
+// nunca ante 4xx/500 reales — cubre el caso de Railway despertando un contenedor.
+const isAuthCredentialPost = (config?: InternalAxiosRequestConfig): boolean => {
+  if (config?.method !== 'post') return false;
+  const url = config.url ?? '';
+  return url === `${AUTH_URL}/` || url.endsWith('/auth/') || url.includes('/auth/google');
+};
+
+const isRetryable = (error: AxiosError): boolean => {
+  const config = error.config;
+  if (!config || error.code === 'ERR_CANCELED') return false;
+  if (config.method === 'get') return !error.response || error.response.status >= 500;
+  if (isAuthCredentialPost(config)) return !error.response || GATEWAY_ERROR_CODES.includes(error.response.status);
+  return false;
+};
 
 api.interceptors.response.use(
   (response) => response,
@@ -133,7 +153,7 @@ api.interceptors.response.use(
 
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    if (error.response?.status !== 401 || originalRequest?._retry || shouldSkipRefresh(originalRequest?.url)) {
+    if (error.response?.status !== 401 || originalRequest?._retry || shouldSkipRefresh(originalRequest?.url) || !isLoggedIn()) {
       return Promise.reject(error);
     }
 

@@ -34,7 +34,7 @@ export const LoginForm = () => {
             const success = await requestLogin(data);
             if (success) window.location.replace(getRedirectUrl(searchParams.get('redirect')));
         } catch (error:unknown) {
-            const appError:AppError = errorHandler(error);
+            const appError:AppError = errorHandler(error, { silent: true });
             setErrorMessage(appError.friendlyMessage);
         } finally {
             setIsLoading(false);
