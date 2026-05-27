@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import type { AppError, ToastData } from '@/interfaces';
 import { callToast } from './callToast';
 
-export const errorHandler = (error:unknown): AppError => {
+export const errorHandler = (error:unknown, { silent = false }: { silent?: boolean } = {}): AppError => {
     if(process.env.NEXT_PUBLIC_ENV === 'development') console.log("Error:", error);
     let appError: AppError = {
         success: false,
@@ -26,7 +26,7 @@ export const errorHandler = (error:unknown): AppError => {
         }
     }
 
-    if (appError.showAlert) {
+    if (appError.showAlert && !silent) {
         const toastData: ToastData = {
             type: appError.type,
             message: {
