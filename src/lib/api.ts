@@ -115,8 +115,23 @@ const forceLogout = async () => {
 
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 1000;
-const isRetryable = (error: AxiosError) =>
-  error.config?.method === 'get' && (!error.response || error.response.status >= 500);
+
+// POSTs de credenciales (login + google) son seguros de reintentar: re-emitir tokens es
+// idempotente. Se reintentan solo ante cold-start/gateway/red (502/503/504 o sin respuesta),
+// nunca ante 4xx/500 reales — cubre el caso de Railway despertando un contenedor.
+const isAuthCredentialPost = (config?: InternalAxiosRequestConfig): boolean => {
+  if (config?.method !== 'post') return false;
+  const url = config.url ?? '';
+  return url === `${AUTH_URL}/` || url.endsWith('/auth/') || url.includes('/auth/google');
+};
+
+const isRetryable = (error: AxiosError): boolean => {
+  const config = error.config;
+  if (!config || error.code === 'ERR_CANCELED') return false;
+  if (config.method === 'get') return !error.response || error.response.status >= 500;
+  if (isAuthCredentialPost(config)) return !error.response || GATEWAY_ERROR_CODES.includes(error.response.status);
+  return false;
+};
 
 api.interceptors.response.use(
   (response) => response,
