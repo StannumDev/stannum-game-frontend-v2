@@ -44,6 +44,15 @@ export const requestLogin = async (data: { username: string; password: string })
     }
 };
 
+export const requestResendActivation = async (email: string): Promise<boolean> => {
+    try {
+        const response = await api.post(`${AUTH_URL}/resend-activation`, { email });
+        return !!response?.data?.success;
+    } catch (error: unknown) {
+        throw error;
+    }
+};
+
 export const checkEmailExists = async (email: string): Promise<boolean> => {
     try {
         const response = await api.post(`${AUTH_URL}/check-email`, { email });
