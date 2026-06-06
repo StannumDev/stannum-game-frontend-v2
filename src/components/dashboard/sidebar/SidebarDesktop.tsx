@@ -7,11 +7,13 @@ import { AnimatePresence, m } from 'framer-motion';
 import type { SidebarLink, UserSidebarDetails } from '@/interfaces';
 import { useUserStore } from '@/stores/userStore';
 import { useSidebarStore } from '@/stores/sidebarStore';
+import { useTrainerFloatStore } from '@/stores/trainerFloatStore';
 import { PanelCloseIcon, PanelOpenIcon, PowerIcon, OptionsIcon } from '@/icons';
 import { BuscadorSidebar, InitialsAvatar, STANNUMIcon, STANNUMLogo, SidebarDesktopLink, Tooltip } from '@/components';
 import { formatCoins } from '@/utilities';
 import { getRankByLevel } from '@/config/ranks';
 import stannum_coin from "@/assets/tins_coin.svg";
+import stan_avatar from "@/assets/home/stan_help.webp";
 
 interface Props{
     user: UserSidebarDetails | null;
@@ -31,6 +33,7 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const storeLogout = useUserStore(s => s.logout);
+    const openStan = useTrainerFloatStore(s => s.open);
 
     const onLogout = () => {
         storeLogout();
@@ -141,6 +144,21 @@ export const SidebarDesktop = ({user, links, pathname, isLoading}:Props) => {
                                 ))
                             }
                         </ul>
+                        {/* Entry point a STAN (entrenador general). Abre el overlay flotante; no es navegación. */}
+                        <m.button
+                            type="button"
+                            onClick={openStan}
+                            aria-label="Preguntale a STAN, tu entrenador"
+                            initial={{ x: '-100%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: 0.6 }}
+                            className={`w-full h-14 flex items-center transition-200 text-neutral-400 hover:text-white hover:bg-card-hover ${isExpanded ? 'px-8 gap-3' : 'justify-center'}`}
+                        >
+                            <span className="relative block size-7 shrink-0 rounded-full overflow-hidden ring-1 ring-stannum/50">
+                                <Image src={stan_avatar} alt="" fill sizes="28px" className="object-cover object-top" />
+                            </span>
+                            {isExpanded && <span className="font-semibold whitespace-nowrap">Preguntale a STAN</span>}
+                        </m.button>
                         <BuscadorSidebar />
                         <m.div
                             initial={{ scale: 0, opacity: 0 }}

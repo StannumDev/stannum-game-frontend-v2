@@ -7,6 +7,7 @@ import { isLessonAvailable, isInstructionAvailable, hasModuleAccess, getLessonFr
 import type { Instruction, Lesson, Module, Program, ProgramId, Section } from '@/interfaces';
 import { getModuleChests, type ChestConfig } from '@/config/chests';
 import { ChestMiniatureCard } from '@/components/dashboard/program/modules/path-map/ChestMiniatureCard';
+import { LessonTopicTimeline } from './LessonTopicTimeline';
 import { Suspense, useEffect, useState } from 'react';
 
 interface Props {
@@ -145,27 +146,20 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
         <main className="main-container min-h-0 p-0 flex flex-col items-start">
             <h1 className="sr-only">{lesson.longTitle}</h1>
             <GoBackButton className='text-card-lightest hover:text-white lg:hover:bg-card' href={`/dashboard/library/${programId}/${section.id}/${program_module.id}`} />
-            <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-4">
-                <div className="col-span-1 lg:col-span-3">
-                    <Suspense>
-                        <LessonVideoPlayer
-                            program={programId}
-                            lesson={lesson}
-                            moduleLessons={program_module.lessons}
-                            isCompleted={isCompleted}
-                            isNextLessonAvailable={isNextLessonAvailable}
-                            nextInstruction={nextInstruction}
-                            nextModule={nextModule}
-                            nextChest={nextChest}
-                            userId={user.username}
-                        />
-                    </Suspense>
-                </div>
-                <div className="hidden lg:block content-visibility-hidden lg:content-visibility-visible col-span-1 w-full max-h-none relative overflow-y-auto">
-                    <div className="size-full pr-4 flex flex-col gap-2 absolute top-0 left-0">
-                        {renderMiniatureList()}
-                    </div>
-                </div>
+            <div className="w-full">
+                <Suspense>
+                    <LessonVideoPlayer
+                        program={programId}
+                        lesson={lesson}
+                        moduleLessons={program_module.lessons}
+                        isCompleted={isCompleted}
+                        isNextLessonAvailable={isNextLessonAvailable}
+                        nextInstruction={nextInstruction}
+                        nextModule={nextModule}
+                        nextChest={nextChest}
+                        userId={user.username}
+                    />
+                </Suspense>
             </div>
             <div className="mt-6 w-full flex flex-col">
                 <p className="subtitle-1"> {section.name} | {program_module.name}</p>
@@ -181,9 +175,15 @@ export const LessonPageContent = ({ lesson, program_module, section, program, pr
                     </div>
                 )}
             </div>
-            <div className="mt-4 lg:hidden lg:content-visibility-hidden w-full h-96 relative overflow-y-auto overflow-x-hidden">
-                <div className="size-full flex flex-col gap-2 absolute top-0 left-0">
-                    {renderMiniatureList()}
+            <LessonTopicTimeline programId={programId} lessonId={lessonId} />
+            <div className="mt-8 w-full flex flex-col">
+                <p className="subtitle-1 mb-3">Lecciones del módulo</p>
+                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 snap-x">
+                    {renderMiniatureList().map((el, i) => (
+                        <div key={i} className="shrink-0 w-[80vw] max-w-[340px] lg:w-[320px] snap-start">
+                            {el}
+                        </div>
+                    ))}
                 </div>
             </div>
         </main>

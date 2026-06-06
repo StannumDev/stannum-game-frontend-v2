@@ -52,6 +52,8 @@ La app estara disponible en `http://localhost:3000`.
   - `sidebarStore` - Estado del sidebar movil
   - `modalQueueStore` - Cola de prioridad para modales y tutoriales
   - `feedbackCooldownStore` - Cooldowns de prompts de feedback (lecciones, instrucciones, NPS, onboarding) para evitar pedir feedback repetido
+  - `trainerChatStore` - Hilos del chat con STAN (mensajes por hilo, streaming, feedback) persistidos en sessionStorage
+  - `trainerFloatStore` - Estado del chat flotante de STAN (abierto/cerrado + contexto programId/lessonId)
 
 ### Autenticacion
 
@@ -118,6 +120,7 @@ src/
 │       │       ├── [section]/    # Secciones del programa
 │       │       │   └── [program_module]/ # Modulos con lecciones
 │       │       ├── lessons/      # Paginas de lecciones
+│       │       │   ├── layout.tsx # Layout del segmento: monta el chat flotante de STAN (persiste entre lecciones)
 │       │       │   └── [lessonId]/
 │       │       └── instructions/ # Paginas de instrucciones
 │       │           └── [instructionId]/
@@ -175,7 +178,7 @@ src/
 │   │   ├── purchases/            # PurchaseList, PurchaseCard, ProductKeyDisplay
 │   │   ├── subscriptions/        # SubscriptionsLayout, SubscriptionCard
 │   │   ├── program/              # Programa: cover, modulos, lecciones, instrucciones, DemoUpgradeBanner
-│   │   │   ├── lessons/          # LessonVideoPlayer, LessonDetails, etc.
+│   │   │   ├── lessons/          # LessonVideoPlayer, LessonDetails, TrainerChatFloat (chat de STAN), etc.
 │   │   │   ├── instructions/     # InstructionCard, InstructionDetails
 │   │   │   ├── modules/          # ModuleContent, BlockedModule, PathMap
 │   │   │   │   └── path-map/     # PathMap visual de modulos
@@ -224,6 +227,7 @@ src/
 │   ├── subscription.ts           # createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory, downloadSubscriptionReceipt
 │   ├── program.ts                # Cliente API para programas (game frontend, /api/programs/public)
 │   ├── programServer.ts          # Mismo, pero para Server Components (RSC con cookies)
+│   ├── trainer.ts                # Entrenador IA STAN: askTrainer, askTrainerStream (SSE), sendTrainerFeedback
 │   └── feedback.ts               # submitFeedback, submitErrorFeedback (NPS / lesson / instruction / onboarding / error)
 │
 ├── providers/                    # React providers
@@ -234,7 +238,9 @@ src/
 │   ├── programStore.ts           # Catalogo de programas (fetch desde API, cache)
 │   ├── sidebarStore.ts           # Estado del sidebar
 │   ├── modalQueueStore.ts        # Cola de prioridad para modales/tutoriales
-│   └── feedbackCooldownStore.ts  # Cooldowns por tipo (NPS, lesson, instruction, onboarding) para evitar spamear prompts
+│   ├── feedbackCooldownStore.ts  # Cooldowns por tipo (NPS, lesson, instruction, onboarding) para evitar spamear prompts
+│   ├── trainerChatStore.ts       # Hilos del chat de STAN (mensajes por hilo, streaming, feedback; persist sessionStorage)
+│   └── trainerFloatStore.ts      # Estado del chat flotante de STAN (abierto/cerrado + contexto program/lesson)
 │
 ├── interfaces/                   # TypeScript interfaces
 │   ├── user/                     # User, FullUserDetails, Level, Achievement
@@ -302,8 +308,9 @@ NEXT_PUBLIC_API_STORE_URL=/store
 NEXT_PUBLIC_API_PAYMENT_URL=/payment
 NEXT_PUBLIC_API_SUBSCRIPTION_URL=/subscription
 
-# Mercado Pago (pagos y suscripciones)
-NEXT_PUBLIC_MP_PUBLIC_KEY=tu_mp_public_key
+# Entrenador IA STAN (chatbot RAG sobre las lecciones)
+# Opcional: si no se setea, trainer.ts usa el default "/trainer" sobre NEXT_PUBLIC_API_URL
+NEXT_PUBLIC_API_TRAINER_URL=/trainer
 
 # Google OAuth
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_client_id.apps.googleusercontent.com
@@ -315,11 +322,19 @@ NEXT_PUBLIC_RECAPTCHA_SITE_KEY=tu_site_key
 NEXT_PUBLIC_MUX_IDS={"tutorial":"playback_id_1","TIAM01L01":"playback_id_2",...}
 NEXT_PUBLIC_MUX_TOKEN_DATA=token_data_para_signed_urls
 
+# App / observabilidad
+NEXT_PUBLIC_APP_VERSION=1.0.0        # Se adjunta a NPS, feedback de errores y captura de 5xx en api.ts
+NEXT_PUBLIC_APP_ORIGIN=https://...   # Origin permitido por el route handler /api/feedback/error
+NEXT_PUBLIC_MAINTENANCE_MODE=false   # 'true' fuerza pantalla de mantenimiento (root layout)
+
 # Environment
 NEXT_PUBLIC_ENV=development
 ```
 
-> **Nota:** Las variables `NEXT_PUBLIC_AWS_S3_*` ya no se usan en el frontend. El upload a S3 se hace via presigned URLs del backend.
+> **Notas:**
+> - Las variables `NEXT_PUBLIC_AWS_S3_*` ya no se usan en el frontend. El upload a S3 se hace via presigned URLs del backend.
+> - `NEXT_PUBLIC_MP_PUBLIC_KEY` quedó como legacy: sigue definida en `.env.local` pero **ya no se referencia en el código** (los pagos de Mercado Pago se resuelven via preferencias creadas por el backend, sin SDK de MP cargado en el cliente). Se puede eliminar.
+> - `NEXT_PUBLIC_APP_VERSION`, `NEXT_PUBLIC_APP_ORIGIN` y `NEXT_PUBLIC_API_TRAINER_URL` se consumen en el código pero no estaban en `.env.local`; cada uno tiene fallback (`'unknown'`, `''` y `'/trainer'` respectivamente).
 
 ## Paginas Principales
 
@@ -345,7 +360,7 @@ NEXT_PUBLIC_ENV=development
 | `/dashboard/library` | Biblioteca de programas |
 | `/dashboard/library/[program_id]` | Path map del programa (modulos visuales) |
 | `/dashboard/library/[program_id]/[section]/[module]` | Contenido del modulo |
-| `/dashboard/library/[program_id]/lessons/[lessonId]` | Reproducir leccion (video Mux) |
+| `/dashboard/library/[program_id]/lessons/[lessonId]` | Reproducir leccion (video Mux). Acepta `?t=<seg>` para arrancar en un minuto (citas de STAN). El chat flotante de STAN vive en el layout del segmento `lessons` y persiste entre lecciones |
 | `/dashboard/library/[program_id]/instructions/[instructionId]` | Realizar instruccion practica |
 | `/dashboard/community/prompts` | Explorar prompts compartidos |
 | `/dashboard/community/assistants` | Explorar GPTs/assistants |
@@ -502,6 +517,31 @@ Al completar una leccion, el backend retorna:
 
 El frontend muestra confetti + toast para achievements y actualiza el store via `refreshUser()`.
 
+## Entrenador IA "STAN" (Chat)
+
+Chatbot RAG que responde dudas del alumno sobre las lecciones del programa. Es un **chat flotante** (FAB "Preguntale a STAN" abajo a la derecha) que vive **solo dentro del segmento `/dashboard/library/[program_id]/lessons`** y **persiste entre lecciones**: está montado en `src/app/dashboard/library/[program_id]/lessons/layout.tsx`, así que al navegar de una lección a otra solo cambia el page segment, el panel no se desmonta y el hilo se mantiene. Al salir de `/lessons` el float desaparece.
+
+**Componente:** `src/components/dashboard/program/lessons/TrainerChatFloat.tsx`
+**Servicio:** `src/services/trainer.ts`
+**Stores:** `src/stores/trainerChatStore.ts` (hilos/mensajes) + `src/stores/trainerFloatStore.ts` (abierto/cerrado + contexto)
+
+### Funcionalidades
+
+- **Hilo por programa:** la clave del hilo en el store es el `programId` (no el `lessonId`), por eso la conversación es continua aunque cambies de lección. El `lessonId` actual sí se envía al backend como **contexto** de la pregunta.
+- **Streaming SSE token a token:** `askTrainerStream` hace un `POST` con `fetch` a `/trainer/ask/stream` y parsea eventos SSE (`data:` con `type: delta | done | error`). Cada `delta` se concatena en la burbuja del asistente en tiempo real; `done` trae las citas y el `interactionId`. (También existe `askTrainer` no-streaming sobre `/trainer/ask` vía Axios.)
+- **Citas clickeables:** cada respuesta puede incluir citas (`lessonId`, `title`, `startSec`). Al hacer click:
+  - Si la cita es de la lección actual → dispara el `CustomEvent` `trainer:seek` y `LessonVideoPlayer` salta el player a ese segundo (sin recargar).
+  - Si es de otra lección (siempre anterior, ya desbloqueada) → navega a `…/lessons/<lessonId>?t=<seg>` y el player arranca en ese minuto. El chat persiste porque es un overlay fijo del layout.
+- **Feedback 👍 / 👎:** por mensaje (`sendTrainerFeedback` → `/trainer/feedback` con el `interactionId`). Toggle optimista con rollback si falla la request.
+- **Persistencia en `sessionStorage`** (`stan-chat-threads`): el hilo sobrevive a un reload pero **se borra al cerrar la pestaña**. Escritura **debounceada** (~600 ms) para no hacer un `setItem` por cada token del stream; flush forzado en `visibilitychange`/`pagehide`. Se persiste como máximo el hilo recortado (60 mensajes); `loadingByLesson` no se persiste (al rehidratar se resetea para no quedar "Pensando" colgado, y se descarta un assistant final vacío de un stream cortado). El estado abierto/cerrado del panel se guarda en `stan-chat-open` (también sessionStorage).
+- **Markdown básico tolerante a parciales:** renderer propio (sin `innerHTML`) que arma nodos React para `**negrita**`, `*itálica*`/`_em_`, `` `código` ``, links, listas y fences ```` ``` ````. La sintaxis sin cerrar (típica durante el streaming) se muestra como texto plano hasta que llega el cierre.
+- **Controles:** botón **Detener** (aborta el stream vía `AbortController` sin mostrar error) y **Nueva conversación** (con confirmación; corta el stream en curso y vacía el hilo). Sugerencias iniciales y saludo de bienvenida hardcodeado por hora/día (sin llamada a la API).
+- **Accesibilidad / UX mobile:** `role="dialog"` + `aria-label`, lista de mensajes con `role="log"`/`aria-live="polite"`, foco al input al abrir (solo desktop) y retorno del foco al FAB al cerrar, **Escape** cierra, **lock de scroll** del `body` en mobile mientras está abierto, y **drag-to-dismiss** (arrastrar el handle hacia abajo cierra). En mobile es un bottom sheet; en desktop, un panel fijo a la derecha.
+
+### Variable de entorno
+
+`NEXT_PUBLIC_API_TRAINER_URL` (default `/trainer`, montado sobre `NEXT_PUBLIC_API_URL`).
+
 ## Instrucciones (Tareas Practicas)
 
 ### Estados de Instruccion
@@ -595,7 +635,28 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 - withCredentials: true (cookies automaticos)
 - timeout: 15000ms
 - Interceptor de refresh token automatico (renueva access token en 401)
-- Redirect a /login en caso de fallo total
+- Reintentos exponenciales ante 5xx / cold-start (ver "Resiliencia de red")
+- Redirect a /login en caso de fallo total (`forceLogout`)
+
+### Resiliencia de Red y Auth
+
+Toda la lógica de robustez de red vive en el interceptor de respuesta de `src/lib/api.ts`, complementada por el manejo de errores del `userStore`:
+
+- **Refresh-on-401 con dedup:** un 401 (en un endpoint que no está en la lista de skip y con el flag local `logged_in` presente) dispara un único `POST /auth/refresh-token`. La promesa de refresh se guarda en `refreshPromise`, así varios requests que fallan en paralelo **comparten el mismo refresh** en vez de disparar uno cada uno; cuando resuelve, todos reintentan su request original (marcado con `_retry` para no reintentar en loop). Si el refresh falla → `forceLogout`.
+- **Lista de skip de refresh:** endpoints de credenciales/recovery (`/auth/register`, `/auth/google`, `/auth/refresh-token`, `/auth/logout`, password-recovery/reset, `/auth/complete-activation`, `/auth/magic-link`) y el **login** (`POST` exacto a `${AUTH_URL}/`) nunca disparan refresh: un 401 ahí son credenciales inválidas, no un token expirado.
+- **Reintentos exponenciales (cold-start / 5xx):** backoff de `1s * 2^(n-1)`, hasta `MAX_RETRIES = 2`. Aplica a:
+  - **GET** sin respuesta o con status ≥ 500.
+  - **POST de credenciales** (login + Google) ante gateway/cold-start (502/503/504 o sin respuesta) — son idempotentes porque re-emitir tokens es seguro; cubre el caso de Railway despertando un contenedor. Nunca se reintentan ante 4xx ni 500 "reales".
+  - `ERR_CANCELED` (requests abortadas) nunca se reintentan.
+- **`forceLogout`:** idempotente (guard `isLoggingOut`). Hace `POST /auth/logout` best-effort, limpia el flag `logged_in`, muestra un toast de "Sesión expirada" y redirige a `/login?redirect=…` preservando la ruta actual.
+- **Captura de 5xx → backend:** errores con status ≥ 500 (excepto los del propio `/feedback`) se reportan a `/api/feedback/error` con metadata sanitizada, throttleados a 1 cada 5 min (`captureServerError`).
+- **Init del user tolerante a red:** `userStore.initUser()` distingue errores de red (`isNetworkError`: sin respuesta o 502/503/504) de errores reales. Ante red caída marca `connectionError = true`, muestra un toast "Sin conexión" (una sola vez) y **resetea `_initStarted`** para permitir reintento (`retryInit`), en vez de tirar al usuario a `/login`. La guarda `_initStarted` evita doble init en el arranque.
+
+### Fixes recientes del flujo de login
+
+- Reintentar el `POST` de login/Google ante cold-start o errores de gateway (502/503/504/sin respuesta), evitando el "login intermitente" cuando el backend está despertando.
+- Evitar el **refresh espurio**: el login (`POST ${AUTH_URL}/`) y los endpoints de credenciales quedaron explícitamente fuera del refresh-on-401, para que un 401 de credenciales inválidas no se interprete como token expirado.
+- Bloqueo de cuentas no activadas y hardening del flujo de recovery (manejo de `AUTH_ACCOUNT_DISABLED`, etc.).
 
 ### Services Disponibles
 
@@ -614,12 +675,13 @@ El frontend muestra confetti + toast para achievements y actualiza el store via 
 | `store.ts` | getStoreCovers, purchaseCover, equipCover, purchaseStreakShield, recoverStreak |
 | `payment.ts` | createPreference, verifyPayment, getMyOrders, applyCoupon, resendGiftEmail |
 | `subscription.ts` | createSubscription, cancelSubscription, getSubscriptionStatus, getPaymentHistory |
+| `trainer.ts` | askTrainer, askTrainerStream (SSE), sendTrainerFeedback (Entrenador IA STAN) |
 
 ## Pagos y Suscripciones (Mercado Pago)
 
 ### Compra Unica
-- Checkout integrado con Mercado Pago (SDK JS)
-- Flujo: seleccionar programa → aplicar cupon (opcional) → crear preferencia → pagar → verificar → activar programa
+- Checkout con Mercado Pago en **modo redirect** (sin SDK JS en el cliente): el backend crea la preferencia y devuelve un `initPoint`; el front hace `window.location.href = initPoint`. No se usa `NEXT_PUBLIC_MP_PUBLIC_KEY` (ver nota en Variables de Entorno)
+- Flujo: seleccionar programa → aplicar cupon (opcional) → crear preferencia → redirect a MP → verificar → activar programa
 - Historial de compras en `/dashboard/billing`
 - Soporte para reenvio de email de regalo
 
@@ -709,6 +771,10 @@ Todos los componentes animados usan `m.*` (no `motion.*`) para reducir bundle si
 ### MotionWrapperLayout
 
 Wrapper reutilizable para paginas con fade-in + slide-up al montar.
+
+## Sugerencias de documentacion
+
+> Este README es hoy la única documentación del frontend. A medida que crecen sistemas como el Entrenador IA STAN o la resiliencia de red, valdría la pena adoptar el patrón del backend (`stannum-game-backend-v2/docs/systems/*.md`) y mover los sistemas grandes a una carpeta `docs/` dedicada (ej. `docs/systems/trainer-chat.md`, `docs/systems/auth-resilience.md`), dejando el README como índice. **Aún no se creó** dicha carpeta — queda como sugerencia.
 
 ---
 

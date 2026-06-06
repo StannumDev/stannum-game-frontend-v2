@@ -67,12 +67,34 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
 
     useEffect(() => {
         setSecurePlaybackId(null);
+        // Permitir re-aplicar el seek inicial (?t= de una cita) en la lección nueva: con el
+        // layout compartido el player puede no remontar entre lecciones, así que reseteamos el flag.
+        initialSeekApplied.current = false;
         getPlaybackId(program.toLowerCase(), lesson.id).then(id => {
             if (id) setSecurePlaybackId(id);
         });
     }, [program, lesson.id]);
 
     const activePlaybackId = securePlaybackId ?? undefined;
+
+    // El Entrenador IA pide saltar a un minuto de ESTA lección (cita clickeada).
+    useEffect(() => {
+        const onSeek = (e: Event) => {
+            const detail = (e as CustomEvent).detail;
+            if (!detail || detail.lessonId !== lesson.id) return;
+            const player = videoRef.current;
+            const t = Number(detail.time);
+            if (!player || !Number.isFinite(t) || t < 0) return;
+            try {
+                player.currentTime = t;
+                lastTimeRef.current = Math.floor(t);
+                player.scrollIntoView?.({ behavior: "smooth", block: "center" });
+                player.play?.()?.catch?.(() => {});
+            } catch { /* noop */ }
+        };
+        window.addEventListener("trainer:seek", onSeek as EventListener);
+        return () => window.removeEventListener("trainer:seek", onSeek as EventListener);
+    }, [lesson.id]);
 
     useEffect(() => {
         if (!activePlaybackId) return;
