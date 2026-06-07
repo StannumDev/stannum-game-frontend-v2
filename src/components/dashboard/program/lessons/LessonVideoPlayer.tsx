@@ -248,7 +248,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
     return (
         <div className='w-full aspect-video relative rounded-lg border border-card cursor-pointer overflow-hidden'>
             {showNextOverlay && nextLesson && isNextLessonAvailable && (
-                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-overlay lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
@@ -307,7 +307,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 </div>
             )}
             {showNextOverlay && nextInstruction && (!nextLesson || !isNextLessonAvailable) && (
-                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-overlay lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
@@ -351,7 +351,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 </div>
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && nextModule && (
-                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-overlay lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>
@@ -395,7 +395,7 @@ export const LessonVideoPlayer = ({ program, lesson, moduleLessons, isCompleted,
                 </div>
             )}
             {showNextOverlay && !nextInstruction && (!nextLesson || !isNextLessonAvailable) && !nextModule && (
-                <div className="fixed inset-0 z-[10000000] lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
+                <div className="fixed inset-0 z-overlay lg:absolute lg:z-20 bg-black/80 flex flex-col items-center justify-center gap-3 lg:gap-4 text-white p-4 transition-opacity">
                     {xpResult && xpResult.totalGain > 0 && (
                         <div className="flex flex-col items-center gap-2">
                             <p className="text-sm font-semibold text-stannum">¡Lección completada!</p>

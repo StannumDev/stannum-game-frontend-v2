@@ -113,16 +113,16 @@ export const CreateAssistantModal = ({ isOpen, onClose, onSuccess }: Props) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={handleClose}
-                        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/60 z-modal-backdrop backdrop-blur-sm"
                     />
                     <m.div
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed right-0 top-0 h-full w-full md:w-150 bg-card border-l border-card-light z-[99999999999999] overflow-y-auto"
+                        className="fixed right-0 top-0 h-full w-full md:w-150 bg-card border-l border-card-light z-modal overflow-y-auto"
                     >
-                        <form className="w-full p-4 sm:p-6 space-y-6">
+                        <form className="w-full p-4 sm:p-6 space-y-6 pb-[calc(1.5rem_+_env(safe-area-inset-bottom))]">
                             <div className="w-full flex items-start sm:items-center justify-between pb-4 border-b border-card-light">
                                 <div className='grow min-w-0'>
                                     <h2 className="w-full text-2xl font-bold">Añadir un Asistente</h2>

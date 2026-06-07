@@ -208,7 +208,7 @@ export const FeedbackModal = (props: Props) => {
     };
 
     return (
-        <Modal showModal={show} setShowModal={(v) => { if (!v && !submitting) onClose(); }} disableBackdropClose className="no-card max-w-xl w-full">
+        <Modal showModal={show} setShowModal={(v) => { if (!v && !submitting) onClose(); }} disableBackdropClose className="no-card max-w-xl w-full h-auto">
             <div className="px-5 sm:px-8 py-8 sm:py-12">
                 {submitted ? (
                     <m.div

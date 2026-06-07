@@ -50,7 +50,7 @@ export const Tooltip = ({ children, text, className, delay = 400 }: Props) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.15 }}
-                        className="fixed z-[9999] -translate-x-1/2 -translate-y-full px-3 py-1.5 bg-card-light/90 border border-card-lighter rounded-lg text-xs text-white whitespace-nowrap pointer-events-none"
+                        className="fixed z-tooltip -translate-x-1/2 -translate-y-full px-3 py-1.5 bg-card-light/90 border border-card-lighter rounded-lg text-xs text-white whitespace-nowrap pointer-events-none"
                         style={{ top: pos.top, left: pos.left }}
                     >
                         {text}

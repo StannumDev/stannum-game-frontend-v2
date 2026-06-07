@@ -39,15 +39,15 @@ export const DeletePromptModal = ({ isOpen, onClose, promptId, promptTitle, onDe
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/60 z-modal-backdrop backdrop-blur-sm"
                     />
-                    <div className="size-full fixed top-0 left-0 z-50 flex items-center justify-center p-4">
+                    <div className="size-full fixed top-0 left-0 z-modal flex items-center justify-center p-4">
                         <m.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                            className="w-full max-w-md bg-card border border-card-light rounded-lg z-50 p-6"
+                            className="w-full max-w-md bg-card border border-card-light rounded-lg z-modal p-6"
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">

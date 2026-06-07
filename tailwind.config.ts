@@ -9,6 +9,21 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		// Escala de capas (z-index) centralizada. Antes había valores arbitrarios de 3 a 14
+  		// dígitos sueltos y empatados; estos tokens ordenan todos los overlays fixed de la app.
+  		zIndex: {
+  			cta: '100',            // barras CTA fijas (ej. comprar programa)
+  			fab: '150',            // FAB de STAN (despeja el nav por posición, no por z)
+  			nav: '200',            // navbars mobile (header + bottom-nav)
+  			tooltip: '250',        // tooltips
+  			overlay: '300',        // overlays fullscreen (fin de lección, velo del buscador)
+  			'overlay-top': '310',  // input del buscador (sobre su velo)
+  			'chat-backdrop': '350',
+  			chat: '360',           // panel del chat de STAN abierto
+  			'modal-backdrop': '400',
+  			modal: '410',          // Modal compartido + modales de comunidad
+  			toast: '500',          // notificaciones (siempre arriba de todo)
+  		},
   		colors: {
   			background: {
   				DEFAULT: '#0a0a0a',

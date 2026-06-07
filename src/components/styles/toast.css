@@ -1,9 +1,12 @@
-.Toastify{
-    @apply !z-[99999999]
+/* El z-index va en el contenedor REAL (position: fixed). `.Toastify` es position:static,
+   así que un z-index ahí es inerte. Esto hace que el token z-toast sea la fuente de verdad
+   (override del --toastify-z-index default de la librería). */
+.Toastify__toast-container{
+    @apply !z-toast
 }
 
 .contenedorToast{
-    @apply !m-0 first:!mt-0 !mb-1 p-4 !rounded !bg-gradient-to-br !from-background-sidebar !to-card !border !border-card relative !z-[99999999]
+    @apply !m-0 first:!mt-0 !mb-1 p-4 !rounded !bg-gradient-to-br !from-background-sidebar !to-card !border !border-card relative !z-toast
 }
 
 .bodyToast{

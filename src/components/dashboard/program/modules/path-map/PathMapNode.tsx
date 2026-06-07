@@ -93,21 +93,21 @@ export const PathMapNode = ({ item, position, nodeIndex, nodeSize, isFirstActive
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: 'spring', bounce: 0, delay: nodeIndex * 0.05 + 0.1 }}
             className={`${labelPositionClass} ${labelStyleClass}`}
-            style={{ maxWidth: isMobile ? 200 : 280 }}
+            style={{ maxWidth: isMobile ? 150 : 280 }}
         >
             {labelContent}
         </m.div>
     ) : item.state === 'completed' ? (
         <div
             className={`${labelPositionClass} ${labelStyleClass} opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none`}
-            style={{ maxWidth: isMobile ? 200 : 280 }}
+            style={{ maxWidth: isMobile ? 150 : 280 }}
         >
             {labelContent}
         </div>
     ) : item.state === 'blocked' ? (
         <div
             className={`${labelPositionClass} ${labelStyleClass} opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none`}
-            style={{ maxWidth: isMobile ? 200 : 280 }}
+            style={{ maxWidth: isMobile ? 150 : 280 }}
         >
             <p className="text-xs text-card-lightest">Completá las actividades anteriores</p>
         </div>

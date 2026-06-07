@@ -32,7 +32,7 @@ export const RankingHome = () => {
 
     return (
         <MotionWrapperLayout className="grow">
-            <section id="top-leaders" className="size-full card flex flex-col">
+            <section id="top-leaders" className="size-full card flex flex-col overflow-hidden">
                 <div className="w-full flex justify-between items-start">
                     <div className="w-fit flex items-center gap-2">
                         <div>

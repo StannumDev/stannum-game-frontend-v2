@@ -47,7 +47,7 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                 isSearching &&
                 <Fragment>
                     <m.div
-                        className={`w-full pl-3 pb-3 bg-background flex justify-center items-end fixed top-0 left-0 z-[99999999] pointer-events-auto ${styles.sidebar__search}`}
+                        className={`w-full pl-3 pb-3 bg-background flex justify-center items-end fixed top-0 left-0 z-overlay-top pointer-events-auto ${styles.sidebar__search}`}
                         initial={{ y: '-100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '-100%' }}
@@ -95,7 +95,7 @@ export const BuscadorSidebarMobile = ({pathname, isSearching, setIsSearching}:Pr
                         </div>
                     </m.div>
                     <m.div
-                        className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[9999999]"
+                        className="w-full min-h-dvh bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-overlay"
                         onClick={() => {
                             reset();
                             setIsSearching(false);

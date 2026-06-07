@@ -7,12 +7,13 @@ import { AppsIcon, CommunityIcon, HomeIcon, StoreIcon, UserCircleIcon } from "@/
 import { SidebarDesktop, SidebarMobile } from "@/components";
 import { useUserStore } from "@/stores/userStore";
 
+// Sin "Mi perfil": el profileLink se appendea SIEMPRE abajo (allLinks). Si estuviera acá,
+// al cargar quedaban 6 links + buscador = 7 celdas y el ícono de perfil duplicado.
 const SKELETON_LINKS: Array<SidebarLink> = [
     { label: 'Inicio', href: '/dashboard', Icon: HomeIcon },
     { label: 'Biblioteca', href: '/dashboard/library', Icon: AppsIcon },
     { label: 'Comunidad', href: '/dashboard/community', Icon: CommunityIcon },
     { label: 'Tienda', href: '/dashboard/store', Icon: StoreIcon },
-    { label: 'Mi perfil', href: '/dashboard', Icon: UserCircleIcon },
 ];
 
 export const Sidebar = () => {

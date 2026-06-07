@@ -144,14 +144,14 @@ export const AssistantsGridFilter = ({ filters, searchTerm, onSearchChange, onFi
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsFiltersOpen(false)}
-                        className="md:hidden fixed inset-0 bg-black/60 z-[99999999] backdrop-blur-sm"
+                        className="md:hidden fixed inset-0 bg-black/60 z-modal-backdrop backdrop-blur-sm"
                     />
                     <m.div
                         initial={{ y: '100%' }}
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-card-light z-[999999999] rounded-t-2xl max-h-[85vh] overflow-y-auto"
+                        className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-card-light z-modal rounded-t-2xl max-h-[85vh] overflow-y-auto"
                     >
                         <div className="p-6 space-y-4">
                             <div className="flex items-center justify-between pb-4 border-b border-card-light">

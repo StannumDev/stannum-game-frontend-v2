@@ -53,7 +53,7 @@ export const SidebarMobile = ({user, links, pathname, isLoading}:Props) => {
 
     return (
         <>
-            <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-[9999999]">
+            <div className="lg:hidden lg:content-visibility-hidden w-full min-h-dvh fixed top-0 left-0 pointer-events-none z-nav">
                 <AnimatePresence>
                     { isShow &&
                         <m.div

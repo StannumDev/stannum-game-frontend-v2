@@ -186,10 +186,14 @@ const FloatButton = forwardRef<HTMLButtonElement, { onClick: () => void; hasUnre
             ref={ref}
             onClick={onClick}
             aria-label={hasUnread ? 'STAN te respondió. Abrir chat' : 'Abrir chat con STAN'}
-            className={`fixed bottom-5 right-5 z-[200] flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full bg-stannum text-black font-bold shadow-lg shadow-black/40 active:scale-95 transition-150 ${hasUnread ? 'animate-in zoom-in-95 duration-300' : ''}`}
+            // Mobile: burbuja circular (solo avatar), posicionada ARRIBA del nav inferior (bottom-[5rem+safe]),
+            // así no se solapan y no hace falta z alto. z-fab está sobre el contenido y la CTA de store,
+            // pero DEBAJO del nav, modales, toasts y overlays de fin de lección (que deben taparlo).
+            // Desktop: pill con texto, abajo-derecha.
+            className={`fixed right-5 bottom-[calc(5rem_+_env(safe-area-inset-bottom))] lg:bottom-5 z-fab flex items-center gap-2 p-1.5 lg:pr-4 rounded-full bg-stannum text-black font-bold shadow-lg shadow-black/40 active:scale-95 transition-150 ${hasUnread ? 'animate-in zoom-in-95 duration-300' : ''}`}
         >
             <span className="relative shrink-0">
-                <StanAvatar className="size-9" />
+                <StanAvatar className="size-12 lg:size-9" />
                 {hasUnread && (
                     <span className="absolute -top-0.5 -right-0.5 flex size-3">
                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-invalid opacity-75" />
@@ -197,7 +201,7 @@ const FloatButton = forwardRef<HTMLButtonElement, { onClick: () => void; hasUnre
                     </span>
                 )}
             </span>
-            <span className="text-sm">{hasUnread ? 'STAN te respondió' : 'Preguntale a STAN'}</span>
+            <span className="hidden lg:inline text-sm">{hasUnread ? 'STAN te respondió' : 'Preguntale a STAN'}</span>
         </button>
     );
 });
@@ -262,8 +266,10 @@ export const TrainerChatFloat = () => {
 
     return (
         <>
-            {/* Backdrop (solo mobile) */}
-            <div className="fixed inset-0 z-[199] bg-black/60 backdrop-blur-sm lg:hidden" onClick={close} />
+            {/* Backdrop (solo mobile). z-chat-backdrop está ENTRE los navbars y los modales/toasts:
+                tapa los dos navbars (modal-like) pero deja que un toast o un modal de feedback/NPS
+                sigan apareciendo por encima del chat. */}
+            <div className="fixed inset-0 z-chat-backdrop bg-black/60 backdrop-blur-sm lg:hidden" onClick={close} />
 
             {/* Panel flotante */}
             <div
@@ -271,8 +277,8 @@ export const TrainerChatFloat = () => {
                 aria-label="Chat con STAN"
                 style={{ transform: dragY ? `translateY(${dragY}px)` : undefined, transition: dragging ? 'none' : 'transform 0.2s ease' }}
                 className="
-                    fixed z-[200] bg-card border border-card-light overflow-hidden flex flex-col
-                    bottom-0 left-0 right-0 h-[88vh] rounded-t-2xl
+                    fixed z-chat bg-card border border-card-light overflow-hidden flex flex-col
+                    bottom-0 left-0 right-0 h-[90vh] rounded-t-2xl
                     animate-in slide-in-from-bottom duration-300
                     lg:bottom-4 lg:right-4 lg:left-auto lg:w-[380px] lg:h-[calc(100vh-5rem)]
                     lg:rounded-xl lg:slide-in-from-bottom-0
@@ -466,8 +472,8 @@ function ChatContent({
                 )}
             </div>
 
-            {/* Input */}
-            <div className="shrink-0 border-t border-card-light p-2.5">
+            {/* Input. pb con safe-area: en mobile el panel llega al borde, bajo el home indicator. */}
+            <div className="shrink-0 border-t border-card-light p-2.5 pb-[calc(0.625rem_+_env(safe-area-inset-bottom))] lg:pb-2.5">
                 <div className="flex items-end gap-2 rounded-lg bg-card-light border border-card-light focus-within:border-stannum transition-150 px-2 py-1.5">
                     <textarea
                         ref={taRef}

@@ -362,7 +362,7 @@ export const ProgramDetail = ({ program }: Props) => {
             {(program.price >= 0 || program.type === 'subscription' || program.type === 'demo') && (
                 <>
                     <div className="lg:hidden h-9" />
-                    <div className="lg:hidden z-[999] px-4 pt-4 pb-2 bg-gradient-to-t from-background via-background to-transparent" style={{ position: 'fixed', left: 0, right: 0, bottom: 'calc(3.5rem + env(safe-area-inset-bottom))' }}>
+                    <div className="lg:hidden z-cta px-4 pt-4 pb-2 bg-gradient-to-t from-background via-background to-transparent" style={{ position: 'fixed', left: 0, right: 0, bottom: 'calc(3.5rem + env(safe-area-inset-bottom))' }}>
                         {isPurchased ? (
                             <Link href={`/dashboard/library/${program.id}`} className="w-full py-3.5 rounded-lg bg-stannum text-black font-bold text-center flex items-center justify-center hover:bg-stannum-light transition-200">
                                 Ir al programa

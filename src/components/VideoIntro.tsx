@@ -59,7 +59,7 @@ export const VideoIntro = () => {
 
     if (isChecking) {
         return (
-            <div className="size-full absolute top-0 left-0 z-[99999999] bg-black">
+            <div className="size-full absolute top-0 left-0 z-overlay bg-black">
                 <LoadingScreen fullScreen />
             </div>
         );
@@ -68,7 +68,7 @@ export const VideoIntro = () => {
     if (!shouldShow) return null;
 
     return (
-        <div className={`size-full absolute top-0 left-0 z-[99999999] ${ isEnded && "pointer-events-none" }`}>
+        <div className={`size-full absolute top-0 left-0 z-overlay ${ isEnded && "pointer-events-none" }`}>
             { !isEnded && <div className="size-full bg-black absolute top-0 left-0"></div>}
             <AnimatePresence mode="wait">
                 { !start ?
@@ -96,7 +96,7 @@ export const VideoIntro = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         key="video-intro-playing"
-                        className="size-full absolute top-0 left-0 z-[99999999]"
+                        className="size-full absolute top-0 left-0 z-overlay"
                     >
                         <div className="size-full relative">
                             <div className="flex justify-center items-center gap-4 absolute bottom-4 lg:bottom-12 right-4 lg:right-12 z-50">

@@ -89,7 +89,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
         <AnimatePresence>
         {
             showModal &&
-            <div className='w-full h-dvh fixed top-0 left-0 z-[99999999] overflow-y-scroll'>
+            <div className='w-full h-dvh fixed top-0 left-0 z-modal overflow-y-scroll'>
                 <div className={`w-full min-h-dvh px-4 pt-24 pb-20 flex justify-center items-center`}>
                     <m.div
                         initial={{ opacity: 0 }}
@@ -112,7 +112,7 @@ export const Modal = ({showModal, setShowModal, children, className, disableClos
                         }}
                         className={`w-full h-[75svh] lg:h-auto card relative z-50 ${className}`}
                     >
-                        <button onClick={ () => { if(!disableClose) setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className={`size-6 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-3 right-0 -translate-y-full z-[9999999999] transition-all duration-200 ease-in-out ${disableClose ? 'opacity-50 pointer-events-none' : ''}`}>
+                        <button onClick={ () => { if(!disableClose) setShowModal(false) }} type={"button"} aria-label={'Cerrar'} className={`size-6 text-neutral-400 hover:text-neutral-300 flex justify-center items-center absolute -top-3 right-0 -translate-y-full z-10 transition-all duration-200 ease-in-out ${disableClose ? 'opacity-50 pointer-events-none' : ''}`}>
                             <span className="sr-only">Cerrar</span>
                             <CrossIcon className="size-8"/>
                         </button>
