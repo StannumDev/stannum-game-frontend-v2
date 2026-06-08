@@ -190,18 +190,21 @@ const FloatButton = forwardRef<HTMLButtonElement, { onClick: () => void; hasUnre
             // así no se solapan y no hace falta z alto. z-fab está sobre el contenido y la CTA de store,
             // pero DEBAJO del nav, modales, toasts y overlays de fin de lección (que deben taparlo).
             // Desktop: pill con texto, abajo-derecha.
-            className={`fixed right-5 bottom-[calc(5rem_+_env(safe-area-inset-bottom))] lg:bottom-5 z-fab flex items-center gap-2 p-1.5 lg:pr-4 rounded-full bg-stannum text-black font-bold shadow-lg shadow-black/40 active:scale-95 transition-150 ${hasUnread ? 'animate-in zoom-in-95 duration-300' : ''}`}
+            // Normal: pill con texto en desktop, burbuja (solo avatar) en mobile.
+            // Sin leer: pill con texto en TODOS los tamaños (en mobile pasa de círculo a pill, muy visible)
+            // + nudge (saltito periódico) para que se note.
+            className={`fixed right-5 bottom-[calc(5rem_+_env(safe-area-inset-bottom))] lg:bottom-5 z-fab flex items-center gap-2 p-1.5 rounded-full bg-stannum text-black font-bold shadow-lg shadow-black/40 active:scale-95 transition-150 ${hasUnread ? 'pr-4 animate-stan-nudge' : 'lg:pr-4'}`}
         >
             <span className="relative shrink-0">
                 <StanAvatar className="size-12 lg:size-9" />
                 {hasUnread && (
-                    <span className="absolute -top-0.5 -right-0.5 flex size-3">
+                    <span className="absolute -top-1 -right-1 flex size-3.5">
                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-invalid opacity-75" />
-                        <span className="relative inline-flex size-3 rounded-full bg-invalid ring-2 ring-stannum" />
+                        <span className="relative inline-flex size-3.5 rounded-full bg-invalid ring-2 ring-stannum" />
                     </span>
                 )}
             </span>
-            <span className="hidden lg:inline text-sm">{hasUnread ? 'STAN te respondió' : 'Preguntale a STAN'}</span>
+            <span className={`text-sm ${hasUnread ? 'inline' : 'hidden lg:inline'}`}>{hasUnread ? 'STAN te respondió' : 'Preguntale a STAN'}</span>
         </button>
     );
 });

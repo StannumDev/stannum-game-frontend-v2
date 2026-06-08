@@ -51,11 +51,19 @@ const config: Config = {
   		animation: {
   			'spin-fast': 'spin .5s linear infinite',
   			'fade-in': 'fadeIn .3s ease-out',
+  			// Nudge sutil para llamar la atención del FAB de STAN cuando hay respuesta sin leer:
+  			// quieto la mayor parte del ciclo y un doble salto corto al final.
+  			'stan-nudge': 'stanNudge 2.4s ease-in-out infinite',
   		},
   		keyframes: {
   			fadeIn: {
   				'0%': { opacity: '0', transform: 'translateY(4px)' },
   				'100%': { opacity: '1', transform: 'translateY(0)' },
+  			},
+  			stanNudge: {
+  				'0%, 65%, 100%': { transform: 'translateY(0)' },
+  				'75%': { transform: 'translateY(-6px)' },
+  				'85%': { transform: 'translateY(-2px)' },
   			},
   		},
   		fontFamily: {
