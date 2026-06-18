@@ -4,3 +4,12 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# 301 del dominio viejo (alias) al dominio canónico.
+# force=true es obligatorio: como el alias sirve toda la app, cada path "existe"
+# y sin force el redirect no dispararía. Solo matchea el host game.stannum.com.ar.
+[[redirects]]
+  from = "https://game.stannum.com.ar/*"
+  to = "https://stannumgame.com/:splat"
+  status = 301
+  force = true
